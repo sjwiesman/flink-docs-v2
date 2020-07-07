@@ -1,0 +1,42 @@
+languageCode = "en-us"
+title = "Apache Flink Stateful Functions"
+theme = "hugo-theme-learn"
+Paginate = 4
+# For search functionality
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
+
+[params]
+  version = "2.1.0"
+  flink_version = "1.10.1"
+  scala_version = "2.11"
+  stable = true
+  author = "Apache Flink PMC" # add your company name
+  github = "https://github.com/apache/flink-statefun" # add your github profile name
+  showVisitedLinks = false
+  disableBreadcrumb = false
+  disableNextPrev = true
+  disableLanguageSwitchingButton = true
+  themeVariant = "flink"
+
+[[menu.shortcuts]]
+name = "<i class='fas fa-arrow-circle-up'></i> Website"
+url = "https://flink.apache.org"
+weight = 10
+
+[[menu.shortcuts]]
+name = "<i class='fab fa-fw fa-github'></i> Github repo"
+identifier = "ds"
+url = "https://github.com/apache/flink-statefun"
+weight = 20
+
+[[menu.shortcuts]]
+name = "<i class='fab fa-fw fa-twitter fa-fw'></i> Twitter"
+url = "https://twitter.com/statefun_io"
+weight = 30
+
+[[menu.shortcuts]]
+name = "<i class='fab fa-java'></i> Javadoc"
+url = "https://ci.apache.org/projects/flink/flink-statefun-docs-master/api/java/"
+weight = 40
+
