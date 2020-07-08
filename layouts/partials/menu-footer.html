@@ -1,0 +1,19 @@
+<label for="select-version">Pick Docs Version</label>
+<div class="select-style">
+    <select id="select-version" onchange="location = this.value;">
+        {{ range $docs := $.Site.Params.previousDocs }}
+        <option style="font-size:18px;" id="{{ index $docs 0 }}" value="{{ index $docs 1 }}" selected>v{{ index $docs 0 }}</option>
+        {{ end }}
+        {{ if not $.Site.Params.stable }}
+        <option style="font-size:18px;" id="SNAPSHOT" value=this.value selected>SNAPSHOT</option>
+        {{ end }}
+    </select>
+    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+         width="255px" height="255px" viewBox="0 0 255 255" style="enable-background:new 0 0 255 255;" xml:space="preserve">
+          <g>
+            <g id="arrow-drop-down">
+              <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+            </g>
+          </g>
+        </svg>
+</div>
