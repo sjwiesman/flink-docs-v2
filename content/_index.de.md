@@ -1,25 +1,25 @@
 ---
-title: "Stateful Functions Documentation"
+title: "Stateful Functions Dokumentation"
 ---
 
-Stateful Functions Documentation
+Stateful Functions Dokumentation
 ================================
 
-**Stateful Functions** is an open source framework that reduces the complexity of building and orchestrating distributed stateful applications at scale. It brings together the benefits of stream processing with Apache Flink® and Function-as-a-Service (FaaS) to provide a powerful abstraction for the next generation of event-driven architectures.
+**Stateful Functions** ist ein Open-Source-Framework, das die Komplexität des Bauens und Orchestrierens verteilter zustandsfähiger Anwendungen auf Skala reduziert. Es vereint die Vorteile der Streamverarbeitung mit Apache Flink® und Function-as-a-Service (FaaaS) um eine leistungsstarke Abstraktion für die nächste Generation von ereignisorientierten Architekturen zu bieten.
 
-![architecture](/fig/stateful_functions.png)
+![architektur](/fig/stateful_functions.png)
 
-There are many ways to get started with Stateful Functions. Which one is the best for you depends on your goals and prior experience. Whether you prefer a more theoretical or a practical approach, we hope you’ll find this section helpful.
+Es gibt viele Möglichkeiten, mit Stateful Functions loszulegen. Welche für Sie das Beste ist, hängt von Ihren Zielen und früheren Erfahrungen ab. Egal ob Sie einen theoretischen oder praktischen Ansatz bevorzugen, wir hoffen, dass Sie diesen Abschnitt hilfreich finden werden.
 
-## Learn By Doing
+## Lernen durch Doing
 
-If you prefer to learn by doing, start with our code [walkthrough](/getting-started/python-walkthrough/). It provides a step by step introduction to the API and guides you through real applications.
+Wenn Sie es vorziehen, mit unserem Code [zu lernen, gehen Sie durch](/getting-started/python-walkthrough/). Es bietet eine schrittweise Einführung in die API und führt Sie durch echte Anwendungen.
 
-## Learn Concepts Step By Step
+## Konzepte Schritt für Schritt lernen
 
-If you prefer to learn concepts step by step, start with our guide to [main concepts](/concepts/). It will walk you through all the API's and concepts to build advanced stateful systems.
+Wenn Sie es vorziehen, Schritt für Schritt Konzepte zu lernen, beginnen Sie mit unserem Leitfaden [Hauptkonzepte](/concepts/). Es wird Sie durch alle APIs und Konzepte führen, um fortschrittliche Systeme zu bauen.
 
 
-## Start A New Project
+## Ein neues Projekt starten
 
-The [project setup](/getting-started/) instructions show you how to create a project for a new Stateful Functions application in just a few steps.
+Die [Projekt-Setup](/getting-started/) Anleitung zeigt Ihnen, wie Sie in wenigen Schritten ein Projekt für eine neue Stateful Functions Applikation erstellen.
