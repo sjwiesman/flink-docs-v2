@@ -24,7 +24,7 @@ Wenn du weiterverfolgen möchtest, benötigst du einen Computer mit [Python 3](h
 
 {{% notice note %}}
 Jeder Code-Block in diesem Gehweg darf nicht die volle umgebende Klasse enthalten, um kürzer zu werden. Der vollständige Code ist am [unten auf dieser Seite](#full-application) verfügbar.
-{{% /Nachricht %}}
+{{% /notice %}}
 
 Sie können eine Zip-Datei mit einem Skelett-Projekt herunterladen, indem Sie hier [klicken](/downloads/walkthrough.zip).
 

@@ -117,7 +117,7 @@ def caller_function(context message):
 
 ## Dauerhaftigkeit
 
-Stateful Functions behandelt den Zustand als Bürger erster Klasse, so dass alle zugehörigen Funktionen den Zustand leicht definieren können, der durch die Laufzeit automatisch toleriert wird. Alle zugewiesenen Funktionen können Zustände enthalten, indem sie lediglich Werte im `Kontext` Objekt speichern. Die Daten werden immer auf einen bestimmten Funktionstyp und Bezeichner übertragen. Zustandswerte konnten fehlen, `Keine`, oder ein {{< Protoany >}}.
+Stateful Functions behandelt den Zustand als Bürger erster Klasse, so dass alle zugehörigen Funktionen den Zustand leicht definieren können, der durch die Laufzeit automatisch toleriert wird. Alle zugewiesenen Funktionen können Zustände enthalten, indem sie lediglich Werte im `Kontext` Objekt speichern. Die Daten werden immer auf einen bestimmten Funktionstyp und Bezeichner übertragen. Zustandswerte konnten fehlen, `Keine`, oder ein {{< protoany >}}.
 
 **Achtung:** [Remote-Module](/sdk/#remote-module) erfordert, dass alle Statuswerte bei module.yaml eifrig registriert sind. Es wird auch das Konfigurieren anderer Status-Eigenschaften, wie zum Beispiel das Auslaufen von Zuständen, erlauben. Weitere Details finden Sie auf dieser Seite.
 
@@ -203,21 +203,21 @@ Das `Kontext` Objekt das an jede Funktion übergeben wurde, hat folgende Attribu
 * send(Selbst, Typname: str, id: str, Nachricht: Any)
     * Send a message to any function with the function type of the form `<namesapce>/<type>` and message of type {{< protoany >}}
 * pack_and_send(Selbst, Typname: str, id: str, message)
-    * Das Gleiche wie oben, aber es wird die Protobuf-Nachricht in einer {{< Protoany >}} packen
+    * Das Gleiche wie oben, aber es wird die Protobuf-Nachricht in einer {{< protoany >}} packen
 * antwort(selber, nachricht: any)
     * Sendet eine Nachricht an die aufrufende Funktion
 * pack_and_reply(selber, Nachricht)
-    * Das Gleiche wie oben, aber es wird die Protobuf-Nachricht in einer {{< Protoany >}} packen
+    * Das Gleiche wie oben, aber es wird die Protobuf-Nachricht in einer {{< protoany >}} packen
 * send_after(self, delay: timedelta, typname: str, id: str, message: Any)
     * Sendet eine Nachricht nach einer Verzögerung
 * pack_and_send_after(self, delay: timedelta, typename: str, id: str, message)
-    * Das Gleiche wie oben, aber es wird die Protobuf-Nachricht in einer {{< Protoany >}} packen
+    * Das Gleiche wie oben, aber es wird die Protobuf-Nachricht in einer {{< protoany >}} packen
 * send_egress(Selbst, Typenname, Nachricht: Any)
     * Sendet eine Nachricht an eine Eizelle mit einem Typennamen des Formulars `<namespace>/<name>`
 * pack_and_send_egress(Selbst, Typenname, Nachricht)
-    * Das Gleiche wie oben, aber es wird die Protobuf-Nachricht in einer {{< Protoany >}} packen
+    * Das Gleiche wie oben, aber es wird die Protobuf-Nachricht in einer {{< protoany >}} packen
 * \_\_getitem\_\_(Selbst, Name)
-    * Ruft das unter dem Namen {{< Protoany >}} oder `Keine` registrierte Bundesland ab, wenn kein Wert gesetzt ist
+    * Ruft das unter dem Namen {{< protoany >}} oder `Keine` registrierte Bundesland ab, wenn kein Wert gesetzt ist
 * \_\_delitem\_\_(Selbst, Name)
     * Löscht das unter dem Namen registrierte Bundesland
 * \_\_setitem\_\_(Selbst, Name, Wert: Any)

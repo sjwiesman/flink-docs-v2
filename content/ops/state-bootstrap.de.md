@@ -23,7 +23,7 @@ Um loszulegen, fügen Sie folgende Bibliotheken in Ihre Anwendung ein:
 
 {{% notice note %}}
 Der Savepoint-Ersteller unterstützt derzeit nur die Initialisierung des Zustands für Java-Module.
-{{% /Nachricht %}}
+{{% /notice %}}
 
 ## Status Bootstrap-Funktion
 
