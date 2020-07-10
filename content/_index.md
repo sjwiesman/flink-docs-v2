@@ -5,7 +5,8 @@ title: "Stateful Functions Documentation"
 Stateful Functions Documentation
 ================================
 
-**Stateful Functions** is an open source framework that reduces the complexity of building and orchestrating distributed stateful applications at scale. It brings together the benefits of stream processing with Apache Flink® and Function-as-a-Service (FaaS) to provide a powerful abstraction for the next generation of event-driven architectures.
+**Stateful Functions** is an open source framework that reduces the complexity of building and orchestrating distributed stateful applications at scale.
+It brings together the benefits of stream processing with Apache Flink® and Function-as-a-Service (FaaS) to provide a powerful abstraction for the next generation of event-driven architectures.
 
 ![architecture](/fig/stateful_functions.png)
 
