@@ -1,6 +1,6 @@
 # Stateful Function Docs V2
 
-This is an experimental rewrite of Flink StateFun docs using Hugo.
+This is an experimental rewrite of Flink docs using Hugo.
 The end goal is to replace Flinks Jekyll infrastructure with a more modern system. 
 
 ### Build the site locally
