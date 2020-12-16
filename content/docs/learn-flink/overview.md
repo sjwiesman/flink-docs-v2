@@ -51,7 +51,7 @@ This training focuses on four critical concepts: continuous processing of stream
 Streams are data’s natural habitat. Whether it is events from web servers, trades from a stock exchange, or sensor readings from a machine on a factory floor, data is created as part of a stream.
 But when you analyze data, you can either organize your processing around `bounded` or `unbounded` streams, and which of these paradigms you choose has profound consequences.
 
-![Bounded vs Unbounded](/fig/learn-flink/bounded-unbounded.png)
+{{< img src="/fig/learn-flink/bounded-unbounded.png" alt="Bounded vs Unbounded" width="80%">}}
 
 **Batch processing** is the paradigm at work when you process a bounded data stream.
 In this mode of operation you can choose to ingest the entire dataset before producing any results, which means that it is possible, for example, to sort the data, compute global statistics, or produce a final report that summarizes all of the input.
@@ -62,7 +62,7 @@ Conceptually, at least, the input may never end, and so you are forced to contin
 In Flink, applications are composed of **streaming dataflows** that may be transformed by user-defined **operators**.
 These dataflows form directed graphs that start with one or more **sources**, and end in one or more **sinks**.
 
-![Program Dataflow](/fig/learn-flink/program_dataflow.svg)
+{{< img src="/fig/learn-flink/program_dataflow.svg" alt="Program Dataflow" width="80%">}}
 
 Often there is a one-to-one correspondence between the transformations in the program and the operators in the dataflow.
 Sometimes, however, one transformation may consist of multiple operators.
@@ -71,7 +71,7 @@ An application may consume real-time data from streaming sources such as message
 But flink can also consume bounded, historic data from a variety of data sources.
 Similarly, the streams of results being produced by a Flink application can be sent to a wide variety of systems that can be connected as sinks.
 
-![Flink Application Sources and Sinks](/fig/learn-flink/flink-application-sources-sinks.png)
+{{< img src="/fig/learn-flink/flink-application-sources-sinks.png" alt="Flink Application Sources and Sinks" width="80%">}}
 
 ### Parallel Dataflows
 
@@ -82,7 +82,7 @@ The operator subtasks are independent of one another, and execute in different t
 The number of operator subtasks is the **parallelism** of that particular operator.
 Different operators of the same program may have different levels of parallelism.
 
-![Parallel Dataflow](/fig/learn-flink/parallel_dataflow.svg)
+{{< img src="/fig/learn-flink/parallel_dataflow.svg" alt="Parallel Dataflow" width="80%">}}
 
 Streams can transport data between two operators in a `one-to-one `(or forwarding) pattern, or in a `redistributing` pattern:
 
@@ -114,12 +114,12 @@ The diagram below shows a job running with a parallelism of two across the first
 The third operator is stateful, and you can see that a fully-connected network shuffle is occurring between the second and third operators.
 This is being done to partition the stream by some key, so that all of the events that need to be processed together, will be.
 
-![Parallel Job](/fig/learn-flink/parallel-job.png)
+{{< img src="/fig/learn-flink/parallel-job.png" alt="Parallel Job" width="65%">}}
 
 State is always accessed locally, which helps Flink applications achieve high throughput and low-latency.
 You can choose to keep state on the JVM heap, or if it is too large, in efficiently organized on-disk data structures.
 
-![Local State](/fig/learn-flink/local-state.png)
+{{< img src="/fig/learn-flink/local-state.png" alt="Local State" width="65%">}}
 
 
 ## Fault Tolerance via State Snapshots

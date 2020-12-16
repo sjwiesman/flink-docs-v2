@@ -132,7 +132,7 @@ rides
 Every `keyBy` causes a network shuffle that repartitions the stream.
 In general this is pretty expensive, since it involves network communication along with serialization and deserialization.
 
-![Key By](/fig/learn-flink/keyBy.png)
+{{< img src="/fig/learn-flink/keyBy.png" alt="Key By" width="45%">}}
 
 ### Keys are Computed
 

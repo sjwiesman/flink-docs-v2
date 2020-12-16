@@ -136,7 +136,7 @@ When `env.execute()` is called this graph is packaged up and sent to the JobMana
 
 Note that if you don’t call `execute()`, your application won’t be run.
 
-![Distributed Runtime](/fig/learn-flink/distributed-runtime.svg)
+{{< img src="/fig/learn-flink/distributed-runtime.svg" alt="Distributed Runtime" width="80%">}}
 
 This distributed runtime depends on your application being serializable.
 It also requires that all dependencies are available to each node in the cluster.

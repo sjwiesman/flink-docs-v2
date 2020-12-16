@@ -443,8 +443,6 @@ class FraudDetector extends KeyedProcessFunction[Long, Transaction, Alert] {
 For the first version, the fraud detector should output an alert for any account that makes a small transaction immediately followed by a large one. Where small is anything less than $1.00 and large is more than $500.
 Imagine your fraud detector processes the following stream of transactions for a particular account.
 
-![]
-
 
 ### Expected Output
 
