@@ -1,30 +1,55 @@
 ---
-title: "Stateful Functions Documentation"
+type: docs
 ---
 
-Stateful Functions Documentation
-================================
+# Apache Flink Documentation
 
-**Stateful Functions** is an open source framework that reduces the complexity of building and orchestrating distributed stateful applications at scale.
-It brings together the benefits of stream processing with Apache Flink® and Function-as-a-Service (FaaS) to provide a powerful abstraction for the next generation of event-driven architectures.
+{{< center >}}
+**Apache Flink** *is a framework and distributed processing engine for stateful computations over* unbounded *and* bounded *data streams. Flink has been designed to run in* all common cluster environments *perform computations at* in-memory speed *and* at any scale.
+{{< /center >}}
 
-![architecture](/fig/stateful_functions.png)
+{{< columns >}}
 
-There are many ways to get started with Stateful Functions.
-Which one is the best for you depends on your goals and prior experience.
-Whether you prefer a more theoretical or a practical approach, we hope you’ll find this section helpful.
+## Try Flink
 
-## Learn By Doing
+If you’re interested in playing around with Flink, try one of our tutorials:
 
-If you prefer to learn by doing, start with our code [walkthrough](/getting-started/python-walkthrough/).
-It provides a step by step introduction to the API and guides you through real applications.
+* Local Installation
+* Fraud Detection with the DataStream API
+* Real Time Reporting with the Table API
+* Intro to PyFlink
+* Flink Operations Playground
 
-## Learn Concepts Step By Step
+## Learn Flink
 
-If you prefer to learn concepts step by step, start with our guide to [main concepts](/concepts/).
-It will walk you through all the API's and concepts to build advanced stateful systems.
+* To dive in deeper, the Hands-on Training includes a set of lessons and exercises that provide a step-by-step introduction to Flink.
+
+* The Concepts section explains what you need to know about Flink before exploring the reference documentation.
 
 
-## Start A New Project
+## Get Help with Flink
 
-The [project setup](/getting-started/) instructions show you how to create a project for a new Stateful Functions application in just a few steps.
+If you get stuck, check out our [community support resources](https://flink.apache.org/community.html). In particular, Apache Flink’s user mailing list is consistently ranked as one of the most active of any Apache project, and is a great way to get help quickly.
+
+<--->
+
+## Explore Flink
+
+The reference documentation covers all the details. Some starting points:
+
+* DataStream API
+* Table API & SQL
+* Stateful Functions
+* Configuration
+* Rest API
+* CLI
+
+## Deploy Flink
+
+Before putting your Flink job into production, read the Production Readiness Checklist. For an overview of possible deployment targets, see Clusters and Deployments.
+
+## Upgrade Flink
+
+Release notes cover important changes between Flink versions. Please read them carefully if you plan to upgrade your Flink setup.
+
+{{< /columns >}}

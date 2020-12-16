@@ -1,87 +1,27 @@
-baseURL = "/"
-languageCode = "en-US"
-defaultContentLanguage = "en"
-defaultContentLanguageInSubdir = true
-
-theme = "hugo-theme-learn"
-Paginate = 4
-
-[Languages]
-[Languages.en]
-title = "Apache Flink Stateful Functions"
-weight = 1
-languageName = "English"
-
-[Languages.zh]
-title = "有状态的函数"
-weight = 2
-languageName = "中文"
-
-[Languages.de]
-title = "Apache Flink Stateful Functions"
-weight = 2
-languageName = "German"
-
-# For search functionality
-[outputs]
-home = [ "HTML", "RSS", "JSON"]
+baseURL = 'https://example.com/'
+languageCode = "en-us"
+title = "Apache Flink"
+enableGitInfo = false
+theme = "book"
 
 [params]
-  version = "2.1.0"
-  flink_version = "1.10.1"
-  scala_version = "2.11"
-  stable = false
-  author = "Apache Flink PMC"
-  github = "https://github.com/apache/flink-statefun"
-  showVisitedLinks = false
-  disableBreadcrumb = false
-  disableNextPrev = true
-  disableLanguageSwitchingButton = false
-  disableShortcutsTitle = true
-  themeVariant = "flink"
-  previousDocs = [
-    ["2.0", "https://ci.apache.org/projects/flink/flink-statefun-docs-release-2.0"],
-    ["2.1", "https://ci.apache.org/projects/flink/flink-statefun-docs-release-2.1"]
-  ]
+  stable  = true
+  version = "1.13-SNAPSHOT"
+  scalaVersion = "2.11"
 
-[[menu.shortcuts]]
-name = "<i class='fas fa-arrow-circle-up'></i> Website"
-url = "https://flink.apache.org"
-weight = 10
+[markup]
+[markup.highlight]
+  style = "pygments"
+[markup.goldmark.renderer]
+  unsafe = true
 
-[[menu.shortcuts]]
-name = "<i class='fab fa-fw fa-github'></i> Github repo"
-identifier = "ds"
-url = "https://github.com/apache/flink-statefun"
-weight = 20
+[languages]
+[languages.en]
+  languageName = 'English'
+  contentDir = 'content'
+  weight = 1
 
-[[menu.shortcuts]]
-name = "<i class='fab fa-fw fa-twitter fa-fw'></i> Twitter"
-url = "https://twitter.com/statefun_io"
-weight = 30
-
-[[menu.shortcuts]]
-name = "<i class='fab fa-java'></i> Javadoc"
-url = "https://ci.apache.org/projects/flink/flink-statefun-docs-master/api/java/"
-weight = 40
-
-[[Languages.zh.menu.shortcuts]]
-name = "<i class='fas fa-arrow-circle-up'></i> Website"
-url = "https://flink.apache.org"
-weight = 10
-
-[[Languages.zh.menu.shortcuts]]
-name = "<i class='fab fa-fw fa-github'></i> Github repo"
-identifier = "ds"
-url = "https://github.com/apache/flink-statefun"
-weight = 20
-
-[[Languages.zh.menu.shortcuts]]
-name = "<i class='fab fa-fw fa-twitter fa-fw'></i> Twitter"
-url = "https://twitter.com/statefun_io"
-weight = 30
-
-[[Languages.zh.menu.shortcuts]]
-name = "<i class='fab fa-java'></i> Javadoc"
-url = "https://ci.apache.org/projects/flink/flink-statefun-docs-master/api/java/"
-weight = 40
+[languages.zh]
+  languageName = 'Chinese'
+  contentDir = 'content.zh'
+  weight = 2
