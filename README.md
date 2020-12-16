@@ -1,4 +1,4 @@
-# Stateful Function Docs V2
+# Apache Flink Docs V2
 
 This is an experimental rewrite of Flink docs using Hugo.
 The end goal is to replace Flinks Jekyll infrastructure with a more modern system. 
