@@ -21,11 +21,6 @@ under the License.
     is marked as stable.
 
     Parmeters: Markdown text
-
-    Usage: 
-        {{< stable >}}
-            You are on the stable site!
-        {{< /stable >}}
 -->
 {{ if $.Site.Params.IsStable }}
 {{ .Inner | markdownify }}

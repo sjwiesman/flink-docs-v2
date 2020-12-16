@@ -26,7 +26,5 @@ under the License.
         - src: The absolute path to the image file (required)
         - alt: Image alt text (optional)
         - width: Image width (optional)
-
-    Usage: {{< img src="/picture.svg" alt="This is a picture" width="80%">}}
 -->
 <img src="{{.Get "src" }}" alt="{{.Get "alt"}}" width="{{ .Get "width"}}" style="display:block;margin-left:auto;margin-right:auto">

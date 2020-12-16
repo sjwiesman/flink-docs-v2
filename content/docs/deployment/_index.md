@@ -1,3 +1,8 @@
+---
+title: Deployment
+bookCollapseSection: true
+weight: 5
+---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -16,23 +21,3 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<!--
-    Partial that on the footer of every page.
--->
-<br/>
-<div class="book-languages" tabindex="0" aria-haspopup="true">
-        <ul>
-            <li class="flex align-center">
-                Pick Docs Version
-            </li> 
-    </ul>
-    <ul class="book-languages-list">
-        {{ range $docs := .Site.Params.PreviousDocs }}
-            <li>
-                <a href="{{ index $docs 1 }}">
-                    v{{ index $docs 0}}
-                </a>
-            </li>
-        {{ end }}
-    </ul>
-</div>

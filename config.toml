@@ -3,6 +3,7 @@ languageCode = "en-us"
 title = "Apache Flink"
 enableGitInfo = false
 theme = "book"
+IsMultiLingual = false
 
 [params]
   # Flag whether this is a stable version or not.
