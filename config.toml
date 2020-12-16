@@ -27,6 +27,14 @@ IsMultiLingual = false
   # This suffix is appended to the Scala-dependent Maven artifact names
   ScalaVersion = "2.11"
 
+  ProjectHomepage = "//flink.apache.org"
+
+  JavaDocs = "//ci.apache.org/projects/flink/flink-docs-master/api/java/"
+
+  ScalaDocs = "//ci.apache.org/projects/flink/flink-docs-master/api/scala/index.html#org.apache.flink.api.scala.package"
+
+  PyDocs = "//ci.apache.org/projects/flink/flink-docs-master/api/python/"
+
   # DO NOT ENABLE
   # This disables the ToC for the
   # unerlying theme. Flink uses its
