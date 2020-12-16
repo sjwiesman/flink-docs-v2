@@ -1,0 +1,17 @@
+<br/>
+<div class="book-languages" tabindex="0" aria-haspopup="true">
+        <ul>
+            <li class="flex align-center">
+                Pick Docs Version
+            </li> 
+    </ul>
+    <ul class="book-languages-list">
+        {{ range $docs := .Site.Params.PreviousDocs }}
+            <li>
+                <a href="{{ index $docs 1 }}">
+                    v{{ index $docs 0}}
+                </a>
+            </li>
+        {{ end }}
+    </ul>
+</div>

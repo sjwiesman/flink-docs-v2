@@ -1,3 +1,3 @@
-{{ if (not $.Site.Params.stable) }}
+{{ if (not $.Site.Params.IsStable) }}
 {{ .Inner | markdownify }}
 {{ end }}

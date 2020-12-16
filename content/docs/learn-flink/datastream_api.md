@@ -25,6 +25,8 @@ under the License.
 
 The focus of this training is to broadly cover the DataStream API well enough that you will be able to get started writing streaming applications.
 
+{{< toc >}}
+
 ## What can be Streamed?
 
 Flink’s DataStream APIs for Java and Scala will let you stream anything they can serialize. Flink’s own serializer is used for
@@ -51,8 +53,6 @@ Integer age = person.f1;
 ```
 
 #### POJOs
-
-POJOs
 
 Flink recognizes a data type as a POJO type (and allows “by-name” field referencing) if the following conditions are fulfilled:
 

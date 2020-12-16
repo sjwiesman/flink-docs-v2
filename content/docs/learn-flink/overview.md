@@ -40,10 +40,11 @@ Specifically, you will learn:
 
 This training focuses on four critical concepts: continuous processing of streaming data, event time, stateful stream processing, and state snapshots. This page introduces these concepts.
 
-{{< hint info >}}
-**Note:** Note Accompanying this training is a set of hands-on exercises that will guide you through learning how to work with the concepts being presented. A link to the relevant exercise is provided at the end of each section.
-{{< /hint >}}
+{{< toc >}}
 
+{{< hint info >}}
+**Note:** Accompanying this training is a set of hands-on exercises that will guide you through learning how to work with the concepts being presented. A link to the relevant exercise is provided at the end of each section.
+{{< /hint >}}
 
 ## Stream Processing
 
