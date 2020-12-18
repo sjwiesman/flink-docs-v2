@@ -57,7 +57,6 @@ If you want to follow along, you will require a computer with:
 A provided Flink Maven Archetype will create a skeleton project with all the necessary dependencies quickly, so you only need to focus on filling out the business logic.
 These dependencies include `flink-streaming-java` which is the core dependency for all Flink streaming applications and `flink-walkthrough-common` that has data generators and other classes specific to this walkthrough.
 
-{{< stable >}}
 {{< tabs "archetype" >}}
 {{< tab "Java" >}}
 ```bash
@@ -84,42 +83,10 @@ $ mvn archetype:generate \
     -Dpackage=spendreport \
     -DinteractiveMode=false
 ```
+{{< /tab >}}
 {{< /tabs >}}
-{{< /tabs >}}
-{{< /stable >}}
 
 {{< unstable >}}
-{{< tabs "archetype" >}}
-{{< tab "Java" >}}
-```bash
-$ mvn archetype:generate \
-    -DarchetypeGroupId=org.apache.flink \
-    -DarchetypeArtifactId=flink-walkthrough-datastream-java \
-    -DarchetypeVersion={{< version >}} \
-    -DgroupId=frauddetection \
-    -DartifactId=frauddetection \
-    -Dversion=0.1 \
-    -Dpackage=spendreport \
-    -DinteractiveMode=false \
-    -DarchetypeCatalog=https://repository.apache.org/content/repositories/snapshots/
-```
-{{< /tab >}}
-{{< tab "Scala" >}}
-```bash
-$ mvn archetype:generate \
-    -DarchetypeGroupId=org.apache.flink \
-    -DarchetypeArtifactId=flink-walkthrough-datastream-scala \
-    -DarchetypeVersion={{< version >}} \
-    -DgroupId=frauddetection \
-    -DartifactId=frauddetection \
-    -Dversion=0.1 \
-    -Dpackage=spendreport \
-    -DinteractiveMode=false  \
-    -DarchetypeCatalog=https://repository.apache.org/content/repositories/snapshots/
-```
-{{< /tabs >}}
-{{< /tabs >}}
-
 {{< hint warning >}}
 For Maven 3.0 or higher, it is no longer possible to specify the repository (-DarchetypeCatalog) via the command line. For details about this change, please refer to [Maven official documentation](http://maven.apache.org/archetype/maven-archetype-plugin/archetype-repository.html).
 If you wish to use the snapshot repository, you need to add a repository entry to your settings.xml. For example:
