@@ -1,3 +1,8 @@
+---
+title: Operators
+bookCollapseSection: true
+weight: 7
+---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -16,12 +21,3 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<!--
-    Contnet written at the bottom of the menu
--->
-<br/>
-
-{{ range $links := .Site.Params.MenuLinks }}
-<a href="{{ index $links 1 }}" class="link fa fa-external-link title" style="color:black"> {{ index $links 0 }}</a>
-<br/>
-{{ end }}

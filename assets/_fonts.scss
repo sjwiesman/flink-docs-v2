@@ -15,51 +15,11 @@
 // specific language governing permissions and limitations
 // under the License.
 
-#TableOfContents {
-    font-size: 1rem;
-    padding: 0rem 1rem;
-
-    ul {
-        display: list-item;
-        padding-left: 0;
-      
-        &:not(:first-child) {
-            display: list-item;
-            padding-left: 0.9rem;
-            font-size: 95%;
-        }
-    }
-
-    li {
-        display: inherit;
-        color: black;
-  
-        a {
-            color: inherit;
-            text-align: left;
-            padding: 0;
-  
-            &:hover {
-                color: black;
-                background-color: transparent;
-            }
-        }
-    }
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
 }
   
-.flink-toc {
-    flex: 0 0 $toc-width;
-    font-size: 0.75rem;
-  
-    img {
-        height: 1em;
-    }
-  
-    nav > ul > li:first-child {
-        margin-top: 0;
-    }
-}
-  
-.link {
-    padding-bottom: 5px;
+code {
+    font-family: "Menlo", "Lucida Console", monospace;
 }

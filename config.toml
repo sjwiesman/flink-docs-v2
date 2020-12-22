@@ -41,6 +41,15 @@ IsMultiLingual = false
   # own TOC implementation.
   BookToC = false
 
+  # External links at the bottom
+  # of the menu
+  MenuLinks = [
+    ["Project Homepage", "//flink.apache.org"],
+    ["JavaDocs", "//ci.apache.org/projects/flink/flink-docs-master/api/java/"],
+    ["ScalaDocs", "//ci.apache.org/projects/flink/flink-docs-master/api/scala/index.html#org.apache.flink.api.scala.package"],
+    ["PyDocs", "//ci.apache.org/projects/flink/flink-docs-master/api/python/"]
+  ]
+
   PreviousDocs = [
     ["1.12", "http://ci.apache.org/projects/flink/flink-docs-release-1.12"],
     ["1.11", "http://ci.apache.org/projects/flink/flink-docs-release-1.11"],

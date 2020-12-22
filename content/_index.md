@@ -23,7 +23,7 @@ under the License.
 # Apache Flink Documentation
 
 {{< center >}}
-**Apache Flink** *is a framework and distributed processing engine for stateful computations over* unbounded *and* bounded *data streams. Flink has been designed to run in* all common cluster environments *perform computations at* in-memory speed *and* at any scale.
+**Apache Flink** is a framework and distributed processing engine for stateful computations over *unbounded* and *bounded* data streams. Flink has been designed to run in *all common cluster environments* perform computations at *in-memory* speed and at *any scale*.
 {{< /center >}}
 
 {{< columns >}}
@@ -32,18 +32,16 @@ under the License.
 
 If you’re interested in playing around with Flink, try one of our tutorials:
 
-* Local Installation
-* Fraud Detection with the DataStream API
-* Real Time Reporting with the Table API
+* [Fraud Detection with the DataStream API]({{< ref "/docs/try-flink/datastream" >}})
+* [Real Time Reporting with the Table API]({{< ref "/docs/try-flink/table_api" >}})
 * Intro to PyFlink
-* Flink Operations Playground
+* [Flink Operations Playground]({{< ref "/docs/try-flink/operations" >}})
 
 ## Learn Flink
 
 * To dive in deeper, the Hands-on Training includes a set of lessons and exercises that provide a step-by-step introduction to Flink.
 
 * The Concepts section explains what you need to know about Flink before exploring the reference documentation.
-
 
 ## Get Help with Flink
 
@@ -55,12 +53,17 @@ If you get stuck, check out our [community support resources](https://flink.apac
 
 The reference documentation covers all the details. Some starting points:
 
-* DataStream API
+{{< columns >}}
+* [DataStream API]({{< ref "/docs/dev/datastream/overview" >}})
 * Table API & SQL
-* Stateful Functions
+* [Stateful Functions](https://ci.apache.org/projects/flink/flink-statefun-docs-stable/)
+
+<--->
+
 * Configuration
 * Rest API
 * CLI
+{{< /columns >}}
 
 ## Deploy Flink
 

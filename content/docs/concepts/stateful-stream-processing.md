@@ -75,7 +75,7 @@ Each barrier carries the ID of the snapshot whose records it pushed in front of 
 Barriers do not interrupt the flow of the stream and are hence very lightweight.
 Multiple barriers from different snapshots can be in the stream at the same time, which means that various snapshots may happen concurrently.
 
-![Stream Barriers](/fig/concepts/stream_barriers.svg)
+{{< img src="/fig/concepts/stream_barriers.svg" alt="Stream Barriers">}}
 
 Stream barriers are injected into the parallel data flow at the stream sources.
 The point where the barriers for snapshot n are injected (let’s call it `Sn`) is the position in the source stream up to which the snapshot covers the data. 
@@ -89,7 +89,7 @@ After all sinks have acknowledged a snapshot, it is considered completed.
 
 Once snapshot `n` has been completed, the job will never again ask the source for records from before `Sn`, since at that point these records (and their descendant records) will have passed through the entire data flow topology.
 
-![Stream Aligning](/fig/concepts/stream_aligning.svg)
+{{< img src="/fig/concepts/stream_aligning.svg" alt="Stream Aligning" width="95%">}}
 
 Operators that receive more than one input stream need to align the input streams on the snapshot barriers. The figure above illustrates this:
 
