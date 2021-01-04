@@ -1,4 +1,5 @@
 ---
+title: <i class="fa fa-hand-paper-o title appetizer" aria-hidden="true"></i> Learn Flink
 bookCollapseSection: true
 weight: 2
 ---

@@ -1,5 +1,5 @@
 ---
-title: Deployment
+title: <i class="fa fa-sliders title maindish" aria-hidden="true"></i> Deployment
 bookCollapseSection: true
 weight: 5
 ---
