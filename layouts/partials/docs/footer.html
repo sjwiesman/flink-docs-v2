@@ -43,6 +43,6 @@ under the License.
         </div>
     </div>
 	{{ if .IsPage }}
-	<a href="{{ .Site.Params.Repo }}/edit/master/content/{{ .File.Path }}" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+	<a href="{{ .Site.Params.Repo }}/edit/{{ .Site.Params.Branch }}/content/{{ .File.Path }}" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
    	{{ end }}
 </div>

@@ -1,5 +1,6 @@
 ---
 type: docs
+bookToc: false
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
