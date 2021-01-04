@@ -24,6 +24,8 @@ IsMultiLingual = false
   # release this should be the same as the regular version
   VersionTitle = "1.13-SNAPSHOT"
 
+  Repo = "//github.com/sjwiesman/flink-docs-v2"
+
   # This suffix is appended to the Scala-dependent Maven artifact names
   ScalaVersion = "2.11"
 

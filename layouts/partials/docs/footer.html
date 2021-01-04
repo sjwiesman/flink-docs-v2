@@ -42,4 +42,7 @@ under the License.
             {{ partial "docs/languages" . }}
         </div>
     </div>
+	{{ if .IsPage }}
+	<a href="{{ .Site.Params.Repo }}/edit/master/content/{{ .File.Path }}" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+   	{{ end }}
 </div>
