@@ -39,7 +39,7 @@ IsMultiLingual = false
   # This disables the ToC for the
   # unerlying theme. Flink uses its
   # own TOC implementation.
-  BookToC = false
+  BookToC = true 
 
   # External links at the bottom
   # of the menu

@@ -22,6 +22,8 @@ specific language governing permissions and limitations
 under the License.
 -->
 
+# Configuration
+
 All configuration is done in `conf/flink-conf.yaml`, which is expected to be a flat collection of [YAML key value pairs](http://www.yaml.org/spec/1.2/spec.html) with format `key: value`.
 
 The configuration is parsed and evaluated when the Flink processes are started.
@@ -30,9 +32,7 @@ Changes to the configuration file require restarting the relevant processes.
 The out of the box configuration will use your default Java installation.
 You can manually set the environment variable `JAVA_HOME` or the configuration key `env.java.home` in `conf/flink-conf.yaml` if you want to manually override the Java runtime to use.
 
-{{< toc >}}
-
-# Common Setup Options
+## Common Setup Options
 
 *Common options to configure your Flink application or cluster.*
 

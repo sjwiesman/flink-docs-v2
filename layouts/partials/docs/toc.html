@@ -1,0 +1,5 @@
+{{/* 
+	Generates the pages table of contents. Unfortunately, hugo does not give us a lot of flexibility 
+	around how the TOC is generated so we have to fall back to a regex to add the header.	
+*/}}
+{{ .TableOfContents | replaceRE "<nav id=\"TableOfContents\">" "<nav id=\"TableOfContents\"><h3>On This Page</h3>" | safeHTML }}
