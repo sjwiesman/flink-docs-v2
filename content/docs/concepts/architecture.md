@@ -35,8 +35,6 @@ standalone cluster or even as a library.
 This section contains an overview of Flink’s architecture and describes how its
 main components interact to execute applications and recover from failures.
 
-{{< toc >}}
-
 ## Anatomy of a Flink Cluster
 
 The Flink runtime consists of two types of processes: a _JobManager_ and one or more _TaskManagers_.
