@@ -1,8 +1,8 @@
 ---
-title: Transformations
+title: "DataSet Transformations"
 nav-title: Transformations
-weight: 2
-type: docs
+nav-parent_id: batch
+nav-pos: 1
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -23,14 +23,13 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# DataSet Transformations
-
 This document gives a deep-dive into the available transformations on DataSets. For a general introduction to the
 Flink Java API, please refer to the [Programming Guide](index.html).
 
 For zipping elements in a data set with a dense index, please refer to the [Zip Elements Guide](zip_elements_guide.html).
 
-
+* This will be replaced by the TOC
+{:toc}
 
 ### Map
 
@@ -40,10 +39,10 @@ the function.
 
 The following code transforms a DataSet of Integer pairs into a DataSet of Integers:
 
-{{< tabs "3a758074-c167-4b66-a787-90525d451ddb" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 // MapFunction that adds two integer values
 public class IntAdder implements MapFunction<Tuple2<Integer, Integer>, Integer> {
   @Override
@@ -55,18 +54,19 @@ public class IntAdder implements MapFunction<Tuple2<Integer, Integer>, Integer> 
 // [...]
 DataSet<Tuple2<Integer, Integer>> intPairs = // [...]
 DataSet<Integer> intSums = intPairs.map(new IntAdder());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val intPairs: DataSet[(Int, Int)] = // [...]
 val intSums = intPairs.map { pair => pair._1 + pair._2 }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 ### FlatMap
 
 The FlatMap transformation applies a user-defined flat-map function on each element of a DataSet.
@@ -74,10 +74,10 @@ This variant of a map function can return arbitrary many result elements (includ
 
 The following code transforms a DataSet of text lines into a DataSet of words:
 
-{{< tabs "3f1a6873-77f0-4113-8339-7617d3b12e41" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 // FlatMapFunction that tokenizes a String by whitespace characters and emits all String tokens.
 public class Tokenizer implements FlatMapFunction<String, String> {
   @Override
@@ -91,18 +91,19 @@ public class Tokenizer implements FlatMapFunction<String, String> {
 // [...]
 DataSet<String> textLines = // [...]
 DataSet<String> words = textLines.flatMap(new Tokenizer());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val textLines: DataSet[String] = // [...]
 val words = textLines.flatMap { _.split(" ") }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 ### MapPartition
 
 MapPartition transforms a parallel partition in a single function call. The map-partition function
@@ -111,10 +112,10 @@ and previous operations.
 
 The following code transforms a DataSet of text lines into a DataSet of counts per partition:
 
-{{< tabs "a2230f1a-6f85-41a0-86b9-48b9166e18df" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 public class PartitionCounter implements MapPartitionFunction<String, Long> {
 
   public void mapPartition(Iterable<String> values, Collector<Long> out) {
@@ -129,30 +130,31 @@ public class PartitionCounter implements MapPartitionFunction<String, Long> {
 // [...]
 DataSet<String> textLines = // [...]
 DataSet<Long> counts = textLines.mapPartition(new PartitionCounter());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val textLines: DataSet[String] = // [...]
 // Some is required because the return value must be a Collection.
 // There is an implicit conversion from Option to a Collection.
 val counts = texLines.mapPartition { in => Some(in.size) }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 ### Filter
 
 The Filter transformation applies a user-defined filter function on each element of a DataSet and retains only those elements for which the function returns `true`.
 
 The following code removes all Integers smaller than zero from a DataSet:
 
-{{< tabs "ac9444c1-31ab-4d7d-9e95-e02ba6599837" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 // FilterFunction that filters out all Integers smaller than zero.
 public class NaturalNumberFilter implements FilterFunction<Integer> {
   @Override
@@ -164,18 +166,19 @@ public class NaturalNumberFilter implements FilterFunction<Integer> {
 // [...]
 DataSet<Integer> intNumbers = // [...]
 DataSet<Integer> naturalNumbers = intNumbers.filter(new NaturalNumberFilter());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val intNumbers: DataSet[Int] = // [...]
 val naturalNumbers = intNumbers.filter { _ > 0 }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 **IMPORTANT:** The system assumes that the function does not modify the elements on which the predicate is applied. Violating this assumption
 can lead to incorrect results.
 
@@ -188,39 +191,40 @@ Projections do not require the definition of a user function.
 
 The following code shows different ways to apply a Project transformation on a DataSet:
 
-{{< tabs "91098608-c1e5-4579-bb1d-051d1d06566b" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple3<Integer, Double, String>> in = // [...]
 // converts Tuple3<Integer, Double, String> into Tuple2<String, Integer>
 DataSet<Tuple2<String, Integer>> out = in.project(2,0);
-```
+{% endhighlight %}
 
 #### Projection with Type Hint
 
 Note that the Java compiler cannot infer the return type of `project` operator. This can cause a problem if you call another operator on a result of `project` operator such as:
 
-```java
+{% highlight java %}
 DataSet<Tuple5<String,String,String,String,String>> ds = ....
 DataSet<Tuple1<String>> ds2 = ds.project(0).distinct(0);
-```
+{% endhighlight %}
 
 This problem can be overcome by hinting the return type of `project` operator like this:
 
-```java
+{% highlight java %}
 DataSet<Tuple1<String>> ds2 = ds.<Tuple1<String>>project(0).distinct(0);
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 Not supported.
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 ### Transformations on Grouped DataSet
 
 The reduce operations can operate on grouped data sets. Specifying the key to
@@ -252,10 +256,10 @@ The key expression "*" selects all fields.
 The following code shows how to group a POJO DataSet using key expressions and to reduce it
 with a reduce function.
 
-{{< tabs "1e955a6e-1aa5-4c86-a783-ad52c13d2464" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 // some ordinary POJO
 public class WC {
   public String word;
@@ -278,12 +282,12 @@ DataSet<WC> wordCounts = words
                          .groupBy("word")
                          // apply ReduceFunction on grouped DataSet
                          .reduce(new WordCounter());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 // some ordinary POJO
 class WC(val word: String, val count: Int) {
   def this() {
@@ -296,10 +300,11 @@ val words: DataSet[WC] = // [...]
 val wordCounts = words.groupBy("word").reduce {
   (w1, w2) => new WC(w1.word, w1.count + w2.count)
 }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### Reduce on DataSet Grouped by KeySelector Function
 
 A key-selector function extracts a key value from each element of a DataSet. The extracted key
@@ -307,10 +312,10 @@ value is used to group the DataSet.
 The following code shows how to group a POJO DataSet using a key-selector function and to reduce it
 with a reduce function.
 
-{{< tabs "a502de54-4f61-488f-a2d1-6511cfbb8a20" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 // some ordinary POJO
 public class WC {
   public String word;
@@ -340,12 +345,12 @@ public class SelectWord implements KeySelector<WC, String> {
     return w.word;
   }
 }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 // some ordinary POJO
 class WC(val word: String, val count: Int) {
   def this() {
@@ -358,60 +363,63 @@ val words: DataSet[WC] = // [...]
 val wordCounts = words.groupBy { _.word } reduce {
   (w1, w2) => new WC(w1.word, w1.count + w2.count)
 }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### Reduce on DataSet Grouped by Field Position Keys (Tuple DataSets only)
 
 Field position keys specify one or more fields of a Tuple DataSet that are used as grouping keys.
 The following code shows how to use field position keys and apply a reduce function
 
-{{< tabs "6195742f-896b-471b-a35d-75545a9905c3" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple3<String, Integer, Double>> tuples = // [...]
 DataSet<Tuple3<String, Integer, Double>> reducedTuples = tuples
                                          // group DataSet on first and second field of Tuple
                                          .groupBy(0, 1)
                                          // apply ReduceFunction on grouped DataSet
                                          .reduce(new MyTupleReducer());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val tuples = DataSet[(String, Int, Double)] = // [...]
 // group on the first and second Tuple field
 val reducedTuples = tuples.groupBy(0, 1).reduce { ... }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### Reduce on DataSet grouped by Case Class Fields
 
 When using Case Classes you can also specify the grouping key using the names of the fields:
 
-{{< tabs "732febf3-c182-475f-a0e6-44434ea6dd62" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 Not supported.
-```
-{{< /tab >}}
-{{< tab "Scala" >}}
+{% endhighlight %}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 case class MyClass(val a: String, b: Int, c: Double)
 val tuples = DataSet[MyClass] = // [...]
 // group on the first and second field
 val reducedTuples = tuples.groupBy("a", "b").reduce { ... }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 ### GroupReduce on Grouped DataSet
 
 A GroupReduce transformation that is applied on a grouped DataSet calls a user-defined
@@ -424,10 +432,10 @@ number of result elements.
 
 The following code shows how duplicate strings can be removed from a DataSet grouped by Integer.
 
-{{< tabs "d7c3d396-189e-418b-a326-888172e480dd" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 public class DistinctReduce
          implements GroupReduceFunction<Tuple2<Integer, String>, Tuple2<Integer, String>> {
 
@@ -455,21 +463,22 @@ DataSet<Tuple2<Integer, String>> input = // [...]
 DataSet<Tuple2<Integer, String>> output = input
                            .groupBy(0)            // group DataSet by the first tuple field
                            .reduceGroup(new DistinctReduce());  // apply GroupReduceFunction
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input: DataSet[(Int, String)] = // [...]
 val output = input.groupBy(0).reduceGroup {
       (in, out: Collector[(Int, String)]) =>
         in.toSet foreach (out.collect)
     }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### GroupReduce on DataSet Grouped by Key Expression, KeySelector Function, or Case Class Fields
 
 Work analogous to [key expressions](#reduce-on-dataset-grouped-by-key-expression),
@@ -484,10 +493,10 @@ group-reduce function and improve its efficiency.
 
 The following code shows another example how to remove duplicate Strings in a DataSet grouped by an Integer and sorted by String.
 
-{{< tabs "94d3e73d-03e1-4f1b-a5b7-4ebfad7f9409" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 // GroupReduceFunction that removes consecutive identical elements
 public class DistinctReduce
          implements GroupReduceFunction<Tuple2<Integer, String>, Tuple2<Integer, String>> {
@@ -516,12 +525,12 @@ DataSet<Double> output = input
                          .groupBy(0)                         // group DataSet by first field
                          .sortGroup(1, Order.ASCENDING)      // sort groups on second tuple field
                          .reduceGroup(new DistinctReduce());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input: DataSet[(Int, String)] = // [...]
 val output = input.groupBy(0).sortGroup(1, Order.ASCENDING).reduceGroup {
       (in, out: Collector[(Int, String)]) =>
@@ -533,10 +542,11 @@ val output = input.groupBy(0).sortGroup(1, Order.ASCENDING).reduceGroup {
         }
     }
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 **Note:** A GroupSort often comes for free if the grouping is established using a sort-based execution strategy of an operator before the reduce operation.
 
 #### Combinable GroupReduceFunctions
@@ -549,10 +559,10 @@ combinable it must implement the `GroupCombineFunction` interface.
 the `GroupCombineFunction` interface must be equal to the generic input type
 of the `GroupReduceFunction` as shown in the following example:
 
-{{< tabs "f6680a99-adcb-433f-87d7-390468a7a240" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 // Combinable GroupReduceFunction that computes a sum.
 public class MyCombinableGroupReducer implements
   GroupReduceFunction<Tuple2<String, Integer>, String>,
@@ -587,12 +597,12 @@ public class MyCombinableGroupReducer implements
     out.collect(new Tuple2<>(key, sum));
   }
 }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 
 // Combinable GroupReduceFunction that computes two sums.
 class MyCombinableGroupReducer
@@ -619,10 +629,11 @@ class MyCombinableGroupReducer
     out.collect(r)
   }
 }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 ### GroupCombine on a Grouped DataSet
 
 The GroupCombine transformation is the generalized form of the combine step in
@@ -646,10 +657,10 @@ costs.
 The following example demonstrates the use of a CombineGroup transformation for
 an alternative WordCount implementation.
 
-{{< tabs "e03a56af-1a35-44c1-b677-40bf2e07674f" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<String> input = [..] // The words received as input
 
 DataSet<Tuple2<String, Integer>> combinedWords = input
@@ -685,12 +696,12 @@ DataSet<Tuple2<String, Integer>> output = combinedWords
         out.collect(new Tuple2(key, count));
     }
 });
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input: DataSet[String] = [..] // The words received as input
 
 val combinedWords: DataSet[(String, Int)] = input
@@ -721,10 +732,11 @@ val output: DataSet[(String, Int)] = combinedWords
         out.collect((key, sum))
 }
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 The above alternative WordCount implementation demonstrates how the GroupCombine
 combines words before performing the GroupReduce transformation. The above
 example is just a proof of concept. Note, how the combine step changes the type
@@ -743,27 +755,28 @@ The Aggregate transformation can only be applied on a Tuple DataSet and supports
 
 The following code shows how to apply an Aggregation transformation on a DataSet grouped by field position keys:
 
-{{< tabs "9d8f27c8-217b-4bda-b56d-0606d5ee77a4" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple3<Integer, String, Double>> input = // [...]
 DataSet<Tuple3<Integer, String, Double>> output = input
                                    .groupBy(1)        // group DataSet on second field
                                    .aggregate(SUM, 0) // compute sum of the first field
                                    .and(MIN, 2);      // compute minimum of the third field
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input: DataSet[(Int, String, Double)] = // [...]
 val output = input.groupBy(1).aggregate(SUM, 0).and(MIN, 2)
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 To apply multiple aggregations on a DataSet it is necessary to use the `.and()` function after the first aggregate, that means `.aggregate(SUM, 0).and(MIN, 2)` produces the sum of field 0 and the minimum of field 2 of the original DataSet.
 In contrast to that `.aggregate(SUM, 0).aggregate(MIN, 2)` will apply an aggregation on an aggregation. In the given example it would produce the minimum of field 2 after calculating the sum of field 0 grouped by field 1.
 
@@ -775,28 +788,29 @@ The MinBy (MaxBy) transformation selects a single tuple for each group of tuples
 
 The following code shows how to select the tuple with the minimum values for the `Integer` and `Double` fields for each group of tuples with the same `String` value from a `DataSet<Tuple3<Integer, String, Double>>`:
 
-{{< tabs "d40f26af-4669-4c36-8193-aca1cf547cdb" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple3<Integer, String, Double>> input = // [...]
 DataSet<Tuple3<Integer, String, Double>> output = input
                                    .groupBy(1)   // group DataSet on second field
                                    .minBy(0, 2); // select tuple with minimum values for first and third field.
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input: DataSet[(Int, String, Double)] = // [...]
 val output: DataSet[(Int, String, Double)] = input
                                    .groupBy(1)  // group DataSet on second field
                                    .minBy(0, 2) // select tuple with minimum values for first and third field.
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 ### Reduce on full DataSet
 
 The Reduce transformation applies a user-defined reduce function to all elements of a DataSet.
@@ -804,10 +818,10 @@ The reduce function subsequently combines pairs of elements into one element unt
 
 The following code shows how to sum all elements of an Integer DataSet:
 
-{{< tabs "c11498cd-b758-4fd6-ad0b-223458b238e2" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 // ReduceFunction that sums Integers
 public class IntSummer implements ReduceFunction<Integer> {
   @Override
@@ -819,18 +833,19 @@ public class IntSummer implements ReduceFunction<Integer> {
 // [...]
 DataSet<Integer> intNumbers = // [...]
 DataSet<Integer> sum = intNumbers.reduce(new IntSummer());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val intNumbers = env.fromElements(1,2,3)
 val sum = intNumbers.reduce (_ + _)
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 Reducing a full DataSet using the Reduce transformation implies that the final Reduce operation cannot be done in parallel. However, a reduce function is automatically combinable such that a Reduce transformation does not limit scalability for most use cases.
 
 ### GroupReduce on full DataSet
@@ -840,25 +855,26 @@ A group-reduce can iterate over all elements of DataSet and return an arbitrary 
 
 The following example shows how to apply a GroupReduce transformation on a full DataSet:
 
-{{< tabs "9f1bf18b-5a2e-473b-bfc1-331421b52ef2" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Integer> input = // [...]
 // apply a (preferably combinable) GroupReduceFunction to a DataSet
 DataSet<Double> output = input.reduceGroup(new MyGroupReducer());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input: DataSet[Int] = // [...]
 val output = input.reduceGroup(new MyGroupReducer())
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 **Note:** A GroupReduce transformation on a full DataSet cannot be done in parallel if the
 group-reduce function is not combinable. Therefore, this can be a very compute intensive operation.
 See the paragraph on "Combinable GroupReduceFunctions" above to learn how to implement a
@@ -883,27 +899,28 @@ The Aggregate transformation can only be applied on a Tuple DataSet.
 
 The following code shows how to apply an Aggregation transformation on a full DataSet:
 
-{{< tabs "03da5cf6-dec9-4a70-9c6a-b89b0a139c41" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple2<Integer, Double>> input = // [...]
 DataSet<Tuple2<Integer, Double>> output = input
                                      .aggregate(SUM, 0)    // compute sum of the first field
                                      .and(MIN, 1);    // compute minimum of the second field
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input: DataSet[(Int, String, Double)] = // [...]
 val output = input.aggregate(SUM, 0).and(MIN, 2)
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 **Note:** Extending the set of supported aggregation functions is on our roadmap.
 
 ### MinBy / MaxBy on full Tuple DataSet
@@ -912,51 +929,53 @@ The MinBy (MaxBy) transformation selects a single tuple from a DataSet of tuples
 
 The following code shows how to select the tuple with the maximum values for the `Integer` and `Double` fields from a `DataSet<Tuple3<Integer, String, Double>>`:
 
-{{< tabs "1b5a62f0-0463-415e-92d9-05aa10df2393" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple3<Integer, String, Double>> input = // [...]
 DataSet<Tuple3<Integer, String, Double>> output = input
                                    .maxBy(0, 2); // select tuple with maximum values for first and third field.
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input: DataSet[(Int, String, Double)] = // [...]
 val output: DataSet[(Int, String, Double)] = input                          
                                    .maxBy(0, 2) // select tuple with maximum values for first and third field.
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 ### Distinct
 
 The Distinct transformation computes the DataSet of the distinct elements of the source DataSet.
 The following code removes all duplicate elements from the DataSet:
 
-{{< tabs "47904f04-4af7-4c9d-ae85-e245f13ce3bc" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple2<Integer, Double>> input = // [...]
 DataSet<Tuple2<Integer, Double>> output = input.distinct();
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input: DataSet[(Int, String, Double)] = // [...]
 val output = input.distinct()
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 It is also possible to change how the distinction of the elements in the DataSet is decided, using:
 
 - one or more field position keys (Tuple DataSets only),
@@ -965,32 +984,33 @@ It is also possible to change how the distinction of the elements in the DataSet
 
 #### Distinct with field position keys
 
-{{< tabs "51da20ca-143d-48a6-bef7-fd74df136083" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple2<Integer, Double, String>> input = // [...]
 DataSet<Tuple2<Integer, Double, String>> output = input.distinct(0,2);
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input: DataSet[(Int, Double, String)] = // [...]
 val output = input.distinct(0,2)
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### Distinct with KeySelector function
 
-{{< tabs "3f5974bb-f5db-43cb-81f5-fcb653e81902" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 private static class AbsSelector implements KeySelector<Integer, Integer> {
 private static final long serialVersionUID = 1L;
 	@Override
@@ -1001,25 +1021,26 @@ private static final long serialVersionUID = 1L;
 DataSet<Integer> input = // [...]
 DataSet<Integer> output = input.distinct(new AbsSelector());
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input: DataSet[Int] = // [...]
 val output = input.distinct {x => Math.abs(x)}
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### Distinct with key expression
 
-{{< tabs "bd8e5712-84ab-4851-9ad1-6aa79cacac37" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 // some ordinary POJO
 public class CustomType {
   public String aName;
@@ -1030,45 +1051,47 @@ public class CustomType {
 DataSet<CustomType> input = // [...]
 DataSet<CustomType> output = input.distinct("aName", "aNumber");
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 // some ordinary POJO
 case class CustomType(aName : String, aNumber : Int) { }
 
 val input: DataSet[CustomType] = // [...]
 val output = input.distinct("aName", "aNumber")
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 It is also possible to indicate to use all the fields by the wildcard character:
 
-{{< tabs "2219a467-df97-4f7f-bd6b-783ff95f03d7" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<CustomType> input = // [...]
 DataSet<CustomType> output = input.distinct("*");
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 // some ordinary POJO
 val input: DataSet[CustomType] = // [...]
 val output = input.distinct("_")
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 ### Join
 
 The Join transformation joins two DataSets into one DataSet. The elements of both DataSets are joined on one or more keys which can be specified using
@@ -1086,10 +1109,10 @@ The default Join transformation produces a new Tuple DataSet with two fields. Ea
 
 The following code shows a default Join transformation using field position keys:
 
-{{< tabs "e44b7d2f-474f-4b47-bd5b-873b9230fd90" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 public static class User { public String name; public int zip; }
 public static class Store { public Manager mgr; public int zip; }
 DataSet<User> input1 = // [...]
@@ -1099,19 +1122,20 @@ DataSet<Tuple2<User, Store>>
             result = input1.join(input2)
                            .where("zip")       // key of the first input (users)
                            .equalTo("zip");    // key of the second input (stores)
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input1: DataSet[(Int, String)] = // [...]
 val input2: DataSet[(Double, Int)] = // [...]
 val result = input1.join(input2).where(0).equalTo(1)
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### Join with Join Function
 
 A Join transformation can also call a user-defined join function to process joining tuples.
@@ -1119,10 +1143,10 @@ A join function receives one element of the first input DataSet and one element 
 
 The following code performs a join of DataSet with custom java objects and a Tuple DataSet using key-selector functions and shows how to use a user-defined join function:
 
-{{< tabs "260fd4ce-1c12-44cd-a22a-dbb7de50c1b9" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 // some POJO
 public class Rating {
   public String name;
@@ -1155,12 +1179,12 @@ DataSet<Tuple2<String, Double>>
 
                    // applying the JoinFunction on joining pairs
                    .with(new PointWeighter());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 case class Rating(name: String, category: String, points: Int)
 
 val ratings: DataSet[Ratings] = // [...]
@@ -1169,20 +1193,21 @@ val weights: DataSet[(String, Double)] = // [...]
 val weightedRatings = ratings.join(weights).where("category").equalTo(0) {
   (rating, weight) => (rating.name, rating.points * weight._2)
 }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### Join with Flat-Join Function
 
 Analogous to Map and FlatMap, a FlatJoin behaves in the same
 way as a Join, but instead of returning one element, it can
 return (collect), zero, one, or more elements.
 
-{{< tabs "1dcde17c-e76e-490d-affc-efd891138e6b" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 public class PointWeighter
          implements FlatJoinFunction<Rating, Tuple2<String, Double>, Tuple2<String, Double>> {
   @Override
@@ -1197,12 +1222,12 @@ public class PointWeighter
 DataSet<Tuple2<String, Double>>
             weightedRatings =
             ratings.join(weights) // [...]
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 case class Rating(name: String, category: String, points: Int)
 
 val ratings: DataSet[Ratings] = // [...]
@@ -1213,18 +1238,19 @@ val weightedRatings = ratings.join(weights).where("category").equalTo(0) {
     if (weight._2 > 0.1) out.collect(rating.name, rating.points * weight._2)
 }
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### Join with Projection (Java Only)
 
 A Join transformation can construct result tuples using a projection as shown here:
 
-{{< tabs "1b86db6d-cf3d-484a-b478-110af7482e64" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple3<Integer, Byte, String>> input1 = // [...]
 DataSet<Tuple2<Integer, Double>> input2 = // [...]
 DataSet<Tuple4<Integer, String, Double, Byte>>
@@ -1236,28 +1262,29 @@ DataSet<Tuple4<Integer, String, Double, Byte>>
                   .equalTo(0)
                   // select and reorder fields of matching tuples
                   .projectFirst(0,2).projectSecond(1).projectFirst(1);
-```
+{% endhighlight %}
 
 `projectFirst(int...)` and `projectSecond(int...)` select the fields of the first and second joined input that should be assembled into an output Tuple. The order of indexes defines the order of fields in the output tuple.
 The join projection works also for non-Tuple DataSets. In this case, `projectFirst()` or `projectSecond()` must be called without arguments to add a joined element to the output Tuple.
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 Not supported.
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### Join with DataSet Size Hint
 
 In order to guide the optimizer to pick the right execution strategy, you can hint the size of a DataSet to join as shown here:
 
-{{< tabs "65a746da-b8a7-4be4-a39a-54fac41d8cb6" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple2<Integer, String>> input1 = // [...]
 DataSet<Tuple2<Integer, String>> input2 = // [...]
 
@@ -1274,12 +1301,12 @@ DataSet<Tuple2<Tuple2<Integer, String>, Tuple2<Integer, String>>>
             input1.joinWithHuge(input2)
                   .where(0)
                   .equalTo(0);
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input1: DataSet[(Int, String)] = // [...]
 val input2: DataSet[(Int, String)] = // [...]
 
@@ -1289,42 +1316,44 @@ val result1 = input1.joinWithTiny(input2).where(0).equalTo(0)
 // hint that the second DataSet is very large
 val result1 = input1.joinWithHuge(input2).where(0).equalTo(0)
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### Join Algorithm Hints
 
 The Flink runtime can execute joins in various ways. Each possible way outperforms the others under
 different circumstances. The system tries to pick a reasonable way automatically, but allows you
 to manually pick a strategy, in case you want to enforce a specific way of executing the join.
 
-{{< tabs "4de39b7c-3f5c-4002-8b0d-65027fd3dbcb" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<SomeType> input1 = // [...]
 DataSet<AnotherType> input2 = // [...]
 
 DataSet<Tuple2<SomeType, AnotherType> result =
       input1.join(input2, JoinHint.BROADCAST_HASH_FIRST)
             .where("id").equalTo("key");
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input1: DataSet[SomeType] = // [...]
 val input2: DataSet[AnotherType] = // [...]
 
 // hint that the second DataSet is very small
 val result1 = input1.join(input2, JoinHint.BROADCAST_HASH_FIRST).where("id").equalTo("key")
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 The following hints are available:
 
 * `OPTIMIZER_CHOOSES`: Equivalent to not giving a hint at all, leaves the choice to the system.
@@ -1372,10 +1401,10 @@ A join function receives one element of the first input DataSet and one element 
 
 The following code performs a left outer join of DataSet with custom java objects and a Tuple DataSet using key-selector functions and shows how to use a user-defined join function:
 
-{{< tabs "769adbfd-3f74-40d5-b762-cdf76ca42e13" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 // some POJO
 public class Rating {
   public String name;
@@ -1409,12 +1438,12 @@ DataSet<Tuple2<String, Integer>>
 
                    // applying the JoinFunction on joining pairs
                    .with(new PointAssigner());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 case class Rating(name: String, category: String, points: Int)
 
 val movies: DataSet[(String, String)] = // [...]
@@ -1423,20 +1452,21 @@ val ratings: DataSet[Ratings] = // [...]
 val moviesWithPoints = movies.leftOuterJoin(ratings).where(0).equalTo("name") {
   (movie, rating) => (movie._1, if (rating == null) -1 else rating.points)
 }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### OuterJoin with Flat-Join Function
 
 Analogous to Map and FlatMap, an OuterJoin with flat-join function behaves in the same
 way as an OuterJoin with join function, but instead of returning one element, it can
 return (collect), zero, one, or more elements.
 
-{{< tabs "a00c96d4-2fa2-4531-927c-18001fd99002" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 public class PointAssigner
          implements FlatJoinFunction<Tuple2<String, String>, Rating, Tuple2<String, Integer>> {
   @Override
@@ -1454,27 +1484,28 @@ public class PointAssigner
 DataSet<Tuple2<String, Integer>>
             moviesWithPoints =
             movies.leftOuterJoin(ratings) // [...]
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 Not supported.
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### Join Algorithm Hints
 
 The Flink runtime can execute outer joins in various ways. Each possible way outperforms the others under
 different circumstances. The system tries to pick a reasonable way automatically, but allows you
 to manually pick a strategy, in case you want to enforce a specific way of executing the outer join.
 
-{{< tabs "fbfb3a6e-a27f-4578-b838-df2180c8e19d" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<SomeType> input1 = // [...]
 DataSet<AnotherType> input2 = // [...]
 
@@ -1485,12 +1516,12 @@ DataSet<Tuple2<SomeType, AnotherType> result1 =
 DataSet<Tuple2<SomeType, AnotherType> result2 =
       input1.rightOuterJoin(input2, JoinHint.BROADCAST_HASH_FIRST)
             .where("id").equalTo("key");
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input1: DataSet[SomeType] = // [...]
 val input2: DataSet[AnotherType] = // [...]
 
@@ -1499,10 +1530,11 @@ val result1 = input1.leftOuterJoin(input2, JoinHint.REPARTITION_SORT_MERGE).wher
 
 val result2 = input1.rightOuterJoin(input2, JoinHint.BROADCAST_HASH_FIRST).where("id").equalTo("key")
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 The following hints are available.
 
 * `OPTIMIZER_CHOOSES`: Equivalent to not giving a hint at all, leaves the choice to the system.
@@ -1558,10 +1590,10 @@ A Cross transformation can call a user-defined cross function. A cross function 
 
 The following code shows how to apply a Cross transformation on two DataSets using a cross function:
 
-{{< tabs "ad2606a0-151e-4cc5-be3c-d3998439d8c0" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 public class Coord {
   public int id;
   public int x;
@@ -1587,13 +1619,13 @@ DataSet<Tuple3<Integer, Integer, Double>>
             coords1.cross(coords2)
                    // apply CrossFunction
                    .with(new EuclideanDistComputer());
-```
+{% endhighlight %}
 
 #### Cross with Projection
 
 A Cross transformation can also construct result tuples using a projection as shown here:
 
-```java
+{% highlight java %}
 DataSet<Tuple3<Integer, Byte, String>> input1 = // [...]
 DataSet<Tuple2<Integer, Double>> input2 = // [...]
 DataSet<Tuple4<Integer, Byte, Integer, Double>
@@ -1601,14 +1633,14 @@ DataSet<Tuple4<Integer, Byte, Integer, Double>
             input1.cross(input2)
                   // select and reorder fields of matching tuples
                   .projectSecond(0).projectFirst(1,0).projectSecond(1);
-```
+{% endhighlight %}
 
 The field selection in a Cross projection works the same way as in the projection of Join results.
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 case class Coord(id: Int, x: Int, y: Int)
 
 val coords1: DataSet[Coord] = // [...]
@@ -1619,19 +1651,20 @@ val distances = coords1.cross(coords2) {
     val dist = sqrt(pow(c1.x - c2.x, 2) + pow(c1.y - c2.y, 2))
     (c1.id, c2.id, dist)
 }
-```
+{% endhighlight %}
 
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 #### Cross with DataSet Size Hint
 
 In order to guide the optimizer to pick the right execution strategy, you can hint the size of a DataSet to cross as shown here:
 
-{{< tabs "073c8892-cbfe-4fe6-b3bd-bf406565e48b" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple2<Integer, String>> input1 = // [...]
 DataSet<Tuple2<Integer, String>> input2 = // [...]
 
@@ -1648,12 +1681,12 @@ DataSet<Tuple3<Integer, Integer, String>>
             input1.crossWithHuge(input2)
                   // apply a projection (or any Cross function)
                   .projectFirst(0,1).projectSecond(1);
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val input1: DataSet[(Int, String)] = // [...]
 val input2: DataSet[(Int, String)] = // [...]
 
@@ -1663,10 +1696,11 @@ val result1 = input1.crossWithTiny(input2)
 // hint that the second DataSet is very large
 val result1 = input1.crossWithHuge(input2)
 
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 ### CoGroup
 
 The CoGroup transformation jointly processes groups of two DataSets. Both DataSets are grouped on a defined key and groups of both DataSets that share the same key are handed together to a user-defined co-group function. If for a specific key only one DataSet has a group, the co-group function is called with this group and an empty group.
@@ -1676,12 +1710,12 @@ Similar to Reduce, GroupReduce, and Join, keys can be defined using the differen
 
 #### CoGroup on DataSets
 
-{{< tabs "48677022-ad18-4a24-b5b8-b51171eba128" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
 The example shows how to group by Field Position Keys (Tuple DataSets only). You can do the same with Pojo-types and key expressions.
 
-```java
+{% highlight java %}
 // Some CoGroupFunction definition
 class MyCoGrouper
          implements CoGroupFunction<Tuple2<String, Integer>, Tuple2<String, Double>, Double> {
@@ -1717,12 +1751,12 @@ DataSet<Double> output = iVals.coGroup(dVals)
                          .equalTo(0)
                          // apply CoGroup function on each pair of groups
                          .with(new MyCoGrouper());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val iVals: DataSet[(String, Int)] = // [...]
 val dVals: DataSet[(String, Double)] = // [...]
 
@@ -1736,115 +1770,120 @@ val output = iVals.coGroup(dVals).where(0).equalTo(0) {
       }
     }
 }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 
 ### Union
 
 Produces the union of two DataSets, which have to be of the same type. A union of more than two DataSets can be implemented with multiple union calls, as shown here:
 
-{{< tabs "8e81e50d-0055-45fc-9c32-971149b2665e" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple2<String, Integer>> vals1 = // [...]
 DataSet<Tuple2<String, Integer>> vals2 = // [...]
 DataSet<Tuple2<String, Integer>> vals3 = // [...]
 DataSet<Tuple2<String, Integer>> unioned = vals1.union(vals2).union(vals3);
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val vals1: DataSet[(String, Int)] = // [...]
 val vals2: DataSet[(String, Int)] = // [...]
 val vals3: DataSet[(String, Int)] = // [...]
 
 val unioned = vals1.union(vals2).union(vals3)
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 ### Rebalance
 Evenly rebalances the parallel partitions of a DataSet to eliminate data skew.
 
-{{< tabs "e3255bfc-4d57-435c-ae39-a15aae75691b" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<String> in = // [...]
 // rebalance DataSet and apply a Map transformation.
 DataSet<Tuple2<String, String>> out = in.rebalance()
                                         .map(new Mapper());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val in: DataSet[String] = // [...]
 // rebalance DataSet and apply a Map transformation.
 val out = in.rebalance().map { ... }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 
 ### Hash-Partition
 
 Hash-partitions a DataSet on a given key.
 Keys can be specified as position keys, expression keys, and key selector functions (see [Reduce examples](#reduce-on-grouped-dataset) for how to specify keys).
 
-{{< tabs "b71f7167-56c1-4e1b-acc2-1f47c1fca0a0" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple2<String, Integer>> in = // [...]
 // hash-partition DataSet by String value and apply a MapPartition transformation.
 DataSet<Tuple2<String, String>> out = in.partitionByHash(0)
                                         .mapPartition(new PartitionMapper());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val in: DataSet[(String, Int)] = // [...]
 // hash-partition DataSet by String value and apply a MapPartition transformation.
 val out = in.partitionByHash(0).mapPartition { ... }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 ### Range-Partition
 
 Range-partitions a DataSet on a given key.
 Keys can be specified as position keys, expression keys, and key selector functions (see [Reduce examples](#reduce-on-grouped-dataset) for how to specify keys).
 
-{{< tabs "2d618ef2-4286-4536-b485-c3a8e3f49b86" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple2<String, Integer>> in = // [...]
 // range-partition DataSet by String value and apply a MapPartition transformation.
 DataSet<Tuple2<String, String>> out = in.partitionByRange(0)
                                         .mapPartition(new PartitionMapper());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val in: DataSet[(String, Int)] = // [...]
 // range-partition DataSet by String value and apply a MapPartition transformation.
 val out = in.partitionByRange(0).mapPartition { ... }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 
 ### Sort Partition
 
@@ -1852,10 +1891,10 @@ Locally sorts all partitions of a DataSet on a specified field in a specified or
 Fields can be specified as field expressions or field positions (see [Reduce examples](#reduce-on-grouped-dataset) for how to specify keys).
 Partitions can be sorted on multiple fields by chaining `sortPartition()` calls.
 
-{{< tabs "6d24783a-75e1-44c9-a7e7-633ee75c9b47" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple2<String, Integer>> in = // [...]
 // Locally sort partitions in ascending order on the second String field and
 // in descending order on the first String field.
@@ -1863,12 +1902,12 @@ DataSet<Tuple2<String, Integer>> in = // [...]
 DataSet<Tuple2<String, String>> out = in.sortPartition(1, Order.ASCENDING)
                                         .sortPartition(0, Order.DESCENDING)
                                         .mapPartition(new PartitionMapper());
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val in: DataSet[(String, Int)] = // [...]
 // Locally sort partitions in ascending order on the second String field and
 // in descending order on the first String field.
@@ -1876,18 +1915,19 @@ val in: DataSet[(String, Int)] = // [...]
 val out = in.sortPartition(1, Order.ASCENDING)
             .sortPartition(0, Order.DESCENDING)
             .mapPartition { ... }
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
+
 ### First-n
 
 Returns the first n (arbitrary) elements of a DataSet. First-n can be applied on a regular DataSet, a grouped DataSet, or a grouped-sorted DataSet. Grouping keys can be specified as key-selector functions or field position keys (see [Reduce examples](#reduce-on-grouped-dataset) for how to specify keys).
 
-{{< tabs "250a1c92-b5b0-4b34-a307-6d50e93a0508" >}}
-{{< tab "Java" >}}
+<div class="codetabs" markdown="1">
+<div data-lang="java" markdown="1">
 
-```java
+{% highlight java %}
 DataSet<Tuple2<String, Integer>> in = // [...]
 // Return the first five (arbitrary) elements of the DataSet
 DataSet<Tuple2<String, Integer>> out1 = in.first(5);
@@ -1900,12 +1940,12 @@ DataSet<Tuple2<String, Integer>> out2 = in.groupBy(0)
 DataSet<Tuple2<String, Integer>> out3 = in.groupBy(0)
                                           .sortGroup(1, Order.ASCENDING)
                                           .first(3);
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< tab "Scala" >}}
+</div>
+<div data-lang="scala" markdown="1">
 
-```scala
+{% highlight scala %}
 val in: DataSet[(String, Int)] = // [...]
 // Return the first five (arbitrary) elements of the DataSet
 val out1 = in.first(5)
@@ -1915,8 +1955,9 @@ val out2 = in.groupBy(0).first(2)
 
 // Return the first three elements of each String group ordered by the Integer field
 val out3 = in.groupBy(0).sortGroup(1, Order.ASCENDING).first(3)
-```
+{% endhighlight %}
 
-{{< /tab >}}
-{{< /tabs >}}
+</div>
+</div>
 
+{% top %}

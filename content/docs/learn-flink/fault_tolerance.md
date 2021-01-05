@@ -42,7 +42,7 @@ snapshots to a distributed file system, and the MemoryStateBackend that uses the
 
 <table class="table table-bordered">
   <thead>
-    <tr class="alert alert-info">
+    <tr class="book-hint info">
       <th class="text-left">Name</th>
       <th class="text-left">Working State</th>
       <th class="text-left">State Backup</th>
