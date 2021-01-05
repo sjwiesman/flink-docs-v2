@@ -2,6 +2,7 @@
 title: "Glossary"
 type: docs
 weight: 5
+bookToc: false
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -23,7 +24,6 @@ under the License.
 -->
 
 # Glossary
-
 
 #### Flink Application Cluster
 

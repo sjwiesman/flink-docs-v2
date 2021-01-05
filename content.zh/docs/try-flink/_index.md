@@ -1,7 +1,7 @@
 ---
-title: Joining
-type: docs
-weight: 3
+title: <i class="fa fa-rocket title appetizer" aria-hidden="true"></i> Try Flink
+bookCollapseSection: true
+weight: 1
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -21,15 +21,3 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-
-# Joining
-
-## Window Join
-
-### Tumbling Window Join
-
-### Sliding Window Join
-
-### Session Window Join
-
-## Interval Join

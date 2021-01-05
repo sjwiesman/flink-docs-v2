@@ -24,8 +24,6 @@ under the License.
 
 # Process Function 
 
-{{< toc >}}
-
 ## The ProcessFunction
 
 ## Low-Level Joins

@@ -1,6 +1,6 @@
 ---
-title: 'Real Time Reporting with the Table API'
-nav-title: 'Real Time Reporting with the Table API'
+title: '基于 Table API 实现实时报表'
+nav-title: '基于 Table API 实现实时报表'
 weight: 4
 type: docs
 ---
@@ -23,7 +23,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Real Time Reporting with the Table API
+# 基于 Table API 实现实时报表
 
 Apache Flink offers a Table API as a unified, relational API for batch and stream processing, i.e., queries are executed with the same semantics on unbounded, real-time streams or bounded, batch data sets and produce the same results.
 The Table API in Flink is commonly used to ease the definition of data analytics, data pipelining, and ETL applications.

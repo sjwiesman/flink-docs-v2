@@ -1250,6 +1250,7 @@ Not supported.
 
 {{< /tab >}}
 {{< /tabs >}}
+
 #### Join with DataSet Size Hint
 
 In order to guide the optimizer to pick the right execution strategy, you can hint the size of a DataSet to join as shown here:
@@ -1290,9 +1291,9 @@ val result1 = input1.joinWithTiny(input2).where(0).equalTo(0)
 val result1 = input1.joinWithHuge(input2).where(0).equalTo(0)
 
 ```
-
 {{< /tab >}}
 {{< /tabs >}}
+
 #### Join Algorithm Hints
 
 The Flink runtime can execute joins in various ways. Each possible way outperforms the others under
@@ -1325,6 +1326,7 @@ val result1 = input1.join(input2, JoinHint.BROADCAST_HASH_FIRST).where("id").equ
 
 {{< /tab >}}
 {{< /tabs >}}
+
 The following hints are available:
 
 * `OPTIMIZER_CHOOSES`: Equivalent to not giving a hint at all, leaves the choice to the system.
@@ -1363,7 +1365,6 @@ The elements of both DataSets are joined on one or more keys which can be specif
 - Case Class Fields
 
 **OuterJoins are only supported for the Java and Scala DataSet API.**
-
 
 #### OuterJoin with Join Function
 
@@ -1427,6 +1428,7 @@ val moviesWithPoints = movies.leftOuterJoin(ratings).where(0).equalTo("name") {
 
 {{< /tab >}}
 {{< /tabs >}}
+
 #### OuterJoin with Flat-Join Function
 
 Analogous to Map and FlatMap, an OuterJoin with flat-join function behaves in the same
@@ -1458,13 +1460,10 @@ DataSet<Tuple2<String, Integer>>
 
 {{< /tab >}}
 {{< tab "Scala" >}}
-
-```scala
 Not supported.
-```
-
 {{< /tab >}}
 {{< /tabs >}}
+
 #### Join Algorithm Hints
 
 The Flink runtime can execute outer joins in various ways. Each possible way outperforms the others under

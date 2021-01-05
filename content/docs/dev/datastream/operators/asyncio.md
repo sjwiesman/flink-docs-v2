@@ -24,8 +24,6 @@ under the License.
 
 # Asynchronous I/O for External Data Access
 
-{{< toc >}}
-
 ## Motivation
 
 ## Prerequisites

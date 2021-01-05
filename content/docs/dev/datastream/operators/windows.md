@@ -63,8 +63,6 @@ stream
 In the above, the commands in square brackets (`[…]`) are optional.
 This reveals that Flink allows you to customize your windowing logic in many different ways so that it best fits your needs.
 
-{{< toc >}}
-
 ## Window Lifecycle
 
 ## Keyed vs Non-Keyed Windows

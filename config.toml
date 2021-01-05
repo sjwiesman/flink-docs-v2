@@ -3,12 +3,14 @@ languageCode = "en-us"
 title = "Apache Flink"
 enableGitInfo = false
 theme = "book"
-IsMultiLingual = false
+
+## DO NOT MERGE THIS LINE
+refLinksErrorLevel = "WARNING"
 
 [params]
   # Flag whether this is a stable version or not.
   # Used for the quickstart page.
-  IsStable = true
+  IsStable = false 
   
   # Flag to indicate whether an outdated warning should be shown.
   ShowOutDatedWarning = false
@@ -40,12 +42,6 @@ IsMultiLingual = false
   ScalaDocs = "//ci.apache.org/projects/flink/flink-docs-master/api/scala/index.html#org.apache.flink.api.scala.package"
 
   PyDocs = "//ci.apache.org/projects/flink/flink-docs-master/api/python/"
-
-  # DO NOT ENABLE
-  # This disables the ToC for the
-  # unerlying theme. Flink uses its
-  # own TOC implementation.
-  BookToC = true 
 
   # External links at the bottom
   # of the menu

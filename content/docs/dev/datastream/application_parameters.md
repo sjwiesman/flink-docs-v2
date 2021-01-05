@@ -30,8 +30,6 @@ They are used to specify input and output sources (like paths or addresses), sys
 Flink provides a simple utility called `ParameterTool` to provide some basic tooling for solving these problems. Please note that you don’t have to use the `ParameterTool` described here.
 Other frameworks such as [Commons CLI](https://commons.apache.org/proper/commons-cli/) and [argparse4j](https://argparse4j.github.io/) also work well with Flink.
 
-{{< toc >}}
-
 ## Getting Configuration Values into Parameter Tool
 
 The `ParameterTool` provides a set of predefined static methods for reading the configuration.
