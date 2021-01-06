@@ -22,6 +22,6 @@ under the License.
 <br/>
 
 {{ range $links := .Site.Params.MenuLinks }}
-<a href="{{ index $links 1 }}" style="color:black"><i class="link fa fa-external-link title" aria-hidden="true"></i> {{ index $links 0 }}</a>
+<a href="{{ index $links 1 }}" style="color:black;margin-bottom:0.5em"><i class="link fa fa-external-link title" aria-hidden="true"></i> {{ index $links 0 }}</a>
 <br/>
 {{ end }}

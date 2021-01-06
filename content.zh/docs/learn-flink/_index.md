@@ -1,7 +1,5 @@
 ---
-title: Learn Flink
-icon: <i class="fa fa-hand-paper-o title appetizer" aria-hidden="true"></i>
-bold: true
+title: <i class="fa fa-hand-paper-o title appetizer" aria-hidden="true"></i> Learn Flink
 bookCollapseSection: true
 weight: 2
 ---

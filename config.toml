@@ -32,6 +32,9 @@ refLinksErrorLevel = "WARNING"
   # The github repository for Apache Flink
   Repo = "//github.com/sjwiesman/flink-docs-v2"
 
+  # Flink training exercises 
+  TrainingExercises = "//github.com/apache/flink-training"
+
   # This suffix is appended to the Scala-dependent Maven artifact names
   ScalaVersion = "2.11"
 

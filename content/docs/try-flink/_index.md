@@ -1,5 +1,7 @@
 ---
-title: <i class="fa fa-rocket title appetizer" aria-hidden="true"></i> Try Flink
+title: Try Flink
+icon: <i class="fa fa-rocket title appetizer" aria-hidden="true"></i>
+bold: true
 bookCollapseSection: true
 weight: 1
 ---

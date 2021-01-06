@@ -1,5 +1,7 @@
 ---
-title: <i class="fa fa-code title maindish" aria-hidden="true"></i> Application Development
+title: Application Development
+icon: <i class="fa fa-code title maindish" aria-hidden="true"></i>
+bold: true
 sectionBreak: true
 bookCollapseSection: true
 weight: 4

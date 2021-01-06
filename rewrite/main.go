@@ -95,6 +95,8 @@ func rewriteFrontMatter(file string) string {
 	re = regexp.MustCompile(`nav-parent_id: .+`)
 	file = re.ReplaceAllString(file, "")
 
+	return file;
+	/*
 	blank := regexp.MustCompile(`(?m)^\s*$`)
 
 	parts := strings.Split(file, "\n")
@@ -114,6 +116,7 @@ func rewriteFrontMatter(file string) string {
 	}
 
 	return strings.Join(parts, "\n")
+*/
 }
 
 func rewriteCodeSample(file string) string {
@@ -125,7 +128,7 @@ func rewriteCodeSample(file string) string {
 }
 
 func rewriteLink(file string) string {
-	re := regexp.MustCompile("{% link (.+)\\.md %}")
+	re := regexp.MustCompile("{% link[\\s+]?(.+)\\.md %}")
 	return re.ReplaceAllString(file, `{{< ref "/$1" >}}`)
 }
 
