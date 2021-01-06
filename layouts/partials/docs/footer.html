@@ -19,30 +19,6 @@ under the License.
 <!--
     Partial that on the footer of every page.
 -->
-<div class="book-columns flex flex-wrap">
-    <div class="flex-even markdown-inner">
-        <div class="book-languages" tabindex="0" aria-haspopup="true">
-            <ul>
-            <li class="flex align-center">
-                Pick Docs Version
-            </li> 
-            </ul>
-                <ul class="book-languages-list">
-                    {{ range $docs := .Site.Params.PreviousDocs }}
-                        <li>
-                            <a href="{{ index $docs 1 }}">
-                                v{{ index $docs 0}}
-                            </a>
-                        </li>
-                    {{ end }}
-                </ul>
-            </div>
-        </div>
-        <div class="flex-even markdown-inner">
-            {{ partial "docs/languages" . }}
-        </div>
-    </div>
-	{{ if .IsPage }}
-	<a href="{{ .Site.Params.Repo }}/edit/{{ .Site.Params.Branch }}/content/{{ .File.Path }}" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
-   	{{ end }}
-</div>
+{{ if .IsPage }}
+<a href="{{ .Site.Params.Repo }}/edit/{{ .Site.Params.Branch }}/content/{{ .File.Path }}" style="color:black"><i class="fa fa-edit fa-fw"></i>Edit This Page</a>
+{{ end }}
