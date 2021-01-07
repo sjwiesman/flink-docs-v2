@@ -73,7 +73,7 @@ refLinksErrorLevel = "WARNING"
 
 [markup]
 [markup.highlight]
-  style = "pygments"
+  style = "github"
 [markup.goldmark.renderer]
   unsafe = true
 
