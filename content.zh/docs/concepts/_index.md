@@ -1,9 +1,9 @@
 ---
-title: 实践练习
-icon: <i class="fa fa-hand-paper-o title appetizer" aria-hidden="true"></i>
+title: 概念透析
+icon: <i class="fa fa-map-o title appetizer" aria-hidden="true"></i>
 bold: true
 bookCollapseSection: true
-weight: 2
+weight: 3
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
