@@ -37,8 +37,7 @@ the DataStream API directly, or not, having a solid understanding the basics pre
 
 This section covers `map()` and `flatmap()`, the basic operations used to implement
 stateless transformations. The examples in this section assume you are familiar with the
-Taxi Ride data used in the hands-on exercises in the
-[flink-training repo]({{< training_repo >}}).
+Taxi Ride data used in the hands-on exercises in the {{< training_repo >}}.
 
 ### `map()`
 
@@ -151,7 +150,7 @@ rides
 Every `keyBy` causes a network shuffle that repartitions the stream. In general this is pretty
 expensive, since it involves network communication along with serialization and deserialization.
 
-<img src="{% link /fig/keyBy.png %}" alt="keyBy and network shuffle" class="offset" width="45%" />
+{{< img src="/fig/keyBy.png" alt="keyBy and network shuffle" class="offset" width="45%" >}}
 
 ### Keys are computed
 
@@ -383,8 +382,7 @@ You might want to do this, for example, after a period of inactivity for a given
 to use Timers to do this when you learn about `ProcessFunction`s in the section on event-driven
 applications.
 
-There's also a [State Time-to-Live (TTL)]({% link dev/stream/state/state.md
-%}#state-time-to-live-ttl) option that you can configure with the state descriptor that specifies
+There's also a [State Time-to-Live (TTL)]({{< ref "/dev/stream/state/state" >}}#state-time-to-live-ttl) option that you can configure with the state descriptor that specifies
 when you want the state for stale keys to be automatically cleared.
 
 ### Non-keyed State
@@ -401,13 +399,13 @@ of sources and sinks.
 
 Sometimes instead of applying a pre-defined transformation like this:
 
-{{<img src="/fig/transformation.svg" alt="simple transformation" width="45%" >}}
+{{< img src="/fig/transformation.svg" alt="simple transformation" width="45%" >}}
 
 you want to be able to dynamically alter some aspects of the transformation -- by streaming in
 thresholds, or rules, or other parameters. The pattern in Flink that supports this is something
 called _connected streams_, wherein a single operator has two input streams, like this:
 
-{{<img src="/fig/connected-streams.svg" alt="connected streams" width="45%" >}}
+{{< img src="/fig/connected-streams.svg" alt="connected streams" width="45%" >}}
 
 Connected streams can also be used to implement streaming joins.
 
@@ -421,8 +419,13 @@ A `RichCoFlatMapFunction` called `ControlFunction` is applied to the connected s
 public static void main(String[] args) throws Exception {
     StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-    DataStream<String> control = env.fromElements("DROP", "IGNORE").keyBy(x -> x);
-    DataStream<String> streamOfWords = env.fromElements("Apache", "DROP", "Flink", "IGNORE").keyBy(x -> x);
+    DataStream<String> control = env
+        .fromElements("DROP", "IGNORE")
+        .keyBy(x -> x);
+
+    DataStream<String> streamOfWords = env
+        .fromElements("Apache", "DROP", "Flink", "IGNORE")
+        .keyBy(x -> x);
   
     control
         .connect(datastreamOfWords)
@@ -446,7 +449,8 @@ public static class ControlFunction extends RichCoFlatMapFunction<String, String
       
     @Override
     public void open(Configuration config) {
-        blocked = getRuntimeContext().getState(new ValueStateDescriptor<>("blocked", Boolean.class));
+        blocked = getRuntimeContext()
+            .getState(new ValueStateDescriptor<>("blocked", Boolean.class));
     }
       
     @Override
@@ -477,7 +481,7 @@ It is important to recognize that you have no control over the order in which th
 
 ## Hands-on
 
-The hands-on exercise that goes with this section is the ({{ training_link file="/rides-and-fares" name="Rides and Fares"}}.
+The hands-on exercise that goes with this section is the {{< training_link file="/rides-and-fares" name="Rides and Fares" >}}.
 
 {{< top >}}
 
