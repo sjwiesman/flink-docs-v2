@@ -1,8 +1,7 @@
 ---
 title: Intro to the DataStream API
-weight: 2
+weight: 3
 type: docs
-nav-title: Intro to the DataStream API
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -12,7 +11,9 @@ regarding copyright ownership.  The ASF licenses this file
 to you under the Apache License, Version 2.0 (the
 "License"); you may not use this file except in compliance
 with the License.  You may obtain a copy of the License at
+
   http://www.apache.org/licenses/LICENSE-2.0
+
 Unless required by applicable law or agreed to in writing,
 software distributed under the License is distributed on an
 "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -20,6 +21,7 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
+
 # Intro to the DataStream API
 
 The focus of this training is to broadly cover the DataStream API well enough that you will be able
@@ -31,7 +33,10 @@ Flink's DataStream APIs for Java and Scala will let you stream anything they can
 own serializer is used for
 
 - basic types, i.e., String, Long, Integer, Boolean, Array
-- composite types: Tuples, POJOs, and Scala case classes and Flink falls back to Kryo for other types. It is also possible to use other serializers with Flink. Avro, in particular, is well supported.
+- composite types: Tuples, POJOs, and Scala case classes
+
+and Flink falls back to Kryo for other types. It is also possible to use other serializers with
+Flink. Avro, in particular, is well supported.
 
 ### Java tuples and POJOs
 
@@ -43,6 +48,7 @@ For Java, Flink defines its own `Tuple0` thru `Tuple25` types.
 
 ```java
 Tuple2<String, Integer> person = Tuple2.of("Fred", 35);
+
 // zero based index!  
 String name = person.f0;
 Integer age = person.f1;
@@ -58,6 +64,8 @@ Flink recognizes a data type as a POJO type (and allows “by-name” field refe
   non-final) or have public getter- and setter- methods that follow the Java beans naming
   conventions for getters and setters.
 
+Example:
+
 ```java
 public class Person {
     public String name;  
@@ -67,6 +75,7 @@ public class Person {
         . . .
     };  
 }  
+
 Person person = new Person("Fred Flintstone", 35);
 ```
 
@@ -86,31 +95,40 @@ This example takes a stream of records about people as input, and filters it to 
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.api.common.functions.FilterFunction;
+
 public class Example {
+
     public static void main(String[] args) throws Exception {
         final StreamExecutionEnvironment env =
                 StreamExecutionEnvironment.getExecutionEnvironment();
+
         DataStream<Person> flintstones = env.fromElements(
                 new Person("Fred", 35),
                 new Person("Wilma", 35),
                 new Person("Pebbles", 2));
+
         DataStream<Person> adults = flintstones.filter(new FilterFunction<Person>() {
             @Override
             public boolean filter(Person person) throws Exception {
                 return person.age >= 18;
             }
         });
+
         adults.print();
+
         env.execute();
     }
+
     public static class Person {
         public String name;
         public Integer age;
         public Person() {};
+
         public Person(String name, Integer age) {
             this.name = name;
             this.age = age;
         };
+
         public String toString() {
             return this.name.toString() + ": age " + this.age.toString();
         };
@@ -122,31 +140,32 @@ public class Example {
 
 Every Flink application needs an execution environment, `env` in this example. Streaming
 applications need to use a `StreamExecutionEnvironment`.
+
 The DataStream API calls made in your application build a job graph that is attached to the
-`StreamExecutionEnvironment`.
-When `env.execute()` is called this graph is packaged up and sent to
+`StreamExecutionEnvironment`. When `env.execute()` is called this graph is packaged up and sent to
 the JobManager, which parallelizes the job and distributes slices of it to the Task Managers for
-execution.
-Each parallel slice of your job will be executed in a *task slot*.
+execution. Each parallel slice of your job will be executed in a *task slot*.
+
 Note that if you don't call execute(), your application won't be run.
 
-{{<img src="/fig/distributed-runtime.svg" alt="Flink runtime: client, job manager, task managers" width="80%" >}}
+{{< img src="/fig/distributed-runtime.svg" alt="Flink runtime: client, job manager, task managers" width="80%" >}}
 
-This distributed runtime depends on your application being serializable.
-It also requires that all dependencies are available to each node in the cluster.
+This distributed runtime depends on your application being serializable. It also requires that all
+dependencies are available to each node in the cluster.
 
 ### Basic stream sources
 
-The example above constructs a `DataStream<Person>` using `env.fromElements(...)`.
-This is a convenient way to throw together a simple stream for use in a prototype or test.
-There is also a `fromCollection(Collection)` method on `StreamExecutionEnvironment`.
-So instead, you could do this:
+The example above constructs a `DataStream<Person>` using `env.fromElements(...)`. This is a
+convenient way to throw together a simple stream for use in a prototype or test. There is also a
+`fromCollection(Collection)` method on `StreamExecutionEnvironment`. So instead, you could do this:
 
 ```java
 List<Person> people = new ArrayList<Person>();
+
 people.add(new Person("Fred", 35));
 people.add(new Person("Wilma", 35));
 people.add(new Person("Pebbles", 2));
+
 DataStream<Person> flintstones = env.fromCollection(people);
 ```
 
@@ -164,7 +183,8 @@ DataStream<String> lines = env.readTextFile("file:///path");
 
 In real applications the most commonly used data sources are those that support low-latency, high
 throughput parallel reads in combination with rewind and replay -- the prerequisites for high
-performance and fault tolerance -- such as Apache Kafka, Kinesis, and various filesystems. REST APIs and databases are also frequently used for stream enrichment.
+performance and fault tolerance -- such as Apache Kafka, Kinesis, and various filesystems. REST APIs
+and databases are also frequently used for stream enrichment.
 
 ### Basic stream sinks
 
@@ -173,20 +193,23 @@ appear in your IDE's console, when running in an IDE). This will call `toString(
 of the stream.
 
 The output looks something like this
-    
+
     1> Fred: age 35
     2> Wilma: age 35
 
-where `1>` and `2>` indicate which sub-task (i.e., thread) produced the output.
+where 1> and 2> indicate which sub-task (i.e., thread) produced the output.
+
 In production, commonly used sinks include the StreamingFileSink, various databases,
 and several pub-sub systems.
 
 ### Debugging
 
-In production, your application will run in a remote cluster or set of containers. And if it fails,it will fail remotely.
-The JobManager and TaskManager logs can be very helpful in debugging such failures, but it is much easier to do local debugging inside an IDE, which is something that Flink supports.
-You can set breakpoints, examine local variables, and step through your code.
-You can also step into Flink's code, which can be a great way to learn more about its internals if you are curious to see how Flink works.
+In production, your application will run in a remote cluster or set of containers. And if it fails,
+it will fail remotely. The JobManager and TaskManager logs can be very helpful in debugging such
+failures, but it is much easier to do local debugging inside an IDE, which is something that Flink
+supports. You can set breakpoints, examine local variables, and step through your code. You can also
+step into Flink's code, which can be a great way to learn more about its internals if you are
+curious to see how Flink works.
 
 {{< top >}}
 
@@ -194,8 +217,9 @@ You can also step into Flink's code, which can be a great way to learn more abou
 
 At this point you know enough to get started coding and running a simple DataStream application.
 Clone the {{< training_repo >}}, and after following the
-instructions in the README, do the first exercise:
-{{< training_link file="/ride-cleansing" name="Filtering a Stream (Ride Cleansing)">}}
+instructions in the README, do the first exercise: {{< training_link file="/ride-cleansing" name="Filtering a Stream (Ride Cleansing)">}}.
+
+{{< top >}}
 
 ## Further Reading
 
