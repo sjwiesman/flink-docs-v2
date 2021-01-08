@@ -28,9 +28,8 @@ under the License.
 #### Flink Application Cluster
 
 A Flink Application Cluster is a dedicated [Flink Cluster](#flink-cluster) that
-only executes [Flink Jobs](#flink-job) from one [Flink
-Application](#flink-application). The lifetime of the [Flink
-Cluster](#flink-cluster) is bound to the lifetime of the Flink Application.
+only executes [Flink Jobs](#flink-job) from one [Flink Application](#flink-application).
+The lifetime of the [Flink Cluster](#flink-cluster) is bound to the lifetime of the Flink Application.
 
 #### Flink Job Cluster
 
