@@ -63,6 +63,10 @@ func getAlias(path string) string {
 		alias = alias[0 : len(alias)-3]
 	}
 
+	if !strings.HasPrefix(alias, "/") {
+		alias = "/" + alias
+	}
+
 	if strings.HasSuffix(alias, "index") {
 		return alias[0 : len(alias)-len("index")]
 	}
