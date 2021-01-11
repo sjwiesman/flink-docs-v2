@@ -17,7 +17,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 <!--
-    Contnet written at the bottom of the menu
+    Content written at the bottom of the menu
 -->
 <br/>
 <hr class="menu-break">
@@ -34,7 +34,7 @@ under the License.
      <span>▾</span>
   </label>
   <ul>
-    <a href="/">
+    <a href="{{.Site.BaseURL}}{{.Site.LanguagePrefix}}">
       {{ .Site.Params.VersionTitle }} (✓)
     </a>
     <hr class="menu-break">
@@ -47,7 +47,7 @@ under the License.
     {{ end }}
     <hr class="menu-break">
     <li>
-      <a href="/versions">
+      <a href="{{.Site.BaseURL}}{{.Site.LanguagePrefix}}/versions">
           All Versions
       </a>
     </li>
