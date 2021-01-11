@@ -33,16 +33,40 @@ under the License.
 
 func main() {
 	path := os.Args[1]
+	alias := getAlias(path)
+
 	file := readFile(path)
 	file = removeToc(file)
 	file = removeTop(file)
 	file = rewriteCodeSample(file)
-	file = rewriteFrontMatter(file)
+	file = rewriteFrontMatter(alias, file)
 	file = rewriteLink(file)
 	file = rewriteTabs(file)
 	file = rewriteCenter(file)
 
 	fmt.Print(file)
+}
+
+func getAlias(path string) string {
+	myExp := regexp.MustCompile(`(.+)/docs/(?P<alias>.+)\.md`)
+	match := myExp.FindStringSubmatch(path)
+	result := make(map[string]string)
+	for i, name := range myExp.SubexpNames() {
+		if i != 0 && name != "" {
+			result[name] = match[i]
+		}
+	}
+
+	alias := result["alias"]
+
+	if strings.HasSuffix(alias, ".zh") {
+		alias = alias[0 : len(alias)-3]
+	}
+
+	if strings.HasSuffix(alias, "index") {
+		return alias[0 : len(alias)-len("index")]
+	}
+	return alias + ".html"
 }
 
 func removeToc(file string) string {
@@ -55,7 +79,7 @@ func removeTop(file string) string {
 	return re.ReplaceAllString(file, "{{< top >}}")
 }
 
-func rewriteFrontMatter(file string) string {
+func rewriteFrontMatter(alias, file string) string {
 
 	position := regexp.MustCompile(`nav-pos: (.+)`)
 	weight := 0
@@ -63,14 +87,20 @@ func rewriteFrontMatter(file string) string {
 
 	if weights != nil {
 		var err error
-		if weight , err = strconv.Atoi(weights[1]); err != nil {
-				panic(err)
+		if weight, err = strconv.Atoi(weights[1]); err != nil {
+			panic(err)
 		}
 
 		weight += 1
 	}
 
-	file = position.ReplaceAllString(file, fmt.Sprintf("weight: %d\ntype: docs", weight))
+	replacement := fmt.Sprintf(`weight: %d
+type: docs
+aliases:
+  - %s
+`, weight, alias)
+
+	file = position.ReplaceAllString(file, replacement)
 
 	title := regexp.MustCompile(`title: (.+)`)
 	titleMatch := title.FindStringSubmatch(file)
@@ -79,44 +109,25 @@ func rewriteFrontMatter(file string) string {
 	}
 
 	pageTitle := strings.Trim(titleMatch[1], ` "`)
-	file = strings.ReplaceAll(file, licnese, licnese+"\n"+"# " + pageTitle+"\n")
+	file = strings.ReplaceAll(file, licnese, licnese+"\n"+"# "+pageTitle+"\n")
 
 	navTitle := regexp.MustCompile(`nav-title: (.+)`)
 	if menuTitle := navTitle.FindStringSubmatch(file); menuTitle != nil {
-		file = title.ReplaceAllString(file, "title: " + menuTitle[1])
+		file = title.ReplaceAllString(file, "title: "+menuTitle[1])
 	}
 
-	re := regexp.MustCompile(`nav-id: .+`)
-	file = re.ReplaceAllString(file, "")
-
-
-	file = re.ReplaceAllString(file, "")
-
-	re = regexp.MustCompile(`nav-parent_id: .+`)
-	file = re.ReplaceAllString(file, "")
-
-	return file;
-	/*
-	blank := regexp.MustCompile(`(?m)^\s*$`)
-
-	parts := strings.Split(file, "\n")
-	var inFrontMatter = false
-	for i := 0; i < len(parts); i++ {
-		if parts[i] == "---" {
-			if inFrontMatter {
-				break
-			} else {
-				inFrontMatter = true
-			}
-		}
-
-		if inFrontMatter && blank.MatchString(parts[i]) {
-			parts = append(parts[:i], parts[i+1:]...)
+	lines := strings.Split(file, "\n")
+	for i := 0; !strings.Contains(lines[i], "<!--"); {
+		if len(strings.TrimSpace(lines[i])) == 0 ||
+			strings.HasPrefix(lines[i], "nav-") ||
+			strings.HasPrefix(lines[i], "nav-parent_id") {
+			lines = append(lines[:i], lines[i+1:]...)
+		} else {
+			i++
 		}
 	}
 
-	return strings.Join(parts, "\n")
-*/
+	return strings.Join(lines, "\n")
 }
 
 func rewriteCodeSample(file string) string {
