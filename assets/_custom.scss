@@ -150,9 +150,14 @@ pre.chroma code {
 }
 
 .book-languages {
-    border: 2px solid blc; 
+    border: 2px solid black; 
 }
 
 .menu-break {
     opacity: 0.1;
+}
+
+#book-search-results {
+    padding: 2px;
+    background-color: white;
 }
