@@ -129,11 +129,10 @@ operations on different processes/machines (TaskManagers) and how data is
 shuffled (sent) between them.
 
 Multiple operations/operators can be chained together using a feature called
-[chaining]({{< ref "/dev/stream/operators/index" >}}#task-chaining-and-resource-groups).
-A group of one or multiple (chained)
-operators that Flink considers as a unit of scheduling is called a _task_.
-Often the term _subtask_ is used to refer to the individual instances of tasks
-that are running in parallel on multiple TaskManagers but we will only use the
+[chaining]({{< ref "/dev/stream/operators/index.md" >}}#task-chaining-and-resource-groups).
+A group of one or multiple (chained) operators that Flink considers as a unit of scheduling
+is called a _task_. Often the term _subtask_ is used to refer to the individual instances
+of tasks that are running in parallel on multiple TaskManagers but we will only use the
 term _task_ here.
 
 Task scheduling and network shuffles work differently for `BATCH` and
@@ -273,7 +272,7 @@ timestamp `t+1`. Because of this, the system can never be sure that no more
 elements with timestamp `t < T` for a given timestamp `T` can come in the
 future. To amortise the impact of this out-of-orderness on the final result
 while making the system practical, in `STREAMING` mode, Flink uses a heuristic
-called [Watermarks]({{< ref "/concepts/timely-stream-processing" >}}#event-time-and-watermarks).
+called [Watermarks]({{< ref "/concepts/timely-stream-processing.md" >}}#event-time-and-watermarks).
 A watermark with timestamp `T` signals that no element with timestamp `t < T` will follow.
 
 In `BATCH` mode, where the input dataset is known in advance, there is no need
@@ -342,7 +341,7 @@ others are not supported.
 
 Behavior Change in BATCH mode:
 
-* "Rolling" operations such as [reduce()]({{< ref "/dev/stream/operators/index" >}}#reduce) 
+* "Rolling" operations such as [reduce()]({{< ref "/dev/stream/operators/index" >}}#reduce)
   or [sum()]({{< ref "/dev/stream/operators/index" >}}#aggregations)
   emit an incremental update for every new record that arrives in `STREAMING`
   mode. In `BATCH` mode, these operations are not "rolling". They emit only the
@@ -351,7 +350,7 @@ Behavior Change in BATCH mode:
 
 Unsupported in BATCH mode:
 
-* [Checkpointing]({{< ref "/concepts/stateful-stream-processing" >}}#stateful-stream-processing) 
+* [Checkpointing]({{< ref "/concepts/stateful-stream-processing.md" >}}#stateful-stream-processing)
   and any operations that depend on checkpointing do not work.
 * [Iterations]({{< ref "/dev/stream/operators/index" >}}#iterate)
 
@@ -366,20 +365,19 @@ does not use checkpointing.
 It is important to remember that because there are no checkpoints, certain
 features such as [CheckpointListener]({{ site.javadocs_baseurl
 }}/api/java/org/apache/flink/api/common/state/CheckpointListener.html) and, as
-a result,  Kafka's [EXACTLY_ONCE]({{< ref "/dev/connectors/kafka" >}}
-#kafka-producers-and-fault-tolerance) mode or `StreamingFileSink`'s
-[OnCheckpointRollingPolicy]({{< ref "/dev/connectors/streamfile_sink" >}}#rolling-policy)
+a result,  Kafka's [EXACTLY_ONCE]({{< ref "/dev/connectors/kafka" >}}#kafka-producers-and-fault-tolerance) mode or `StreamingFileSink`'s
+[OnCheckpointRollingPolicy]({{< ref "/dev/connectors/streamfile_sink.md" >}}#rolling-policy) 
 won't work. If you need a transactional sink that works in
 `BATCH` mode make sure it uses the Unified Sink API as proposed in
 [FLIP-143](https://cwiki.apache.org/confluence/x/KEJ4CQ).
 
-You can still use all the [state primitives]({{< ref "/dev/stream/state/state" >}}#working-with-state),
-it's just that the mechanism used for failure recovery will be different.
+You can still use all the [state primitives]({{< ref "/dev/stream/state/state" >}}#working-with-state), it's just that the mechanism used for failure recovery
+will be different.
 
 ### Writing Custom Operators
 
 {{< hint info >}}
-**Note:** Custom operators are an advanced usage pattern of Apache Flink. For most
+Custom operators are an advanced usage pattern of Apache Flink. For most
 use-cases, consider using a (keyed-)process function instead.
 {{< /hint >}}
 
