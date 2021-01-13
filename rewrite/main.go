@@ -64,7 +64,7 @@ func getAlias(path string) string {
 	}
 
 	if strings.HasSuffix(alias, ".zh") {
-		alias = "/zh/" + alias[0 : len(alias)-3]
+		alias = "/zh" + alias[0 : len(alias)-3]
 	}
 
 	if strings.HasSuffix(alias, "index") {
