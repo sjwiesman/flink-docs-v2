@@ -59,12 +59,12 @@ func getAlias(path string) string {
 
 	alias := result["alias"]
 
-	if strings.HasSuffix(alias, ".zh") {
-		alias = alias[0 : len(alias)-3]
-	}
-
 	if !strings.HasPrefix(alias, "/") {
 		alias = "/" + alias
+	}
+
+	if strings.HasSuffix(alias, ".zh") {
+		alias = "/zh/" + alias[0 : len(alias)-3]
 	}
 
 	if strings.HasSuffix(alias, "index") {
