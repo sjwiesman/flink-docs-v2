@@ -1,3 +1,8 @@
+---
+title: 算子 
+bookCollapseSection: true
+weight: 7
+---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
@@ -16,15 +21,3 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<!--
-    Shortcode for linking to a file in github. This shortcode
-    will automatically discover the repo and correct branch.
-
-    Parmeters: 
-        - file: The absolute path to the image file (required)
-        - name: The rendered link name (required)
--->
-<a href="{{ .Site.Params.Repo }}/blob/{{ .Site.Params.Branch }}/{{ .Get "file" }}">
-    {{ .Get "name" | markdownify }}
-</a>
-

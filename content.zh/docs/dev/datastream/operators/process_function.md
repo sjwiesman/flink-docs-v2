@@ -3,7 +3,7 @@ title: "Process Function"
 weight: 4 
 type: docs
 aliases:
-  - /dev/stream/operators/process_function.html
+  - /zh/dev/stream/operators/process_function.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

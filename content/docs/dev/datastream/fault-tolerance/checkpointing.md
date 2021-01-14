@@ -2,6 +2,8 @@
 title: "Checkpointing"
 weight: 4
 type: docs
+aliases:
+  - /dev/stream/state/checkpointing.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -23,9 +25,6 @@ under the License.
 -->
 
 # Checkpointing
-
-* ToC
-
 
 Every function and operator in Flink can be **stateful** (see [working with state](state.html) for details).
 Stateful functions store data across the processing of individual elements/events, making state a critical building block for
@@ -82,7 +81,7 @@ Other parameters for checkpointing include:
 
   - *unaligned checkpoints*: You can enable [unaligned checkpoints]({{< ref "/ops/state/checkpoints" >}}#unaligned-checkpoints) to greatly reduce checkpointing times under backpressure. Only works for exactly-once checkpoints and with number of concurrent checkpoints of 1.
 
-{{< tabs "a1346dbd-707c-4ea6-8066-bdba15c7c71f" >}}
+{{< tabs "4b9c6a74-8a45-4ad2-9e80-52fe44a85991" >}}
 {{< tab "Java" >}}
 ```java
 StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -176,7 +175,7 @@ env.get_checkpoint_config().enable_unaligned_checkpoints()
 
 Some more parameters and/or defaults may be set via `conf/flink-conf.yaml` (see [configuration]({{< ref "/deployment/config" >}}) for a full guide):
 
-{% include generated/checkpointing_configuration.html %}
+{{< generated/checkpointing_configuration >}}
 
 {{< top >}}
 

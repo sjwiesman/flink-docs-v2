@@ -1,9 +1,9 @@
 ---
-title: "Windows"
+title: 窗口
 weight: 2 
 type: docs
 aliases:
-  - /dev/stream/operators/windows.html
+  - /zh/dev/stream/operators/windows.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,7 +24,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Windows
+# 窗口
 
 Windows are at the heart of processing infinite streams. Windows split the stream into "buckets" of finite size,
 over which we can apply computations. This document focuses on how windowing is performed in Flink and how the

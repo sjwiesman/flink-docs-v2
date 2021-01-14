@@ -3,7 +3,7 @@ title: "Joining"
 weight: 3 
 type: docs
 aliases:
-  - /dev/stream/operators/joining.html
+  - /zh/dev/stream/operators/joining.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

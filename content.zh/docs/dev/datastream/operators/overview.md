@@ -1,5 +1,5 @@
 ---
-title: "Overview"
+title: 概览
 weight: 1
 type: docs
 aliases:
@@ -24,15 +24,13 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Operators
+# 算子
 
-Operators transform one or more DataStreams into a new DataStream. Programs can combine
-multiple transformations into sophisticated dataflow topologies.
+用户通过算子能将一个或多个 DataStream 转换成新的 DataStream，在应用程序中可以将多个数据转换算子合并成一个复杂的数据流拓扑。
 
-This section gives a description of the basic transformations, the effective physical
-partitioning after applying those as well as insights into Flink's operator chaining.
+这部分内容将描述 Flink DataStream API 中基本的数据转换API，数据转换后各种数据分区方式，以及算子的链接策略。
 
-## DataStream Transformations
+## 数据流转换
 
 ### Map
 #### DataStream &rarr; DataStream
@@ -575,9 +573,9 @@ This feature is not yet supported in Python
 {{< /tab >}}
 {{< /tabs>}}
 
-## Physical Partitioning
+## 物理分区
 
-Flink also gives low-level control (if desired) on the exact stream partitioning after a transformation, via the following functions.
+Flink 也提供以下方法让用户根据需要在数据转换完成后对数据分区进行更细粒度的配置。
 
 ### Custom Partitioning
 #### DataStream &rarr; DataStream
@@ -683,13 +681,13 @@ data_stream.broadcast()
 {{< /tab >}}
 {{< /tabs>}}
 
-## Task Chaining and Resource Groups
+## 算子链和资源组
 
-Chaining two subsequent transformations means co-locating them within the same thread for better performance. Flink by default chains operators if this is possible (e.g., two subsequent map transformations). The API gives fine-grained control over chaining if desired:
+将两个算子链接在一起能使得它们在同一个线程中执行，从而提升性能。Flink 默认会将能链接的算子尽可能地进行链接(例如， 两个 map 转换操作)。此外， Flink 还提供了对链接更细粒度控制的 API 以满足更多需求：
 
-Use `StreamExecutionEnvironment.disableOperatorChaining()` if you want to disable chaining in the whole job. For more fine grained control, the following functions are available. Note that these functions can only be used right after a DataStream transformation as they refer to the previous transformation. For example, you can use `someStream.map(...).startNewChain()`, but you cannot use `someStream.startNewChain()`.
+如果想对整个作业禁用算子链，可以调用 `StreamExecutionEnvironment.disableOperatorChaining()`。下列方法还提供了更细粒度的控制。需要注 意的是， 这些方法只能在 `DataStream` 转换操作后才能被调用，因为它们只对前一次数据转换生效。例如，可以 `someStream.map(...).startNewChain()` 这样调用，而不能 someStream.startNewChain()这样。
 
-A resource group is a slot in Flink, see slots. You can manually isolate operators in separate slots if desired.
+一个资源组对应着 Flink 中的一个 slot 槽，更多细节请看slots 槽。 你可以根据需要手动地将各个算子隔离到不同的 slot 中。 
 
 ### Start New Chain
 
