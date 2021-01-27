@@ -4,7 +4,7 @@ nav-title: Zipping Elements
 weight: 3
 type: docs
 aliases:
-  - /dev/batch/zip_elements_guide.html
+  - /zh/dev/batch/zip_elements_guide.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

@@ -4,7 +4,7 @@ nav-title: Transformations
 weight: 2
 type: docs
 aliases:
-  - /dev/batch/dataset_transformations.html
+  - /zh/dev/batch/dataset_transformations.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -31,6 +31,8 @@ This document gives a deep-dive into the available transformations on DataSets. 
 Flink Java API, please refer to the [Programming Guide](index.html).
 
 For zipping elements in a data set with a dense index, please refer to the [Zip Elements Guide](zip_elements_guide.html).
+
+
 
 ### Map
 

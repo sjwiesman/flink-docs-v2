@@ -1,9 +1,9 @@
 ---
-title: Iterations
+title: "迭代"
 weight: 3
 type: docs
 aliases:
-  - /dev/batch/iterations.html
+  - /zh/dev/batch/iterations.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,7 +24,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Iterations
+# 迭代
 
 Iterative algorithms occur in many domains of data analysis, such as *machine learning* or *graph analysis*. Such algorithms are crucial in order to realize the promise of Big Data to extract meaningful information out of your data. With increasing interest to run these kinds of algorithms on very large data sets, there is a need to execute iterations in a massively parallel fashion.
 
