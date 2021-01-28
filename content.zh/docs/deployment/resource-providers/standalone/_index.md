@@ -1,5 +1,5 @@
 ---
-title: Resource Providers
+title: Standalone
 bookCollapseSection: true
 weight: 2
 ---

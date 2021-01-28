@@ -1,7 +1,7 @@
 ---
-title: Resource Providers
+title: Advanced
 bookCollapseSection: true
-weight: 2
+weight: 10
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

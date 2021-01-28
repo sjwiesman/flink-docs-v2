@@ -1,9 +1,9 @@
 ---
-title: Command-Line Interface
+title: 命令行界面
 weight: 5
 type: docs
 aliases:
-  - /deployment/cli.html
+  - /zh/deployment/cli.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,12 +24,14 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Command-Line Interface
+# 命令行界面
 
 Flink provides a Command-Line Interface (CLI) `bin/flink` to run programs that 
 are packaged as JAR files and to control their execution. The CLI is part of any 
 Flink setup, available in local single node setups and in distributed setups. 
 It connects to the running JobManager specified in `conf/flink-config.yaml`.
+
+
 
 ## Job Lifecycle Management
 

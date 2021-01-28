@@ -1,7 +1,7 @@
 ---
-title: Resource Providers
+title: File Systems
 bookCollapseSection: true
-weight: 2
+weight: 6
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

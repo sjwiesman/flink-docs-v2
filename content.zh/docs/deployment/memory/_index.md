@@ -1,7 +1,7 @@
 ---
-title: Resource Providers
+title: 内存配置
 bookCollapseSection: true
-weight: 2
+weight: 4
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

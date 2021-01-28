@@ -1,7 +1,7 @@
 ---
-title: Resource Providers
+title: Security
 bookCollapseSection: true
-weight: 2
+weight: 8
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

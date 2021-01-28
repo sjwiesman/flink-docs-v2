@@ -118,7 +118,7 @@ This could only happen when the weights are explicitly configured/overwritten.
 The off-heap memory which is allocated by user code should be accounted for in *task off-heap memory*
 ([`taskmanager.memory.task.off-heap.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-task-off-heap-size)).
 
-<span class="label label-info">Note</span> You can also adjust the [framework off-heap memory](#framework-memory).
+You can also adjust the [framework off-heap memory](#framework-memory).
 You should only change this value if you are sure that the Flink framework needs more memory. 
 
 Flink includes the *framework off-heap memory* and *task off-heap memory* into the *direct memory* limit of the JVM,
