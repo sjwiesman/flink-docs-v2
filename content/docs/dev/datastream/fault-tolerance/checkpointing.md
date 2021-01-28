@@ -175,7 +175,7 @@ env.get_checkpoint_config().enable_unaligned_checkpoints()
 
 Some more parameters and/or defaults may be set via `conf/flink-conf.yaml` (see [configuration]({{< ref "/deployment/config" >}}) for a full guide):
 
-{{< generated/checkpointing_configuration >}}
+{{< generate/checkpointing_configuration >}}
 
 {{< top >}}
 

@@ -20,7 +20,4 @@ under the License.
   is not marked as stable.
 
   Parmeters: Markdown text
-*/}}
-{{ if (not $.Site.Params.IsStable) }}
-{{ .Inner | markdownify }}
-{{ end }}
+*/}}{{ if (not $.Site.Params.IsStable) }}{{ .Inner | markdownify }}{{ end }}

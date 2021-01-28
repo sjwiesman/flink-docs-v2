@@ -1,4 +1,9 @@
-{{/*
+---
+title: REPLs
+bookCollapseSection: true
+weight: 9
+---
+<!--
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
 distributed with this work for additional information
@@ -15,9 +20,4 @@ software distributed under the License is distributed on an
 KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
-*/}}{{/*
-  Shortcode that only renders its contents if the site
-  is marked as stable.
-
-  Parmeters: Markdown text
-*/}}{{ if $.Site.Params.IsStable }}{{ .Inner | markdownify }}{{ end }}
+-->
