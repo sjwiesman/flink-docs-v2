@@ -175,3 +175,10 @@ pre.chroma code {
     border-radius: .25em;
     background-color: #337ab7;
 }
+
+.expand-toc {
+    position: fixed;
+    top: 2em;
+    right: 5em;
+    display: none;
+}
