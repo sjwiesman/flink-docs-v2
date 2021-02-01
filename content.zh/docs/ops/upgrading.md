@@ -1,9 +1,9 @@
 ---
-title: "Upgrading Applications and Flink Versions"
+title: "升级应用程序和 Flink 版本"
 weight: 10
 type: docs
 aliases:
-  - /ops/upgrading.html
+  - /zh/ops/upgrading.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,7 +24,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Upgrading Applications and Flink Versions
+# 升级应用程序和 Flink 版本
 
 Flink DataStream programs are typically designed to run for long periods of time such as weeks, months, or even years. As with all long-running services, Flink streaming applications need to be maintained, which includes fixing bugs, implementing improvements, or migrating an application to a Flink cluster of a later version.
 

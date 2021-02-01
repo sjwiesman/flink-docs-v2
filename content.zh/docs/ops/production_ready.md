@@ -1,9 +1,9 @@
 ---
-title: "Production Readiness Checklist"
+title: "生产就绪情况核对清单"
 weight: 11
 type: docs
 aliases:
-  - /ops/production_ready.html
+  - /zh/ops/production_ready.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,7 +24,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Production Readiness Checklist
+# 生产就绪情况核对清单
 
 The production readiness checklist provides an overview of configuration options that should be carefully considered before bringing an Apache Flink job into production. 
 While the Flink community has attempted to provide sensible defaults for each configuration, it is important to review this list and ensure the options chosen are sufficient for your needs. 

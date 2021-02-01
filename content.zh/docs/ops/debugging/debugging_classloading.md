@@ -1,9 +1,9 @@
 ---
-title: "Debugging Classloading"
+title: "调试类加载"
 weight: 3
 type: docs
 aliases:
-  - /ops/debugging/debugging_classloading.html
+  - /zh/ops/debugging/debugging_classloading.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,7 +24,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Debugging Classloading
+# 调试类加载
 
 ## Overview of Classloading in Flink
 

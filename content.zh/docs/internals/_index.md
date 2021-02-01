@@ -1,7 +1,9 @@
 ---
-title: 状态与容错
+title: 内幕
+icon: <i class="fa fa-book title dessert" aria-hidden="true"></i>
+bold: true
 bookCollapseSection: true
-weight: 1
+weight: 10
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

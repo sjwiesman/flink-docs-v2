@@ -1,9 +1,9 @@
 ---
-title: "Metrics"
+title: "指标"
 weight: 6
 type: docs
 aliases:
-  - /ops/metrics.html
+  - /zh/ops/metrics.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,7 +24,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Metrics
+# 指标
 
 Flink exposes a metric system that allows gathering and exposing metrics to external systems.
 

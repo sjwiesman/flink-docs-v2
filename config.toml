@@ -33,6 +33,8 @@ refLinksErrorLevel = "WARNING"
   # The github repository for Apache Flink
   Repo = "//github.com/sjwiesman/flink-docs-v2"
 
+  GithubRepo = "https://github.com/apache/flink.git"
+
   # Flink training exercises 
   TrainingExercises = "//github.com/apache/flink-training"
 

@@ -1,9 +1,9 @@
 ---
-title: "Tuning Checkpoints and Large State"
+title: "大状态与 Checkpoint 调优"
 weight: 13
 type: docs
 aliases:
-  - /ops/state/large_state_tuning.html
+  - /zh/ops/state/large_state_tuning.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,7 +24,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Tuning Checkpoints and Large State
+# 大状态与 Checkpoint 调优
 
 This page gives a guide how to configure and tune applications that use large state.
 
