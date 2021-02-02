@@ -1,6 +1,6 @@
 ---
 title: State Processor API
-weight: 3
+weight: 2
 type: docs
 aliases:
   - /dev/libs/state_processor_api.html

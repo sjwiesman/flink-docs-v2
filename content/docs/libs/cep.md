@@ -1,6 +1,6 @@
 ---
 title: Event Processing (CEP)
-weight: 2
+weight: 1
 type: docs
 aliases:
   - /dev/libs/cep.html
