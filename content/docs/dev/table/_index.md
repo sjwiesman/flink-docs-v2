@@ -1,7 +1,7 @@
 ---
-title: Graphs
-weight: 3
+title: Table API & SQL
 bookCollapseSection: true
+weight: 3
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

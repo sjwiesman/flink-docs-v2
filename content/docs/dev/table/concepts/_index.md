@@ -1,7 +1,7 @@
 ---
-title: Graphs
-weight: 3
+title: Streaming Concepts
 bookCollapseSection: true
+weight: 4
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
