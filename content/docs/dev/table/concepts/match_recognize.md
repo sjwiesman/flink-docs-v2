@@ -27,7 +27,7 @@ under the License.
 # 'Detecting Patterns in Tables'
 
 It is a common use case to search for a set of event patterns, especially in case of data streams.
-Flink comes with a [complex event processing (CEP) library]({{< ref "/dev/libs/cep" >}})
+Flink comes with a [complex event processing (CEP) library]({{< ref "docs/dev/libs/cep" >}})
 which allows for pattern detection in event streams. Furthermore, Flink's SQL API provides a
 relational way of expressing queries with a large set of built-in functions and rule-based
 optimizations that can be used out of the box.
@@ -96,10 +96,10 @@ project.
 ```
 
 Alternatively, you can also add the dependency to the cluster classpath (see the
-[dependency section]({{< ref "/dev/project-configuration" >}}) for more information).
+[dependency section]({{< ref "docs/dev/project-configuration" >}}) for more information).
 
 If you want to use the `MATCH_RECOGNIZE` clause in the
-[SQL Client]({{< ref "/dev/table/sqlClient" >}}), you don't have to do anything as all the
+[SQL Client]({{< ref "docs/dev/table/sqlClient" >}}), you don't have to do anything as all the
 dependencies are included by default.
 
 ### SQL Semantics
@@ -265,8 +265,8 @@ look at the [event stream navigation](#pattern-navigation) section.
 ### Aggregations
 
 Aggregations can be used in `DEFINE` and `MEASURES` clauses. Both
-[built-in]({{< ref "/dev/table/functions/systemFunctions" >}}) and custom
-[user defined]({{< ref "/dev/table/functions/udfs" >}}) functions are supported.
+[built-in]({{{{< ref "docs/dev/table/functions/systemFunctions" >}}) and custom
+[user defined]({{{{< ref "docs/dev/table/functions/udfs" >}}) functions are supported.
 
 Aggregate functions are applied to each subset of rows mapped to a match. In order to understand
 how those subsets are evaluated have a look at the [event stream navigation](#pattern-navigation)
@@ -1042,7 +1042,7 @@ use [time attributes](time_attributes.html). To select those there are available
       <td><p>Returns the timestamp of the last row that was mapped to the given pattern.</p>
       <p>The resulting attribute is a <a href="time_attributes.html">rowtime attribute</a>
          that can be used in subsequent time-based operations such as
-         <a href="{{< ref "/dev/table/streaming/joins" >}}#interval-joins">interval joins</a> and <a href="#aggregations">group window or over
+         <a href="{{< ref "docs/dev/table/concepts/joins" >}}#interval-joins">interval joins</a> and <a href="#aggregations">group window or over
          window aggregations</a>.</p></td>
     </tr>
     <tr>
@@ -1051,7 +1051,7 @@ use [time attributes](time_attributes.html). To select those there are available
       </td>
       <td><p>Returns a <a href="time_attributes.html#processing-time">proctime attribute</a>
           that can be used in subsequent time-based operations such as
-          <a href="{{< ref "/dev/table/streaming/joins" >}}#interval-joins">interval joins</a> and <a href="#aggregations">group window or over
+          <a href="{{{{< ref "docs/dev/table/concepts/joins" >}}#interval-joins">interval joins</a> and <a href="#aggregations">group window or over
           window aggregations</a>.</p></td>
     </tr>
   </tbody>

@@ -33,7 +33,7 @@ SQL 是数据分析中使用最广泛的语言。Flink Table API 和 SQL 使用�
 
 <span class="label label-danger">注意</span> 目前，这一页提到的优化选项仅支持 Blink planner。
 
-<span class="label label-danger">注意</span> 目前，流聚合优化仅支持 [无界聚合]({{< ref "/dev/table/sql/queries" >}}#聚合)。[窗口聚合]({{< ref "/dev/table/sql/queries" >}}#分组窗口) 优化将在未来支持。
+<span class="label label-danger">注意</span> 目前，流聚合优化仅支持 [无界聚合]({{< ref "docs/dev/table/sql/queries" >}}#聚合)。[窗口聚合]({{< ref "docs/dev/table/sql/queries" >}}#分组窗口) 优化将在未来支持。
 
 
 
@@ -47,7 +47,7 @@ MiniBatch 聚合的核心思想是将一组输入的数据缓存在聚合算子�
 
 <img src="/fig/table-streaming/minibatch_agg.png" width="50%" height="50%" />
 
-默认情况下 mini-batch 优化是被禁用的。开启这项优化，需要设置选项 `table.exec.mini-batch.enabled`、`table.exec.mini-batch.allow-latency` 和 `table.exec.mini-batch.size`。更多详细信息请参见[配置]({{< ref "/dev/table/config" >}}#execution-options)页面。
+默认情况下 mini-batch 优化是被禁用的。开启这项优化，需要设置选项 `table.exec.mini-batch.enabled`、`table.exec.mini-batch.allow-latency` 和 `table.exec.mini-batch.size`。更多详细信息请参见[配置]({{< ref "docs/dev/table/config" >}}#execution-options)页面。
 
 下面的例子显示如何启用这些选项。
 

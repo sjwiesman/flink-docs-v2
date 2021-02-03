@@ -3,7 +3,7 @@ title: "Dependency Management"
 weight: 41
 type: docs
 aliases:
-  - /dev/python/datastream-api-users-guide/dependency_management.html
+  - /zh/dev/python/datastream-api-users-guide/dependency_management.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

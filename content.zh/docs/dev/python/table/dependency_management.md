@@ -1,9 +1,9 @@
 ---
-title: "Dependency Management"
+title: "依赖管理"
 weight: 46
 type: docs
 aliases:
-  - /dev/python/table-api-users-guide/dependency_management.html
+  - /zh/dev/python/table-api-users-guide/dependency_management.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,33 +24,29 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Dependency Management
-
-
+# 依赖管理
 
 # Java Dependency in Python Program
 
-If third-party Java dependencies are used, you can specify the dependencies with the following Python Table APIs or through [command line arguments]({{< ref "/deployment/cli" >}}#usage) directly when submitting the job.
+如果应用了第三方 Java 依赖， 用户可以通过以下 Python Table API进行配置，或者在提交作业时直接通过[命令行参数]({{< ref "docs/deployment/cli" >}}#usage) 配置.
 
 ```python
-# Specify a list of jar URLs via "pipeline.jars". The jars are separated by ";" 
-#and will be uploaded to the cluster.
-# NOTE: Only local file URLs (start with "file://") are supported.
+# 通过 "pipeline.jars" 参数指定 jar 包 URL列表， 每个 URL 使用 ";" 分隔。这些 jar 包最终会被上传到集群中。
+# 注意：当前支持通过本地文件 URL 进行上传(以 "file://" 开头)。
 table_env.get_config().get_configuration().set_string("pipeline.jars", "file:///my/jar/path/connector.jar;file:///my/jar/path/udf.jar")
 
-# Specify a list of URLs via "pipeline.classpaths". The URLs are separated by ";" 
-# and will be added to the classpath of the cluster.
-# NOTE: The Paths must specify a protocol (e.g. file://) and users should ensure that the URLs are accessible on both the client and the cluster.
+# 通过 "pipeline.jars" 参数指定依赖 URL 列表， 这些 URL 通过 ";" 分隔，它们最终会被添加到集群的 classpath 中。
+# 注意： 必须指定这些文件路径的协议 (如 file://), 并确保这些 URL 在本地客户端和集群都能访问。
 table_env.get_config().get_configuration().set_string("pipeline.classpaths", "file:///my/jar/path/connector.jar;file:///my/jar/path/udf.jar")
 ```
 
-# Python Dependency in Python Program
+# Python 依赖管理
 
-If third-party Python dependencies are used, you can specify the dependencies with the following Python Table APIs or through [command line arguments]({{< ref "/deployment/cli" >}}#usage) directly when submitting the job.
+如果程序中应用到了 Python 第三方依赖，用户可以使用以下 Table API 配置依赖信息，或在提交作业时直接通过命令行参数配置。
 
 #### add_python_file(file_path)
 
-Adds python file dependencies which could be python files, python packages or local directories. They will be added to the PYTHONPATH of the python UDF worker.
+添加 Python 文件依赖，可以是 Python文件、Python 包或本地文件目录。他们最终会被添加到 Python Worker 的 PYTHONPATH 中，从而让 Python 函数能够正确访问读取。
 
 ```python
 table_env.add_python_file(file_path)
@@ -58,7 +54,7 @@ table_env.add_python_file(file_path)
 
 #### set_python_requirements(requirements_file_path, requirements_cache_dir=None)
 
-Specifies a requirements.txt file which defines the third-party dependencies. These dependencies will be installed to a temporary directory and added to the PYTHONPATH of the python UDF worker. For the dependencies which could not be accessed in the cluster, a directory which contains the installation packages of these dependencies could be specified using the parameter "requirements_cached_dir". It will be uploaded to the cluster to support offline installation.
+配置一个 requirements.txt 文件用于指定 Python 第三方依赖，这些依赖会被安装到一个临时目录并添加到 Python Worker 的 PYTHONPATH 中。对于在集群中无法访问的外部依赖，用户可以通过 "requirements_cached_dir" 参数指定一个包含这些依赖安装包的目录，这个目录文件会被上传到集群并实现离线安装。
 
 ```python
 # commands executed in shell
@@ -69,11 +65,11 @@ pip download -d cached_dir -r requirements.txt --no-binary :all:
 table_env.set_python_requirements("/path/to/requirements.txt", "cached_dir")
 ```
 
-Please make sure the installation packages matches the platform of the cluster and the python version used. These packages will be installed using pip, so also make sure the version of Pip (version >= 7.1.0) and the version of SetupTools (version >= 37.0.0).
+请确保这些依赖安装包和集群运行环境所使用的 Python 版本相匹配。此外，这些依赖将通过 Pip 安装， 请确保 Pip 的版本（version >= 7.1.0） 和 Setuptools 的版本（version >= 37.0.0）符合要求。
 
 #### add_python_archive(archive_path, target_dir=None)
 
-Adds a python archive file dependency. The file will be extracted to the working directory of python UDF worker. If the parameter "target_dir" is specified, the archive file will be extracted to a directory named "target_dir". Otherwise, the archive file will be extracted to a directory with the same name of the archive file.
+添加 Python 归档文件依赖。归档文件内的文件将会被提取到 Python Worker 的工作目录下。如果指定了 "target_dir" 参数，归档文件则会被提取到指定名字的目录文件中，否则文件被提取到和归档文件名相同的目录中。
 
 ```python
 # command executed in shell
@@ -91,25 +87,24 @@ def my_udf():
         ...
 ```
 
-Please make sure the uploaded python environment matches the platform that the cluster is running on. Currently only zip-format is supported. i.e. zip, jar, whl, egg, etc.
+请确保上传的 Python 环境和集群运行环境匹配。目前只支持上传 zip 格式的文件，如 zip, jar, whl, egg等等。
 
 #### set_python_executable(python_exec)
 
-Sets the path of the python interpreter which is used to execute the python udf workers, e.g., "/usr/local/bin/python3".
+配置用于执行 Python Worker 的 Python 解释器路径，如 "/usr/local/bin/python3"。
 
 ```python
 table_env.add_python_archive("/path/to/py_env.zip")
 table_env.get_config().set_python_executable("py_env.zip/py_env/bin/python")
 ```
 
-Please note that if the path of the python interpreter comes from the uploaded python archive, the path specified in set_python_executable should be a relative path.
+如果 Python 解释器的路径指向上传的 Python 归档文件，那么通过 set_python_executable 设置的 Python 解释器的路径必须是相对路径。
 
-Please make sure that the specified environment matches the platform that the cluster is running on.
+请确保配置的 Python 环境和集群运行环境匹配。
 
-# Python Dependency in Java/Scala Program
+# Java/Scala程序中的Python依赖管理
 
-It also supports to use Python UDFs in the Java Table API programs or pure SQL programs. The following example shows how to
-use the Python UDFs in a Java Table API program:
+It also supports to use Python UDFs in the Java Table API programs or pure SQL programs. The following example shows how to use the Python UDFs in a Java Table API program:
 
 ```java
 import org.apache.flink.configuration.CoreOptions;

@@ -31,9 +31,9 @@ These legacy features remain documented here for those users that have not yet o
 
 # Temporal Table Function
 
-The temporal table function is the legacy way of defining something akin to a [versioned table]({{< ref "/dev/table/streaming/versioned_tables" >}})
+The temporal table function is the legacy way of defining something akin to a [versioned table]({{< ref "docs/dev/table/concepts/versioned_tables" >}})
 that can be used in a temporal table join.
-Please define temporal joins using [versioned tables]({{< ref "/dev/table/streaming/versioned_tables" >}}) in new queries.
+Please define temporal joins using [versioned tables]({{< ref "docs/dev/table/streaming/versioned_tables" >}}) in new queries.
 
 Unlike a versioned table, temporal table functions can only be defined on top of append-only streams 
 &mdash; it does not support changelog inputs.
@@ -41,7 +41,7 @@ Additionally, a temporal table function cannot be defined in pure SQL DDL.
 
 #### Defining a Temporal Table Function
 
-Temporal table functions can be defined on top of append-only streams using the [Table API]({{< ref "/dev/table/tableApi" >}}).
+Temporal table functions can be defined on top of append-only streams using the [Table API]({{< ref "docs/dev/table/tableApi" >}}).
 The table is registered with one or more key columns, and a time attribute used for versioning.
 
 Suppose we have an append-only table of currency rates that we would like to 
@@ -85,7 +85,7 @@ tEnv.registerFunction("rates", rates)
 
 #### Temporal Table Function Join
 
-Once defined, a temporal table function is used as a standard [table function]({{< ref "/dev/table/functions/udfs" >}}#table-functions).
+Once defined, a temporal table function is used as a standard [table function]({{< ref "docs/dev/table/functions/udfs" >}}#table-functions).
 Append-only tables (left input/probe side) can join with a temporal table (right input/build side),
 i.e., a table that changes over time and tracks its changes, to retrieve the value for a key as it was at a particular point in time.
 

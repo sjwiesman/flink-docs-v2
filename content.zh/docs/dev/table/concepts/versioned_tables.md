@@ -26,7 +26,7 @@ under the License.
 
 # 时态表（Temporal Tables）
 
-时态表（Temporal Table）是一张随时间变化的表 -- 在 Flink 中称为[动态表]({{< ref "/dev/table/streaming/dynamic_tables" >}})，时态表中的每条记录都关联了一个或多个时间段，所有的 Flink 表都是时态的（动态的）。
+时态表（Temporal Table）是一张随时间变化的表 -- 在 Flink 中称为[动态表]({{< ref "docs/dev/table/streaming/dynamic_tables" >}})，时态表中的每条记录都关联了一个或多个时间段，所有的 Flink 表都是时态的（动态的）。
 
 时态表包含表的一个或多个有版本的表快照，时态表可以是一张跟踪所有变更记录的表（例如数据库表的 changelog，包含多个表快照），也可以是物化所有变更之后的表（例如数据库表，只有最新表快照）。
 
@@ -180,7 +180,7 @@ currency_time currency  rate
 11:49:00      Pounds    108
 ```
 
-为了在 `RatesHistory` 上定义版本表，Flink 支持通过[去重查询]({{< ref "/dev/table/sql/queries" >}}#去重)定义版本视图，
+为了在 `RatesHistory` 上定义版本表，Flink 支持通过[去重查询]({{< ref "docs/dev/table/sql/queries" >}}#去重)定义版本视图，
 去重查询可以产出一个有序的 changelog 流，去重查询能够推断主键并保留原始数据流的事件时间属性。
 
 ```sql
@@ -230,7 +230,7 @@ currency_time currency   rate
 
 ### 声明普通表
  
-普通表的声明和 Flink 建表 DDL 一致，参考 [create table]({{< ref "/dev/table/sql/create" >}}#create-table) 页面获取更多如何建表的信息。
+普通表的声明和 Flink 建表 DDL 一致，参考 [create table]({{< ref "docs/dev/table/sql/create" >}}#create-table) 页面获取更多如何建表的信息。
  
 ```sql
 -- 用 DDL 定义一张 HBase 表，然后我们可以在 SQL 中将其当作一张时态表使用
@@ -248,20 +248,20 @@ currency_time currency   rate
 <span class="label label-danger">注意</span> 理论上讲任意都能用作时态表并在基于处理时间的时态表 Join 中使用，但当前支持作为时态表的普通表必须实现接口 `LookupableTableSource`。接口 `LookupableTableSource` 的实例只能作为时态表用于基于处理时间的时态 Join 。
 
 通过 `LookupableTableSource` 定义的表意味着该表具备了在运行时通过一个或多个 key 去查询外部存储系统的能力，当前支持在 基于处理时间的时态表 join 中使用的表包括
-[JDBC]({{< ref "/dev/table/connectors/jdbc" >}}), [HBase]({{< ref "/docs/dev/table/connectors/hbase" >}}) 和 [Hive]({{< ref "/docs/dev/table/connectors/hive/hive_read_write" >}}#temporal-table-join)。
+[JDBC]({{< ref "docs/dev/table/connectors/jdbc" >}}), [HBase]({{< ref "docs/dev/table/connectors/hbase" >}}) 和 [Hive]({{< ref "docs/dev/table/connectors/hive/hive_read_write" >}}#temporal-table-join)。
 
-另请参阅 [LookupableTableSource]({{< ref "/docs/dev/table/sourceSinks" >}}#lookup-table-source)页面了解更多信息。
+另请参阅 [LookupableTableSource]({{< ref "docs/dev/table/sourceSinks" >}}#lookup-table-source)页面了解更多信息。
 
 在基于处理时间的时态表 Join 中支持任意表作为时态表会在不远的将来支持。
 
 时态表函数
 ------------------------
-时态表函数是一种过时的方式去定义时态表并关联时态表的数据，现在我们可以用时态表 DDL 去定义时态表，用[时态表 Join]({{< ref "/docs/dev/table/streaming/joins" >}}#时态表-join) 语法去关联时态表。 
+时态表函数是一种过时的方式去定义时态表并关联时态表的数据，现在我们可以用时态表 DDL 去定义时态表，用[时态表 Join]({{< ref "docs/dev/table/concepts/joins" >}}#时态表-join) 语法去关联时态表。 
 
 时态表函数和时态表 DDL 最大的区别在于，时态表 DDL 可以在纯 SQL 环境中使用但是时态表函数不支持，用时态表 DDL 声明的时态表支持 changelog 流和 append-only 流但时态表函数仅支持 append-only 流。
  
-为了访问时态表中的数据，必须传递一个[时间属性]({{< ref "/dev/table/streaming/time_attributes" >}})，该属性确定将要返回的表的版本。
-Flink 使用[表函数]({{< ref "/dev/table/functions/udfs" >}}#表值函数)的 SQL 语法提供一种表达它的方法。
+为了访问时态表中的数据，必须传递一个[时间属性]({{< ref "docs/dev/table/concepts/time_attributes" >}})，该属性确定将要返回的表的版本。
+Flink 使用[表函数]({{< ref "docs/dev/table/functions/udfs" >}}#表值函数)的 SQL 语法提供一种表达它的方法。
 
 定义后，*时态表函数*将使用单个时间参数 timeAttribute 并返回一个行集合。
 该集合包含相对于给定时间属性的所有现有主键的行的最新版本。
@@ -290,7 +290,7 @@ rowtime  currency  rate
 
 **注意**：当前 Flink 不支持使用常量时间属性参数直接查询时态表函数。目前，时态表函数只能在 join 中使用。上面的示例用于为函数 `Rates(timeAttribute)` 返回内容提供直观信息。
 
-另请参阅有关[用于持续查询的 join ]({{< ref "/dev/table/streaming/joins" >}})页面，以获取有关如何与时态表 join 的更多信息。
+另请参阅有关[用于持续查询的 join ]({{< ref "docs/dev/table/concepts/joins" >}})页面，以获取有关如何与时态表 join 的更多信息。
 
 ### 定义时态表函数
 
@@ -358,8 +358,8 @@ tEnv.registerFunction("Rates", rates)                                          /
 {{< /tabs >}}
 
 行`(1)`创建了一个 `rates` [时态表函数](#时态表函数)，
-这使我们可以在[ Table API ]({{< ref "/dev/table/tableApi" >}}#joins)中使用 `rates` 函数。
+这使我们可以在[ Table API ]({{< ref "docs/dev/table/tableApi" >}}#joins)中使用 `rates` 函数。
 
-行`(2)`在表环境中注册名称为 `Rates` 的函数，这使我们可以在[ SQL ]({{< ref "/dev/table/sql/queries" >}}#joins)中使用 `Rates` 函数。
+行`(2)`在表环境中注册名称为 `Rates` 的函数，这使我们可以在[ SQL ]({{< ref "docs/dev/table/sql/queries" >}}#joins)中使用 `Rates` 函数。
 
 {{< top >}}

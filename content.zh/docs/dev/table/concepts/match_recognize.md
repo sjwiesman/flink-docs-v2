@@ -26,7 +26,7 @@ under the License.
 
 # '表中的模式检测'
 
-搜索一组事件模式（event pattern）是一种常见的用例，尤其是在数据流情景中。Flink 提供[复杂事件处理（CEP）库]({{< ref "/dev/libs/cep" >}})，该库允许在事件流中进行模式检测。此外，Flink 的 SQL API 提供了一种关系式的查询表达方式，其中包含大量内置函数和基于规则的优化，可以开箱即用。
+搜索一组事件模式（event pattern）是一种常见的用例，尤其是在数据流情景中。Flink 提供[复杂事件处理（CEP）库]({{< ref "docs/libs/cep" >}})，该库允许在事件流中进行模式检测。此外，Flink 的 SQL API 提供了一种关系式的查询表达方式，其中包含大量内置函数和基于规则的优化，可以开箱即用。
 
 2016 年 12 月，国际标准化组织（ISO）发布了新版本的 SQL 标准，其中包括在 _SQL 中的行模式识别（Row Pattern Recognition in SQL）_([ISO/IEC TR 19075-5:2016](https://standards.iso.org/ittf/PubliclyAvailableStandards/c065143_ISO_IEC_TR_19075-5_2016.zip))。它允许 Flink 使用 `MATCH_RECOGNIZE` 子句融合 CEP 和 SQL API，以便在 SQL 中进行复杂事件处理。
 
@@ -81,9 +81,9 @@ FROM MyTable
 </dependency>
 ```
 
-或者，也可以将依赖项添加到集群的 classpath（查看 [dependency section]({{< ref "/dev/project-configuration" >}}) 获取更多相关依赖信息）。
+或者，也可以将依赖项添加到集群的 classpath（查看 [dependency section]({{< ref "docs/dev/datastream/project-configuration" >}}) 获取更多相关依赖信息）。
 
-如果你想在 [SQL Client]({{< ref "/dev/table/sqlClient" >}}) 中使用 `MATCH_RECOGNIZE` 子句，你无需执行任何操作，因为默认情况下包含所有依赖项。
+如果你想在 [SQL Client]({{< ref "docs/dev/table/sqlClient" >}}) 中使用 `MATCH_RECOGNIZE` 子句，你无需执行任何操作，因为默认情况下包含所有依赖项。
 
 <a name="sql-semantics"></a>
 
@@ -99,7 +99,7 @@ FROM MyTable
 * [PATTERN](#defining-a-pattern) - 允许使用类似于 _正则表达式_ 的语法构造搜索的模式。
 * [DEFINE](#define--measures) - 本部分定义了模式变量必须满足的条件。
 
-<span class="label label-danger">注意</span> 目前，`MATCH_RECOGNIZE` 子句只能应用于[追加表]({{< ref "/dev/table/streaming/dynamic_tables" >}}#update-and-append-queries)。此外，它也总是生成一个追加表。
+<span class="label label-danger">注意</span> 目前，`MATCH_RECOGNIZE` 子句只能应用于[追加表]({{< ref "docs/dev/table/concepts/dynamic_tables" >}}#update-and-append-queries)。此外，它也总是生成一个追加表。
 
 <a name="examples"></a>
 
@@ -195,11 +195,11 @@ ACME       01-APR-11 10:00:04  01-APR-11 10:00:07  01-APR-11 10:00:08
 事件顺序
 ---------------
 
-Apache Flink 可以根据时间（[处理时间或者事件时间]({{< ref "/dev/table/streaming/time_attributes" >}})）进行模式搜索。
+Apache Flink 可以根据时间（[处理时间或者事件时间]({{< ref "docs/dev/table/concepts/time_attributes" >}})）进行模式搜索。
 
 如果是事件时间，则在将事件传递到内部模式状态机之前对其进行排序。所以，无论行添加到表的顺序如何，生成的输出都是正确的。而模式是按照每行中所包含的时间指定顺序计算的。
 
-`MATCH_RECOGNIZE` 子句假定升序的 [时间属性]({{< ref "/dev/table/streaming/time_attributes" >}}) 是 `ORDER BY` 子句的第一个参数。
+`MATCH_RECOGNIZE` 子句假定升序的 [时间属性]({{< ref "docs/dev/table/concepts/time_attributes" >}}) 是 `ORDER BY` 子句的第一个参数。
 
 对于示例 `Ticker` 表，诸如 `ORDER BY rowtime ASC, price DESC` 的定义是有效的，但 `ORDER BY price, rowtime` 或者 `ORDER BY rowtime DESC, price ASC` 是无效的。
 
@@ -216,7 +216,7 @@ Define & Measures
 
 ### Aggregations
 
-Aggregations 可以在 `DEFINE` 和 `MEASURES` 子句中使用。支持[内置函数]({{< ref "/dev/table/functions/systemFunctions" >}})和[用户自定义函数]({{< ref "dev/table/functions/udfs" >}})。
+Aggregations 可以在 `DEFINE` 和 `MEASURES` 子句中使用。支持[内置函数]({{< ref "docs/dev/table/functions/systemFunctions" >}})和[用户自定义函数]({{< ref "docs/dev/table/functions/udfs" >}})。
 
 对相应匹配项的行子集可以使用 Aggregate functions。请查看[事件流导航](#pattern-navigation)部分以了解如何计算这些子集。
 
@@ -914,7 +914,7 @@ FROM Ticker
 时间属性
 ---------------
 
-为了在 `MATCH_RECOGNIZE` 之上应用一些后续查询，可能需要使用[时间属性]({{< ref "/dev/table/streaming/time_attributes" >}})。有两个函数可供选择：
+为了在 `MATCH_RECOGNIZE` 之上应用一些后续查询，可能需要使用[时间属性]({{< ref "docs/dev/table/concepts/time_attributes" >}})。有两个函数可供选择：
 
 <table class="table table-bordered">
   <thead>
@@ -931,7 +931,7 @@ FROM Ticker
       </td>
       <td>
         <p>返回映射到给定模式的最后一行的时间戳。</p>
-        <p>结果属性是<a href="{{< ref "/dev/table/streaming/time_attributes" >}}">行时间属性</a>，可用于后续基于时间的操作，例如 <a href="{{< ref "dev/table/streaming/joins" >}}#interval-joins">interval joins</a> 和 <a href="#aggregations">group window or over window aggregations</a>。</p>
+        <p>结果属性是<a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}">行时间属性</a>，可用于后续基于时间的操作，例如 <a href="{{< ref "docs/dev/table/concepts/joins" >}}#interval-joins">interval joins</a> 和 <a href="#aggregations">group window or over window aggregations</a>。</p>
       </td>
     </tr>
     <tr>
@@ -939,7 +939,7 @@ FROM Ticker
         <code>MATCH_PROCTIME()</code><br/>
       </td>
       <td>
-        <p>返回<a href="{{< ref "/dev/table/streaming/time_attributes" >}}#processing-time">处理时间属性</a>，该属性可用于随后的基于时间的操作，例如 <a href="{{< ref "dev/table/streaming/joins" >}}#interval-joins">interval joins</a> 和 <a href="#aggregations">group window or over window aggregations</a>。</p>
+        <p>返回<a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}#processing-time">处理时间属性</a>，该属性可用于随后的基于时间的操作，例如 <a href="{{< ref "docs/dev/table/concepts/joins" >}}#interval-joins">interval joins</a> 和 <a href="#aggregations">group window or over window aggregations</a>。</p>
       </td>
     </tr>
   </tbody>
@@ -980,7 +980,7 @@ DEFINE
   C as C.price > 20
 ```
 
-<span class="label label-danger">注意</span> 请注意，`MATCH_RECOGNIZE` 子句未使用配置的 [state retention time]({{< ref "/dev/table/streaming/query_configuration" >}}#idle-state-retention-time)。为此，可能需要使用 `WITHIN` [子句](#time-constraint)。
+<span class="label label-danger">注意</span> 请注意，`MATCH_RECOGNIZE` 子句未使用配置的 [state retention time]({{< ref "docs/dev/table/config" >}}#idle-state-retention-time)。为此，可能需要使用 `WITHIN` [子句](#time-constraint)。
 
 <a name="known-limitations"></a>
 

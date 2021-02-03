@@ -52,11 +52,11 @@ To satisfy the PyFlink requirement regarding the Python environment version, you
 ln -s /usr/bin/python3 python
 ```
 
-In addition to creating a soft link, you can also choose to create a Python virtual environment (`venv`). You can refer to the [Preparing Python Virtual Environment]({{< ref "/dev/python/faq" >}}#preparing-python-virtual-environment) documentation page for details on how to achieve that setup.
+In addition to creating a soft link, you can also choose to create a Python virtual environment (`venv`). You can refer to the [Preparing Python Virtual Environment]({{< ref "docs/dev/python/faq" >}}#preparing-python-virtual-environment) documentation page for details on how to achieve that setup.
 
 If you don’t want to use a soft link to change the system's `python` interpreter point to, you can use the configuration way to specify the Python interpreter.
-For specifying the Python interpreter used to compile the jobs, you can refer to the [python client executable]({{< ref "/dev/python/python_config" >}}#python-client-executable)
-For specifying the Python interpreter used to execute the python UDF worker, you can refer to the [python.executable]({{< ref "/dev/python/python_config" >}}#python-executable)
+For specifying the Python interpreter used to compile the jobs, you can refer to the [python client executable]({{< ref "docs/dev/python/python_config" >}}#python-client-executable)
+For specifying the Python interpreter used to execute the python UDF worker, you can refer to the [python.executable]({{< ref "docs/dev/python/python_config" >}}#python-executable)
 
 ## Installation of PyFlink
 
@@ -73,4 +73,4 @@ $ python -m pip install apache-flink
 ```
 {{< /unstable >}}
 
-You can also build PyFlink from source by following the [development guide]({{< ref "/flinkDev/building" >}}#build-pyflink).
+You can also build PyFlink from source by following the [development guide]({{< ref "docs/flinkDev/building" >}}#build-pyflink).

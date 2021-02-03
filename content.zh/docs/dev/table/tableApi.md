@@ -28,9 +28,9 @@ under the License.
 
 The Table API is a unified, relational API for stream and batch processing. Table API queries can be run on batch or streaming input without modifications. The Table API is a super set of the SQL language and is specially designed for working with Apache Flink. The Table API is a language-integrated API for Scala, Java and Python. Instead of specifying queries as String values as common with SQL, Table API queries are defined in a language-embedded style in Java, Scala or Python with IDE support like autocompletion and syntax validation. 
 
-The Table API shares many concepts and parts of its API with Flink's SQL integration. Have a look at the [Common Concepts & API]({{< ref "/dev/table/common" >}}) to learn how to register tables or to create a `Table` object. The [Streaming Concepts]({{< ref "/dev/table/streaming/index" >}}) pages discuss streaming specific concepts such as dynamic tables and time attributes.
+The Table API shares many concepts and parts of its API with Flink's SQL integration. Have a look at the [Common Concepts & API]({{< ref "docs/dev/table/common" >}}) to learn how to register tables or to create a `Table` object. The [Streaming Concepts]({{< ref "docs/dev/table/concepts/index" >}}) pages discuss streaming specific concepts such as dynamic tables and time attributes.
 
-The following examples assume a registered table called `Orders` with attributes `(a, b, c, rowtime)`. The `rowtime` field is either a logical [time attribute]({{< ref "/dev/table/streaming/time_attributes" >}}) in streaming or a regular timestamp field in batch.
+The following examples assume a registered table called `Orders` with attributes `(a, b, c, rowtime)`. The `rowtime` field is either a logical [time attribute]({{< ref "docs/dev/table/concepts/time_attributes" >}}) in streaming or a regular timestamp field in batch.
 
 
 Overview & Examples
@@ -220,7 +220,7 @@ result = orders.filter(orders.a.is_not_null & orders.b.is_not_null & orders.c.is
 {{< /tab >}}
 {{< /tabs >}}
 
-Since the Table API is a unified API for batch and streaming data, both example programs can be executed on batch and streaming inputs without any modification of the table program itself. In both cases, the program produces the same results given that streaming records are not late (see [Streaming Concepts]({{< ref "/dev/table/streaming/index" >}}) for details).
+Since the Table API is a unified API for batch and streaming data, both example programs can be executed on batch and streaming inputs without any modification of the table program itself. In both cases, the program produces the same results given that streaming records are not late (see [Streaming Concepts]({{< ref "docs/dev/table/concepts/index" >}}) for details).
 
 {{< top >}}
 
@@ -727,7 +727,7 @@ result = orders.over_window(Over.partition_by(orders.a).order_by(orders.rowtime)
 {{< /tab >}}
 {{< /tabs >}}
 
-All aggregates must be defined over the same window, i.e., same partitioning, sorting, and range. Currently, only windows with PRECEDING (UNBOUNDED and bounded) to CURRENT ROW range are supported. Ranges with FOLLOWING are not supported yet. ORDER BY must be specified on a single [time attribute]({{< ref "/dev/table/streaming/time_attributes" >}}).
+All aggregates must be defined over the same window, i.e., same partitioning, sorting, and range. Currently, only windows with PRECEDING (UNBOUNDED and bounded) to CURRENT ROW range are supported. Ranges with FOLLOWING are not supported yet. ORDER BY must be specified on a single [time attribute]({{< ref "docs/dev/table/concepts/time_attributes" >}}).
 
 #### Distinct Aggregation
 
@@ -1610,7 +1610,7 @@ Tumbling windows are defined by using the `Tumble` class as follows:
     </tr>
     <tr>
       <td><code>on</code></td>
-      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "/dev/table/streaming/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
+      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
     </tr>
     <tr>
       <td><code>as</code></td>
@@ -1648,7 +1648,7 @@ Tumbling windows are defined by using the `Tumble` class as follows:
     </tr>
     <tr>
       <td><code>on</code></td>
-      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "/dev/table/streaming/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
+      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
     </tr>
     <tr>
       <td><code>as</code></td>
@@ -1686,7 +1686,7 @@ Tumbling windows are defined by using the `Tumble` class as follows:
     </tr>
     <tr>
       <td><code>on</code></td>
-      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "/dev/table/streaming/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
+      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
     </tr>
     <tr>
       <td><code>alias</code></td>
@@ -1735,7 +1735,7 @@ Sliding windows are defined by using the `Slide` class as follows:
     </tr>
     <tr>
       <td><code>on</code></td>
-      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "/dev/table/streaming/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
+      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
     </tr>
     <tr>
       <td><code>as</code></td>
@@ -1783,7 +1783,7 @@ Sliding windows are defined by using the `Slide` class as follows:
     </tr>
     <tr>
       <td><code>on</code></td>
-      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "/dev/table/streaming/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
+      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
     </tr>
     <tr>
       <td><code>as</code></td>
@@ -1825,7 +1825,7 @@ Sliding windows are defined by using the `Slide` class as follows:
     </tr>
     <tr>
       <td><code>on</code></td>
-      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "/dev/table/streaming/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
+      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
     </tr>
     <tr>
       <td><code>alias</code></td>
@@ -1870,7 +1870,7 @@ A session window is defined by using the `Session` class as follows:
     </tr>
     <tr>
       <td><code>on</code></td>
-      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "/dev/table/streaming/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
+      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
     </tr>
     <tr>
       <td><code>as</code></td>
@@ -1905,7 +1905,7 @@ A session window is defined by using the `Session` class as follows:
     </tr>
     <tr>
       <td><code>on</code></td>
-      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "/dev/table/streaming/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
+      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
     </tr>
     <tr>
       <td><code>as</code></td>
@@ -1940,7 +1940,7 @@ A session window is defined by using the `Session` class as follows:
     </tr>
     <tr>
       <td><code>on</code></td>
-      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "/dev/table/streaming/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
+      <td>The time attribute to group (time interval) or sort (row count) on. For batch queries this might be any Long or Timestamp attribute. For streaming queries this must be a <a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}">declared event-time or processing-time time attribute</a>.</td>
     </tr>
     <tr>
       <td><code>alias</code></td>
@@ -2529,13 +2529,13 @@ Currently not supported in Python Table API.
 Data Types
 ----------
 
-Please see the dedicated page about [data types]({{< ref "/dev/table/types" >}}).
+Please see the dedicated page about [data types]({{< ref "docs/dev/table/types" >}}).
 
 Generic types and (nested) composite types (e.g., POJOs, tuples, rows, Scala case classes) can be fields of a row as well.
 
-Fields of composite types with arbitrary nesting can be accessed with [value access functions]({{< ref "/dev/table/functions/systemFunctions" >}}#value-access-functions).
+Fields of composite types with arbitrary nesting can be accessed with [value access functions]({{< ref "docs/dev/table/functions/systemFunctions" >}}#value-access-functions).
 
-Generic types are treated as a black box and can be passed on or processed by [user-defined functions]({{< ref "/dev/table/functions/udfs" >}}).
+Generic types are treated as a black box and can be passed on or processed by [user-defined functions]({{< ref "docs/dev/table/functions/udfs" >}}).
 
 {{< top >}}
 
