@@ -37,7 +37,6 @@ Flink SQL supports the following SHOW statements for now:
 - SHOW VIEWS
 - SHOW FUNCTIONS
 
-
 ## Run a SHOW statement
 
 {{< tabs "show" >}}

@@ -47,16 +47,16 @@ find on the left side below the menu.
 ## Anatomy of this Playground
 
 This playground consists of a long living
-[Flink Session Cluster]({{< ref "/concepts/glossary" >}}#flink-session-cluster) and a Kafka
+[Flink Session Cluster]({{< ref "docs/concepts/glossary" >}}#flink-session-cluster) and a Kafka
 Cluster.
 
 A Flink Cluster always consists of a 
-[JobManager]({{< ref "/concepts/glossary" >}}#flink-jobmanager) and one or more 
-[Flink TaskManagers]({{< ref "/concepts/glossary" >}}#flink-taskmanager). The JobManager 
-is responsible for handling [Job]({{< ref "/concepts/glossary" >}}#flink-job) submissions, 
+[JobManager]({{< ref "docs/concepts/glossary" >}}#flink-jobmanager) and one or more 
+[Flink TaskManagers]({{< ref "docs/concepts/glossary" >}}#flink-taskmanager). The JobManager 
+is responsible for handling [Job]({{< ref "docs/concepts/glossary" >}}#flink-job) submissions, 
 the supervision of Jobs as well as resource management. The Flink TaskManagers are the worker 
 processes and are responsible for the execution of the actual 
-[Tasks]({{< ref "/concepts/glossary" >}}#task) which make up a Flink Job. In this 
+[Tasks]({{< ref "docs/concepts/glossary" >}}#task) which make up a Flink Job. In this 
 playground you will start with a single TaskManager, but scale out to more TaskManagers later. 
 Additionally, this playground comes with a dedicated *client* container, which we use to submit the 
 Flink Job initially and to perform various operational tasks later on. The *client* container is not
@@ -73,7 +73,7 @@ JobManager. Additionally, two Kafka Topics *input* and *output* are created.
 
 The Job consumes `ClickEvent`s from the *input* topic, each with a `timestamp` and a `page`. The 
 events are then keyed by `page` and counted in 15 second
-[windows]({{< ref "/dev/stream/operators/windows" >}}). The results are written to the 
+[windows]({{< ref "docs/dev/stream/operators/windows" >}}). The results are written to the 
 *output* topic. 
 
 There are six different pages and we generate 1000 click events per page and 15 seconds. Hence, the 
@@ -163,7 +163,7 @@ After the initial startup you should mainly see log messages for every checkpoin
 
 ### Flink CLI
 
-The [Flink CLI]({{< ref "/deployment/cli" >}}) can be used from within the client container. For example, to print the `help` message of the Flink CLI you can run
+The [Flink CLI]({{< ref "docs/deployment/cli" >}}) can be used from within the client container. For example, to print the `help` message of the Flink CLI you can run
 
 ```bash
 docker-compose run --no-deps client flink --help
@@ -171,7 +171,7 @@ docker-compose run --no-deps client flink --help
 
 ### Flink REST API
 
-The [Flink REST API]({{< ref "/ops/rest_api" >}}#api) is exposed via
+The [Flink REST API]({{< ref "docs/ops/rest_api" >}}#api) is exposed via
 `localhost:8081` on the host or via `jobmanager:8081` from the client container, e.g. to list all currently running jobs, you can run:
 
 ```bash
@@ -307,14 +307,14 @@ docker-compose up -d taskmanager
 
 When the JobManager is notified about the new TaskManager, it schedules the tasks of the 
 recovering Job to the newly available TaskSlots. Upon restart, the tasks recover their state from
-the last successful [checkpoint]({{< ref "/learn-flink/fault_tolerance" >}}) that was taken
+the last successful [checkpoint]({{< ref "docs/learn-flink/fault_tolerance" >}}) that was taken
 before the failure and switch to the `RUNNING` state.
 
 The Job will quickly process the full backlog of input events (accumulated during the outage) 
 from Kafka and produce output at a much higher rate (> 24 records/minute) until it reaches 
 the head of the stream. In the *output* you will see that all keys (`page`s) are present for all time 
 windows and that every count is exactly one thousand. Since we are using the 
-[FlinkKafkaProducer]({{< ref "/dev/connectors/kafka" >}}#kafka-producers-and-fault-tolerance)
+[FlinkKafkaProducer]({{< ref "docs/dev/connectors/kafka" >}}#kafka-producers-and-fault-tolerance)
 in its "at-least-once" mode, there is a chance that you will see some duplicate output records.
 
 {{< hint info >}}
@@ -324,7 +324,7 @@ in its "at-least-once" mode, there is a chance that you will see some duplicate 
 ### Upgrading & Rescaling a Job
 
 Upgrading a Flink Job always involves two steps: First, the Flink Job is gracefully stopped with a
-[Savepoint]({{< ref "/ops/state/savepoints" >}}). A Savepoint is a consistent snapshot of 
+[Savepoint]({{< ref "docs/ops/state/savepoints" >}}). A Savepoint is a consistent snapshot of 
 the complete application state at a well-defined, globally consistent point in time (similar to a 
 checkpoint). Second, the upgraded Flink Job is started from the Savepoint. In this context "upgrade" 
 can mean different things including the following:
@@ -520,7 +520,7 @@ rescaling: all windows are present with a count of exactly one thousand.
 
 ### Querying the Metrics of a Job
 
-The JobManager exposes system and user [metrics]({{< ref "/ops/metrics" >}})
+The JobManager exposes system and user [metrics]({{< ref "docs/ops/metrics" >}})
 via its REST API.
 
 The endpoint depends on the scope of these metrics. Metrics scoped to a Job can be listed via 
@@ -770,7 +770,7 @@ curl localhost:8081/jobs/<jod-id>
 }
 ```
 
-Please consult the [REST API reference]({{< ref "/ops/rest_api" >}}#api)
+Please consult the [REST API reference]({{< ref "docs/ops/rest_api" >}}#api)
 for a complete list of possible queries including how to query metrics of different scopes (e.g. 
 TaskManager metrics);
 
@@ -782,12 +782,12 @@ You might have noticed that the *Click Event Count* application was always start
 and `--event-time` program arguments. By omitting these in the command of the *client* container in the 
 `docker-compose.yaml`, you can change the behavior of the Job.
 
-* `--checkpointing` enables [checkpoint]({{< ref "/learn-flink/fault_tolerance" >}}), 
+* `--checkpointing` enables [checkpoint]({{< ref "docs/learn-flink/fault_tolerance" >}}), 
 which is Flink's fault-tolerance mechanism. If you run without it and go through 
 [failure and recovery](#observing-failure--recovery), you should will see that data is actually 
 lost.
 
-* `--event-time` enables [event time semantics]({{< ref "/dev/event_time" >}}) for your 
+* `--event-time` enables [event time semantics]({{< ref "docs/dev/event_time" >}}) for your 
 Job. When disabled, the Job will assign events to windows based on the wall-clock time instead of 
 the timestamp of the `ClickEvent`. Consequently, the number of events per window will not be exactly
 one thousand anymore. 
@@ -798,7 +798,7 @@ command of the *client* container in `docker-compose.yaml`.
 
 * `--backpressure` adds an additional operator into the middle of the job that causes severe backpressure 
 during even-numbered minutes (e.g., during 10:12, but not during 10:13). This can be observed by 
-inspecting various [network metrics]({{< ref "/ops/metrics" >}}#default-shuffle-service) 
+inspecting various [network metrics]({{< ref "docs/ops/metrics" >}}#default-shuffle-service) 
 such as `outputQueueLength` and `outPoolUsage`, and/or by using the 
-[backpressure monitoring]({{< ref "/ops/monitoring/back_pressure" >}}#monitoring-back-pressure) 
+[backpressure monitoring]({{< ref "docs/ops/monitoring/back_pressure" >}}#monitoring-back-pressure) 
 available in the WebUI.

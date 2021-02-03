@@ -41,16 +41,16 @@ Apache Flink 可以以多种方式在不同的环境中部署，抛开这种多�
 ## 场景说明
 
 这篇文章中的所有操作都是基于如下两个集群进行的： 
-[Flink Session Cluster]({{< ref "concepts/glossary" >}}#flink-session-cluster) 以及一个 Kafka 集群，
+[Flink Session Cluster]({{< ref "docs/concepts/glossary" >}}#flink-session-cluster) 以及一个 Kafka 集群，
 我们会在下文带领大家一起搭建这两个集群。
 
 一个 Flink 集群总是包含一个 
-[JobManager]({{< ref "concepts/glossary" >}}#flink-jobmanager) 以及一个或多个 
-[Flink TaskManager]({{< ref "concepts/glossary" >}}#flink-taskmanager)。JobManager 
-负责处理 [Job]({{< ref "concepts/glossary" >}}#flink-job) 提交、
+[JobManager]({{< ref "docs/concepts/glossary" >}}#flink-jobmanager) 以及一个或多个 
+[Flink TaskManager]({{< ref "docs/concepts/glossary" >}}#flink-taskmanager)。JobManager 
+负责处理 [Job]({{< ref "docs/concepts/glossary" >}}#flink-job) 提交、
 Job 监控以及资源管理。Flink TaskManager 运行 worker 进程，
 负责实际任务 
-[Tasks]({{< ref "concepts/glossary" >}}#task) 的执行，而这些任务共同组成了一个 Flink Job。 在这篇文章中，
+[Tasks]({{< ref "docs/concepts/glossary" >}}#task) 的执行，而这些任务共同组成了一个 Flink Job。 在这篇文章中，
 我们会先运行一个 TaskManager，接下来会扩容到多个 TaskManager。 
 另外，这里我们会专门使用一个 *client* 容器来提交 Flink Job，
 后续还会使用该容器执行一些操作任务。需要注意的是，Flink 集群的运行并不需要依赖 *client* 容器，
@@ -65,7 +65,7 @@ Job 监控以及资源管理。Flink TaskManager 运行 worker 进程，
 {{< img src="/fig/click-event-count-example.svg" alt="Click Event Count Example" width="80%" >}}
 
 该 Job 负责从 *input* topic 消费点击事件 `ClickEvent`，每个点击事件都包含一个 `timestamp` 和一个 `page` 属性。
-这些事件将按照 `page` 属性进行分组，然后按照每 15s 窗口 [windows]({{< ref "dev/stream/operators/windows" >}}) 进行统计，
+这些事件将按照 `page` 属性进行分组，然后按照每 15s 窗口 [windows]({{< ref "docs/dev/stream/operators/windows" >}}) 进行统计，
 最终结果输出到 *output* topic 中。
 
 总共有 6 种不同的 page 属性，针对特定 page，我们会按照每 15s 产生 1000 个点击事件的速率生成数据。
@@ -161,7 +161,7 @@ TaskManager 刚启动完成之时，你同样会看到很多关于 checkpoint co
 
 ### Flink CLI
 
-[Flink CLI]({{< ref "deployment/cli" >}}) 相关命令可以在 client 容器内进行使用。
+[Flink CLI]({{< ref "docs/deployment/cli" >}}) 相关命令可以在 client 容器内进行使用。
 比如，想查看 Flink CLI 的 `help` 命令，可以通过如下方式进行查看：
 ```bash
 docker-compose run --no-deps client flink --help
@@ -169,7 +169,7 @@ docker-compose run --no-deps client flink --help
 
 ### Flink REST API
 
-[Flink REST API]({{< ref "ops/rest_api" >}}#api) 可以通过本机的 
+[Flink REST API]({{< ref "docs/ops/rest_api" >}}#api) 可以通过本机的 
 `localhost:8081` 进行访问，也可以在 client 容器中通过 `jobmanager:8081` 进行访问。
 比如，通过如下命令可以获取所有正在运行中的 Job：
 ```bash
@@ -309,14 +309,14 @@ docker-compose up -d taskmanager
 
 当 TaskManager 注册成功后，JobManager 就会将处于 `SCHEDULED` 状态的所有任务调度到该 TaskManager 
 的可用 TaskSlots 中运行，此时所有的任务将会从失败前最近一次成功的 
-[checkpoint]({{< ref "learn-flink/fault_tolerance" >}}) 进行恢复，
+[checkpoint]({{< ref "docs/learn-flink/fault_tolerance" >}}) 进行恢复，
 一旦恢复成功，它们的状态将转变为 `RUNNING`。
 
 接下来该 Job 将快速处理 Kafka input 事件的全部积压（在 Job 中断期间累积的数据），
 并以更快的速度(>24 条记录/分钟)产生输出，直到它追上 kafka 的 lag 延迟为止。
 此时观察 *output* topic 输出，
 你会看到在每一个时间窗口中都有按 `page` 进行分组的记录，而且计数刚好是 1000。
-由于我们使用的是 [FlinkKafkaProducer]({{< ref "dev/connectors/kafka" >}}#kafka-producers-and-fault-tolerance) "至少一次"模式，因此你可能会看到一些记录重复输出多次。
+由于我们使用的是 [FlinkKafkaProducer]({{< ref "docs/dev/connectors/kafka" >}}#kafka-producers-and-fault-tolerance) "至少一次"模式，因此你可能会看到一些记录重复输出多次。
 
 {{< hint info >}}
   **注意**：在大部分生产环境中都需要一个资源管理器 (Kubernetes、Yarn,、Mesos)对
@@ -327,7 +327,7 @@ docker-compose up -d taskmanager
 
 ### Job 升级与扩容
 
-升级 Flink 作业一般都需要两步：第一，使用 [Savepoint]({{< ref "ops/state/savepoints" >}}) 优雅地停止 Flink Job。
+升级 Flink 作业一般都需要两步：第一，使用 [Savepoint]({{< ref "docs/ops/state/savepoints" >}}) 优雅地停止 Flink Job。
 Savepoint 是整个应用程序状态的一次快照（类似于 checkpoint ），该快照是在一个明确定义的、全局一致的时间点生成的。第二，从 Savepoint 恢复启动待升级的 Flink Job。
 在此，“升级”包含如下几种含义：
 
@@ -538,7 +538,7 @@ docker-compose scale taskmanager=2
 
 ### 查询 Job 指标
 
-可以通过 JobManager 提供的 REST API 来获取系统和用户[指标]({{< ref "ops/metrics" >}})
+可以通过 JobManager 提供的 REST API 来获取系统和用户[指标]({{< ref "docs/ops/metrics" >}})
 
 具体请求方式取决于我们想查询哪类指标，Job 相关的指标分类可通过 `jobs/<job-id>/metrics` 
 获得，而要想查询某类指标的具体值则可以在请求地址后跟上 `get` 参数。
@@ -786,7 +786,7 @@ curl localhost:8081/jobs/<jod-id>
 }
 ```
 
-请查阅 [REST API 参考]({{< ref "ops/rest_api" >}}#api)，该参考上有完整的指标查询接口信息，包括如何查询不同种类的指标（例如 TaskManager 指标）。
+请查阅 [REST API 参考]({{< ref "docs/ops/rest_api" >}}#api)，该参考上有完整的指标查询接口信息，包括如何查询不同种类的指标（例如 TaskManager 指标）。
 
 {{< top >}}
 
@@ -797,13 +797,13 @@ curl localhost:8081/jobs/<jod-id>
 你可能已经注意到了，*Click Event Count* 这个 Job 在启动时总是会带上 `--checkpointing` 和 `--event-time` 两个参数，
 如果我们去除这两个参数，那么 Job 的行为也会随之改变。
 
-* `--checkpointing` 参数开启了 [checkpoint]({{< ref "learn-flink/fault_tolerance" >}}) 配置，checkpoint 是 Flink 容错机制的重要保证。
+* `--checkpointing` 参数开启了 [checkpoint]({{< ref "docs/learn-flink/fault_tolerance" >}}) 配置，checkpoint 是 Flink 容错机制的重要保证。
 如果你没有开启 checkpoint，那么在 
 [Job 失败与恢复](#observing-failure--recovery)这一节中，你将会看到数据丢失现象发生。
 
-* `--event-time` 参数开启了 Job 的 [事件时间]({{< ref "dev/event_time" >}}) 机制，该机制会使用 `ClickEvent` 自带的时间戳进行统计。
+* `--event-time` 参数开启了 Job 的 [事件时间]({{< ref "docs/dev/event_time" >}}) 机制，该机制会使用 `ClickEvent` 自带的时间戳进行统计。
 如果不指定该参数，Flink 将结合当前机器时间使用事件处理时间进行统计。如此一来，每个窗口计数将不再是准确的 1000 了。 
 
 *Click Event Count* 这个 Job 还有另外一个选项，该选项默认是关闭的，你可以在 *client* 容器的 `docker-compose.yaml` 文件中添加该选项从而观察该 Job 在反压下的表现，该选项描述如下：
 
-* `--backpressure` 将一个额外算子添加到 Job 中，该算子会在偶数分钟内产生严重的反压（比如：10:12 期间，而 10:13 期间不会）。这种现象可以通过多种[网络指标]({{< ref "ops/metrics" >}}#default-shuffle-service)观察到，比如：`outputQueueLength` 和 `outPoolUsage` 指标，通过 WebUI 上的[反压监控]({{< ref "ops/monitoring/back_pressure" >}}#monitoring-back-pressure)也可以观察到。
+* `--backpressure` 将一个额外算子添加到 Job 中，该算子会在偶数分钟内产生严重的反压（比如：10:12 期间，而 10:13 期间不会）。这种现象可以通过多种[网络指标]({{< ref "docs/ops/metrics" >}}#default-shuffle-service)观察到，比如：`outputQueueLength` 和 `outPoolUsage` 指标，通过 WebUI 上的[反压监控]({{< ref "docs/ops/monitoring/back_pressure" >}}#monitoring-back-pressure)也可以观察到。

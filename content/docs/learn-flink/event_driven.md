@@ -33,8 +33,8 @@ A `ProcessFunction` combines event processing with timers and state, making it a
 ### Example
 
 If you've done the
-[hands-on exercise]({{< ref "/learn-flink/streaming_analytics" >}}#hands-on)
-in the [Streaming Analytics training]({{< ref "/learn-flink/streaming_analytics" >}}),
+[hands-on exercise]({{< ref "docs/learn-flink/streaming_analytics" >}}#hands-on)
+in the [Streaming Analytics training]({{< ref "docs/learn-flink/streaming_analytics" >}}),
 you will recall that it uses a `TumblingEventTimeWindow` to compute the sum of the tips for
 each driver during each hour, like this:
 
@@ -165,7 +165,7 @@ Things to consider:
 
 * What happens with late events? Events that are behind the watermark (i.e., late) are being
   dropped. If you want to do something better than this, consider using a side output, which is
-  explained in the [next section]({{< ref "/learn-flink/event_driven" >}}#side-outputs).
+  explained in the [next section]({{< ref "docs/learn-flink/event_driven" >}}#side-outputs).
 
 * This example uses a `MapState` where the keys are timestamps, and sets a `Timer` for that same
   timestamp. This is a common pattern; it makes it easy and efficient to lookup relevant information when the timer fires.
@@ -286,7 +286,7 @@ The hands-on exercise that goes with this section is the {{< training_link file=
 
 ## Further Reading
 
-- [ProcessFunction]({{< ref "/dev/stream/operators/process_function" >}})
-- [Side Outputs]({{< ref "/dev/stream/side_output" >}})
+- [ProcessFunction]({{< ref "docs/dev/stream/operators/process_function" >}})
+- [Side Outputs]({{< ref "docs/dev/stream/side_output" >}})
 
 {{< top >}}

@@ -37,8 +37,8 @@ under the License.
 ### 示例
 
 如果你已经体验了
-[流式分析训练]({{< ref "/learn-flink/streaming_analytics" >}})
-的[动手实践]({{< ref "/learn-flink/streaming_analytics" >}}#hands-on)，
+[流式分析训练]({{< ref "docs/learn-flink/streaming_analytics" >}})
+的[动手实践]({{< ref "docs/learn-flink/streaming_analytics" >}}#hands-on)，
 你应该记得，它是采用 `TumblingEventTimeWindow` 来计算每个小时内每个司机的小费总和，
 像下面的示例这样：
 
@@ -174,7 +174,7 @@ public void processElement(
 需要考虑的事项：
 
 * 延迟的事件怎么处理？watermark 后面的事件（即延迟的）正在被删除。
-  如果你想做一些比这更高级的操作，可以考虑使用旁路输出（Side outputs），这将在[下一节]({{< ref "/learn-flink/event_driven" >}}#side-outputs)中解释。
+  如果你想做一些比这更高级的操作，可以考虑使用旁路输出（Side outputs），这将在[下一节]({{< ref "docs/learn-flink/event_driven" >}}#side-outputs)中解释。
 
 * 本例使用一个 `MapState`，其中 keys 是时间戳（timestamp），并为同一时间戳设置一个 Timer。
   这是一种常见的模式；它使得在 Timer 触发时查找相关信息变得简单高效。
@@ -299,7 +299,7 @@ hourlyTips.getSideOutput(lateFares).print();
 <a name="further-reading"></a>
 ## 延伸阅读
 
-- [处理函数（ProcessFunction）]({{< ref "/dev/stream/operators/process_function" >}})
-- [旁路输出（Side Outputs）]({{< ref "/dev/stream/side_output" >}})
+- [处理函数（ProcessFunction）]({{< ref "docs/dev/stream/operators/process_function" >}})
+- [旁路输出（Side Outputs）]({{< ref "docs/dev/stream/side_output" >}})
 
 {{< top >}}

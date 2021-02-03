@@ -44,7 +44,7 @@ Flink 明确支持以下三种时间语义:
 
 ### 使用 Event Time
 
-如果想要使用事件时间，需要额外给 Flink 提供一个时间戳提取器和 Watermark 生成器，Flink 将使用它们来跟踪事件时间的进度。这将在选节[使用 Watermarks]({{< ref "/learn-flink/streaming_analytics.zh" >}}#working-with-watermarks) 中介绍，但是首先我们需要解释一下 watermarks 是什么。
+如果想要使用事件时间，需要额外给 Flink 提供一个时间戳提取器和 Watermark 生成器，Flink 将使用它们来跟踪事件时间的进度。这将在选节[使用 Watermarks]({{< ref "docs/learn-flink/streaming_analytics.zh" >}}#working-with-watermarks) 中介绍，但是首先我们需要解释一下 watermarks 是什么。
 
 ### Watermarks
 
@@ -190,7 +190,7 @@ Flink 有一些内置的窗口分配器，如下所示：
 
 使用基于计数的窗口时，请记住，只有窗口内的事件数量到达窗口要求的数值时，这些窗口才会触发计算。尽管可以使用自定义触发器自己实现该行为，但无法应对超时和处理部分窗口。
 
-我们可能在有些场景下，想使用全局 window assigner 将每个事件（相同的 key）都分配给某一个指定的全局窗口。 很多情况下，一个比较好的建议是使用 `ProcessFunction`，具体介绍在[这里]({{< ref "/learn-flink/event_driven.zh" >}}#process-functions)。
+我们可能在有些场景下，想使用全局 window assigner 将每个事件（相同的 key）都分配给某一个指定的全局窗口。 很多情况下，一个比较好的建议是使用 `ProcessFunction`，具体介绍在[这里]({{< ref "docs/learn-flink/event_driven.zh" >}}#process-functions)。
 
 <a name="window-functions"></a>
 
@@ -300,7 +300,7 @@ private static class MyWindowFunction extends ProcessWindowFunction<
 
 默认场景下，超过最大无序边界的事件会被删除，但是 Flink 给了我们两个选择去控制这些事件。
 
-您可以使用一种称为[旁路输出]({{< ref "/learn-flink/event_driven.zh" >}}#side-outputs) 的机制来安排将要删除的事件收集到侧输出流中，这里是一个示例:
+您可以使用一种称为[旁路输出]({{< ref "docs/learn-flink/event_driven.zh" >}}#side-outputs) 的机制来安排将要删除的事件收集到侧输出流中，这里是一个示例:
 
 
 ```java
@@ -347,8 +347,8 @@ Flink 的窗口 API 某些方面有一些奇怪的行为，可能和我们预期
 仅仅因为我们使用的是一个小时的处理时间窗口并在 12:05 开始运行您的应用程序，并不意味着第一个窗口将在 1:05 关闭。第一个窗口将长 55 分钟，并在 1:00 关闭。
 
  请注意，滑动窗口和滚动窗口分配器所采用的 offset 参数可用于改变窗口的对齐方式。有关详细的信息，请参见
-[滚动窗口]({{< ref "/dev/stream/operators/windows.zh" >}}#tumbling-windows) 和
-[滑动窗口]({{< ref "/dev/stream/operators/windows.zh" >}}#sliding-windows) 。
+[滚动窗口]({{< ref "docs/dev/stream/operators/windows.zh" >}}#tumbling-windows) 和
+[滑动窗口]({{< ref "docs/dev/stream/operators/windows.zh" >}}#sliding-windows) 。
 
 <a name="windows-can-follow-windows"></a>
 #### window 后面可以接 window
@@ -391,7 +391,7 @@ stream
 <a name="further-reading"></a>
 ## 延伸阅读
 
-- [Timely Stream Processing]({{< ref "/concepts/timely-stream-processing.zh" >}})
-- [Windows]({{< ref "/dev/stream/operators/windows.zh" >}})
+- [Timely Stream Processing]({{< ref "docs/concepts/timely-stream-processing.zh" >}})
+- [Windows]({{< ref "docs/dev/stream/operators/windows.zh" >}})
 
 {{< top >}}

@@ -48,7 +48,7 @@ implementations.
 
 If you want to use event time, you will also need to supply a Timestamp Extractor and Watermark
 Generator that Flink will use to track the progress of event time. This will be covered in the
-section below on [Working with Watermarks]({{< ref "/learn-flink/streaming_analytics" >}}#working-with-watermarks), but first we should explain what watermarks are.
+section below on [Working with Watermarks]({{< ref "docs/learn-flink/streaming_analytics" >}}#working-with-watermarks), but first we should explain what watermarks are.
 
 ### Watermarks
 
@@ -227,7 +227,7 @@ that behavior yourself with a custom Trigger.
 A global window assigner assigns every event (with the same key) to the same global window. This is
 only useful if you are going to do your own custom windowing, with a custom Trigger. In many cases
 where this might seem useful you will be better off using a `ProcessFunction` as described
-[in another section]({{< ref "/learn-flink/event_driven" >}}#process-functions).
+[in another section]({{< ref "docs/learn-flink/event_driven" >}}#process-functions).
 
 ### Window Functions
 
@@ -333,7 +333,7 @@ will contain exactly one reading -- the pre-aggregated maximum computed by `MyRe
 By default, when using event time windows, late events are dropped. There are two optional parts of the window API that give you more control over this.
 
 You can arrange for the events that would be dropped to be collected to an alternate output stream instead, using a mechanism called
-[Side Outputs]({{< ref "/learn-flink/event_driven" >}}#side-outputs).
+[Side Outputs]({{< ref "docs/learn-flink/event_driven" >}}#side-outputs).
 Here is an example of what that might look like:
 
 ```java
@@ -385,8 +385,8 @@ long and close at 1:00.
 
 Note, however, that the tumbling and sliding window assigners take an optional offset parameter
 that can be used to change the alignment of the windows. See
-[Tumbling Windows]({{< ref "/dev/stream/operators/windows" >}}#tumbling-windows) and
-[Sliding Windows]({{< ref "/dev/stream/operators/windows" >}}#sliding-windows) for details.
+[Tumbling Windows]({{< ref "docs/dev/stream/operators/windows" >}}#tumbling-windows) and
+[Sliding Windows]({{< ref "docs/dev/stream/operators/windows" >}}#sliding-windows) for details.
 
 #### Windows Can Follow Windows
 
@@ -429,7 +429,7 @@ The hands-on exercise that goes with this section is the {{< training_link file=
 
 ## Further Reading
 
-- [Timely Stream Processing]({{< ref "/concepts/timely-stream-processing" >}})
-- [Windows]({{< ref "/dev/stream/operators/windows" >}})
+- [Timely Stream Processing]({{< ref "docs/concepts/timely-stream-processing" >}})
+- [Windows]({{< ref "docs/dev/stream/operators/windows" >}})
 
 {{< top >}}

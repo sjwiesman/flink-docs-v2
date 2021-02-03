@@ -74,7 +74,7 @@ public class Person {
 Person person = new Person("Fred Flintstone", 35);
 ```
 
-Flink 的序列化器[支持的 POJO 类型数据结构升级]({{< ref "/dev/stream/state/schema_evolution.zh" >}}#pojo-types)。
+Flink 的序列化器[支持的 POJO 类型数据结构升级]({{< ref "docs/dev/stream/state/schema_evolution.zh" >}}#pojo-types)。
 
 ### Scala tuples 和 case classes
 
@@ -202,9 +202,9 @@ and several pub-sub systems.
 ## 更多阅读
 
 - [Flink Serialization Tuning Vol. 1: Choosing your Serializer — if you can](https://flink.apache.org/news/2020/04/15/flink-serialization-tuning-vol-1.html)
-- [Anatomy of a Flink Program]({{< ref "/dev/datastream_api.zh" >}}#anatomy-of-a-flink-program)
-- [Data Sources]({{< ref "/dev/datastream_api.zh" >}}#data-sources)
-- [Data Sinks]({{< ref "/dev/datastream_api.zh" >}}#data-sinks)
-- [DataStream Connectors]({{< ref "/dev/connectors/index.zh" >}})
+- [Anatomy of a Flink Program]({{< ref "docs/dev/datastream_api.zh" >}}#anatomy-of-a-flink-program)
+- [Data Sources]({{< ref "docs/dev/datastream_api.zh" >}}#data-sources)
+- [Data Sinks]({{< ref "docs/dev/datastream_api.zh" >}}#data-sinks)
+- [DataStream Connectors]({{< ref "docs/dev/connectors/index.zh" >}})
 
 {{< top >}}
