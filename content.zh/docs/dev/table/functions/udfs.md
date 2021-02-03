@@ -1,9 +1,9 @@
 ---
-title: "User-defined Functions"
+title: "自定义函数"
 weight: 51
 type: docs
 aliases:
-  - /dev/table/functions/udfs.html
+  - /zh/dev/table/functions/udfs.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,39 +24,39 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# User-defined Functions
+# 自定义函数
 
-User-defined functions (UDFs) are extension points to call frequently used logic or custom logic that cannot be expressed otherwise in queries.
+自定义函数（UDF）是一种扩展开发机制，可以用来在查询语句里调用难以用其他方式表达的频繁使用或自定义的逻辑。
 
-User-defined functions can be implemented in a JVM language (such as Java or Scala) or Python.
-An implementer can use arbitrary third party libraries within a UDF.
-This page will focus on JVM-based languages, please refer to the PyFlink documentation
-for details on writing [general]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}) 
- and [vectorized]({{< ref "/dev/python/table-api-users-guide/udfs/vectorized_python_udfs" >}}) UDFs in Python.
+自定义函数可以用 JVM 语言（例如 Java 或 Scala）或 Python 实现，实现者可以在 UDF 中使用任意第三方库，本文聚焦于使用 JVM 语言开发自定义函数。
 
-Overview
+
+
+概述
 --------
 
-Currently, Flink distinguishes between the following kinds of functions:
+当前 Flink 有如下几种函数：
 
-- *Scalar functions* map scalar values to a new scalar value.
-- *Table functions* map scalar values to new rows.
-- *Aggregate functions* map scalar values of multiple rows to a new scalar value.
-- *Table aggregate functions* map scalar values of multiple rows to new rows.
-- *Async table functions* are special functions for table sources that perform a lookup.
+- *标量函数* 将标量值转换成一个新标量值；
+- *表值函数* 将标量值转换成新的行数据；
+- *聚合函数* 将多行数据里的标量值转换成一个新标量值；
+- *表值聚合函数* 将多行数据里的标量值转换成新的行数据；
+- *异步表值函数* 是异步查询外部数据系统的特殊函数。
 
-The following example shows how to create a simple scalar function and how to call the function in both Table API and SQL.
+<span class="label label-danger">注意</span> 标量和表值函数已经使用了新的基于[数据类型]({{< ref "/dev/table/types.zh" >}})的类型系统，聚合函数仍然使用基于 `TypeInformation` 的旧类型系统。
 
-For SQL queries, a function must always be registered under a name. For Table API, a function can be registered or directly used _inline_.
+以下示例展示了如何创建一个基本的标量函数，以及如何在 Table API 和 SQL 里调用这个函数。
 
-{{< tabs "250f91a3-8622-4908-9c1d-c558cb7c2f42" >}}
+函数用于 SQL 查询前要先经过注册；而在用于 Table API 时，函数可以先注册后调用，也可以 _内联_ 后直接使用。
+
+{{< tabs "1a14d788-01f7-4582-827f-5dda58de0512" >}}
 {{< tab "Java" >}}
 ```java
 import org.apache.flink.table.api.*;
 import org.apache.flink.table.functions.ScalarFunction;
 import static org.apache.flink.table.api.Expressions.*;
 
-// define function logic
+// 定义函数逻辑
 public static class SubstringFunction extends ScalarFunction {
   public String eval(String s, Integer begin, Integer end) {
     return s.substring(begin, end);
@@ -65,16 +65,16 @@ public static class SubstringFunction extends ScalarFunction {
 
 TableEnvironment env = TableEnvironment.create(...);
 
-// call function "inline" without registration in Table API
+// 在 Table API 里不经注册直接“内联”调用函数
 env.from("MyTable").select(call(SubstringFunction.class, $("myField"), 5, 12));
 
-// register function
+// 注册函数
 env.createTemporarySystemFunction("SubstringFunction", SubstringFunction.class);
 
-// call registered function in Table API
+// 在 Table API 里调用注册好的函数
 env.from("MyTable").select(call("SubstringFunction", $("myField"), 5, 12));
 
-// call registered function in SQL
+// 在 SQL 里调用注册好的函数
 env.sqlQuery("SELECT SubstringFunction(myField, 5, 12) FROM MyTable");
 
 ```
@@ -93,37 +93,34 @@ class SubstringFunction extends ScalarFunction {
 
 val env = TableEnvironment.create(...)
 
-// call function "inline" without registration in Table API
+// 在 Table API 里不经注册直接“内联”调用函数
 env.from("MyTable").select(call(classOf[SubstringFunction], $"myField", 5, 12))
 
-// register function
+// 注册函数
 env.createTemporarySystemFunction("SubstringFunction", classOf[SubstringFunction])
 
-// call registered function in Table API
+// 在 Table API 里调用注册好的函数
 env.from("MyTable").select(call("SubstringFunction", $"myField", 5, 12))
 
-// call registered function in SQL
+// 在 SQL 里调用注册好的函数
 env.sqlQuery("SELECT SubstringFunction(myField, 5, 12) FROM MyTable")
 
 ```
 {{< /tab >}}
 {{< /tabs >}}
 
-For interactive sessions, it is also possible to parameterize functions before using or
-registering them. In this case, function _instances_ instead of function _classes_ can be
-used as temporary functions.
+对于交互式会话，还可以在使用或注册函数之前对其进行参数化，这样可以把函数 _实例_ 而不是函数 _类_ 用作临时函数。
 
-It requires that the parameters are serializable for shipping
-function instances to the cluster.
+为确保函数实例可应用于集群环境，参数必须是可序列化的。
 
-{{< tabs "5236edad-3d13-455c-8e2f-5e164da9f844" >}}
+{{< tabs "0a4ec6d3-9f17-43bd-9b4d-506ca2cc7ec2" >}}
 {{< tab "Java" >}}
 ```java
 import org.apache.flink.table.api.*;
 import org.apache.flink.table.functions.ScalarFunction;
 import static org.apache.flink.table.api.Expressions.*;
 
-// define parameterizable function logic
+// 定义可参数化的函数逻辑
 public static class SubstringFunction extends ScalarFunction {
 
   private boolean endInclusive;
@@ -139,10 +136,10 @@ public static class SubstringFunction extends ScalarFunction {
 
 TableEnvironment env = TableEnvironment.create(...);
 
-// call function "inline" without registration in Table API
+// 在 Table API 里不经注册直接“内联”调用函数
 env.from("MyTable").select(call(new SubstringFunction(true), $("myField"), 5, 12));
 
-// register function
+// 注册函数
 env.createTemporarySystemFunction("SubstringFunction", new SubstringFunction(true));
 
 ```
@@ -152,7 +149,7 @@ env.createTemporarySystemFunction("SubstringFunction", new SubstringFunction(tru
 import org.apache.flink.table.api._
 import org.apache.flink.table.functions.ScalarFunction
 
-// define parameterizable function logic
+// 定义可参数化的函数逻辑
 class SubstringFunction(val endInclusive) extends ScalarFunction {
   def eval(s: String, begin: Integer, end: Integer): String = {
     s.substring(endInclusive ? end + 1 : end)
@@ -161,10 +158,10 @@ class SubstringFunction(val endInclusive) extends ScalarFunction {
 
 val env = TableEnvironment.create(...)
 
-// call function "inline" without registration in Table API
+// 在 Table API 里不经注册直接“内联”调用函数
 env.from("MyTable").select(call(new SubstringFunction(true), $"myField", 5, 12))
 
-// register function
+// 注册函数
 env.createTemporarySystemFunction("SubstringFunction", new SubstringFunction(true))
 
 ```
@@ -173,47 +170,45 @@ env.createTemporarySystemFunction("SubstringFunction", new SubstringFunction(tru
 
 {{< top >}}
 
-Implementation Guide
---------------------
+开发指南
+--------
 
-Independent of the kind of function, all user-defined functions follow some basic implementation principles.
+<span class="label label-danger">注意</span>在聚合函数使用新的类型系统前，本节仅适用于标量和表值函数。
 
-### Function Class
+所有的自定义函数都遵循一些基本的实现原则。
 
-An implementation class must extend from one of the available base classes (e.g. `org.apache.flink.table.functions.ScalarFunction`).
+### 函数类
 
-The class must be declared `public`, not `abstract`, and should be globally accessible. Thus, non-static inner or anonymous classes are not allowed.
+实现类必须继承自合适的基类之一（例如 `org.apache.flink.table.functions.ScalarFunction` ）。
 
-For storing a user-defined function in a persistent catalog, the class must have a default constructor and must be instantiable during runtime.
+该类必须声明为 `public` ，而不是 `abstract` ，并且可以被全局访问。不允许使用非静态内部类或匿名类。
 
-### Evaluation Methods
+为了将自定义函数存储在持久化的 catalog 中，该类必须具有默认构造器，且在运行时可实例化。
 
-The base class provides a set of methods that can be overridden such as `open()`, `close()`, or `isDeterministic()`.
+### 求值方法
 
-However, in addition to those declared methods, the main runtime logic that is applied to every incoming record must be implemented through specialized _evaluation methods_.
+基类提供了一组可以被重写的方法，例如 `open()`、 `close()` 或 `isDeterministic()` 。
 
-Depending on the function kind, evaluation methods such as `eval()`, `accumulate()`, or `retract()` are called by code-generated operators during runtime.
+但是，除了上述方法之外，作用于每条传入记录的主要逻辑还必须通过专门的 _求值方法_ 来实现。
 
-The methods must be declared `public` and take a well-defined set of arguments.
+根据函数的种类，后台生成的运算符会在运行时调用诸如 `eval()`、`accumulate()` 或 `retract()` 之类的求值方法。
 
-Regular JVM method calling semantics apply. Therefore, it is possible to:
-- implement overloaded methods such as `eval(Integer)` and `eval(LocalDateTime)`,
-- use var-args such as `eval(Integer...)`,
-- use object inheritance such as `eval(Object)` that takes both `LocalDateTime` and `Integer`,
-- and combinations of the above such as `eval(Object...)` that takes all kinds of arguments.
+这些方法必须声明为 `public` ，并带有一组定义明确的参数。
 
-If you intend to implement functions in Scala, please add the `scala.annotation.varargs` annotation in
-case of variable arguments. Furthermore, it is recommended to use boxed primitives (e.g. `java.lang.Integer`
-instead of `Int`) to support `NULL`.
+常规的 JVM 方法调用语义是适用的。因此可以：
+- 实现重载的方法，例如 `eval(Integer)` 和 `eval(LocalDateTime)`；
+- 使用变长参数，例如 `eval(Integer...)`;
+- 使用对象继承，例如 `eval(Object)` 可接受 `LocalDateTime` 和 `Integer` 作为参数；
+- 也可组合使用，例如 `eval(Object...)` 可接受所有类型的参数。
 
-The following snippets shows an example of an overloaded function:
+以下代码片段展示了一个重载函数的示例：
 
-{{< tabs "c5f4b8a1-0385-4153-84c4-d25eef6b29a0" >}}
+{{< tabs "cef0f4dd-cd54-4bd8-a739-a5384709ed14" >}}
 {{< tab "Java" >}}
 ```java
 import org.apache.flink.table.functions.ScalarFunction;
 
-// function with overloaded evaluation methods
+// 有多个重载求值方法的函数
 public static class SumFunction extends ScalarFunction {
 
   public Integer eval(Integer a, Integer b) {
@@ -237,11 +232,9 @@ public static class SumFunction extends ScalarFunction {
 {{< tab "Scala" >}}
 ```scala
 import org.apache.flink.table.functions.ScalarFunction
-import java.lang.Integer
-import java.lang.Double
 import scala.annotation.varargs
 
-// function with overloaded evaluation methods
+// 有多个重载求值方法的函数
 class SumFunction extends ScalarFunction {
 
   def eval(a: Integer, b: Integer): Integer = {
@@ -262,31 +255,32 @@ class SumFunction extends ScalarFunction {
 {{< /tab >}}
 {{< /tabs >}}
 
-### Type Inference
+### 类型推导
 
-The table ecosystem (similar to the SQL standard) is a strongly typed API. Therefore, both function parameters and return types must be mapped to a [data type]({{< ref "/dev/table/types" >}}).
+Table（类似于 SQL 标准）是一种强类型的 API。因此，函数的参数和返回类型都必须映射到[数据类型]({%link dev/table/types.zh.md %})。
 
-From a logical perspective, the planner needs information about expected types, precision, and scale. From a JVM perspective, the planner needs information about how internal data structures are represented as JVM objects when calling a user-defined function.
+从逻辑角度看，Planner 需要知道数据类型、精度和小数位数；从 JVM 角度来看，Planner 在调用自定义函数时需要知道如何将内部数据结构表示为 JVM 对象。
 
-The logic for validating input arguments and deriving data types for both the parameters and the result of a function is summarized under the term _type inference_.
+术语 _类型推导_ 概括了意在验证输入值、派生出参数/返回值数据类型的逻辑。
 
-Flink's user-defined functions implement an automatic type inference extraction that derives data types from the function's class and its evaluation methods via reflection. If this implicit reflective extraction approach is not successful, the extraction process can be supported by annotating affected parameters, classes, or methods with `@DataTypeHint` and `@FunctionHint`. More examples on how to annotate functions are shown below.
+Flink 自定义函数实现了自动的类型推导提取，通过反射从函数的类及其求值方法中派生数据类型。如果这种隐式的反射提取方法不成功，则可以通过使用 `@DataTypeHint` 和 `@FunctionHint` 注解相关参数、类或方法来支持提取过程，下面展示了有关如何注解函数的例子。
 
-If more advanced type inference logic is required, an implementer can explicitly override the `getTypeInference()` method in every user-defined function. However, the annotation approach is recommended because it keeps custom type inference logic close to the affected locations and falls back to the default behavior for the remaining implementation.
+如果需要更高级的类型推导逻辑，实现者可以在每个自定义函数中显式重写 `getTypeInference()` 方法。但是，建议使用注解方式，因为它可使自定义类型推导逻辑保持在受影响位置附近，而在其他位置则保持默认状态。
 
-#### Automatic Type Inference
 
-The automatic type inference inspects the function's class and evaluation methods to derive data types for the arguments and result of a function. `@DataTypeHint` and `@FunctionHint` annotations support the automatic extraction.
+#### 自动类型推导
 
-For a full list of classes that can be implicitly mapped to a data type, see the [data type extraction section]({{< ref "/dev/table/types" >}}#data-type-extraction).
+自动类型推导会检查函数的类和求值方法，派生出函数参数和结果的数据类型， `@DataTypeHint` 和 `@FunctionHint` 注解支持自动类型推导。
+
+有关可以隐式映射到数据类型的类的完整列表，请参阅[数据类型]({%link dev/table/types.zh.md %}#数据类型注解)。
 
 **`@DataTypeHint`**
 
-In many scenarios, it is required to support the automatic extraction _inline_ for paramaters and return types of a function
+在许多情况下，需要支持以 _内联_ 方式自动提取出函数参数、返回值的类型。
 
-The following example shows how to use data type hints. More information can be found in the documentation of the annotation class.
+以下例子展示了如何使用 `@DataTypeHint`，详情可参考该注解类的文档。
 
-{{< tabs "5aa7ac0f-ff0a-4bbb-81ef-66cb61ebc272" >}}
+{{< tabs "f5e228c1-ded2-4892-a46d-fdb2431e6841" >}}
 {{< tab "Java" >}}
 ```java
 import org.apache.flink.table.annotation.DataTypeHint;
@@ -294,7 +288,7 @@ import org.apache.flink.table.annotation.InputGroup;
 import org.apache.flink.table.functions.ScalarFunction;
 import org.apache.flink.types.Row;
 
-// function with overloaded evaluation methods
+// 有多个重载求值方法的函数
 public static class OverloadedFunction extends ScalarFunction {
 
   // no hint required
@@ -302,18 +296,18 @@ public static class OverloadedFunction extends ScalarFunction {
     return a + b;
   }
 
-  // define the precision and scale of a decimal
+  // 定义 decimal 的精度和小数位
   public @DataTypeHint("DECIMAL(12, 3)") BigDecimal eval(double a, double b) {
     return BigDecimal.valueOf(a + b);
   }
 
-  // define a nested data type
+  // 定义嵌套数据类型
   @DataTypeHint("ROW<s STRING, t TIMESTAMP(3) WITH LOCAL TIME ZONE>")
   public Row eval(int i) {
     return Row.of(String.valueOf(i), Instant.ofEpochSecond(i));
   }
 
-  // allow wildcard input and customly serialized output
+  // 允许任意类型的符入，并输出序列化定制后的值
   @DataTypeHint(value = "RAW", bridgedTo = ByteBuffer.class)
   public ByteBuffer eval(@DataTypeHint(inputGroup = InputGroup.ANY) Object o) {
     return MyUtils.serializeToByteBuffer(o);
@@ -338,19 +332,19 @@ class OverloadedFunction extends ScalarFunction {
     a + b
   }
 
-  // define the precision and scale of a decimal
+  // 定义 decimal 的精度和小数位
   @DataTypeHint("DECIMAL(12, 3)")
   def eval(double a, double b): BigDecimal = {
     java.lang.BigDecimal.valueOf(a + b)
   }
 
-  // define a nested data type
+  // 定义嵌套数据类型
   @DataTypeHint("ROW<s STRING, t TIMESTAMP(3) WITH LOCAL TIME ZONE>")
   def eval(Int i): Row = {
     Row.of(java.lang.String.valueOf(i), java.time.Instant.ofEpochSecond(i))
   }
 
-  // allow wildcard input and customly serialized output
+  // 允许任意类型的符入，并输出定制序列化后的值
   @DataTypeHint(value = "RAW", bridgedTo = classOf[java.nio.ByteBuffer])
   def eval(@DataTypeHint(inputGroup = InputGroup.ANY) Object o): java.nio.ByteBuffer = {
     MyUtils.serializeToByteBuffer(o)
@@ -363,13 +357,13 @@ class OverloadedFunction extends ScalarFunction {
 
 **`@FunctionHint`**
 
-In some scenarios, it is desirable that one evaluation method handles multiple different data types at the same time. Furthermore, in some scenarios, overloaded evaluation methods have a common result type that should be declared only once.
+有时我们希望一种求值方法可以同时处理多种数据类型，有时又要求对重载的多个求值方法仅声明一次通用的结果类型。
 
-The `@FunctionHint` annotation can provide a mapping from argument data types to a result data type. It enables annotating entire function classes or evaluation methods for input, accumulator, and result data types. One or more annotations can be declared on top of a class or individually for each evaluation method for overloading function signatures. All hint parameters are optional. If a parameter is not defined, the default reflection-based extraction is used. Hint parameters defined on top of a function class are inherited by all evaluation methods.
+`@FunctionHint` 注解可以提供从入参数据类型到结果数据类型的映射，它可以在整个函数类或求值方法上注解输入、累加器和结果的数据类型。可以在类顶部声明一个或多个注解，也可以为类的所有求值方法分别声明一个或多个注解。所有的 hint 参数都是可选的，如果未定义参数，则使用默认的基于反射的类型提取。在函数类顶部定义的 hint 参数被所有求值方法继承。
 
-The following example shows how to use function hints. More information can be found in the documentation of the annotation class.
+以下例子展示了如何使用 `@FunctionHint`，详情可参考该注解类的文档。
 
-{{< tabs "41037cd4-d491-4f85-95d2-25542cbe89f6" >}}
+{{< tabs "89e481b6-9709-4f8d-883b-921f0e67b041" >}}
 {{< tab "Java" >}}
 ```java
 import org.apache.flink.table.annotation.DataTypeHint;
@@ -377,8 +371,7 @@ import org.apache.flink.table.annotation.FunctionHint;
 import org.apache.flink.table.functions.TableFunction;
 import org.apache.flink.types.Row;
 
-// function with overloaded evaluation methods
-// but globally defined output type
+// 为函数类的所有求值方法指定同一个输出类型
 @FunctionHint(output = @DataTypeHint("ROW<s STRING, i INT>"))
 public static class OverloadedFunction extends TableFunction<Row> {
 
@@ -392,8 +385,7 @@ public static class OverloadedFunction extends TableFunction<Row> {
   }
 }
 
-// decouples the type inference from evaluation methods,
-// the type inference is entirely determined by the function hints
+// 解耦类型推导与求值方法，类型推导完全取决于 FunctionHint
 @FunctionHint(
   input = {@DataTypeHint("INT"), @DataTypeHint("INT")},
   output = @DataTypeHint("INT")
@@ -428,8 +420,7 @@ import org.apache.flink.table.annotation.FunctionHint
 import org.apache.flink.table.functions.TableFunction
 import org.apache.flink.types.Row
 
-// function with overloaded evaluation methods
-// but globally defined output type
+// 为函数类的所有求值方法指定同一个输出类型
 @FunctionHint(output = new DataTypeHint("ROW<s STRING, i INT>"))
 class OverloadedFunction extends TableFunction[Row] {
 
@@ -443,8 +434,7 @@ class OverloadedFunction extends TableFunction[Row] {
   }
 }
 
-// decouples the type inference from evaluation methods,
-// the type inference is entirely determined by the function hints
+// 解耦类型推导与求值方法，类型推导完全取决于 @FunctionHint
 @FunctionHint(
   input = Array(new DataTypeHint("INT"), new DataTypeHint("INT")),
   output = new DataTypeHint("INT")
@@ -474,13 +464,13 @@ class OverloadedFunction extends TableFunction[AnyRef] {
 {{< /tab >}}
 {{< /tabs >}}
 
-#### Custom Type Inference
+#### 定制类型推导
 
-For most scenarios, `@DataTypeHint` and `@FunctionHint` should be sufficient to model user-defined functions. However, by overriding the automatic type inference defined in `getTypeInference()`, implementers can create arbitrary functions that behave like built-in system functions.
+在大多数情况下，`@DataTypeHint` 和 `@FunctionHint` 足以构建自定义函数，然而通过重写 `getTypeInference()` 定制自动类型推导逻辑，实现者可以创建任意像系统内置函数那样有用的函数。
 
-The following example implemented in Java illustrates the potential of a custom type inference logic. It uses a string literal argument to determine the result type of a function. The function takes two string arguments: the first argument represents the string to be parsed, the second argument represents the target type.
+以下用 Java 实现的例子展示了定制类型推导的潜力，它根据字符串参数来确定函数的结果类型。该函数带有两个字符串参数：第一个参数表示要分析的字符串，第二个参数表示目标类型。
 
-{{< tabs "68ea10db-69f5-4a71-bfff-b87b4f3be010" >}}
+{{< tabs "db47e1b8-e387-432a-8bd5-1317e12ff64b" >}}
 {{< tab "Java" >}}
 ```java
 import org.apache.flink.table.api.DataTypes;
@@ -502,20 +492,18 @@ public static class LiteralFunction extends ScalarFunction {
     }
   }
 
-  // the automatic, reflection-based type inference is disabled and
-  // replaced by the following logic
+  // 禁用自动的反射式类型推导，使用如下逻辑进行类型推导
   @Override
   public TypeInference getTypeInference(DataTypeFactory typeFactory) {
     return TypeInference.newBuilder()
-      // specify typed arguments
-      // parameters will be casted implicitly to those types if necessary
+      // 指定输入参数的类型，必要时参数会被隐式转换
       .typedArguments(DataTypes.STRING(), DataTypes.STRING())
       // specify a strategy for the result data type of the function
       .outputTypeStrategy(callContext -> {
         if (!callContext.isArgumentLiteral(1) || callContext.isArgumentNull(1)) {
           throw callContext.newValidationError("Literal expected for second argument.");
         }
-        // return a data type based on a literal
+        // 基于字符串值返回数据类型
         final String literal = callContext.getArgumentValue(1, String.class).orElse("STRING");
         switch (literal) {
           case "INT":
@@ -536,50 +524,28 @@ public static class LiteralFunction extends ScalarFunction {
 {{< /tabs >}}
 
 For more examples of custom type inference, see also the `flink-examples-table` module with
-{{< gh_link file="/flink-examples/flink-examples-table/src/main/java/org/apache/flink/table/examples/java/functions/AdvancedFunctionsExample.java" name="advanced function implementation" >}}.
+{% gh_link flink-examples/flink-examples-table/src/main/java/org/apache/flink/table/examples/java/functions/AdvancedFunctionsExample.java "advanced function implementation" %}.
 
-### Determinism
+### 运行时集成
+-------------------
 
-Every user-defined function class can declare whether it produces deterministic results or not by overriding
-the `isDeterministic()` method. If the function is not purely functional (like `random()`, `date()`, or `now()`),
-the method must return `false`. By default, `isDeterministic()` returns `true`.
+有时候自定义函数需要获取一些全局信息，或者在真正被调用之前做一些配置（setup）/清理（clean-up）的工作。自定义函数也提供了 `open()` 和 `close()` 方法，你可以重写这两个方法做到类似于 DataStream API 中 `RichFunction` 的功能。
 
-Furthermore, the `isDeterministic()` method might also influence the runtime behavior. A runtime
-implementation might be called at two different stages:
+open() 方法在求值方法被调用之前先调用。close() 方法在求值方法调用完之后被调用。
 
-**During planning (i.e. pre-flight phase)**: If a function is called with constant expressions
-or constant expressions can be derived from the given statement, a function is pre-evaluated
-for constant expression reduction and might not be executed on the cluster anymore. Unless
-`isDeterministic()` is used to disable constant expression reduction in this case. For example,
-the following calls to `ABS` are executed during planning: `SELECT ABS(-1) FROM t` and
-`SELECT ABS(field) FROM t WHERE field = -1`; whereas `SELECT ABS(field) FROM t` is not.
+open() 方法提供了一个 FunctionContext，它包含了一些自定义函数被执行时的上下文信息，比如 metric group、分布式文件缓存，或者是全局的作业参数等。
 
-**During runtime (i.e. cluster execution)**: If a function is called with non-constant expressions
-or `isDeterministic()` returns `false`.
+下面的信息可以通过调用 `FunctionContext` 的对应的方法来获得：
 
-### Runtime Integration
+| 方法                                | 描述                                            |
+| :------------------------------------ | :----------------------------------------------------- |
+| `getMetricGroup()`                    | 执行该函数的 subtask 的 Metric Group。                |
+| `getCachedFile(name)`                 | 分布式文件缓存的本地临时文件副本。|
+| `getJobParameter(name, defaultValue)` | 跟对应的 key 关联的全局参数值。  |
 
-Sometimes it might be necessary for a user-defined function to get global runtime information or do some setup/clean-up work before the actual work. User-defined functions provide `open()` and `close()` methods that can be overridden and provide similar functionality as the methods in `RichFunction` of DataStream API.
+下面的例子展示了如何在一个标量函数中通过 FunctionContext 来获取一个全局的任务参数：
 
-The `open()` method is called once before the evaluation method. The `close()` method after the last call to the evaluation method.
-
-The `open()` method provides a `FunctionContext` that contains information about the context in which user-defined functions are executed, such as the metric group, the distributed cache files, or the global job parameters.
-
-The following information can be obtained by calling the corresponding methods of `FunctionContext`:
-
-| Method                                   | Description                                                             |
-| :--------------------------------------- | :---------------------------------------------------------------------- |
-| `getMetricGroup()`                       | Metric group for this parallel subtask.                                 |
-| `getCachedFile(name)`                    | Local temporary file copy of a distributed cache file.                  |
-| `getJobParameter(name, defaultValue)`    | Global job parameter value associated with given key.                   |
-| `getExternalResourceInfos(resourceName)` | Returns a set of external resource infos associated with the given key. |
-
-**Note**: Depending on the context in which the function is executed, not all methods from above might be available. For example,
-during constant expression reduction adding a metric is a no-op operation.
-
-The following example snippet shows how to use `FunctionContext` in a scalar function for accessing a global job parameter:
-
-{{< tabs "80fcb023-ae6b-4936-b0dd-aaf157cc2b34" >}}
+{{< tabs "39170f36-8e99-464a-bc9c-0d052568ef8a" >}}
 {{< tab "Java" >}}
 ```java
 import org.apache.flink.table.api.*;
@@ -592,8 +558,8 @@ public static class HashCodeFunction extends ScalarFunction {
 
     @Override
     public void open(FunctionContext context) throws Exception {
-        // access the global "hashcode_factor" parameter
-        // "12" would be the default value if the parameter does not exist
+        // 获取参数 "hashcode_factor"
+        // 如果不存在，则使用默认值 "12"
         factor = Integer.parseInt(context.getJobParameter("hashcode_factor", "12"));
     }
 
@@ -604,13 +570,13 @@ public static class HashCodeFunction extends ScalarFunction {
 
 TableEnvironment env = TableEnvironment.create(...);
 
-// add job parameter
+// 设置任务参数
 env.getConfig().addJobParameter("hashcode_factor", "31");
 
-// register the function
+// 注册函数
 env.createTemporarySystemFunction("hashCode", HashCodeFunction.class);
 
-// use the function
+// 调用函数
 env.sqlQuery("SELECT myField, hashCode(myField) FROM MyTable");
 
 ```
@@ -626,8 +592,8 @@ class HashCodeFunction extends ScalarFunction {
   private var factor: Int = 0
 
   override def open(context: FunctionContext): Unit = {
-    // access the global "hashcode_factor" parameter
-    // "12" would be the default value if the parameter does not exist
+    // 获取参数 "hashcode_factor"
+    // 如果不存在，则使用默认值 "12"
     factor = context.getJobParameter("hashcode_factor", "12").toInt
   }
 
@@ -638,13 +604,13 @@ class HashCodeFunction extends ScalarFunction {
 
 val env = TableEnvironment.create(...)
 
-// add job parameter
+// 设置任务参数
 env.getConfig.addJobParameter("hashcode_factor", "31")
 
-// register the function
+// 注册函数
 env.createTemporarySystemFunction("hashCode", classOf[HashCodeFunction])
 
-// use the function
+// 调用函数
 env.sqlQuery("SELECT myField, hashCode(myField) FROM MyTable")
 
 ```
@@ -653,16 +619,16 @@ env.sqlQuery("SELECT myField, hashCode(myField) FROM MyTable")
 
 {{< top >}}
 
-Scalar Functions
+标量函数
 ----------------
 
-A user-defined scalar function maps zero, one, or multiple scalar values to a new scalar value. Any data type listed in the [data types section]({{< ref "/dev/table/types" >}}) can be used as a parameter or return type of an evaluation method.
+自定义标量函数可以把 0 到多个标量值映射成 1 个标量值，[数据类型]({%link dev/table/types.zh.md %})里列出的任何数据类型都可作为求值方法的参数和返回值类型。
 
-In order to define a scalar function, one has to extend the base class `ScalarFunction` in `org.apache.flink.table.functions` and implement one or more evaluation methods named `eval(...)`.
+想要实现自定义标量函数，你需要扩展 `org.apache.flink.table.functions` 里面的 `ScalarFunction` 并且实现一个或者多个求值方法。标量函数的行为取决于你写的求值方法。求值方法必须是 `public` 的，而且名字必须是 `eval`。
 
-The following example shows how to define your own hash code function and call it in a query. See the [Implementation Guide](#implementation-guide) for more details.
+下面的例子展示了如何实现一个求哈希值的函数并在查询里调用它，详情可参考[开发指南](#开发指南)：
 
-{{< tabs "2e958a18-39bb-46e4-aefc-4dbfc50abf88" >}}
+{{< tabs "6828e58c-65f1-4bed-a35e-63fec7aa8c19" >}}
 {{< tab "Java" >}}
 ```java
 import org.apache.flink.table.annotation.InputGroup;
@@ -672,7 +638,7 @@ import static org.apache.flink.table.api.Expressions.*;
 
 public static class HashFunction extends ScalarFunction {
 
-  // take any data type and return INT
+  // 接受任意类型输入，返回 INT 型输出
   public int eval(@DataTypeHint(inputGroup = InputGroup.ANY) Object o) {
     return o.hashCode();
   }
@@ -680,16 +646,16 @@ public static class HashFunction extends ScalarFunction {
 
 TableEnvironment env = TableEnvironment.create(...);
 
-// call function "inline" without registration in Table API
+// 在 Table API 里不经注册直接“内联”调用函数
 env.from("MyTable").select(call(HashFunction.class, $("myField")));
 
-// register function
+// 注册函数
 env.createTemporarySystemFunction("HashFunction", HashFunction.class);
 
-// call registered function in Table API
+// 在 Table API 里调用注册好的函数
 env.from("MyTable").select(call("HashFunction", $("myField")));
 
-// call registered function in SQL
+// 在 SQL 里调用注册好的函数
 env.sqlQuery("SELECT HashFunction(myField) FROM MyTable");
 
 ```
@@ -702,48 +668,48 @@ import org.apache.flink.table.functions.ScalarFunction
 
 class HashFunction extends ScalarFunction {
 
-  // take any data type and return INT
-  def eval(@DataTypeHint(inputGroup = InputGroup.ANY) o: AnyRef): Int = {
-    o.hashCode()
+  // 接受任意类型输入，返回 INT 型输出
+  def eval(@DataTypeHint(inputGroup = InputGroup.ANY) o: AnyRef): Int {
+    return o.hashCode();
   }
 }
 
 val env = TableEnvironment.create(...)
 
-// call function "inline" without registration in Table API
+// 在 Table API 里不经注册直接“内联”调用函数
 env.from("MyTable").select(call(classOf[HashFunction], $"myField"))
 
-// register function
+// 注册函数
 env.createTemporarySystemFunction("HashFunction", classOf[HashFunction])
 
-// call registered function in Table API
+// 在 Table API 里调用注册好的函数
 env.from("MyTable").select(call("HashFunction", $"myField"))
 
-// call registered function in SQL
+// 在 SQL 里调用注册好的函数
 env.sqlQuery("SELECT HashFunction(myField) FROM MyTable")
 
 ```
 {{< /tab >}}
 {{< /tabs >}}
 
-If you intend to implement or call functions in Python, please refer to the [Python Scalar Functions]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}#scalar-functions) documentation for more details.
+如果你打算使用 Python 实现或调用标量函数，详情可参考 [Python 标量函数]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs.zh" >}}#scalar-functions)。
 
 {{< top >}}
 
-Table Functions
+表值函数
 ---------------
 
-Similar to a user-defined scalar function, a user-defined table function (_UDTF_) takes zero, one, or multiple scalar values as input arguments. However, it can return an arbitrary number of rows (or structured types) as output instead of a single value. The returned record may consist of one or more fields. If an output record consists of only a single field, the structured record can be omitted, and a scalar value can be emitted that will be implicitly wrapped into a row by the runtime.
+跟自定义标量函数一样，自定义表值函数的输入参数也可以是 0 到多个标量。但是跟标量函数只能返回一个值不同的是，它可以返回任意多行。返回的每一行可以包含 1 到多列，如果输出行只包含 1 列，会省略结构化信息并生成标量值，这个标量值在运行阶段会隐式地包装进行里。
 
-In order to define a table function, one has to extend the base class `TableFunction` in `org.apache.flink.table.functions` and implement one or more evaluation methods named `eval(...)`. Similar to other functions, input and output data types are automatically extracted using reflection. This includes the generic argument `T` of the class for determining an output data type. In contrast to scalar functions, the evaluation method itself must not have a return type, instead, table functions provide a `collect(T)` method that can be called within every evaluation method for emitting zero, one, or more records.
+要定义一个表值函数，你需要扩展 `org.apache.flink.table.functions` 下的 `TableFunction`，可以通过实现多个名为 `eval` 的方法对求值方法进行重载。像其他函数一样，输入和输出类型也可以通过反射自动提取出来。表值函数返回的表的类型取决于 `TableFunction` 类的泛型参数 `T`，不同于标量函数，表值函数的求值方法本身不包含返回类型，而是通过 `collect(T)` 方法来发送要输出的行。
 
-In the Table API, a table function is used with `.joinLateral(...)` or `.leftOuterJoinLateral(...)`. The `joinLateral` operator (cross) joins each row from the outer table (table on the left of the operator) with all rows produced by the table-valued function (which is on the right side of the operator). The `leftOuterJoinLateral` operator joins each row from the outer table (table on the left of the operator) with all rows produced by the table-valued function (which is on the right side of the operator) and preserves outer rows for which the table function returns an empty table.
+在 Table API 中，表值函数是通过 `.joinLateral(...)` 或者 `.leftOuterJoinLateral(...)` 来使用的。`joinLateral` 算子会把外表（算子左侧的表）的每一行跟跟表值函数返回的所有行（位于算子右侧）进行 （cross）join。`leftOuterJoinLateral` 算子也是把外表（算子左侧的表）的每一行跟表值函数返回的所有行（位于算子右侧）进行（cross）join，并且如果表值函数返回 0 行也会保留外表的这一行。
 
-In SQL, use `LATERAL TABLE(<TableFunction>)` with `JOIN` or `LEFT JOIN` with an `ON TRUE` join condition.
+在 SQL 里面用 `JOIN` 或者 以 `ON TRUE` 为条件的 `LEFT JOIN` 来配合 `LATERAL TABLE(<TableFunction>)` 的使用。
 
-The following example shows how to define your own split function and call it in a query. See the [Implementation Guide](#implementation-guide) for more details.
+下面的例子展示了如何实现一个分隔函数并在查询里调用它，详情可参考[开发指南](#开发指南)：
 
-{{< tabs "800a5c49-7c8b-430e-a1f7-68e105d603f4" >}}
+{{< tabs "1cf0d01a-2559-4b16-bb98-9b348f37bdc0" >}}
 {{< tab "Java" >}}
 ```java
 import org.apache.flink.table.annotation.DataTypeHint;
@@ -766,7 +732,7 @@ public static class SplitFunction extends TableFunction<Row> {
 
 TableEnvironment env = TableEnvironment.create(...);
 
-// call function "inline" without registration in Table API
+// 在 Table API 里不经注册直接“内联”调用函数
 env
   .from("MyTable")
   .joinLateral(call(SplitFunction.class, $("myField")))
@@ -776,16 +742,16 @@ env
   .leftOuterJoinLateral(call(SplitFunction.class, $("myField")))
   .select($("myField"), $("word"), $("length"));
 
-// rename fields of the function in Table API
+// 在 Table API 里重命名函数字段
 env
   .from("MyTable")
   .leftOuterJoinLateral(call(SplitFunction.class, $("myField")).as("newWord", "newLength"))
   .select($("myField"), $("newWord"), $("newLength"));
 
-// register function
+// 注册函数
 env.createTemporarySystemFunction("SplitFunction", SplitFunction.class);
 
-// call registered function in Table API
+// 在 Table API 里调用注册好的函数
 env
   .from("MyTable")
   .joinLateral(call("SplitFunction", $("myField")))
@@ -795,7 +761,7 @@ env
   .leftOuterJoinLateral(call("SplitFunction", $("myField")))
   .select($("myField"), $("word"), $("length"));
 
-// call registered function in SQL
+// 在 SQL 里调用注册好的函数
 env.sqlQuery(
   "SELECT myField, word, length " +
   "FROM MyTable, LATERAL TABLE(SplitFunction(myField))");
@@ -804,7 +770,7 @@ env.sqlQuery(
   "FROM MyTable " +
   "LEFT JOIN LATERAL TABLE(SplitFunction(myField)) ON TRUE");
 
-// rename fields of the function in SQL
+// 在 SQL 里重命名函数字段
 env.sqlQuery(
   "SELECT myField, newWord, newLength " +
   "FROM MyTable " +
@@ -831,7 +797,7 @@ class SplitFunction extends TableFunction[Row] {
 
 val env = TableEnvironment.create(...)
 
-// call function "inline" without registration in Table API
+// 在 Table API 里不经注册直接“内联”调用函数
 env
   .from("MyTable")
   .joinLateral(call(classOf[SplitFunction], $"myField")
@@ -841,16 +807,16 @@ env
   .leftOuterJoinLateral(call(classOf[SplitFunction], $"myField"))
   .select($"myField", $"word", $"length")
 
-// rename fields of the function in Table API
+// 在 Table API 里重命名函数字段
 env
   .from("MyTable")
   .leftOuterJoinLateral(call(classOf[SplitFunction], $"myField").as("newWord", "newLength"))
   .select($"myField", $"newWord", $"newLength")
 
-// register function
+// 注册函数
 env.createTemporarySystemFunction("SplitFunction", classOf[SplitFunction])
 
-// call registered function in Table API
+// 在 Table API 里调用注册好的函数
 env
   .from("MyTable")
   .joinLateral(call("SplitFunction", $"myField"))
@@ -860,16 +826,16 @@ env
   .leftOuterJoinLateral(call("SplitFunction", $"myField"))
   .select($"myField", $"word", $"length")
 
-// call registered function in SQL
+// 在 SQL 里调用注册好的函数
 env.sqlQuery(
   "SELECT myField, word, length " +
-  "FROM MyTable, LATERAL TABLE(SplitFunction(myField))")
+  "FROM MyTable, LATERAL TABLE(SplitFunction(myField))");
 env.sqlQuery(
   "SELECT myField, word, length " +
   "FROM MyTable " +
   "LEFT JOIN LATERAL TABLE(SplitFunction(myField)) ON TRUE")
 
-// rename fields of the function in SQL
+// 在 SQL 里重命名函数字段
 env.sqlQuery(
   "SELECT myField, newWord, newLength " +
   "FROM MyTable " +
@@ -879,164 +845,382 @@ env.sqlQuery(
 {{< /tab >}}
 {{< /tabs >}}
 
-If you intend to implement functions in Scala, do not implement a table function as a Scala `object`. Scala `object`s are singletons and will cause concurrency issues.
+如果你打算使用 Scala，不要把表值函数声明为 Scala `object`，Scala `object` 是单例对象，将导致并发问题。
 
-If you intend to implement or call functions in Python, please refer to the [Python Table Functions]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}#table-functions) documentation for more details.
+如果你打算使用 Python 实现或调用表值函数，详情可参考 [Python 表值函数]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs.zh" >}}#table-functions)。
 
 {{< top >}}
 
-Aggregate Functions
--------------------
+聚合函数
+---------------------
 
-A user-defined aggregate function (_UDAGG_) maps scalar values of multiple rows to a new scalar value.
-
-The behavior of an aggregate function is centered around the concept of an accumulator. The _accumulator_
-is an intermediate data structure that stores the aggregated values until a final aggregation result
-is computed.
-
-For each set of rows that needs to be aggregated, the runtime will create an empty accumulator by calling
-`createAccumulator()`. Subsequently, the `accumulate(...)` method of the function is called for each input
-row to update the accumulator. Once all rows have been processed, the `getValue(...)` method of the
-function is called to compute and return the final result.
-
-The following example illustrates the aggregation process:
+自定义聚合函数（UDAGG）是把一个表（一行或者多行，每行可以有一列或者多列）聚合成一个标量值。
 
 <img alt="UDAGG mechanism" src="/fig/udagg-mechanism.png" width="80%">
 
-In the example, we assume a table that contains data about beverages. The table consists of three columns (`id`, `name`,
-and `price`) and 5 rows. We would like to find the highest price of all beverages in the table, i.e., perform
-a `max()` aggregation. We need to consider each of the 5 rows. The result is a single numeric value.
+上面的图片展示了一个聚合的例子。假设你有一个关于饮料的表。表里面有三个字段，分别是 `id`、`name`、`price`，表里有 5 行数据。假设你需要找到所有饮料里最贵的饮料的价格，即执行一个 `max()` 聚合。你需要遍历所有 5 行数据，而结果就只有一个数值。
 
-In order to define an aggregate function, one has to extend the base class `AggregateFunction` in
-`org.apache.flink.table.functions` and implement one or more evaluation methods named `accumulate(...)`.
-An accumulate method must be declared publicly and not static. Accumulate methods can also be overloaded
-by implementing multiple methods named `accumulate`.
+自定义聚合函数是通过扩展 `AggregateFunction` 来实现的。`AggregateFunction` 的工作过程如下。首先，它需要一个 `accumulator`，它是一个数据结构，存储了聚合的中间结果。通过调用 `AggregateFunction` 的 `createAccumulator()` 方法创建一个空的 accumulator。接下来，对于每一行数据，会调用 `accumulate()` 方法来更新 accumulator。当所有的数据都处理完了之后，通过调用 `getValue` 方法来计算和返回最终的结果。
 
-By default, input, accumulator, and output data types are automatically extracted using reflection. This
-includes the generic argument `ACC` of the class for determining an accumulator data type and the generic
-argument `T` for determining an accumulator data type. Input arguments are derived from one or more
-`accumulate(...)` methods. See the [Implementation Guide](#implementation-guide) for more details.
+**下面几个方法是每个 `AggregateFunction` 必须要实现的：**
 
-If you intend to implement or call functions in Python, please refer to the [Python Functions]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}})
-documentation for more details.
+- `createAccumulator()`
+- `accumulate()`
+- `getValue()`
 
-The following example shows how to define your own aggregate function and call it in a query.
+Flink 的类型推导在遇到复杂类型的时候可能会推导出错误的结果，比如那些非基本类型和普通的 POJO 类型的复杂类型。所以跟 `ScalarFunction` 和 `TableFunction` 一样，`AggregateFunction` 也提供了 `AggregateFunction#getResultType()` 和 `AggregateFunction#getAccumulatorType()` 来分别指定返回值类型和 accumulator 的类型，两个函数的返回值类型也都是 `TypeInformation`。
 
-{{< tabs "a59e000c-a149-4215-87c4-1b88d8f54e37" >}}
+除了上面的方法，还有几个方法可以选择实现。这些方法有些可以让查询更加高效，而有些是在某些特定场景下必须要实现的。例如，如果聚合函数用在会话窗口（当两个会话窗口合并的时候需要 merge 他们的 accumulator）的话，`merge()` 方法就是必须要实现的。
+
+**`AggregateFunction` 的以下方法在某些场景下是必须实现的：**
+
+- `retract()` 在 bounded `OVER` 窗口中是必须实现的。
+- `merge()` 在许多批式聚合和会话以及滚动窗口聚合中是必须实现的。除此之外，这个方法对于优化也很多帮助。例如，两阶段聚合优化就需要所有的 `AggregateFunction` 都实现 `merge` 方法。
+- `resetAccumulator()` 在许多批式聚合中是必须实现的。
+
+`AggregateFunction` 的所有方法都必须是 `public` 的，不能是 `static` 的，而且名字必须跟上面写的一样。`createAccumulator`、`getValue`、`getResultType` 以及 `getAccumulatorType` 这几个函数是在抽象类 `AggregateFunction` 中定义的，而其他函数都是约定的方法。如果要定义一个聚合函数，你需要扩展 `org.apache.flink.table.functions.AggregateFunction`，并且实现一个（或者多个）`accumulate` 方法。`accumulate` 方法可以重载，每个方法的参数类型不同，并且支持变长参数。
+
+`AggregateFunction` 的所有方法的详细文档如下。
+
+{{< tabs "55ea8f05-96d8-462f-8bc4-8316da3d097b" >}}
 {{< tab "Java" >}}
 ```java
-import org.apache.flink.table.api.*;
-import org.apache.flink.table.functions.AggregateFunction;
-import static org.apache.flink.table.api.Expressions.*;
+/**
+  * Base class for user-defined aggregates and table aggregates.
+  *
+  * @param <T>   the type of the aggregation result.
+  * @param <ACC> the type of the aggregation accumulator. The accumulator is used to keep the
+  *             aggregated values which are needed to compute an aggregation result.
+  */
+public abstract class UserDefinedAggregateFunction<T, ACC> extends UserDefinedFunction {
 
-// mutable accumulator of structured type for the aggregate function
-public static class WeightedAvgAccumulator {
-  public long sum = 0;
-  public int count = 0;
+  /**
+    * Creates and init the Accumulator for this (table)aggregate function.
+    *
+    * @return the accumulator with the initial value
+    */
+  public ACC createAccumulator(); // MANDATORY
+
+  /**
+    * Returns the TypeInformation of the (table)aggregate function's result.
+    *
+    * @return The TypeInformation of the (table)aggregate function's result or null if the result
+    *         type should be automatically inferred.
+    */
+  public TypeInformation<T> getResultType = null; // PRE-DEFINED
+
+  /**
+    * Returns the TypeInformation of the (table)aggregate function's accumulator.
+    *
+    * @return The TypeInformation of the (table)aggregate function's accumulator or null if the
+    *         accumulator type should be automatically inferred.
+    */
+  public TypeInformation<ACC> getAccumulatorType = null; // PRE-DEFINED
 }
 
-// function that takes (value BIGINT, weight INT), stores intermediate results in a structured
-// type of WeightedAvgAccumulator, and returns the weighted average as BIGINT
-public static class WeightedAvg extends AggregateFunction<Long, WeightedAvgAccumulator> {
+/**
+  * Base class for aggregation functions.
+  *
+  * @param <T>   the type of the aggregation result
+  * @param <ACC> the type of the aggregation accumulator. The accumulator is used to keep the
+  *             aggregated values which are needed to compute an aggregation result.
+  *             AggregateFunction represents its state using accumulator, thereby the state of the
+  *             AggregateFunction must be put into the accumulator.
+  */
+public abstract class AggregateFunction<T, ACC> extends UserDefinedAggregateFunction<T, ACC> {
 
-  @Override
-  public WeightedAvgAccumulator createAccumulator() {
-    return new WeightedAvgAccumulator();
-  }
+  /** Processes the input values and update the provided accumulator instance. The method
+    * accumulate can be overloaded with different custom types and arguments. An AggregateFunction
+    * requires at least one accumulate() method.
+    *
+    * @param accumulator           the accumulator which contains the current aggregated results
+    * @param [user defined inputs] the input value (usually obtained from a new arrived data).
+    */
+  public void accumulate(ACC accumulator, [user defined inputs]); // MANDATORY
 
-  @Override
-  public Long getValue(WeightedAvgAccumulator acc) {
-    if (acc.count == 0) {
-      return null;
-    } else {
-      return acc.sum / acc.count;
-    }
-  }
+  /**
+    * Retracts the input values from the accumulator instance. The current design assumes the
+    * inputs are the values that have been previously accumulated. The method retract can be
+    * overloaded with different custom types and arguments. This function must be implemented for
+    * datastream bounded over aggregate.
+    *
+    * @param accumulator           the accumulator which contains the current aggregated results
+    * @param [user defined inputs] the input value (usually obtained from a new arrived data).
+    */
+  public void retract(ACC accumulator, [user defined inputs]); // OPTIONAL
 
-  public void accumulate(WeightedAvgAccumulator acc, Long iValue, Integer iWeight) {
-    acc.sum += iValue * iWeight;
-    acc.count += iWeight;
-  }
+  /**
+    * Merges a group of accumulator instances into one accumulator instance. This function must be
+    * implemented for datastream session window grouping aggregate and dataset grouping aggregate.
+    *
+    * @param accumulator  the accumulator which will keep the merged aggregate results. It should
+    *                     be noted that the accumulator may contain the previous aggregated
+    *                     results. Therefore user should not replace or clean this instance in the
+    *                     custom merge method.
+    * @param its          an {@link java.lang.Iterable} pointed to a group of accumulators that will be
+    *                     merged.
+    */
+  public void merge(ACC accumulator, java.lang.Iterable<ACC> its); // OPTIONAL
 
-  public void retract(WeightedAvgAccumulator acc, Long iValue, Integer iWeight) {
-    acc.sum -= iValue * iWeight;
-    acc.count -= iWeight;
-  }
+  /**
+    * Called every time when an aggregation result should be materialized.
+    * The returned value could be either an early and incomplete result
+    * (periodically emitted as data arrive) or the final result of the
+    * aggregation.
+    *
+    * @param accumulator the accumulator which contains the current
+    *                    aggregated results
+    * @return the aggregation result
+    */
+  public T getValue(ACC accumulator); // MANDATORY
 
-  public void merge(WeightedAvgAccumulator acc, Iterable<WeightedAvgAccumulator> it) {
-    for (WeightedAvgAccumulator a : it) {
-      acc.count += a.count;
-      acc.sum += a.sum;
-    }
-  }
+  /**
+    * Resets the accumulator for this [[AggregateFunction]]. This function must be implemented for
+    * dataset grouping aggregate.
+    *
+    * @param accumulator  the accumulator which needs to be reset
+    */
+  public void resetAccumulator(ACC accumulator); // OPTIONAL
 
-  public void resetAccumulator(WeightedAvgAccumulator acc) {
-    acc.count = 0;
-    acc.sum = 0L;
-  }
+  /**
+    * Returns true if this AggregateFunction can only be applied in an OVER window.
+    *
+    * @return true if the AggregateFunction requires an OVER window, false otherwise.
+    */
+  public Boolean requiresOver = false; // PRE-DEFINED
 }
-
-TableEnvironment env = TableEnvironment.create(...);
-
-// call function "inline" without registration in Table API
-env
-  .from("MyTable")
-  .groupBy($("myField"))
-  .select($("myField"), call(WeightedAvg.class, $("value"), $("weight")));
-
-// register function
-env.createTemporarySystemFunction("WeightedAvg", WeightedAvg.class);
-
-// call registered function in Table API
-env
-  .from("MyTable")
-  .groupBy($("myField"))
-  .select($("myField"), call("WeightedAvg", $("value"), $("weight")));
-
-// call registered function in SQL
-env.sqlQuery(
-  "SELECT myField, WeightedAvg(`value`, weight) FROM MyTable GROUP BY myField"
-);
 ```
 {{< /tab >}}
 {{< tab "Scala" >}}
 ```scala
-import org.apache.flink.table.api._
+/**
+  * Base class for user-defined aggregates and table aggregates.
+  *
+  * @tparam T   the type of the aggregation result.
+  * @tparam ACC the type of the aggregation accumulator. The accumulator is used to keep the
+  *             aggregated values which are needed to compute an aggregation result.
+  */
+abstract class UserDefinedAggregateFunction[T, ACC] extends UserDefinedFunction {
+
+  /**
+    * Creates and init the Accumulator for this (table)aggregate function.
+    *
+    * @return the accumulator with the initial value
+    */
+  def createAccumulator(): ACC // MANDATORY
+
+  /**
+    * Returns the TypeInformation of the (table)aggregate function's result.
+    *
+    * @return The TypeInformation of the (table)aggregate function's result or null if the result
+    *         type should be automatically inferred.
+    */
+  def getResultType: TypeInformation[T] = null // PRE-DEFINED
+
+  /**
+    * Returns the TypeInformation of the (table)aggregate function's accumulator.
+    *
+    * @return The TypeInformation of the (table)aggregate function's accumulator or null if the
+    *         accumulator type should be automatically inferred.
+    */
+  def getAccumulatorType: TypeInformation[ACC] = null // PRE-DEFINED
+}
+
+/**
+  * Base class for aggregation functions.
+  *
+  * @tparam T   the type of the aggregation result
+  * @tparam ACC the type of the aggregation accumulator. The accumulator is used to keep the
+  *             aggregated values which are needed to compute an aggregation result.
+  *             AggregateFunction represents its state using accumulator, thereby the state of the
+  *             AggregateFunction must be put into the accumulator.
+  */
+abstract class AggregateFunction[T, ACC] extends UserDefinedAggregateFunction[T, ACC] {
+
+  /**
+    * Processes the input values and update the provided accumulator instance. The method
+    * accumulate can be overloaded with different custom types and arguments. An AggregateFunction
+    * requires at least one accumulate() method.
+    *
+    * @param accumulator           the accumulator which contains the current aggregated results
+    * @param [user defined inputs] the input value (usually obtained from a new arrived data).
+    */
+  def accumulate(accumulator: ACC, [user defined inputs]): Unit // MANDATORY
+
+  /**
+    * Retracts the input values from the accumulator instance. The current design assumes the
+    * inputs are the values that have been previously accumulated. The method retract can be
+    * overloaded with different custom types and arguments. This function must be implemented for
+    * datastream bounded over aggregate.
+    *
+    * @param accumulator           the accumulator which contains the current aggregated results
+    * @param [user defined inputs] the input value (usually obtained from a new arrived data).
+    */
+  def retract(accumulator: ACC, [user defined inputs]): Unit // OPTIONAL
+
+  /**
+    * Merges a group of accumulator instances into one accumulator instance. This function must be
+    * implemented for datastream session window grouping aggregate and dataset grouping aggregate.
+    *
+    * @param accumulator  the accumulator which will keep the merged aggregate results. It should
+    *                     be noted that the accumulator may contain the previous aggregated
+    *                     results. Therefore user should not replace or clean this instance in the
+    *                     custom merge method.
+    * @param its          an [[java.lang.Iterable]] pointed to a group of accumulators that will be
+    *                     merged.
+    */
+  def merge(accumulator: ACC, its: java.lang.Iterable[ACC]): Unit // OPTIONAL
+
+  /**
+    * Called every time when an aggregation result should be materialized.
+    * The returned value could be either an early and incomplete result
+    * (periodically emitted as data arrive) or the final result of the
+    * aggregation.
+    *
+    * @param accumulator the accumulator which contains the current
+    *                    aggregated results
+    * @return the aggregation result
+    */
+  def getValue(accumulator: ACC): T // MANDATORY
+
+  /**
+    * Resets the accumulator for this [[AggregateFunction]]. This function must be implemented for
+    * dataset grouping aggregate.
+    *
+    * @param accumulator  the accumulator which needs to be reset
+    */
+  def resetAccumulator(accumulator: ACC): Unit // OPTIONAL
+
+  /**
+    * Returns true if this AggregateFunction can only be applied in an OVER window.
+    *
+    * @return true if the AggregateFunction requires an OVER window, false otherwise.
+    */
+  def requiresOver: Boolean = false // PRE-DEFINED
+}
+```
+{{< /tab >}}
+{{< /tabs >}}
+
+
+下面的例子展示了如何：
+
+- 定义一个聚合函数来计算某一列的加权平均，
+- 在 `TableEnvironment` 中注册函数，
+- 在查询中使用函数。
+
+为了计算加权平均值，accumulator 需要存储加权总和以及数据的条数。在我们的例子里，我们定义了一个类 `WeightedAvgAccum` 来作为 accumulator。Flink 的 checkpoint 机制会自动保存 accumulator，在失败时进行恢复，以此来保证精确一次的语义。
+
+我们的 `WeightedAvg`（聚合函数）的 `accumulate` 方法有三个输入参数。第一个是 `WeightedAvgAccum` accumulator，另外两个是用户自定义的输入：输入的值 `ivalue` 和 输入的权重 `iweight`。尽管 `retract()`、`merge()`、`resetAccumulator()` 这几个方法在大多数聚合类型中都不是必须实现的，我们也在样例中提供了他们的实现。请注意我们在 Scala 样例中也是用的是 Java 的基础类型，并且定义了 `getResultType()` 和 `getAccumulatorType()`，因为 Flink 的类型推导对于 Scala 的类型推导做的不是很好。
+
+{{< tabs "ee5bdf7f-9cb8-4b3a-9522-8d20cd97522c" >}}
+{{< tab "Java" >}}
+```java
+/**
+ * Accumulator for WeightedAvg.
+ */
+public static class WeightedAvgAccum {
+    public long sum = 0;
+    public int count = 0;
+}
+
+/**
+ * Weighted Average user-defined aggregate function.
+ */
+public static class WeightedAvg extends AggregateFunction<Long, WeightedAvgAccum> {
+
+    @Override
+    public WeightedAvgAccum createAccumulator() {
+        return new WeightedAvgAccum();
+    }
+
+    @Override
+    public Long getValue(WeightedAvgAccum acc) {
+        if (acc.count == 0) {
+            return null;
+        } else {
+            return acc.sum / acc.count;
+        }
+    }
+
+    public void accumulate(WeightedAvgAccum acc, long iValue, int iWeight) {
+        acc.sum += iValue * iWeight;
+        acc.count += iWeight;
+    }
+
+    public void retract(WeightedAvgAccum acc, long iValue, int iWeight) {
+        acc.sum -= iValue * iWeight;
+        acc.count -= iWeight;
+    }
+
+    public void merge(WeightedAvgAccum acc, Iterable<WeightedAvgAccum> it) {
+        Iterator<WeightedAvgAccum> iter = it.iterator();
+        while (iter.hasNext()) {
+            WeightedAvgAccum a = iter.next();
+            acc.count += a.count;
+            acc.sum += a.sum;
+        }
+    }
+
+    public void resetAccumulator(WeightedAvgAccum acc) {
+        acc.count = 0;
+        acc.sum = 0L;
+    }
+}
+
+// 注册函数
+StreamTableEnvironment tEnv = ...
+tEnv.registerFunction("wAvg", new WeightedAvg());
+
+// 使用函数
+tEnv.sqlQuery("SELECT user, wAvg(points, level) AS avgPoints FROM userScores GROUP BY user");
+
+```
+{{< /tab >}}
+{{< tab "Scala" >}}
+```scala
+import java.lang.{Long => JLong, Integer => JInteger}
+import org.apache.flink.api.java.tuple.{Tuple1 => JTuple1}
+import org.apache.flink.api.java.typeutils.TupleTypeInfo
+import org.apache.flink.table.api.Types
 import org.apache.flink.table.functions.AggregateFunction
 
-// mutable accumulator of structured type for the aggregate function
-case class WeightedAvgAccumulator(
-  var sum: Long = 0,
-  var count: Int = 0
-)
+/**
+ * Accumulator for WeightedAvg.
+ */
+class WeightedAvgAccum extends JTuple1[JLong, JInteger] {
+  sum = 0L
+  count = 0
+}
 
-// function that takes (value BIGINT, weight INT), stores intermediate results in a structured
-// type of WeightedAvgAccumulator, and returns the weighted average as BIGINT
-class WeightedAvg extends AggregateFunction[java.lang.Long, WeightedAvgAccumulator] {
+/**
+ * Weighted Average user-defined aggregate function.
+ */
+class WeightedAvg extends AggregateFunction[JLong, CountAccumulator] {
 
-  override def createAccumulator(): WeightedAvgAccumulator = {
-    WeightedAvgAccumulator()
+  override def createAccumulator(): WeightedAvgAccum = {
+    new WeightedAvgAccum
   }
 
-  override def getValue(acc: WeightedAvgAccumulator): java.lang.Long = {
+  override def getValue(acc: WeightedAvgAccum): JLong = {
     if (acc.count == 0) {
-      null
+        null
     } else {
-      acc.sum / acc.count
+        acc.sum / acc.count
     }
   }
 
-  def accumulate(acc: WeightedAvgAccumulator, iValue: java.lang.Long, iWeight: java.lang.Integer): Unit = {
+  def accumulate(acc: WeightedAvgAccum, iValue: JLong, iWeight: JInteger): Unit = {
     acc.sum += iValue * iWeight
     acc.count += iWeight
   }
 
-  def retract(acc: WeightedAvgAccumulator, iValue: java.lang.Long, iWeight: java.lang.Integer): Unit = {
+  def retract(acc: WeightedAvgAccum, iValue: JLong, iWeight: JInteger): Unit = {
     acc.sum -= iValue * iWeight
     acc.count -= iWeight
   }
 
-  def merge(acc: WeightedAvgAccumulator, it: java.lang.Iterable[WeightedAvgAccumulator]): Unit = {
+  def merge(acc: WeightedAvgAccum, it: java.lang.Iterable[WeightedAvgAccum]): Unit = {
     val iter = it.iterator()
     while (iter.hasNext) {
       val a = iter.next()
@@ -1045,741 +1229,688 @@ class WeightedAvg extends AggregateFunction[java.lang.Long, WeightedAvgAccumulat
     }
   }
 
-  def resetAccumulator(acc: WeightedAvgAccumulator): Unit = {
+  def resetAccumulator(acc: WeightedAvgAccum): Unit = {
     acc.count = 0
     acc.sum = 0L
   }
+
+  override def getAccumulatorType: TypeInformation[WeightedAvgAccum] = {
+    new TupleTypeInfo(classOf[WeightedAvgAccum], Types.LONG, Types.INT)
+  }
+
+  override def getResultType: TypeInformation[JLong] = Types.LONG
 }
 
-val env = TableEnvironment.create(...)
+// 注册函数
+val tEnv: StreamTableEnvironment = ???
+tEnv.registerFunction("wAvg", new WeightedAvg())
 
-// call function "inline" without registration in Table API
-env
-  .from("MyTable")
-  .groupBy($"myField")
-  .select($"myField", call(classOf[WeightedAvg], $"value", $"weight"))
+// 使用函数
+tEnv.sqlQuery("SELECT user, wAvg(points, level) AS avgPoints FROM userScores GROUP BY user")
 
-// register function
-env.createTemporarySystemFunction("WeightedAvg", classOf[WeightedAvg])
+```
+{{< /tab >}}
+{{< tab "Python" >}}
+```python
+'''
+Java code:
 
-// call registered function in Table API
-env
-  .from("MyTable")
-  .groupBy($"myField")
-  .select($"myField", call("WeightedAvg", $"value", $"weight"))
+/**
+ * Accumulator for WeightedAvg.
+ */
+public static class WeightedAvgAccum {
+    public long sum = 0;
+    public int count = 0;
+}
 
-// call registered function in SQL
-env.sqlQuery(
-  "SELECT myField, WeightedAvg(`value`, weight) FROM MyTable GROUP BY myField"
-)
+// The java class must have a public no-argument constructor and can be founded in current java classloader.
+// Java 类必须有一个 public 的无参构造函数，并且可以在当前类加载器中加载到。
+
+/**
+ * Weighted Average user-defined aggregate function.
+ */
+public static class WeightedAvg extends AggregateFunction<Long, WeightedAvgAccum> {
+
+    @Override
+    public WeightedAvgAccum createAccumulator() {
+        return new WeightedAvgAccum();
+    }
+
+    @Override
+    public Long getValue(WeightedAvgAccum acc) {
+        if (acc.count == 0) {
+            return null;
+        } else {
+            return acc.sum / acc.count;
+        }
+    }
+
+    public void accumulate(WeightedAvgAccum acc, long iValue, int iWeight) {
+        acc.sum += iValue * iWeight;
+        acc.count += iWeight;
+    }
+
+    public void retract(WeightedAvgAccum acc, long iValue, int iWeight) {
+        acc.sum -= iValue * iWeight;
+        acc.count -= iWeight;
+    }
+
+    public void merge(WeightedAvgAccum acc, Iterable<WeightedAvgAccum> it) {
+        Iterator<WeightedAvgAccum> iter = it.iterator();
+        while (iter.hasNext()) {
+            WeightedAvgAccum a = iter.next();
+            acc.count += a.count;
+            acc.sum += a.sum;
+        }
+    }
+
+    public void resetAccumulator(WeightedAvgAccum acc) {
+        acc.count = 0;
+        acc.sum = 0L;
+    }
+}
+'''
+
+# 注册函数
+t_env = ...  # type: StreamTableEnvironment
+t_env.register_java_function("wAvg", "my.java.function.WeightedAvg")
+
+# 使用函数
+t_env.sql_query("SELECT user, wAvg(points, level) AS avgPoints FROM userScores GROUP BY user")
+
 ```
 {{< /tab >}}
 {{< /tabs >}}
 
-The `accumulate(...)` method of our `WeightedAvg` class takes three inputs. The first one is the accumulator
-and the other two are user-defined inputs. In order to calculate a weighted average value, the accumulator
-needs to store the weighted sum and count of all the data that has been accumulated. In our example, we
-define a class `WeightedAvgAccumulator` to be the accumulator. Accumulators are automatically managed
-by Flink's checkpointing mechanism and are restored in case of a failure to ensure exactly-once semantics.
-
-### Mandatory and Optional Methods
-
-**The following methods are mandatory for each `AggregateFunction`:**
-
-- `createAccumulator()`
-- `accumulate(...)`
-- `getValue(...)`
-
-Additionally, there are a few methods that can be optionally implemented. While some of these methods
-allow the system more efficient query execution, others are mandatory for certain use cases. For instance,
-the `merge(...)` method is mandatory if the aggregation function should be applied in the context of a
-session group window (the accumulators of two session windows need to be joined when a row is observed
-that "connects" them).
-
-**The following methods of `AggregateFunction` are required depending on the use case:**
-
-- `retract(...)` is required for aggregations on `OVER` windows.
-- `merge(...)` is required for many bounded aggregations and session window and hop window aggregations. Besides, this method is also helpful for optimizations. For example, two phase aggregation optimization requires all the `AggregateFunction` support `merge` method.
-
-If the aggregate function can only be applied in an OVER window, this can be declared by returning the
-requirement `FunctionRequirement.OVER_WINDOW_ONLY` in `getRequirements()`.
-
-If an accumulator needs to store large amounts of data, `org.apache.flink.table.api.dataview.ListView`
-and `org.apache.flink.table.api.dataview.MapView` provide advanced features for leveraging Flink's state
-backends in unbounded data scenarios. Please see the docs of the corresponding classes for more information
-about this advanced feature.
-
-Since some of the methods are optional, or can be overloaded, the runtime invokes aggregate function
-methods via generated code. This means the base class does not always provide a signature to be overridden
-by the concrete implementation. Nevertheless, all mentioned methods must be declared publicly, not static,
-and named exactly as the names mentioned above to be called.
-
-Detailed documentation for all methods that are not declared in `AggregateFunction` and called by generated
-code is given below.
-
-**`accumulate(...)`**
-{{< tabs "cc3550d8-3264-429d-b54e-01c1275faa8a" >}}
-{{< tab "Java" >}}
-```java
-/*
- * Processes the input values and updates the provided accumulator instance. The method
- * accumulate can be overloaded with different custom types and arguments. An aggregate function
- * requires at least one accumulate() method.
- *
- * param: accumulator           the accumulator which contains the current aggregated results
- * param: [user defined inputs] the input value (usually obtained from new arrived data).
- */
-public void accumulate(ACC accumulator, [user defined inputs])
-```
-{{< /tab >}}
-{{< tab "Scala" >}}
-```scala
-/*
- * Processes the input values and updates the provided accumulator instance. The method
- * accumulate can be overloaded with different custom types and arguments. An aggregate function
- * requires at least one accumulate() method.
- *
- * param: accumulator           the accumulator which contains the current aggregated results
- * param: [user defined inputs] the input value (usually obtained from new arrived data).
- */
-def accumulate(accumulator: ACC, [user defined inputs]): Unit
-```
-{{< /tab >}}
-{{< /tabs >}}
-
-**`retract(...)`**
-{{< tabs "787bfbb6-e935-47fb-b6aa-ea0c5f775c7b" >}}
-{{< tab "Java" >}}
-```java
-/*
- * Retracts the input values from the accumulator instance. The current design assumes the
- * inputs are the values that have been previously accumulated. The method retract can be
- * overloaded with different custom types and arguments. This method must be implemented for
- * bounded OVER aggregates over unbounded tables.
- *
- * param: accumulator           the accumulator which contains the current aggregated results
- * param: [user defined inputs] the input value (usually obtained from new arrived data).
- */
-public void retract(ACC accumulator, [user defined inputs])
-```
-{{< /tab >}}
-{{< tab "Scala" >}}
-```scala
-/*
- * Retracts the input values from the accumulator instance. The current design assumes the
- * inputs are the values that have been previously accumulated. The method retract can be
- * overloaded with different custom types and arguments. This method must be implemented for
- * bounded OVER aggregates over unbounded tables.
- *
- * param: accumulator           the accumulator which contains the current aggregated results
- * param: [user defined inputs] the input value (usually obtained from new arrived data).
- */
-def retract(accumulator: ACC, [user defined inputs]): Unit
-```
-{{< /tab >}}
-{{< /tabs >}}
-
-**`merge(...)`**
-{{< tabs "e69ba1f6-581f-4008-8350-fce811ce11c6" >}}
-{{< tab "Java" >}}
-```java
-/*
- * Merges a group of accumulator instances into one accumulator instance. This method must be
- * implemented for unbounded session window grouping aggregates and bounded grouping aggregates.
- *
- * param: accumulator the accumulator which will keep the merged aggregate results. It should
- *                    be noted that the accumulator may contain the previous aggregated
- *                    results. Therefore user should not replace or clean this instance in the
- *                    custom merge method.
- * param: iterable    an java.lang.Iterable pointed to a group of accumulators that will be
- *                    merged.
- */
-public void merge(ACC accumulator, java.lang.Iterable<ACC> iterable)
-```
-{{< /tab >}}
-{{< tab "Scala" >}}
-```scala
-/*
- * Merges a group of accumulator instances into one accumulator instance. This method must be
- * implemented for unbounded session window grouping aggregates and bounded grouping aggregates.
- *
- * param: accumulator the accumulator which will keep the merged aggregate results. It should
- *                    be noted that the accumulator may contain the previous aggregated
- *                    results. Therefore user should not replace or clean this instance in the
- *                    custom merge method.
- * param: iterable    an java.lang.Iterable pointed to a group of accumulators that will be
- *                    merged.
- */
-def merge(accumulator: ACC, iterable: java.lang.Iterable[ACC]): Unit
-```
-{{< /tab >}}
-{{< /tabs >}}
-
-If you intend to implement or call functions in Python, please refer to the [Python Aggregate Functions]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}#aggregate-functions) documentation for more details.
+如果你打算使用 Python 实现或调用聚合函数，详情可参考 [Python 聚合函数]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs.zh" >}}#aggregate-functions)。
 
 {{< top >}}
 
-Table Aggregate Functions
--------------------------
+表值聚合函数
+---------------------
 
-A user-defined table aggregate function (_UDTAGG_) maps scalar values of multiple rows to zero, one,
-or multiple rows (or structured types). The returned record may consist of one or more fields. If an
-output record consists of only a single field, the structured record can be omitted, and a scalar value
-can be emitted that will be implicitly wrapped into a row by the runtime.
+自定义表值聚合函数（UDTAGG）可以把一个表（一行或者多行，每行有一列或者多列）聚合成另一张表，结果中可以有多行多列。
 
-Similar to an [aggregate function](#aggregate-functions), the behavior of a table aggregate is centered
-around the concept of an accumulator. The accumulator is an intermediate data structure that stores
-the aggregated values until a final aggregation result is computed.
+<img alt="UDAGG mechanism" src="/fig/udtagg-mechanism.png" width="80%">
 
-For each set of rows that needs to be aggregated, the runtime will create an empty accumulator by calling
-`createAccumulator()`. Subsequently, the `accumulate(...)` method of the function is called for each
-input row to update the accumulator. Once all rows have been processed, the `emitValue(...)` or `emitUpdateWithRetract(...)`
-method of the function is called to compute and return the final result.
+上图展示了一个表值聚合函数的例子。假设你有一个饮料的表，这个表有 3 列，分别是 `id`、`name` 和 `price`，一共有 5 行。假设你需要找到价格最高的两个饮料，类似于 `top2()` 表值聚合函数。你需要遍历所有 5 行数据，结果是有 2 行数据的一个表。
 
-The following example illustrates the aggregation process:
+用户自定义表值聚合函数是通过扩展 `TableAggregateFunction` 类来实现的。一个 `TableAggregateFunction` 的工作过程如下。首先，它需要一个 `accumulator`，这个 `accumulator` 负责存储聚合的中间结果。 通过调用 `TableAggregateFunction` 的 `createAccumulator` 方法来构造一个空的 accumulator。接下来，对于每一行数据，会调用 `accumulate` 方法来更新 accumulator。当所有数据都处理完之后，调用 `emitValue` 方法来计算和返回最终的结果。
 
-<img alt="UDTAGG mechanism" src="/fig/udtagg-mechanism.png" width="80%">
-
-In the example, we assume a table that contains data about beverages. The table consists of three columns (`id`, `name`,
-and `price`) and 5 rows. We would like to find the 2 highest prices of all beverages in the table, i.e.,
-perform a `TOP2()` table aggregation. We need to consider each of the 5 rows. The result is a table
-with the top 2 values.
-
-In order to define a table aggregate function, one has to extend the base class `TableAggregateFunction` in
-`org.apache.flink.table.functions` and implement one or more evaluation methods named `accumulate(...)`.
-An accumulate method must be declared publicly and not static. Accumulate methods can also be overloaded
-by implementing multiple methods named `accumulate`.
-
-By default, input, accumulator, and output data types are automatically extracted using reflection. This
-includes the generic argument `ACC` of the class for determining an accumulator data type and the generic
-argument `T` for determining an accumulator data type. Input arguments are derived from one or more
-`accumulate(...)` methods. See the [Implementation Guide](#implementation-guide) for more details.
-
-If you intend to implement or call functions in Python, please refer to the [Python Functions]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}})
-documentation for more details.
-
-The following example shows how to define your own table aggregate function and call it in a query.
-
-{{< tabs "326aa11d-e252-4e04-a157-d6f4788ee76d" >}}
-{{< tab "Java" >}}
-```java
-import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.table.api.*;
-import org.apache.flink.table.functions.TableAggregateFunction;
-import org.apache.flink.util.Collector;
-import static org.apache.flink.table.api.Expressions.*;
-
-// mutable accumulator of structured type for the aggregate function
-public static class Top2Accumulator {
-  public Integer first;
-  public Integer second;
-}
-
-// function that takes (value INT), stores intermediate results in a structured
-// type of Top2Accumulator, and returns the result as a structured type of Tuple2<Integer, Integer>
-// for value and rank
-public static class Top2 extends TableAggregateFunction<Tuple2<Integer, Integer>, Top2Accumulator> {
-
-  @Override
-  public Top2Accumulator createAccumulator() {
-    Top2Accumulator acc = new Top2Accumulator();
-    acc.first = Integer.MIN_VALUE;
-    acc.second = Integer.MIN_VALUE;
-    return acc;
-  }
-
-  public void accumulate(Top2Accumulator acc, Integer value) {
-    if (value > acc.first) {
-      acc.second = acc.first;
-      acc.first = value;
-    } else if (value > acc.second) {
-      acc.second = value;
-    }
-  }
-
-  public void merge(Top2Accumulator acc, Iterable<Top2Accumulator> it) {
-    for (Top2Accumulator otherAcc : it) {
-      accumulate(acc, otherAcc.first);
-      accumulate(acc, otherAcc.second);
-    }
-  }
-
-  public void emitValue(Top2Accumulator acc, Collector<Tuple2<Integer, Integer>> out) {
-    // emit the value and rank
-    if (acc.first != Integer.MIN_VALUE) {
-      out.collect(Tuple2.of(acc.first, 1));
-    }
-    if (acc.second != Integer.MIN_VALUE) {
-      out.collect(Tuple2.of(acc.second, 2));
-    }
-  }
-}
-
-TableEnvironment env = TableEnvironment.create(...);
-
-// call function "inline" without registration in Table API
-env
-  .from("MyTable")
-  .groupBy($("myField"))
-  .flatAggregate(call(Top2.class, $("value")))
-  .select($("myField"), $("f0"), $("f1"));
-
-// call function "inline" without registration in Table API
-// but use an alias for a better naming of Tuple2's fields
-env
-  .from("MyTable")
-  .groupBy($("myField"))
-  .flatAggregate(call(Top2.class, $("value")).as("value", "rank"))
-  .select($("myField"), $("value"), $("rank"));
-
-// register function
-env.createTemporarySystemFunction("Top2", Top2.class);
-
-// call registered function in Table API
-env
-  .from("MyTable")
-  .groupBy($("myField"))
-  .flatAggregate(call("Top2", $("value")).as("value", "rank"))
-  .select($("myField"), $("value"), $("rank"));
-
-```
-{{< /tab >}}
-{{< tab "Scala" >}}
-```scala
-import java.lang.Integer
-import org.apache.flink.api.java.tuple.Tuple2
-import org.apache.flink.table.api._
-import org.apache.flink.table.functions.TableAggregateFunction
-import org.apache.flink.util.Collector
-
-// mutable accumulator of structured type for the aggregate function
-case class Top2Accumulator(
-  var first: Integer,
-  var second: Integer
-)
-
-// function that takes (value INT), stores intermediate results in a structured
-// type of Top2Accumulator, and returns the result as a structured type of Tuple2[Integer, Integer]
-// for value and rank
-class Top2 extends TableAggregateFunction[Tuple2[Integer, Integer], Top2Accumulator] {
-
-  override def createAccumulator(): Top2Accumulator = {
-    Top2Accumulator(
-      Integer.MIN_VALUE,
-      Integer.MIN_VALUE
-    )
-  }
-
-  def accumulate(acc: Top2Accumulator, value: Integer): Unit = {
-    if (value > acc.first) {
-      acc.second = acc.first
-      acc.first = value
-    } else if (value > acc.second) {
-      acc.second = value
-    }
-  }
-
-  def merge(acc: Top2Accumulator, it: java.lang.Iterable[Top2Accumulator]) {
-    val iter = it.iterator()
-    while (iter.hasNext) {
-      val otherAcc = iter.next()
-      accumulate(acc, otherAcc.first)
-      accumulate(acc, otherAcc.second)
-    }
-  }
-
-  def emitValue(acc: Top2Accumulator, out: Collector[Tuple2[Integer, Integer]]): Unit = {
-    // emit the value and rank
-    if (acc.first != Integer.MIN_VALUE) {
-      out.collect(Tuple2.of(acc.first, 1))
-    }
-    if (acc.second != Integer.MIN_VALUE) {
-      out.collect(Tuple2.of(acc.second, 2))
-    }
-  }
-}
-
-val env = TableEnvironment.create(...)
-
-// call function "inline" without registration in Table API
-env
-  .from("MyTable")
-  .groupBy($"myField")
-  .flatAggregate(call(classOf[Top2], $"value"))
-  .select($"myField", $"f0", $"f1")
-
-// call function "inline" without registration in Table API
-// but use an alias for a better naming of Tuple2's fields
-env
-  .from("MyTable")
-  .groupBy($"myField")
-  .flatAggregate(call(classOf[Top2], $"value").as("value", "rank"))
-  .select($"myField", $"value", $"rank")
-
-// register function
-env.createTemporarySystemFunction("Top2", classOf[Top2])
-
-// call registered function in Table API
-env
-  .from("MyTable")
-  .groupBy($"myField")
-  .flatAggregate(call("Top2", $"value").as("value", "rank"))
-  .select($"myField", $"value", $"rank")
-```
-{{< /tab >}}
-{{< /tabs >}}
-
-The `accumulate(...)` method of our `Top2` class takes two inputs. The first one is the accumulator
-and the second one is the user-defined input. In order to calculate a result, the accumulator needs to
-store the 2 highest values of all the data that has been accumulated. Accumulators are automatically managed
-by Flink's checkpointing mechanism and are restored in case of a failure to ensure exactly-once semantics.
-The result values are emitted together with a ranking index.
-
-### Mandatory and Optional Methods
-
-**The following methods are mandatory for each `TableAggregateFunction`:**
+**下面几个 `TableAggregateFunction` 的方法是必须要实现的：**
 
 - `createAccumulator()`
-- `accumulate(...)`
-- `emitValue(...)` or `emitUpdateWithRetract(...)`
+- `accumulate()`
 
-Additionally, there are a few methods that can be optionally implemented. While some of these methods
-allow the system more efficient query execution, others are mandatory for certain use cases. For instance,
-the `merge(...)` method is mandatory if the aggregation function should be applied in the context of a
-session group window (the accumulators of two session windows need to be joined when a row is observed
-that "connects" them).
+Flink 的类型推导在遇到复杂类型的时候可能会推导出错误的结果，比如那些非基本类型和普通的 POJO 类型的复杂类型。所以类似于 `ScalarFunction` 和 `TableFunction`，`TableAggregateFunction` 也提供了 `TableAggregateFunction#getResultType()` 和 `TableAggregateFunction#getAccumulatorType()` 方法来指定返回值类型和 accumulator 的类型，这两个方法都需要返回 `TypeInformation`。
 
-**The following methods of `TableAggregateFunction` are required depending on the use case:**
+除了上面的方法，还有几个其他的方法可以选择性的实现。有些方法可以让查询更加高效，而有些方法对于某些特定场景是必须要实现的。比如，在会话窗口（当两个会话窗口合并时会合并两个 accumulator）中使用聚合函数时，必须要实现`merge()` 方法。
 
-- `retract(...)` is required for aggregations on `OVER` windows.
-- `merge(...)` is required for many bounded aggregations and unbounded session and hop window aggregations.
-- `emitValue(...)` is required for bounded and window aggregations.
+**下面几个 `TableAggregateFunction` 的方法在某些特定场景下是必须要实现的：**
 
-**The following methods of `TableAggregateFunction` are used to improve the performance of streaming jobs:**
+- `retract()` 在 bounded `OVER` 窗口中的聚合函数必须要实现。
+- `merge()` 在许多批式聚合和以及流式会话和滑动窗口聚合中是必须要实现的。
+- `resetAccumulator()` 在许多批式聚合中是必须要实现的。
+- `emitValue()` 在批式聚合以及窗口聚合中是必须要实现的。
 
-- `emitUpdateWithRetract(...)` is used to emit values that have been updated under retract mode.
+**下面的 `TableAggregateFunction` 的方法可以提升流式任务的效率：**
 
-The `emitValue(...)` method always emits the full data according to the accumulator. In unbounded scenarios,
-this may bring performance problems. Take a Top N function as an example. The `emitValue(...)` would emit
-all N values each time. In order to improve the performance, one can implement `emitUpdateWithRetract(...)` which
-outputs data incrementally in retract mode. In other words, once there is an update, the method can retract
-old records before sending new, updated ones. The method will be used in preference to the `emitValue(...)`
-method.
+- `emitUpdateWithRetract()` 在 retract 模式下，该方法负责发送被更新的值。
 
-If the table aggregate function can only be applied in an OVER window, this can be declared by returning the
-requirement `FunctionRequirement.OVER_WINDOW_ONLY` in `getRequirements()`.
+`emitValue` 方法会发送所有 accumulator 给出的结果。拿 TopN 来说，`emitValue` 每次都会发送所有的最大的 n 个值。这在流式任务中可能会有一些性能问题。为了提升性能，用户可以实现 `emitUpdateWithRetract` 方法。这个方法在 retract 模式下会增量的输出结果，比如有数据更新了，我们必须要撤回老的数据，然后再发送新的数据。如果定义了 `emitUpdateWithRetract` 方法，那它会优先于 `emitValue` 方法被使用，因为一般认为 `emitUpdateWithRetract` 会更加高效，因为它的输出是增量的。
 
-If an accumulator needs to store large amounts of data, `org.apache.flink.table.api.dataview.ListView`
-and `org.apache.flink.table.api.dataview.MapView` provide advanced features for leveraging Flink's state
-backends in unbounded data scenarios. Please see the docs of the corresponding classes for more information
-about this advanced feature.
+`TableAggregateFunction` 的所有方法都必须是 `public` 的、非 `static` 的，而且名字必须跟上面提到的一样。`createAccumulator`、`getResultType` 和 `getAccumulatorType` 这三个方法是在抽象父类 `TableAggregateFunction` 中定义的，而其他的方法都是约定的方法。要实现一个表值聚合函数，你必须扩展 `org.apache.flink.table.functions.TableAggregateFunction`，并且实现一个（或者多个）`accumulate` 方法。`accumulate` 方法可以有多个重载的方法，也可以支持变长参数。
 
-Since some of methods are optional or can be overloaded, the methods are called by generated code. The
-base class does not always provide a signature to be overridden by the concrete implementation class. Nevertheless,
-all mentioned methods must be declared publicly, not static, and named exactly as the names mentioned above
-to be called.
+`TableAggregateFunction` 的所有方法的详细文档如下。
 
-Detailed documentation for all methods that are not declared in `TableAggregateFunction` and called by generated
-code is given below.
-
-**`accumulate(...)`**
-{{< tabs "e9899bf1-8885-4b13-ba31-51da35a3857f" >}}
+{{< tabs "be05e2c1-92b0-4373-8ef8-cf7dce67f85c" >}}
 {{< tab "Java" >}}
 ```java
-/*
- * Processes the input values and updates the provided accumulator instance. The method
- * accumulate can be overloaded with different custom types and arguments. An aggregate function
- * requires at least one accumulate() method.
- *
- * param: accumulator           the accumulator which contains the current aggregated results
- * param: [user defined inputs] the input value (usually obtained from new arrived data).
- */
-public void accumulate(ACC accumulator, [user defined inputs])
-```
-{{< /tab >}}
-{{< tab "Scala" >}}
-```scala
-/*
- * Processes the input values and updates the provided accumulator instance. The method
- * accumulate can be overloaded with different custom types and arguments. An aggregate function
- * requires at least one accumulate() method.
- *
- * param: accumulator           the accumulator which contains the current aggregated results
- * param: [user defined inputs] the input value (usually obtained from new arrived data).
- */
-def accumulate(accumulator: ACC, [user defined inputs]): Unit
-```
-{{< /tab >}}
-{{< /tabs >}}
 
-**`retract(...)`**
-{{< tabs "758c5113-cd01-4aca-9d50-53b370e5e4fe" >}}
-{{< tab "Java" >}}
-```java
-/*
- * Retracts the input values from the accumulator instance. The current design assumes the
- * inputs are the values that have been previously accumulated. The method retract can be
- * overloaded with different custom types and arguments. This method must be implemented for
- * bounded OVER aggregates over unbounded tables.
- *
- * param: accumulator           the accumulator which contains the current aggregated results
- * param: [user defined inputs] the input value (usually obtained from new arrived data).
- */
-public void retract(ACC accumulator, [user defined inputs])
-```
-{{< /tab >}}
-{{< tab "Scala" >}}
-```scala
-/*
- * Retracts the input values from the accumulator instance. The current design assumes the
- * inputs are the values that have been previously accumulated. The method retract can be
- * overloaded with different custom types and arguments. This method must be implemented for
- * bounded OVER aggregates over unbounded tables.
- *
- * param: accumulator           the accumulator which contains the current aggregated results
- * param: [user defined inputs] the input value (usually obtained from new arrived data).
- */
-def retract(accumulator: ACC, [user defined inputs]): Unit
-```
-{{< /tab >}}
-{{< /tabs >}}
+/**
+  * Base class for user-defined aggregates and table aggregates.
+  *
+  * @param <T>   the type of the aggregation result.
+  * @param <ACC> the type of the aggregation accumulator. The accumulator is used to keep the
+  *             aggregated values which are needed to compute an aggregation result.
+  */
+public abstract class UserDefinedAggregateFunction<T, ACC> extends UserDefinedFunction {
 
-**`merge(...)`**
-{{< tabs "26327570-9183-44ff-aea6-dd60581f3a3c" >}}
-{{< tab "Java" >}}
-```java
-/*
- * Merges a group of accumulator instances into one accumulator instance. This method must be
- * implemented for unbounded session window grouping aggregates and bounded grouping aggregates.
- *
- * param: accumulator the accumulator which will keep the merged aggregate results. It should
- *                    be noted that the accumulator may contain the previous aggregated
- *                    results. Therefore user should not replace or clean this instance in the
- *                    custom merge method.
- * param: iterable    an java.lang.Iterable pointed to a group of accumulators that will be
- *                    merged.
- */
-public void merge(ACC accumulator, java.lang.Iterable<ACC> iterable)
-```
-{{< /tab >}}
-{{< tab "Scala" >}}
-```scala
-/*
- * Merges a group of accumulator instances into one accumulator instance. This method must be
- * implemented for unbounded session window grouping aggregates and bounded grouping aggregates.
- *
- * param: accumulator the accumulator which will keep the merged aggregate results. It should
- *                    be noted that the accumulator may contain the previous aggregated
- *                    results. Therefore user should not replace or clean this instance in the
- *                    custom merge method.
- * param: iterable    an java.lang.Iterable pointed to a group of accumulators that will be
- *                    merged.
- */
-def merge(accumulator: ACC, iterable: java.lang.Iterable[ACC]): Unit
-```
-{{< /tab >}}
-{{< /tabs >}}
+  /**
+    * Creates and init the Accumulator for this (table)aggregate function.
+    *
+    * @return the accumulator with the initial value
+    */
+  public ACC createAccumulator(); // MANDATORY
 
-**`emitValue(...)`**
-{{< tabs "7e6a6b36-ad76-4777-a886-681ac8ddcbea" >}}
-{{< tab "Java" >}}
-```java
-/*
- * Called every time when an aggregation result should be materialized. The returned value could
- * be either an early and incomplete result (periodically emitted as data arrives) or the final
- * result of the aggregation.
- *
- * param: accumulator           the accumulator which contains the current aggregated results
- * param: out                   the collector used to output data.
- */
-public void emitValue(ACC accumulator, org.apache.flink.util.Collector<T> out)
-```
-{{< /tab >}}
-{{< tab "Scala" >}}
-```scala
-/*
- * Called every time when an aggregation result should be materialized. The returned value could
- * be either an early and incomplete result (periodically emitted as data arrives) or the final
- * result of the aggregation.
- *
- * param: accumulator           the accumulator which contains the current aggregated results
- * param: out                   the collector used to output data.
- */
-def emitValue(accumulator: ACC, out: org.apache.flink.util.Collector[T]): Unit
-```
-{{< /tab >}}
-{{< /tabs >}}
-**`emitUpdateWithRetract(...)`**
-{{< tabs "22e2887f-0bc0-4d48-ad2c-f4bda99b29ec" >}}
-{{< tab "Java" >}}
-```java
-/*
- * Called every time when an aggregation result should be materialized. The returned value could
- * be either an early and incomplete result (periodically emitted as data arrives) or the final
- * result of the aggregation.
- *
- * Compared to emitValue(), emitUpdateWithRetract() is used to emit values that have been updated. This method
- * outputs data incrementally in retraction mode (also known as "update before" and "update after"). Once
- * there is an update, we have to retract old records before sending new updated ones. The emitUpdateWithRetract()
- * method will be used in preference to the emitValue() method if both methods are defined in the table aggregate
- * function, because the method is treated to be more efficient than emitValue as it can output
- * values incrementally.
- *
- * param: accumulator           the accumulator which contains the current aggregated results
- * param: out                   the retractable collector used to output data. Use the collect() method
- *                              to output(add) records and use retract method to retract(delete)
- *                              records.
- */
-public void emitUpdateWithRetract(ACC accumulator, RetractableCollector<T> out)
-```
-{{< /tab >}}
-{{< tab "Scala" >}}
-```scala
-/*
- * Called every time when an aggregation result should be materialized. The returned value could
- * be either an early and incomplete result (periodically emitted as data arrives) or the final
- * result of the aggregation.
- *
- * Compared to emitValue(), emitUpdateWithRetract() is used to emit values that have been updated. This method
- * outputs data incrementally in retraction mode (also known as "update before" and "update after"). Once
- * there is an update, we have to retract old records before sending new updated ones. The emitUpdateWithRetract()
- * method will be used in preference to the emitValue() method if both methods are defined in the table aggregate
- * function, because the method is treated to be more efficient than emitValue as it can output
- * values incrementally.
- *
- * param: accumulator           the accumulator which contains the current aggregated results
- * param: out                   the retractable collector used to output data. Use the collect() method
- *                              to output(add) records and use retract method to retract(delete)
- *                              records.
- */
-def emitUpdateWithRetract(accumulator: ACC, out: RetractableCollector[T]): Unit
-```
-{{< /tab >}}
-{{< /tabs >}}
+  /**
+    * Returns the TypeInformation of the (table)aggregate function's result.
+    *
+    * @return The TypeInformation of the (table)aggregate function's result or null if the result
+    *         type should be automatically inferred.
+    */
+  public TypeInformation<T> getResultType = null; // PRE-DEFINED
 
-### Retraction Example
-
-The following example shows how to use the `emitUpdateWithRetract(...)` method to emit only incremental
-updates. In order to do so, the accumulator keeps both the old and new top 2 values.
-
-If the N of Top N is big, it might be inefficient to keep both the old and new values. One way to
-solve this case is to store only the input record in the accumulator in `accumulate` method and then perform
-a calculation in `emitUpdateWithRetract`.
-
-{{< tabs "043e94c6-05b5-4800-9e5f-7d11235f3a11" >}}
-{{< tab "Java" >}}
-```java
-import org.apache.flink.api.java.tuple.Tuple2;
-import org.apache.flink.table.functions.TableAggregateFunction;
-
-public static class Top2WithRetractAccumulator {
-  public Integer first;
-  public Integer second;
-  public Integer oldFirst;
-  public Integer oldSecond;
+  /**
+    * Returns the TypeInformation of the (table)aggregate function's accumulator.
+    *
+    * @return The TypeInformation of the (table)aggregate function's accumulator or null if the
+    *         accumulator type should be automatically inferred.
+    */
+  public TypeInformation<ACC> getAccumulatorType = null; // PRE-DEFINED
 }
 
-public static class Top2WithRetract
-    extends TableAggregateFunction<Tuple2<Integer, Integer>, Top2WithRetractAccumulator> {
+/**
+  * Base class for table aggregation functions.
+  *
+  * @param <T>   the type of the aggregation result
+  * @param <ACC> the type of the aggregation accumulator. The accumulator is used to keep the
+  *             aggregated values which are needed to compute a table aggregation result.
+  *             TableAggregateFunction represents its state using accumulator, thereby the state of
+  *             the TableAggregateFunction must be put into the accumulator.
+  */
+public abstract class TableAggregateFunction<T, ACC> extends UserDefinedAggregateFunction<T, ACC> {
 
-  @Override
-  public Top2WithRetractAccumulator createAccumulator() {
-    Top2WithRetractAccumulator acc = new Top2WithRetractAccumulator();
-    acc.first = Integer.MIN_VALUE;
-    acc.second = Integer.MIN_VALUE;
-    acc.oldFirst = Integer.MIN_VALUE;
-    acc.oldSecond = Integer.MIN_VALUE;
-    return acc;
-  }
+  /** Processes the input values and update the provided accumulator instance. The method
+    * accumulate can be overloaded with different custom types and arguments. A TableAggregateFunction
+    * requires at least one accumulate() method.
+    *
+    * @param accumulator           the accumulator which contains the current aggregated results
+    * @param [user defined inputs] the input value (usually obtained from a new arrived data).
+    */
+  public void accumulate(ACC accumulator, [user defined inputs]); // MANDATORY
 
-  public void accumulate(Top2WithRetractAccumulator acc, Integer v) {
-    if (v > acc.first) {
-      acc.second = acc.first;
-      acc.first = v;
-    } else if (v > acc.second) {
-      acc.second = v;
-    }
-  }
+  /**
+    * Retracts the input values from the accumulator instance. The current design assumes the
+    * inputs are the values that have been previously accumulated. The method retract can be
+    * overloaded with different custom types and arguments. This function must be implemented for
+    * datastream bounded over aggregate.
+    *
+    * @param accumulator           the accumulator which contains the current aggregated results
+    * @param [user defined inputs] the input value (usually obtained from a new arrived data).
+    */
+  public void retract(ACC accumulator, [user defined inputs]); // OPTIONAL
 
-  public void emitUpdateWithRetract(
-      Top2WithRetractAccumulator acc,
-      RetractableCollector<Tuple2<Integer, Integer>> out) {
-    if (!acc.first.equals(acc.oldFirst)) {
-      // if there is an update, retract the old value then emit a new value
-      if (acc.oldFirst != Integer.MIN_VALUE) {
-          out.retract(Tuple2.of(acc.oldFirst, 1));
-      }
-      out.collect(Tuple2.of(acc.first, 1));
-      acc.oldFirst = acc.first;
-    }
-    if (!acc.second.equals(acc.oldSecond)) {
-      // if there is an update, retract the old value then emit a new value
-      if (acc.oldSecond != Integer.MIN_VALUE) {
-          out.retract(Tuple2.of(acc.oldSecond, 2));
-      }
-      out.collect(Tuple2.of(acc.second, 2));
-      acc.oldSecond = acc.second;
-    }
+  /**
+    * Merges a group of accumulator instances into one accumulator instance. This function must be
+    * implemented for datastream session window grouping aggregate and dataset grouping aggregate.
+    *
+    * @param accumulator  the accumulator which will keep the merged aggregate results. It should
+    *                     be noted that the accumulator may contain the previous aggregated
+    *                     results. Therefore user should not replace or clean this instance in the
+    *                     custom merge method.
+    * @param its          an {@link java.lang.Iterable} pointed to a group of accumulators that will be
+    *                     merged.
+    */
+  public void merge(ACC accumulator, java.lang.Iterable<ACC> its); // OPTIONAL
+
+  /**
+    * Called every time when an aggregation result should be materialized. The returned value
+    * could be either an early and incomplete result  (periodically emitted as data arrive) or
+    * the final result of the  aggregation.
+    *
+    * @param accumulator the accumulator which contains the current
+    *                    aggregated results
+    * @param out         the collector used to output data
+    */
+  public void emitValue(ACC accumulator, Collector<T> out); // OPTIONAL
+
+  /**
+    * Called every time when an aggregation result should be materialized. The returned value
+    * could be either an early and incomplete result (periodically emitted as data arrive) or
+    * the final result of the aggregation.
+    *
+    * Different from emitValue, emitUpdateWithRetract is used to emit values that have been updated.
+    * This method outputs data incrementally in retract mode, i.e., once there is an update, we
+    * have to retract old records before sending new updated ones. The emitUpdateWithRetract
+    * method will be used in preference to the emitValue method if both methods are defined in the
+    * table aggregate function, because the method is treated to be more efficient than emitValue
+    * as it can outputvalues incrementally.
+    *
+    * @param accumulator the accumulator which contains the current
+    *                    aggregated results
+    * @param out         the retractable collector used to output data. Use collect method
+    *                    to output(add) records and use retract method to retract(delete)
+    *                    records.
+    */
+  public void emitUpdateWithRetract(ACC accumulator, RetractableCollector<T> out); // OPTIONAL
+
+  /**
+    * Collects a record and forwards it. The collector can output retract messages with the retract
+    * method. Note: only use it in {@code emitRetractValueIncrementally}.
+    */
+  public interface RetractableCollector<T> extends Collector<T> {
+
+      /**
+        * Retract a record.
+        *
+        * @param record The record to retract.
+        */
+      void retract(T record);
   }
 }
 ```
 {{< /tab >}}
 {{< tab "Scala" >}}
 ```scala
-import org.apache.flink.api.java.tuple.Tuple2
+/**
+  * Base class for user-defined aggregates and table aggregates.
+  *
+  * @tparam T   the type of the aggregation result.
+  * @tparam ACC the type of the aggregation accumulator. The accumulator is used to keep the
+  *             aggregated values which are needed to compute an aggregation result.
+  */
+abstract class UserDefinedAggregateFunction[T, ACC] extends UserDefinedFunction {
+
+  /**
+    * Creates and init the Accumulator for this (table)aggregate function.
+    *
+    * @return the accumulator with the initial value
+    */
+  def createAccumulator(): ACC // MANDATORY
+
+  /**
+    * Returns the TypeInformation of the (table)aggregate function's result.
+    *
+    * @return The TypeInformation of the (table)aggregate function's result or null if the result
+    *         type should be automatically inferred.
+    */
+  def getResultType: TypeInformation[T] = null // PRE-DEFINED
+
+  /**
+    * Returns the TypeInformation of the (table)aggregate function's accumulator.
+    *
+    * @return The TypeInformation of the (table)aggregate function's accumulator or null if the
+    *         accumulator type should be automatically inferred.
+    */
+  def getAccumulatorType: TypeInformation[ACC] = null // PRE-DEFINED
+}
+
+/**
+  * Base class for table aggregation functions.
+  *
+  * @tparam T   the type of the aggregation result
+  * @tparam ACC the type of the aggregation accumulator. The accumulator is used to keep the
+  *             aggregated values which are needed to compute an aggregation result.
+  *             TableAggregateFunction represents its state using accumulator, thereby the state of
+  *             the TableAggregateFunction must be put into the accumulator.
+  */
+abstract class TableAggregateFunction[T, ACC] extends UserDefinedAggregateFunction[T, ACC] {
+
+  /**
+    * Processes the input values and update the provided accumulator instance. The method
+    * accumulate can be overloaded with different custom types and arguments. A TableAggregateFunction
+    * requires at least one accumulate() method.
+    *
+    * @param accumulator           the accumulator which contains the current aggregated results
+    * @param [user defined inputs] the input value (usually obtained from a new arrived data).
+    */
+  def accumulate(accumulator: ACC, [user defined inputs]): Unit // MANDATORY
+
+  /**
+    * Retracts the input values from the accumulator instance. The current design assumes the
+    * inputs are the values that have been previously accumulated. The method retract can be
+    * overloaded with different custom types and arguments. This function must be implemented for
+    * datastream bounded over aggregate.
+    *
+    * @param accumulator           the accumulator which contains the current aggregated results
+    * @param [user defined inputs] the input value (usually obtained from a new arrived data).
+    */
+  def retract(accumulator: ACC, [user defined inputs]): Unit // OPTIONAL
+
+  /**
+    * Merges a group of accumulator instances into one accumulator instance. This function must be
+    * implemented for datastream session window grouping aggregate and dataset grouping aggregate.
+    *
+    * @param accumulator  the accumulator which will keep the merged aggregate results. It should
+    *                     be noted that the accumulator may contain the previous aggregated
+    *                     results. Therefore user should not replace or clean this instance in the
+    *                     custom merge method.
+    * @param its          an [[java.lang.Iterable]] pointed to a group of accumulators that will be
+    *                     merged.
+    */
+  def merge(accumulator: ACC, its: java.lang.Iterable[ACC]): Unit // OPTIONAL
+
+  /**
+    * Called every time when an aggregation result should be materialized. The returned value
+    * could be either an early and incomplete result  (periodically emitted as data arrive) or
+    * the final result of the  aggregation.
+    *
+    * @param accumulator the accumulator which contains the current
+    *                    aggregated results
+    * @param out         the collector used to output data
+    */
+  def emitValue(accumulator: ACC, out: Collector[T]): Unit // OPTIONAL
+
+  /**
+    * Called every time when an aggregation result should be materialized. The returned value
+    * could be either an early and incomplete result (periodically emitted as data arrive) or
+    * the final result of the aggregation.
+    *
+    * Different from emitValue, emitUpdateWithRetract is used to emit values that have been updated.
+    * This method outputs data incrementally in retract mode, i.e., once there is an update, we
+    * have to retract old records before sending new updated ones. The emitUpdateWithRetract
+    * method will be used in preference to the emitValue method if both methods are defined in the
+    * table aggregate function, because the method is treated to be more efficient than emitValue
+    * as it can outputvalues incrementally.
+    *
+    * @param accumulator the accumulator which contains the current
+    *                    aggregated results
+    * @param out         the retractable collector used to output data. Use collect method
+    *                    to output(add) records and use retract method to retract(delete)
+    *                    records.
+    */
+  def emitUpdateWithRetract(accumulator: ACC, out: RetractableCollector[T]): Unit // OPTIONAL
+
+  /**
+    * Collects a record and forwards it. The collector can output retract messages with the retract
+    * method. Note: only use it in `emitRetractValueIncrementally`.
+    */
+  trait RetractableCollector[T] extends Collector[T] {
+
+    /**
+      * Retract a record.
+      *
+      * @param record The record to retract.
+      */
+    def retract(record: T): Unit
+  }
+}
+```
+{{< /tab >}}
+{{< /tabs >}}
+
+
+下面的例子展示了如何
+
+- 定义一个 `TableAggregateFunction` 来计算给定列的最大的 2 个值，
+- 在 `TableEnvironment` 中注册函数，
+- 在 Table API 查询中使用函数（当前只在 Table API 中支持 TableAggregateFunction）。
+
+为了计算最大的 2 个值，accumulator 需要保存当前看到的最大的 2 个值。在我们的例子中，我们定义了类 `Top2Accum` 来作为 accumulator。Flink 的 checkpoint 机制会自动保存 accumulator，并且在失败时进行恢复，来保证精确一次的语义。
+
+我们的 `Top2` 表值聚合函数（`TableAggregateFunction`）的 `accumulate()` 方法有两个输入，第一个是 `Top2Accum` accumulator，另一个是用户定义的输入：输入的值 `v`。尽管 `merge()` 方法在大多数聚合类型中不是必须的，我们也在样例中提供了它的实现。请注意，我们在 Scala 样例中也使用的是 Java 的基础类型，并且定义了 `getResultType()` 和 `getAccumulatorType()` 方法，因为 Flink 的类型推导对于 Scala 的类型推导支持的不是很好。
+
+{{< tabs "1348443b-e70d-4e88-888a-69a21ecc7857" >}}
+{{< tab "Java" >}}
+```java
+/**
+ * Accumulator for Top2.
+ */
+public class Top2Accum {
+    public Integer first;
+    public Integer second;
+}
+
+/**
+ * The top2 user-defined table aggregate function.
+ */
+public static class Top2 extends TableAggregateFunction<Tuple2<Integer, Integer>, Top2Accum> {
+
+    @Override
+    public Top2Accum createAccumulator() {
+        Top2Accum acc = new Top2Accum();
+        acc.first = Integer.MIN_VALUE;
+        acc.second = Integer.MIN_VALUE;
+        return acc;
+    }
+
+
+    public void accumulate(Top2Accum acc, Integer v) {
+        if (v > acc.first) {
+            acc.second = acc.first;
+            acc.first = v;
+        } else if (v > acc.second) {
+            acc.second = v;
+        }
+    }
+
+    public void merge(Top2Accum acc, java.lang.Iterable<Top2Accum> iterable) {
+        for (Top2Accum otherAcc : iterable) {
+            accumulate(acc, otherAcc.first);
+            accumulate(acc, otherAcc.second);
+        }
+    }
+
+    public void emitValue(Top2Accum acc, Collector<Tuple2<Integer, Integer>> out) {
+        // emit the value and rank
+        if (acc.first != Integer.MIN_VALUE) {
+            out.collect(Tuple2.of(acc.first, 1));
+        }
+        if (acc.second != Integer.MIN_VALUE) {
+            out.collect(Tuple2.of(acc.second, 2));
+        }
+    }
+}
+
+// 注册函数
+StreamTableEnvironment tEnv = ...
+tEnv.registerFunction("top2", new Top2());
+
+// 初始化表
+Table tab = ...;
+
+// 使用函数
+tab.groupBy("key")
+    .flatAggregate("top2(a) as (v, rank)")
+    .select("key, v, rank");
+
+```
+{{< /tab >}}
+{{< tab "Scala" >}}
+```scala
+import java.lang.{Integer => JInteger}
+import org.apache.flink.table.api.Types
 import org.apache.flink.table.functions.TableAggregateFunction
-import org.apache.flink.table.functions.TableAggregateFunction.RetractableCollector
 
-case class Top2WithRetractAccumulator(
-  var first: Integer,
-  var second: Integer,
-  var oldFirst: Integer,
-  var oldSecond: Integer
-)
+/**
+ * Accumulator for top2.
+ */
+class Top2Accum {
+  var first: JInteger = _
+  var second: JInteger = _
+}
 
-class Top2WithRetract
-    extends TableAggregateFunction[Tuple2[Integer, Integer], Top2WithRetractAccumulator] {
+/**
+ * The top2 user-defined table aggregate function.
+ */
+class Top2 extends TableAggregateFunction[JTuple2[JInteger, JInteger], Top2Accum] {
 
-  override def createAccumulator(): Top2WithRetractAccumulator = {
-    Top2WithRetractAccumulator(
-      Integer.MIN_VALUE,
-      Integer.MIN_VALUE,
-      Integer.MIN_VALUE,
-      Integer.MIN_VALUE
-    )
+  override def createAccumulator(): Top2Accum = {
+    val acc = new Top2Accum
+    acc.first = Int.MinValue
+    acc.second = Int.MinValue
+    acc
   }
 
-  def accumulate(acc: Top2WithRetractAccumulator, value: Integer): Unit = {
-    if (value > acc.first) {
+  def accumulate(acc: Top2Accum, v: Int) {
+    if (v > acc.first) {
       acc.second = acc.first
-      acc.first = value
-    } else if (value > acc.second) {
-      acc.second = value
+      acc.first = v
+    } else if (v > acc.second) {
+      acc.second = v
+    }
+  }
+
+  def merge(acc: Top2Accum, its: JIterable[Top2Accum]): Unit = {
+    val iter = its.iterator()
+    while (iter.hasNext) {
+      val top2 = iter.next()
+      accumulate(acc, top2.first)
+      accumulate(acc, top2.second)
+    }
+  }
+
+  def emitValue(acc: Top2Accum, out: Collector[JTuple2[JInteger, JInteger]]): Unit = {
+    // emit the value and rank
+    if (acc.first != Int.MinValue) {
+      out.collect(JTuple2.of(acc.first, 1))
+    }
+    if (acc.second != Int.MinValue) {
+      out.collect(JTuple2.of(acc.second, 2))
+    }
+  }
+}
+
+// 初始化表
+val tab = ...
+
+// 使用函数
+tab
+  .groupBy('key)
+  .flatAggregate(top2('a) as ('v, 'rank))
+  .select('key, 'v, 'rank)
+
+```
+{{< /tab >}}
+{{< /tabs >}}
+
+
+下面的例子展示了如何使用 `emitUpdateWithRetract` 方法来只发送更新的数据。为了只发送更新的结果，accumulator 保存了上一次的最大的2个值，也保存了当前最大的2个值。注意：如果 TopN 中的 n 非常大，这种既保存上次的结果，也保存当前的结果的方式不太高效。一种解决这种问题的方式是把输入数据直接存储到 `accumulator` 中，然后在调用 `emitUpdateWithRetract` 方法时再进行计算。
+
+{{< tabs "e0d841fe-8d95-4706-9e19-e76141171966" >}}
+{{< tab "Java" >}}
+```java
+/**
+ * Accumulator for Top2.
+ */
+public class Top2Accum {
+    public Integer first;
+    public Integer second;
+    public Integer oldFirst;
+    public Integer oldSecond;
+}
+
+/**
+ * The top2 user-defined table aggregate function.
+ */
+public static class Top2 extends TableAggregateFunction<Tuple2<Integer, Integer>, Top2Accum> {
+
+    @Override
+    public Top2Accum createAccumulator() {
+        Top2Accum acc = new Top2Accum();
+        acc.first = Integer.MIN_VALUE;
+        acc.second = Integer.MIN_VALUE;
+        acc.oldFirst = Integer.MIN_VALUE;
+        acc.oldSecond = Integer.MIN_VALUE;
+        return acc;
+    }
+
+    public void accumulate(Top2Accum acc, Integer v) {
+        if (v > acc.first) {
+            acc.second = acc.first;
+            acc.first = v;
+        } else if (v > acc.second) {
+            acc.second = v;
+        }
+    }
+
+    public void emitUpdateWithRetract(Top2Accum acc, RetractableCollector<Tuple2<Integer, Integer>> out) {
+        if (!acc.first.equals(acc.oldFirst)) {
+            // if there is an update, retract old value then emit new value.
+            if (acc.oldFirst != Integer.MIN_VALUE) {
+                out.retract(Tuple2.of(acc.oldFirst, 1));
+            }
+            out.collect(Tuple2.of(acc.first, 1));
+            acc.oldFirst = acc.first;
+        }
+
+        if (!acc.second.equals(acc.oldSecond)) {
+            // if there is an update, retract old value then emit new value.
+            if (acc.oldSecond != Integer.MIN_VALUE) {
+                out.retract(Tuple2.of(acc.oldSecond, 2));
+            }
+            out.collect(Tuple2.of(acc.second, 2));
+            acc.oldSecond = acc.second;
+        }
+    }
+}
+
+// 注册函数
+StreamTableEnvironment tEnv = ...
+tEnv.registerFunction("top2", new Top2());
+
+// 初始化表
+Table tab = ...;
+
+// 使用函数
+tab.groupBy("key")
+    .flatAggregate("top2(a) as (v, rank)")
+    .select("key, v, rank");
+
+```
+{{< /tab >}}
+{{< tab "Scala" >}}
+```scala
+import java.lang.{Integer => JInteger}
+import org.apache.flink.table.api.Types
+import org.apache.flink.table.functions.TableAggregateFunction
+
+/**
+ * Accumulator for top2.
+ */
+class Top2Accum {
+  var first: JInteger = _
+  var second: JInteger = _
+  var oldFirst: JInteger = _
+  var oldSecond: JInteger = _
+}
+
+/**
+ * The top2 user-defined table aggregate function.
+ */
+class Top2 extends TableAggregateFunction[JTuple2[JInteger, JInteger], Top2Accum] {
+
+  override def createAccumulator(): Top2Accum = {
+    val acc = new Top2Accum
+    acc.first = Int.MinValue
+    acc.second = Int.MinValue
+    acc.oldFirst = Int.MinValue
+    acc.oldSecond = Int.MinValue
+    acc
+  }
+
+  def accumulate(acc: Top2Accum, v: Int) {
+    if (v > acc.first) {
+      acc.second = acc.first
+      acc.first = v
+    } else if (v > acc.second) {
+      acc.second = v
     }
   }
 
   def emitUpdateWithRetract(
-      acc: Top2WithRetractAccumulator,
-      out: RetractableCollector[Tuple2[Integer, Integer]])
-    : Unit = {
-    if (!acc.first.equals(acc.oldFirst)) {
-      // if there is an update, retract the old value then emit a new value
-      if (acc.oldFirst != Integer.MIN_VALUE) {
-          out.retract(Tuple2.of(acc.oldFirst, 1))
+    acc: Top2Accum,
+    out: RetractableCollector[JTuple2[JInteger, JInteger]])
+  : Unit = {
+    if (acc.first != acc.oldFirst) {
+      // if there is an update, retract old value then emit new value.
+      if (acc.oldFirst != Int.MinValue) {
+        out.retract(JTuple2.of(acc.oldFirst, 1))
       }
-      out.collect(Tuple2.of(acc.first, 1))
+      out.collect(JTuple2.of(acc.first, 1))
       acc.oldFirst = acc.first
     }
-    if (!acc.second.equals(acc.oldSecond)) {
-      // if there is an update, retract the old value then emit a new value
-      if (acc.oldSecond != Integer.MIN_VALUE) {
-          out.retract(Tuple2.of(acc.oldSecond, 2))
+    if (acc.second != acc.oldSecond) {
+      // if there is an update, retract old value then emit new value.
+      if (acc.oldSecond != Int.MinValue) {
+        out.retract(JTuple2.of(acc.oldSecond, 2))
       }
-      out.collect(Tuple2.of(acc.second, 2))
+      out.collect(JTuple2.of(acc.second, 2))
       acc.oldSecond = acc.second
     }
   }
 }
+
+// 初始化表
+val tab = ...
+
+// 使用函数
+tab
+  .groupBy('key)
+  .flatAggregate(top2('a) as ('v, 'rank))
+  .select('key, 'v, 'rank)
+
 ```
 {{< /tab >}}
 {{< /tabs >}}

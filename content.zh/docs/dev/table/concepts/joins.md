@@ -1,9 +1,9 @@
 ---
-title: "Joins"
+title: "流上的 Join"
 weight: 5
 type: docs
 aliases:
-  - /dev/table/streaming/joins.html
+  - /zh/dev/table/streaming/joins.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,20 +24,22 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Joins in Continuous Queries
+# 流上的 Join
 
-Flink SQL supports complex and flexible join operations over dynamic tables. 
-There are several different types of joins to account for the wide variety of semantics queries may require. 
+Join 在批数据处理中是比较常见且广为人知的运算，一般用于连接两张关系表。然而在[动态表]({{< ref "docs/dev/table/streaming/dynamic_tables" >}})中 Join 的语义会难以理解甚至让人困惑。
 
-For full syntax of each join, please check the join sections in [Table API](../tableApi.html#joins) and [SQL]({{< ref "/dev/table/sql/queries" >}}#joins).
+因而，Flink 提供了几种基于 Table API 和 SQL 的 Join 方法。
+
+欲获取更多关于 Join 语法的细节，请参考 [Table API]({{< ref "docs/dev/table/tableApi" >}}#joins) 和 [SQL]({{< ref "docs/dev/table/sql/queries" >}}#joins) 中的 Join 章节。
 
 
 
-Regular Joins
+<a name="regular-joins"></a>
+
+常规 Join
 -------------
 
-Regular joins are the most generic type of join in which any new record, or changes to either side of the join, are visible and affect the entirety of the join result. 
-For example, if there is a new record on the left side, it will be joined with all the previous and future records on the right side. 
+常规 Join 是最常用的 Join 用法。在常规 Join 中，任何新记录或对 Join 两侧表的任何更改都是可见的，并会影响最终整个 Join 的结果。例如，如果 Join 左侧插入了一条新的记录，那么它将会与 Join 右侧过去与将来的所有记录进行 Join 运算。
 
 ```sql
 SELECT * FROM Orders
@@ -45,16 +47,16 @@ INNER JOIN Product
 ON Orders.productId = Product.id
 ```
 
+上述语意允许对输入表进行任意类型的更新操作（insert, update, delete）。
 
-These semantics are the most flexible and allow for any kind of updating (insert, update, delete) input table.
-However, this operation has important operational implications: it requires to keep both sides of the join input in Flinks state forever.
-Thus, the resource usage may grow indefinitely if both input tables are append-only. 
+然而，常规 Join 隐含了一个重要的前提：即它需要在 Flink 的状态中永久保存 Join 两侧的数据。因而，如果 Join 操作中的一方或双方输入表持续增长的话，资源消耗也将会随之无限增长。
 
-Interval Joins
---------------
+<a name="interval-joins"></a>
 
-An interval join is defined by a join predicate that checks if the [time attributes](time_attributes.html) of the input
-records are within certain time constraints, i.e., a time window.
+时间区间 Join
+-------------------
+
+如果一个 Join 限定输入[时间属性]({{< ref "docs/dev/table/streaming/time_attributes" >}})必须在一定的时间限制中（即时间窗口），那么就称之为时间区间 Join。
 
 ```sql
 SELECT *
@@ -65,20 +67,19 @@ WHERE o.id = s.orderId AND
       o.ordertime BETWEEN s.shiptime - INTERVAL '4' HOUR AND s.shiptime
 ```
 
-Compared to a regular join, this kind of join only supports append-only tables with time attributes.
-Since time attributes are quasi-monotonic increasing, Flink can remove old values from its state without affecting the correctness of the result.
+与常规 Join 操作相比，时间区间 Join 只支持带有时间属性的递增表。由于时间属性是单调递增的，Flink 可以从状态中移除过期的数据，而不会影响结果的正确性。
 
-Temporal Joins
---------------
+<a name="join-with-a-temporal-table-function"></a>
 
-### Event Time Temporal Join
+时态表 Join
+--------------------------
+<span class="label label-danger">注意</span> 只在 Blink planner 中支持。
+<span class="label label-danger">注意</span> 时态表有两种方式去定义，即 [时态表函数]({{< ref "/dev/table/streaming/versioned_tables" >}}#时态表函数) 和 [时态表 DDL]({{< ref "docs/dev/table/streaming/versioned_tables" >}}#时态表)，使用时态表函数的时态表 join 只支持在 Table API 中使用，使用时态表 DDL 的时态表 join 只支持在 SQL 中使用。
+请参考[时态表]({{< ref "/dev/table/streaming/versioned_tables" >}})页面获取更多关于时态表和时态表函数的区别。
 
-Temporal joins allow joining against a [versioned table]({{< ref "/dev/table/streaming/versioned_tables" >}}).
-This means a table can be enriched with changing metadata and retrieve its value at a certain point in time. 
+时态表 Join 意味着对任意表（左输入/探针侧）去关联一个时态表（右输入/构建侧）的版本，时态表可以是一张跟踪所有变更记录的表（例如数据库表的 changelog，包含多个表快照），也可以是物化所有变更之后的表（例如数据库表，只有最新表快照）。
 
-Temporal joins take an arbitrary table (left input/probe site) and correlate each row to the corresponding row's relevant version in the versioned table (right input/build side). 
-Flink uses the SQL syntax of `FOR SYSTEM_TIME AS OF` to perform this operation from the SQL:2011 standard. 
-The syntax of a temporal join is as follows;
+Flink 使用了 SQL:2011 标准引入的时态表 Join 语法，时态表 Join 的语法如下:
 
 ```sql
 SELECT [column_list]
@@ -86,103 +87,129 @@ FROM table1 [AS <alias1>]
 [LEFT] JOIN table2 FOR SYSTEM_TIME AS OF table1.{ proctime | rowtime } [AS <alias2>]
 ON table1.column-name1 = table2.column-name1
 ```
+ 
+<a name="processing-time-temporal-joins"></a>
 
-With an event-time attribute (i.e., a rowtime attribute), it is possible to retrieve the value of a key as it was at some point in the past. 
-This allows for joining the two tables at a common point in time. 
-The versioned table will store all versions - identified by time - since the last watermark. 
+### 基于事件时间的时态 Join
+基于事件时间的时态表 join 使用(左侧输入/探针侧) 的 事件时间 去关联(右侧输入/构建侧) [版本表]({{< ref "/dev/table/streaming/versioned_tables" >}}#声明版本表) 对应的版本。
+基于事件时间的时态表 join 仅支持关版本表或版本视图，版本表或版本视图只能是一个 changelog 流。 但是，Flink 支持将 append-only 流转换成 changelog 流，因此版本表也可以来自一个 append-only 流。
+查看[声明版本视图]({{< ref "/dev/table/streaming/versioned_tables" >}}#声明版本视图) 获取更多的信息关于如何声明一张来自 append-only 流的版本表。
 
-For example, suppose we have a table of orders, each with prices in different currencies.
-To properly normalize this table to a single currency, such as USD, each order needs to be joined with the proper currency conversion rate from the point-in-time when the order was placed. 
+将事件时间作为时间属性时，可将 _过去_ 时间属性与时态表一起使用。这允许对两个表中在相同时间点的记录执行 Join 操作。
+与基于处理时间的时态 Join 相比，时态表不仅将构建侧记录的最新版本（是否最新由所定义的主键所决定）保存在 state 中，同时也会存储自上一个 watermarks 以来的所有版本（按时间区分）。
+
+例如，在探针侧表新插入一条事件时间时间为 `12:30:00` 的记录，它将和构建侧表时间点为 `12:30:00` 的版本根据[时态表的概念]({{< ref "/dev/table/streaming/versioned_tables" >}})进行 Join 运算。
+因此，新插入的记录仅与时间戳小于等于 `12:30:00` 的记录进行 Join 计算（由主键决定哪些时间点的数据将参与计算）。
+
+通过定义事件时间，[watermarks]({{< ref "/ dev/event_time" >}}) 允许 Join 运算不断向前滚动，丢弃不再需要的构建侧快照。因为不再需要时间戳更低或相等的记录。
+
+下面的例子展示了订单流关联产品表这个场景举例，`orders` 表包含了来自 Kafka 的实时订单流，`product_changelog` 表来自数据库表 `products` 的 changelog , 产品的价格在数据库表 `products` 中是随时间实时变化的。
 
 ```sql
--- Create a table of orders. This is a standard
--- append-only dynamic table.
+SELECT * FROM product_changelog;
+
+(changelog kind)  update_time product_name price
+================= =========== ============ ===== 
++(INSERT)         00:01:00    scooter      11.11
++(INSERT)         00:02:00    basketball   23.11
+-(UPDATE_BEFORE)  12:00:00    scooter      11.11
++(UPDATE_AFTER)   12:00:00    scooter      12.99  <= 产品 `scooter` 在 `12:00:00` 时涨价到了 `12.99`
+-(UPDATE_BEFORE)  12:00:00    basketball   23.11 
++(UPDATE_AFTER)   12:00:00    basketball   19.99  <= 产品 `basketball` 在 `12:00:00` 时降价到了 `19.99`
+-(DELETE)         18:00:00    scooter      12.99  <= 产品 `scooter` 在 `18:00:00` 从数据库表中删除
+```
+
+如果我们想输出 `product_changelog` 表在 `10:00:00` 对应的版本，表的内容如下所示：
+```sql
+update_time  product_id product_name price
+===========  ========== ============ ===== 
+00:01:00     p_001      scooter      11.11
+00:02:00     p_002      basketball   23.11
+```
+
+如果我们想输出 `product_changelog` 表在 `13:00:00` 对应的版本，表的内容如下所示：
+```sql
+update_time  product_id product_name price
+===========  ========== ============ ===== 
+12:00:00     p_001      scooter      12.99
+12:00:00     p_002      basketball   19.99
+```
+
+通过基于事件时间的时态表 join, 我们可以 join 上版本表中的不同版本：
+```sql
 CREATE TABLE orders (
-    order_id    STRING,
-    price       DECIMAL(32,2),
-    currency    STRING,
-    order_time  TIMESTAMP(3),
-    WATERMARK FOR order_time AS order_time
-) WITH (...);
+  order_id STRING,
+  product_id STRING,
+  order_time TIMESTAMP(3),
+  WATERMARK FOR order_time AS order_time  -- defines the necessary event time
+) WITH (
+...
+);
 
--- Define a versioned table of currency rates. 
--- This could be from a change-data-capture
--- such as Debezium, a compacted Kafka topic, or any other
--- way of defining a versioned table. 
-CREATE TABLE currency_rates (
-    currency STRING,
-    conversion_rate DECIMAL(32, 2),
-    update_time TIMESTAMP(3) METADATA FROM `values.source.timestamp` VIRTURAL
-    WATERMARK FOR update_time AS update_time
-) WITH (...);
+-- 设置会话的时间区间, changelog 里的数据库操作时间是以 epoch 开始的毫秒数存储的，
+-- 在从毫秒转化为时间戳时，Flink SQL 会使用会话的时间区间
+-- 因此，请根据 changelog 中的数据库操作时间设置合适的时间区间
+SET table.local-time-zone=UTC;
 
-SELECT 
-     order_id,
-     price,
-     currency,
-     conversion_rate,
-     order_time,
-FROM orders
-LEFT JOIN currency_rates FOR SYSTEM TIME AS OF orders.order_time
-ON orders.currency = currency_rates.currency
+-- 声明一张版本表
+CREATE TABLE product_changelog (
+  product_id STRING,
+  product_name STRING,
+  product_price DECIMAL(10, 4),
+  update_time TIMESTAMP(3) METADATA FROM 'value.source.timestamp' VIRTUAL, -- 注意：自动从毫秒数转为时间戳
+  PRIMARY KEY(product_id) NOT ENFORCED,      -- (1) defines the primary key constraint
+  WATERMARK FOR update_time AS update_time   -- (2) defines the event time by watermark                               
+) WITH (
+  'connector' = 'kafka',
+  'topic' = 'products',
+  'scan.startup.mode' = 'earliest-offset',
+  'properties.bootstrap.servers' = 'localhost:9092',
+  'value.format' = 'debezium-json'
+);
 
-order_id price currency conversion_rate  order_time
-====== ==== ======  ============  ========
-o_001    11.11  EUR        1.14                    12:00:00
-o_002    12.51  EUR        1.10                    12:0600
+-- 基于事件时间的时态表 Join
+SELECT
+  order_id,
+  order_time,
+  product_name,
+  product_time,
+  price
+FROM orders AS O
+LEFT JOIN product_changelog FOR SYSTEM_TIME AS OF O.order_time AS P
+ON O.product_id = P.product_id;
 
+order_id order_time product_name product_time price
+======== ========== ============ ============ =====
+o_001    00:01:00   scooter      00:01:00     11.11
+o_002    00:03:00   basketball   00:02:00     23.11
+o_003    12:00:00   scooter      12:00:00     12.99
+o_004    12:00:00   basketball   12:00:00     19.99
+o_005    18:00:00   NULL         NULL         NULL
 ```
 
-**Note:** The event-time temporal join is triggered by a watermark from the left and right sides; please ensure both sides of the join have set watermark correctly.
+基于事件时间的时态表 Join 通常用在通过 changelog 丰富流上数据的场景。 
 
-**Note:** The event-time temporal join requires the primary key contained in the equivalence condition of the temporal join condition, e.g., The primary key `P.product_id` of table `product_changelog` to be constrained in the condition `O.product_id = P.product_id`.
+**注意**: 基于事件时间的时态表 Join 是通过左右两侧的 watermark 触发，请确保为 join 两侧的表设置了合适的 watermark。
 
-In contrast to [regular joins](#regular-joins), the previous temporal table results will not be affected despite the changes on the build side.
-Compared to [interval joins](#interval-joins), temporal table joins do not define a time window within which the records will be joined.
-Records from the probe side are always joined with the build side's version at the time specified by the time attribute. Thus, rows on the build side might be arbitrarily old.
-As time passes,  no longer needed versions of the record (for the given primary key) will be removed from the state.
+**注意**: 基于事件时间的时态表 Join 的 join key 必须包含时态表的主键，例如：表 `product_changelog` 的主键 `P.product_id` 必须包含在 join 条件 `O.product_id = P.product_id` 中。
 
-### Processing Time Temporal Join
+### 基于处理时间的时态 Join
 
-A processing time temporal table join uses a processing-time attribute to correlate rows to the latest version of a key in an external versioned table. 
+基于处理时间的时态表 join 使用任意表 (左侧输入/探针侧) 的 处理时间 去关联 (右侧输入/构建侧) [普通表]({{< ref "/dev/table/streaming/versioned_tables" >}}#声明普通表)的最新版本.
+基于处理时间的时态表 join 当前只支持关联普通表或普通视图，且支持普通表或普通视图当前只能是 append-only 流。
 
-By definition, with a processing-time attribute, the join will always return the most up-to-date value for a given key. One can think of a lookup table as a simple HashMap<K, V> that stores all the records from the build side.
-The power of this join is it allows Flink to work directly against external systems when it is not feasible to materialize the table as a dynamic table within Flink. 
+如果将处理时间作为时间属性，_过去_ 时间属性将无法与时态表一起使用。根据定义，处理时间总会是当前时间戳。
+因此，关联时态表的调用将始终返回底层表的最新已知版本，并且底层表中的任何更新也将立即覆盖当前值。
 
-The following processing-time temporal table join example shows an append-only table `orders` that should be joined with the table `LatestRates`.
-`LatestRates` is a dimension table (e.g. HBase table) that is materialized with the latest rate. At time `10:15`, `10:30`, `10:52`, the content of `LatestRates` looks as follows:
+可以将处理时间的时态 Join 视作简单的 `HashMap <K，V>`，HashMap 中存储来自构建侧的所有记录。
+当来自构建侧的新插入的记录与旧值具有相同的 Key 时，旧值会被覆盖。
+探针侧的每条记录将总会根据 `HashMap` 的最新/当前状态来计算。
 
-```sql
-10:15> SELECT * FROM LatestRates;
+接下来的示例展示了订单流 `Orders` 该如何与实时变化的汇率表 `Lates` 进行基于处理时间的时态 Join 操作，`LatestRates` 总是表示 HBase 表 `Rates` 的最新内容。
 
-currency   rate
-======== ======
-US Dollar   102
-Euro        114
-Yen           1
+表 `LastestRates` 中的数据在时间点 `10:15` 和 `10:30` 时是相等的。欧元汇率在时间点 `10:52` 从 114 变化至 116 。
 
-10:30> SELECT * FROM LatestRates;
-
-currency   rate
-======== ======
-US Dollar   102
-Euro        114
-Yen           1
-
-10:52> SELECT * FROM LatestRates;
-
-currency   rate
-======== ======
-US Dollar   102
-Euro        116     <==== changed from 114 to 116
-Yen           1
-```
-
-The content of `LastestRates` at times `10:15` and `10:30` are equal.
-The Euro rate has changed from 114 to 116 at `10:52`.
-
-`Orders` is an append-only table representing payments for the given `amount` and the given `currency`.
-For example, at `10:15` there was an order for an amount of `2 Euro`.
+表 `Orders` 包含了金额字段 `amount` 和货币字段 `currency` 的支付记录数据。例如在 `10:15` 有一笔金额为 `2` 欧元的订单记录。
 
 ```sql
 SELECT * FROM Orders;
@@ -194,7 +221,9 @@ amount currency
      2 Euro             <== arrived at time 10:52
 ```
 
-Given these tables, we would like to calculate all `Orders` converted to a common currency.
+基于以上，我们想要计算所有 `Orders` 表的订单金额总和，并同时转换为对应成日元的金额。
+
+例如，我们想要以表 `LatestRates` 中的汇率将以下订单转换，则结果将为：
 
 ```text
 amount currency     rate   amount*rate
@@ -204,8 +233,7 @@ amount currency     rate   amount*rate
      2 Euro          116          232    <== arrived at time 10:52
 ```
 
-
-With the help of temporal table join, we can express such a query in SQL as:
+通过时态表 Join，我们可以将上述操作表示为以下 SQL 查询：
 
 ```sql
 SELECT
@@ -216,13 +244,139 @@ FROM
   ON r.currency = o.currency
 ```
 
-Each record from the probe side will be joined with the current version of the build side table.
-In our example, the query uses the processing-time notion, so a newly appended order would always be joined with the most recent version of `LatestRates` when executing the operation.
+探针侧表中的每个记录都将与构建侧表的当前版本所关联。 在此示例中，查询使用`处理时间`作为处理时间，因而新增订单将始终与表 `LatestRates` 的最新汇率执行 Join 操作。注意，结果对于处理时间来说不是确定的。
+基于处理时间的时态表 Join 通常用在通过外部表（例如维度表）丰富流上数据的场景。 
 
-The result is not deterministic for processing-time.
-The processing-time temporal join is most often used to enrich the stream with an external table (i.e., dimension table).
+与[常规 Join](#常规-join) 相比，尽管构建侧表的数据发生了变化，但时态表 Join 的变化前结果不会随之变化。
+* 对于基于事件时间的时态 Join， join 算子保留 Join 两侧流的状态并通过 watermark 清理。 
+* 对于基于处理时间的时态 Join， join 算子保留仅保留右侧（构建侧）的状态，且构建侧的状态只包含数据的最新版本，右侧的状态是轻量级的; 对于在运行时有能力查询外部系统的时态表，join 算子还可以优化成不保留任何状态，此时算子是非常轻量级的。
 
-In contrast to [regular joins](#regular-joins), the previous temporal table results will not be affected despite the changes on the build side.
-Compared to [interval joins](#interval-joins), temporal table joins do not define a time window within which the records join, i.e., old rows are not stored in state.
+与[时间区间 Join](#时间区间-join) 相比，时态表 Join 没有定义决定构建侧记录所属的将被 Join 时间窗口。
+探针侧的记录将总是与构建侧在对应`处理时间`的最新数据执行 Join，因而构建侧的数据可能是任意旧的。
+ 
+时态表函数 Join
+--------------------------
 
+时态表函数 Join 连接了一个递增表（左输入/探针侧）和一个时态表（右输入/构建侧），即一个随时间变化且不断追踪其改动的表。请参考[时态表]({{< ref "/dev/table/streaming/versioned_tables" >}})的相关章节查看更多细节。
+
+下方示例展示了一个递增表 `Orders` 与一个不断改变的汇率表 `RatesHistory` 的 Join 操作。
+
+`Orders` 表示了包含支付数据（数量字段 `amount` 和货币字段 `currency`）的递增表。例如 `10:15` 对应行的记录代表了一笔 2 欧元支付记录。
+
+```sql
+SELECT * FROM Orders;
+
+rowtime amount currency
+======= ====== =========
+10:15        2 Euro
+10:30        1 US Dollar
+10:32       50 Yen
+10:52        3 Euro
+11:04        5 US Dollar
+```
+
+字段 `RatesHistory` 表示不断变化的汇率信息。汇率以日元为基准（即 `Yen` 永远为 1）。例如，`09:00` 到 `10:45` 间欧元对日元的汇率是 `114`，`10:45` 到 `11:15` 间为 `116`。
+
+```sql
+SELECT * FROM RatesHistory;
+
+rowtime currency   rate
+======= ======== ======
+09:00   US Dollar   102
+09:00   Euro        114
+09:00   Yen           1
+10:45   Euro        116
+11:15   Euro        119
+11:49   Pounds      108
+```
+
+基于上述信息，欲计算 `Orders` 表中所有交易量并全部转换成日元。例如，若要转换下表中的交易，需要使用对应时间区间内的汇率（即 `114`）。
+
+```text
+rowtime amount currency
+======= ====== =========
+10:15        2 Euro
+```
+
+如果没有[时态表]({{< ref "/dev/table/streaming/versioned_tables" >}})概念，则需要写一段这样的查询：
+
+```sql
+SELECT
+  SUM(o.amount * r.rate) AS amount
+FROM Orders AS o,
+  RatesHistory AS r
+WHERE r.currency = o.currency
+AND r.rowtime = (
+  SELECT MAX(rowtime)
+  FROM RatesHistory AS r2
+  WHERE r2.currency = o.currency
+  AND r2.rowtime <= o.rowtime);
+```
+
+有了时态表函数 `Rates` 和 `RatesHistory` 的帮助，我们可以将上述查询写成：
+
+```sql
+SELECT
+  o.amount * r.rate AS amount
+FROM
+  Orders AS o,
+  LATERAL TABLE (Rates(o.rowtime)) AS r
+WHERE r.currency = o.currency
+```
+
+探针侧的每条记录都将与构建侧的表执行 Join 运算，构建侧的表中与探针侧对应时间属性的记录将参与运算。为了支持更新（包括覆盖）构建侧的表，该表必须定义主键。
+
+在示例中，`Orders` 表中的每一条记录都与时间点 `o.rowtime` 的 `Rates` 进行 Join 运算。`currency` 字段已被定义为 `Rates` 表的主键，在示例中该字段也被用于连接两个表。如果该查询采用的是处理时间，则在执行时新增的订单将始终与最新的 `Rates` 执行 Join。
+
+与[常规 Join](#常规-join) 相反，时态表函数 Join 意味着如果在构建侧新增一行记录将不会影响之前的结果。这同时使得 Flink 能够限制必须保存在 state 中的元素数量（因为不再需要保存之前的状态）。
+
+与[时间区间 Join](#时间区间-join) 相比，时态表 Join 没有定义限制了每次参与 Join 运算的元素的时间范围。探针侧的记录总是会和构建侧中对应特定时间属性的数据进行 Join 操作。因而在构建侧的记录可以是任意时间之前的。随着时间流动，之前产生的和不再需要的给定 primary key 所对应的记录将从 state 中移除。
+
+这种做法让时态表 Join 成为一个很好的用于表达不同流之间关联的方法。
+
+[时态表函数 Join](#时态表函数-join) 和[时态表 Join](#时态表-join)都有类似的功能，但是有不同的 SQL 语法和 runtime 实现：
+
+* 时态表函数 Join 的 SQL 语法是一种 Join 用户定义生成表函数(UDTF，User-Defined Table-Generating Functions)，而时态表 Join 使用了 SQL:2011 标准引入的标准时态表语法。
+* 时态表 Join 的覆盖了时态表函数 Join 支持的所有功能，两者共享部分算子实现，基于事件时间的时态表 Join 从 Flink 1.12 开始支持。
+* 时态表函数 Join 总是保留数据流的状态，但在一些情况下，时态表 Join 可以不用保留流的状态，即：基于处理时间的时态表 Join 中， join 算子可以在运行时根据记录的键值查找外部数据库而不是从状态中获取。
+* 时态表函数 Join 在 legacy planer 和 Blink planer 中均支持，而时态表 Join 仅在 Blink planner 中支持，legacy planner 在将来会被废弃。。
+
+**注意**: 基于处理时间的时态 Join 中， 如果右侧表不是可以直接查询外部系统的表而是普通的数据流，时态表函数 Join 和 时态表 Join 的语义都有问题，时态表函数 Join 仍然允许使用，但是时态表 Join 禁用了该功能。
+语义问题的原因是 join 算子没办法知道右侧时态表（构建侧）的完整快照是否到齐，这可能导致左侧的流在启动时关联不到用户期待的数据, 在生产环境中可能误导用户。
+
+Flink SQL 在未来可能需要引入新的机制去获取右侧时态表的完整快照。
+
+### 用法
+
+在[定义时态表函数]({{< ref "docs/dev/table/streaming/versioned_tables" >}}#defining-temporal-table-function)之后就可以使用了。时态表函数可以和普通表函数一样使用。
+
+接下来这段代码解决了我们一开始提出的问题，即从计算订单表 `Orders` 的交易量之和，并转换为对应货币：
+
+{{< tabs "daf8a297-4a1e-486a-bfbd-9bb5c73c989d" >}}
+{{< tab "SQL" >}}
+```sql
+SELECT
+  SUM(o_amount * r_rate) AS amount
+FROM
+  Orders,
+  LATERAL TABLE (Rates(o_proctime))
+WHERE
+  r_currency = o_currency
+```
+{{< /tab >}}
+{{< tab "Java" >}}
+```java
+Table result = orders
+    .joinLateral("rates(o_proctime)", "o_currency = r_currency")
+    .select("(o_amount * r_rate).sum as amount");
+```
+{{< /tab >}}
+{{< tab "Scala" >}}
+```scala
+val result = orders
+    .joinLateral(rates('o_proctime), 'r_currency === 'o_currency)
+    .select(('o_amount * 'r_rate).sum as 'amount)
+```
+{{< /tab >}}
+{{< /tabs >}}
 {{< top >}}

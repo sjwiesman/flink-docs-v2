@@ -1,9 +1,9 @@
 ---
-title: "ALTER Statements"
+title: "ALTER 语句"
 weight: 5
 type: docs
 aliases:
-  - /dev/table/sql/alter.html
+  - /zh/dev/table/sql/alter.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,64 +24,64 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# ALTER Statements
+# ALTER 语句
 
 
 
-ALTER statements are used to modified a registered table/view/function definition in the [Catalog]({{< ref "/dev/table/catalogs" >}}).
+ALTER 语句用于修改一个已经在 [Catalog]({{< ref "/dev/table/catalogs.zh" >}}) 中注册的表、视图或函数定义。
 
-Flink SQL supports the following ALTER statements for now:
+Flink SQL 目前支持以下 ALTER 语句：
 
 - ALTER TABLE
 - ALTER DATABASE
 - ALTER FUNCTION
 
-## Run an ALTER statement
+## 执行 ALTER 语句
 
-{{< tabs "alter" >}}
+{{< tabs "explain" >}}
 {{< tab "Java" >}}
-ALTER statements can be executed with the `executeSql()` method of the `TableEnvironment`. The `executeSql()` method returns 'OK' for a successful ALTER operation, otherwise will throw an exception.
+可以使用 `TableEnvironment` 中的 `executeSql()` 方法执行 ALTER 语句。 若 ALTER 操作执行成功，`executeSql()` 方法返回 'OK'，否则会抛出异常。
 
-The following examples show how to run an ALTER statement in `TableEnvironment`.
+以下的例子展示了如何在 `TableEnvironment` 中执行一个 ALTER 语句。
 {{< /tab >}}
 {{< tab "Scala" >}}
-ALTER statements can be executed with the `executeSql()` method of the `TableEnvironment`. The `executeSql()` method returns 'OK' for a successful ALTER operation, otherwise will throw an exception.
+可以使用 `TableEnvironment` 中的 `executeSql()` 方法执行 ALTER 语句。 若 ALTER 操作执行成功，`executeSql()` 方法返回 'OK'，否则会抛出异常。
 
-The following examples show how to run an ALTER statement in `TableEnvironment`.
+以下的例子展示了如何在 `TableEnvironment` 中执行一个 ALTER 语句。
 {{< /tab >}}
 {{< tab "Python" >}}
 
-ALTER statements can be executed with the `execute_sql()` method of the `TableEnvironment`. The `execute_sql()` method returns 'OK' for a successful ALTER operation, otherwise will throw an exception.
+可以使用 `TableEnvironment` 中的 `execute_sql()` 方法执行 ALTER 语句。 若 ALTER 操作执行成功，`execute_sql()` 方法返回 'OK'，否则会抛出异常。
 
-The following examples show how to run an ALTER statement in `TableEnvironment`.
+以下的例子展示了如何在 `TableEnvironment` 中执行一个 ALTER 语句。
 
 {{< /tab >}}
 {{< tab "SQL CLI" >}}
 
-ALTER statements can be executed in [SQL CLI]({{< ref "/dev/table/sqlClient" >}}).
+可以在 [SQL CLI]({{< ref "/dev/table/sqlClient.zh" >}}) 中执行 ALTER 语句。
 
-The following examples show how to run an ALTER statement in SQL CLI.
+以下的例子展示了如何在 SQL CLI 中执行一个 ALTER 语句。
 
 {{< /tab >}}
 {{< /tabs >}}
 
-{{< tabs "a01e970b-5de2-44de-b5d0-595b53682c64" >}}
+{{< tabs "147c58e0-44d1-4f78-b995-88b3edba7bec" >}}
 {{< tab "Java" >}}
 ```java
 EnvironmentSettings settings = EnvironmentSettings.newInstance()...
 TableEnvironment tableEnv = TableEnvironment.create(settings);
 
-// register a table named "Orders"
+// 注册名为 “Orders” 的表
 tableEnv.executeSql("CREATE TABLE Orders (`user` BIGINT, product STRING, amount INT) WITH (...)");
 
-// a string array: ["Orders"]
+// 字符串数组： ["Orders"]
 String[] tables = tableEnv.listTables();
 // or tableEnv.executeSql("SHOW TABLES").print();
 
-// rename "Orders" to "NewOrders"
+// 把 “Orders” 的表名改为 “NewOrders”
 tableEnv.executeSql("ALTER TABLE Orders RENAME TO NewOrders;");
 
-// a string array: ["NewOrders"]
+// 字符串数组：["NewOrders"]
 String[] tables = tableEnv.listTables();
 // or tableEnv.executeSql("SHOW TABLES").print();
 ```
@@ -91,17 +91,17 @@ String[] tables = tableEnv.listTables();
 val settings = EnvironmentSettings.newInstance()...
 val tableEnv = TableEnvironment.create(settings)
 
-// register a table named "Orders"
+// 注册名为 “Orders” 的表
 tableEnv.executeSql("CREATE TABLE Orders (`user` BIGINT, product STRING, amount INT) WITH (...)");
 
-// a string array: ["Orders"]
+// 字符串数组： ["Orders"]
 val tables = tableEnv.listTables()
 // or tableEnv.executeSql("SHOW TABLES").print()
 
-// rename "Orders" to "NewOrders"
+// 把 “Orders” 的表名改为 “NewOrders”
 tableEnv.executeSql("ALTER TABLE Orders RENAME TO NewOrders;")
 
-// a string array: ["NewOrders"]
+// 字符串数组：["NewOrders"]
 val tables = tableEnv.listTables()
 // or tableEnv.executeSql("SHOW TABLES").print()
 ```
@@ -111,14 +111,14 @@ val tables = tableEnv.listTables()
 settings = EnvironmentSettings.new_instance()...
 table_env = StreamTableEnvironment.create(env, settings)
 
-# a string array: ["Orders"]
+# 字符串数组： ["Orders"]
 tables = table_env.list_tables()
 # or table_env.execute_sql("SHOW TABLES").print()
 
-# rename "Orders" to "NewOrders"
+# 把 “Orders” 的表名改为 “NewOrders”
 table_env.execute_sql("ALTER TABLE Orders RENAME TO NewOrders;")
 
-# a string array: ["NewOrders"]
+# 字符串数组：["NewOrders"]
 tables = table_env.list_tables()
 # or table_env.execute_sql("SHOW TABLES").print()
 ```
@@ -142,21 +142,21 @@ NewOrders
 
 ## ALTER TABLE
 
-* Rename Table
+* 重命名表
 
 ```sql
 ALTER TABLE [catalog_name.][db_name.]table_name RENAME TO new_table_name
 ```
 
-Rename the given table name to another new table name.
+把原有的表名更改为新的表名。
 
-* Set or Alter Table Properties
+* 设置或修改表属性
 
 ```sql
 ALTER TABLE [catalog_name.][db_name.]table_name SET (key1=val1, key2=val2, ...)
 ```
 
-Set one or more properties in the specified table. If a particular property is already set in the table, override the old value with the new one.
+为指定的表设置一个或多个属性。若个别属性已经存在于表中，则使用新的值覆盖旧的值。
 
 ## ALTER DATABASE
 
@@ -164,35 +164,34 @@ Set one or more properties in the specified table. If a particular property is a
 ALTER DATABASE [catalog_name.]db_name SET (key1=val1, key2=val2, ...)
 ```
 
-Set one or more properties in the specified database. If a particular property is already set in the database, override the old value with the new one.
+在数据库中设置一个或多个属性。若个别属性已经在数据库中设定，将会使用新值覆盖旧值。
 
 ## ALTER FUNCTION
 
-```sql
-ALTER [TEMPORARY|TEMPORARY SYSTEM] FUNCTION 
-  [IF EXISTS] [catalog_name.][db_name.]function_name 
+{% highlight sql%}
+ALTER [TEMPORARY|TEMPORARY SYSTEM] FUNCTION
+  [IF EXISTS] [catalog_name.][db_name.]function_name
   AS identifier [LANGUAGE JAVA|SCALA|PYTHON]
 ```
 
-Alter a catalog function with the new identifier and optional language tag. If a function doesn't exist in the catalog, an exception is thrown.
+修改一个有 catalog 和数据库命名空间的 catalog function ，需要指定一个新的 identifier ，可指定 language tag 。若函数不存在，删除会抛出异常。
 
-If the language tag is JAVA/SCALA, the identifier is the full classpath of the UDF. For the implementation of Java/Scala UDF, please refer to [User-defined Functions]({{< ref "/dev/table/functions/udfs" >}}) for more details.
+如果 language tag 是 JAVA 或者 SCALA ，则 identifier 是 UDF 实现类的全限定名。关于 JAVA/SCALA UDF 的实现，请参考 [自定义函数]({{< ref "/dev/table/functions/udfs.zh" >}})。
 
-If the language tag is PYTHON, the identifier is the fully qualified name of the UDF, e.g. `pyflink.table.tests.test_udf.add`. For the implementation of Python UDF, please refer to [Python UDFs]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}) for more details.
+如果 language tag 是 PYTHON ， 则 identifier 是 UDF 对象的全限定名，例如 `pyflink.table.tests.test_udf.add`。关于 PYTHON UDF 的实现，请参考 [Python UDFs]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs.zh" >}})。
 
 **TEMPORARY**
 
-Alter temporary catalog function that has catalog and database namespaces and overrides catalog functions.
+修改一个有 catalog 和数据库命名空间的临时 catalog function ，并覆盖原有的 catalog function 。
 
 **TEMPORARY SYSTEM**
 
-Alter temporary system function that has no namespace and overrides built-in functions
+修改一个没有数据库命名空间的临时系统 catalog function ，并覆盖系统内置的函数。
 
 **IF EXISTS**
 
-If the function doesn't exist, nothing happens.
+若函数不存在，则不进行任何操作。
 
 **LANGUAGE JAVA\|SCALA\|PYTHON**
 
-Language tag to instruct flink runtime how to execute the function. Currently only JAVA, SCALA and PYTHON are supported, the default language for a function is JAVA.
-
+Language tag 用于指定 Flink runtime 如何执行这个函数。目前，只支持 JAVA，SCALA 和 PYTHON，且函数的默认语言为 JAVA。

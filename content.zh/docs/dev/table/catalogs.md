@@ -3,7 +3,7 @@ title: "Catalogs"
 weight: 81
 type: docs
 aliases:
-  - /dev/table/catalogs.html
+  - /zh/dev/table/catalogs.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -26,52 +26,48 @@ under the License.
 
 # Catalogs
 
-Catalogs provide metadata, such as databases, tables, partitions, views, and functions and information needed to access data stored in a database or other external systems.
+Catalog 提供了元数据信息，例如数据库、表、分区、视图以及数据库或其他外部系统中存储的函数和信息。
 
-One of the most crucial aspects of data processing is managing metadata.
-It may be transient metadata like temporary tables, or UDFs registered against the table environment.
-Or permanent metadata, like that in a Hive Metastore. Catalogs provide a unified API for managing metadata and making it accessible from the Table API and SQL Queries. 
-
-Catalog enables users to reference existing metadata in their data systems, and automatically maps them to Flink's corresponding metadata. 
-For example, Flink can map JDBC tables to Flink table automatically, and users don't have to manually re-writing DDLs in Flink.
-Catalog greatly simplifies steps required to get started with Flink with users' existing system, and greatly enhanced user experiences.
+数据处理最关键的方面之一是管理元数据。
+元数据可以是临时的，例如临时表、或者通过 TableEnvironment 注册的 UDF。
+元数据也可以是持久化的，例如 Hive Metastore 中的元数据。Catalog 提供了一个统一的API，用于管理元数据，并使其可以从 Table API 和 SQL 查询语句中来访问。
 
 
 
-## Catalog Types
+## Catalog 类型
 
 ### GenericInMemoryCatalog
 
-The `GenericInMemoryCatalog` is an in-memory implementation of a catalog. All objects will be available only for the lifetime of the session.
+`GenericInMemoryCatalog` 是基于内存实现的 Catalog，所有元数据只在 session 的生命周期内可用。
 
 ### JdbcCatalog
 
-The `JdbcCatalog` enables users to connect Flink to relational databases over JDBC protocol. `PostgresCatalog` is the only implementation of JDBC Catalog at the moment.
-See [JdbcCatalog documentation]({{< ref "/dev/table/connectors/jdbc" >}}) for more details on setting up the catalog.
+`JdbcCatalog` 使得用户可以将 Flink 通过 JDBC 协议连接到关系数据库。`PostgresCatalog` 是当前实现的唯一一种 JDBC Catalog。
+参考 [JdbcCatalog 文档]({{< ref "/dev/table/connectors/jdbc.zh" >}}) 获取关于配置 JDBC catalog 的详细信息。
 
 ### HiveCatalog
 
-The `HiveCatalog` serves two purposes; as persistent storage for pure Flink metadata, and as an interface for reading and writing existing Hive metadata. 
-Flink's [Hive documentation]({{< ref "/dev/table/connectors/hive/index" >}}) provides full details on setting up the catalog and interfacing with an existing Hive installation.
+`HiveCatalog` 有两个用途：作为原生 Flink 元数据的持久化存储，以及作为读写现有 Hive 元数据的接口。 
+Flink 的 [Hive 文档]({{< ref "/dev/table/connectors/hive/index.zh" >}}) 提供了有关设置 `HiveCatalog` 以及访问现有 Hive 元数据的详细信息。
 
 
-{% warn %} The Hive Metastore stores all meta-object names in lower case. This is unlike `GenericInMemoryCatalog` which is case-sensitive
+<span class="label label-danger">警告</span> Hive Metastore 以小写形式存储所有元数据对象名称。而 `GenericInMemoryCatalog` 区分大小写。
 
-### User-Defined Catalog
+### 用户自定义 Catalog
 
-Catalogs are pluggable and users can develop custom catalogs by implementing the `Catalog` interface.
-To use custom catalogs in SQL CLI, users should develop both a catalog and its corresponding catalog factory by implementing the `CatalogFactory` interface.
+Catalog 是可扩展的，用户可以通过实现 `Catalog` 接口来开发自定义 Catalog。
+想要在 SQL CLI 中使用自定义 Catalog，用户除了需要实现自定义的 Catalog 之外，还需要为这个 Catalog 实现对应的 `CatalogFactory` 接口。
 
-The catalog factory defines a set of properties for configuring the catalog when the SQL CLI bootstraps.
-The set of properties will be passed to a discovery service where the service tries to match the properties to a `CatalogFactory` and initiate a corresponding catalog instance.
+`CatalogFactory` 定义了一组属性，用于 SQL CLI 启动时配置 Catalog。
+这组属性集将传递给发现服务，在该服务中，服务会尝试将属性关联到 `CatalogFactory` 并初始化相应的 Catalog 实例。
 
-## How to Create and Register Flink Tables to Catalog
+## 如何创建 Flink 表并将其注册到 Catalog
 
-### Using SQL DDL
+### 使用 SQL DDL
 
-Users can use SQL DDL to create tables in catalogs in both Table API and SQL.
+用户可以使用 DDL 通过 Table API 或者 SQL Client 在 Catalog 中创建表。
 
-{{< tabs "b462513f-2da9-4bd0-a55d-ca9a5e4cf512" >}}
+{{< tabs "88ed733a-cf54-4676-9685-7d77d3cc9771" >}}
 {{< tab "Java" >}}
 ```java
 TableEnvironment tableEnv = ...
@@ -97,18 +93,18 @@ tableEnv.listTables(); // should return the tables in current catalog and databa
 val tableEnv = ...
 
 // Create a HiveCatalog 
-val catalog = new HiveCatalog("myhive", null, "<path_of_hive_conf>")
+val catalog = new HiveCatalog("myhive", null, "<path_of_hive_conf>");
 
 // Register the catalog
-tableEnv.registerCatalog("myhive", catalog)
+tableEnv.registerCatalog("myhive", catalog);
 
 // Create a catalog database
-tableEnv.executeSql("CREATE DATABASE mydb WITH (...)")
+tableEnv.executeSql("CREATE DATABASE mydb WITH (...)");
 
 // Create a catalog table
-tableEnv.executeSql("CREATE TABLE mytable (name STRING, age INT) WITH (...)")
+tableEnv.executeSql("CREATE TABLE mytable (name STRING, age INT) WITH (...)");
 
-tableEnv.listTables() // should return the tables in current catalog and database.
+tableEnv.listTables(); // should return the tables in current catalog and database.
 
 ```
 {{< /tab >}}
@@ -147,13 +143,13 @@ mytable
 {{< /tabs >}}
 
 
-For detailed information, please check out [Flink SQL CREATE DDL]({{< ref "/dev/table/sql/create" >}}).
+更多详细信息，请参考[Flink SQL CREATE DDL]({{< ref "/dev/table/sql/create.zh" >}})。
 
-### Using Java, Scala or Python
+### 使用 Java/Scala
 
-Users can use Java, Scala or Python to create catalog tables programmatically.
+用户可以用编程的方式使用Java 或者 Scala 来创建 Catalog 表。
 
-{{< tabs "62adb189-5538-46e1-87d2-76753cfcc13c" >}}
+{{< tabs "f491601e-d053-4ccb-9e14-203154f01b82" >}}
 {{< tab "Java" >}}
 ```java
 import org.apache.flink.table.api.*;
@@ -163,13 +159,13 @@ import org.apache.flink.table.descriptors.Kafka;
 
 TableEnvironment tableEnv = TableEnvironment.create(EnvironmentSettings.newInstance().build());
 
-// Create a HiveCatalog 
+// Create a HiveCatalog
 Catalog catalog = new HiveCatalog("myhive", null, "<path_of_hive_conf>");
 
 // Register the catalog
 tableEnv.registerCatalog("myhive", catalog);
 
-// Create a catalog database 
+// Create a catalog database
 catalog.createDatabase("mydb", new CatalogDatabaseImpl(...));
 
 // Create a catalog table
@@ -179,7 +175,7 @@ TableSchema schema = TableSchema.builder()
     .build();
 
 catalog.createTable(
-        new ObjectPath("mydb", "mytable"), 
+        new ObjectPath("mydb", "mytable"),
         new CatalogTableImpl(
             schema,
             new Kafka()
@@ -191,7 +187,7 @@ catalog.createTable(
         ),
         false
     );
-    
+
 List<String> tables = catalog.listTables("mydb"); // tables should contain "mytable"
 ```
 
@@ -205,13 +201,13 @@ import org.apache.flink.table.descriptors.Kafka
 
 val tableEnv = TableEnvironment.create(EnvironmentSettings.newInstance.build)
 
-// Create a HiveCatalog 
+// Create a HiveCatalog
 val catalog = new HiveCatalog("myhive", null, "<path_of_hive_conf>")
 
 // Register the catalog
 tableEnv.registerCatalog("myhive", catalog)
 
-// Create a catalog database 
+// Create a catalog database
 catalog.createDatabase("mydb", new CatalogDatabaseImpl(...))
 
 // Create a catalog table
@@ -221,7 +217,7 @@ val schema = TableSchema.builder()
     .build()
 
 catalog.createTable(
-        new ObjectPath("mydb", "mytable"), 
+        new ObjectPath("mydb", "mytable"),
         new CatalogTableImpl(
             schema,
             new Kafka()
@@ -233,9 +229,10 @@ catalog.createTable(
         ),
         false
     )
-    
+
 val tables = catalog.listTables("mydb") // tables should contain "mytable"
 ```
+
 {{< /tab >}}
 {{< tab "Python" >}}
 ```python
@@ -284,13 +281,13 @@ tables = catalog.list_tables("mydb")
 
 ## Catalog API
 
-Note: only catalog program APIs are listed here. Users can achieve many of the same funtionalities with SQL DDL. 
-For detailed DDL information, please refer to [SQL CREATE DDL]({{< ref "/dev/table/sql/create" >}}).
+注意：这里只列出了编程方式的 Catalog API，用户可以使用 SQL DDL 实现许多相同的功能。
+关于 DDL 的详细信息请参考 [SQL CREATE DDL]({{< ref "/dev/table/sql/create.zh" >}})。
 
 
-### Database operations
+### 数据库操作
 
-{{< tabs "8cd64552-f121-4a3e-a657-c472794631ad" >}}
+{{< tabs "3558a545-e79d-4328-8b79-af4bfd90c7d1" >}}
 {{< tab "Java/Scala" >}}
 ```java
 // create database
@@ -302,14 +299,14 @@ catalog.dropDatabase("mydb", false);
 // alter database
 catalog.alterDatabase("mydb", new CatalogDatabaseImpl(...), false);
 
-// get database
+// get databse
 catalog.getDatabase("mydb");
 
 // check if a database exist
 catalog.databaseExists("mydb");
 
 // list databases in a catalog
-catalog.listDatabases();
+catalog.listDatabases("mycatalog");
 ```
 {{< /tab >}}
 {{< tab "Python" >}}
@@ -338,9 +335,9 @@ catalog.list_databases()
 {{< /tab >}}
 {{< /tabs >}}
 
-### Table operations
+### 表操作
 
-{{< tabs "5b12e0cd-fc1c-475e-89fa-3dd91081c65f" >}}
+{{< tabs "ba887fb0-81d0-4080-8609-789d548ae56b" >}}
 {{< tab "Java/Scala" >}}
 ```java
 // create table
@@ -407,9 +404,9 @@ catalog.list_tables("mydb")
 {{< /tab >}}
 {{< /tabs >}}
 
-### View operations
+### 视图操作
 
-{{< tabs "5d17889a-bb81-40b0-8f0c-219bda7a9c96" >}}
+{{< tabs "797800ec-dde2-45f9-922e-1431ff43e175" >}}
 {{< tab "Java/Scala" >}}
 ```java
 // create view
@@ -476,9 +473,9 @@ catalog.list_views("mydb")
 {{< /tabs >}}
 
 
-### Partition operations
+### 分区操作
 
-{{< tabs "f046e952-ba2b-46d3-878d-b128e03753b4" >}}
+{{< tabs "ea16c47a-94a6-4fd6-9f6c-c453dde908b2" >}}
 {{< tab "Java/Scala" >}}
 ```java
 // create view
@@ -511,7 +508,7 @@ catalog.listPartitions(new ObjectPath("mydb", "mytable"));
 catalog.listPartitions(new ObjectPath("mydb", "mytable"), new CatalogPartitionSpec(...));
 
 // list partitions of a table by expression filter
-catalog.listPartitionsByFilter(new ObjectPath("mydb", "mytable"), Arrays.asList(epr1, ...));
+catalog.listPartitions(new ObjectPath("mydb", "mytable"), Arrays.asList(epr1, ...));
 ```
 {{< /tab >}}
 {{< tab "Python" >}}
@@ -553,9 +550,9 @@ catalog.list_partitions(ObjectPath("mydb", "mytable"), catalog_partition_spec)
 {{< /tabs >}}
 
 
-### Function operations
+### 函数操作
 
-{{< tabs "23dee372-3448-4724-ba56-8fc09d2130c8" >}}
+{{< tabs "e02e0c0e-20b2-48a3-8aa1-ff825e6cf391" >}}
 {{< tab "Java/Scala" >}}
 ```java
 // create function
@@ -605,14 +602,14 @@ catalog.list_functions("mydb")
 {{< /tabs >}}
 
 
-## Table API and SQL for Catalog
+## 通过 Table API 和 SQL Client 操作 Catalog
 
-### Registering a Catalog
+### 注册 Catalog
 
-Users have access to a default in-memory catalog named `default_catalog`, that is always created by default. This catalog by default has a single database called `default_database`.
-Users can also register additional catalogs into an existing Flink session.
+用户可以访问默认创建的内存 Catalog `default_catalog`，这个 Catalog 默认拥有一个默认数据库 `default_database`。
+用户也可以注册其他的 Catalog 到现有的 Flink 会话中。
 
-{{< tabs "5e227696-2cad-4def-91ab-9d0d7158abf6" >}}
+{{< tabs "b9ea0237-4684-49cd-9d02-ff3f2487a512" >}}
 {{< tab "Java/Scala" >}}
 ```java
 tableEnv.registerCatalog(new CustomCatalog("myCatalog"));
@@ -625,8 +622,8 @@ t_env.register_catalog(catalog)
 {{< /tab >}}
 {{< tab "YAML" >}}
 
-All catalogs defined using YAML must provide a `type` property that specifies the type of catalog. 
-The following types are supported out of the box.
+使用 YAML 定义的 Catalog 必须提供 `type` 属性，以表示指定的 Catalog 类型。
+以下几种类型可以直接使用。
 
 <table class="table table-bordered">
   <thead>
@@ -656,11 +653,11 @@ catalogs:
 {{< /tab >}}
 {{< /tabs >}}
 
-### Changing the Current Catalog And Database
+### 修改当前的 Catalog 和数据库
 
-Flink will always search for tables, views, and UDF's in the current catalog and database. 
+Flink 始终在当前的 Catalog 和数据库中寻找表、视图和 UDF。 
 
-{{< tabs "8b1d139a-aac0-465c-91e9-43e20cf07951" >}}
+{{< tabs "517f64ba-ce33-42a0-8955-dac7e6760827" >}}
 {{< tab "Java/Scala" >}}
 ```java
 tableEnv.useCatalog("myCatalog");
@@ -681,9 +678,9 @@ Flink SQL> USE myDB;
 {{< /tab >}}
 {{< /tabs >}}
 
-Metadata from catalogs that are not the current catalog are accessible by providing fully qualified names in the form `catalog.database.object`.
+通过提供全限定名 `catalog.database.object` 来访问不在当前 Catalog 中的元数据信息。
 
-{{< tabs "5a05ca75-2bc4-4e63-8d81-b2caa3396d66" >}}
+{{< tabs "eb7d643a-745f-4b4c-9cf2-cdcd77d49998" >}}
 {{< tab "Java/Scala" >}}
 ```java
 tableEnv.from("not_the_current_catalog.not_the_current_db.my_table");
@@ -701,9 +698,9 @@ Flink SQL> SELECT * FROM not_the_current_catalog.not_the_current_db.my_table;
 {{< /tab >}}
 {{< /tabs >}}
 
-### List Available Catalogs
+### 列出可用的 Catalog
 
-{{< tabs "392f1f64-06ba-4c89-be82-bfe1fef1930f" >}}
+{{< tabs "f0beae6f-5272-4c3e-8f98-4ce35922a7d4" >}}
 {{< tab "Java/Scala" >}}
 ```java
 tableEnv.listCatalogs();
@@ -722,9 +719,9 @@ Flink SQL> show catalogs;
 {{< /tabs >}}
 
 
-### List Available Databases
+### 列出可用的数据库
 
-{{< tabs "69821973-4de4-4002-92a3-a2c60987fc1f" >}}
+{{< tabs "f8a1a667-e2bf-48ee-bb06-58c774d34f76" >}}
 {{< tab "Java/Scala" >}}
 ```java
 tableEnv.listDatabases();
@@ -742,9 +739,9 @@ Flink SQL> show databases;
 {{< /tab >}}
 {{< /tabs >}}
 
-### List Available Tables
+### 列出可用的表
 
-{{< tabs "bc80afea-4501-449b-866d-e55a94675cc4" >}}
+{{< tabs "e6f05027-2eef-44cc-baff-188d15c9c3f2" >}}
 {{< tab "Java/Scala" >}}
 ```java
 tableEnv.listTables();

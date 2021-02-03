@@ -1,5 +1,5 @@
 ---
-title: Functions
+title: 函数
 bookCollapseSection: true
 weight: 33
 ---

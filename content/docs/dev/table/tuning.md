@@ -1,5 +1,5 @@
 ---
-title: "Streaming Aggregation"
+title: "Performance Tuning"
 weight: 112
 type: docs
 aliases:
@@ -24,7 +24,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Streaming Aggregation
+# Performance Tuning
 
 SQL is the most widely used language for data analytics. Flink's Table API and SQL enables users to define efficient stream analytics applications in less time and effort. Moreover, Flink Table API and SQL is effectively optimized, it integrates a lot of query optimizations and tuned operator implementations. But not all of the optimizations are enabled by default, so for some workloads, it is possible to improve performance by turning on some options.
 

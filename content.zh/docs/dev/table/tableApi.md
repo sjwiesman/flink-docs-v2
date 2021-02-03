@@ -3,7 +3,7 @@ title: "Table API"
 weight: 31
 type: docs
 aliases:
-  - /dev/table/tableApi.html
+  - /zh/dev/table/tableApi.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

@@ -1,9 +1,9 @@
 ---
-title: "USE Statements"
+title: "USE 语句"
 weight: 10
 type: docs
 aliases:
-  - /dev/table/sql/use.html
+  - /zh/dev/table/sql/use.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,46 +24,45 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# USE Statements
+# USE 语句
 
 
 
-USE statements are used to set the current database or catalog.
+USE 语句用来设置当前的 catalog 或者 database。
 
+## 运行一个 USE 语句
 
-## Run a USE statement
-
-{{< tabs "use" >}}
+{{< tabs "explain" >}}
 {{< tab "Java" >}}
 
-USE statements can be executed with the `executeSql()` method of the `TableEnvironment`. The `executeSql()` method returns 'OK' for a successful USE operation, otherwise will throw an exception.
+可以使用 `TableEnvironment` 中的 `executeSql()` 方法执行 USE 语句。 若 USE 操作执行成功，`executeSql()` 方法返回 'OK'，否则会抛出异常。
 
-The following examples show how to run a USE statement in `TableEnvironment`.
+以下的例子展示了如何在 `TableEnvironment` 中执行一个 USE 语句。
 
 {{< /tab >}}
 {{< tab "Scala" >}}
 
-USE statements can be executed with the `executeSql()` method of the `TableEnvironment`. The `executeSql()` method returns 'OK' for a successful USE operation, otherwise will throw an exception.
+可以使用 `TableEnvironment` 中的 `executeSql()` 方法执行 USE 语句。 若 USE 操作执行成功，`executeSql()` 方法返回 'OK'，否则会抛出异常。
 
-The following examples show how to run a USE statement in `TableEnvironment`.
+以下的例子展示了如何在 `TableEnvironment` 中执行一个 USE 语句。
 {{< /tab >}}
 {{< tab "Python" >}}
 
-USE statements can be executed with the `execute_sql()` method of the `TableEnvironment`. The `execute_sql()` method returns 'OK' for a successful USE operation, otherwise will throw an exception.
+可以使用 `TableEnvironment` 中的 `execute_sql()` 方法执行 USE 语句。 若 USE 操作执行成功，`execute_sql()` 方法返回 'OK'，否则会抛出异常。
 
-The following examples show how to run a USE statement in `TableEnvironment`.
+以下的例子展示了如何在 `TableEnvironment` 中执行一个 USE 语句。
 
 {{< /tab >}}
 {{< tab "SQL CLI" >}}
 
-USE statements can be executed in [SQL CLI]({{< ref "/dev/table/sqlClient" >}}).
+可以在 SQL CLI 中执行 USE 语句。
 
-The following examples show how to run a USE statement in SQL CLI.
+以下的例子展示了如何在 SQL CLI 中执行一个 USE 语句。
 
 {{< /tab >}}
 {{< /tabs >}}
 
-{{< tabs "5d0314ba-9ac3-418e-9f40-1379fd516c85" >}}
+{{< tabs "9c2050ce-b261-4692-9447-b9b6772c5b38" >}}
 {{< tab "Java" >}}
 ```java
 StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -214,7 +213,7 @@ Flink SQL> USE db1;
 USE CATALOG catalog_name
 ```
 
-Set the current catalog. All subsequent commands that do not explicitly specify a catalog will use this one. If the provided catalog does not exist, an exception is thrown. The default current catalog is `default_catalog`.
+设置当前的 catalog。所有后续命令未显式指定 catalog 的将使用此 catalog。如果指定的的 catalog 不存在，则抛出异常。默认的当前 catalog 是 `default_catalog`。
 
 
 ## USE
@@ -223,4 +222,4 @@ Set the current catalog. All subsequent commands that do not explicitly specify 
 USE [catalog_name.]database_name
 ```
 
-Set the current database. All subsequent commands that do not explicitly specify a database will use this one. If the provided database does not exist, an exception is thrown. The default current database is `default_database`.
+设置当前的 database。所有后续命令未显式指定 database 的将使用此 database。如果指定的的 database 不存在，则抛出异常。默认的当前 database 是 `default_database`。

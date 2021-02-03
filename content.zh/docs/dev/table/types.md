@@ -3,7 +3,7 @@ title: "Data Types"
 weight: 21
 type: docs
 aliases:
-  - /dev/table/types.html
+  - /zh/dev/table/types.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

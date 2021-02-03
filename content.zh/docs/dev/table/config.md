@@ -1,9 +1,9 @@
 ---
-title: "Configuration"
+title: "配置"
 weight: 111
 type: docs
 aliases:
-  - /dev/table/config.html
+  - /zh/dev/table/config.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,32 +24,25 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Configuration
+# 配置
 
-By default, the Table & SQL API is preconfigured for producing accurate results with acceptable
-performance.
+Table 和 SQL API 的默认配置能够确保结果准确，同时也提供可接受的性能。
 
-Depending on the requirements of a table program, it might be necessary to adjust
-certain parameters for optimization. For example, unbounded streaming programs may need to ensure
-that the required state size is capped (see [streaming concepts](./streaming/query_configuration.html)).
+根据 Table 程序的需求，可能需要调整特定的参数用于优化。例如，无界流程序可能需要保证所需的状态是有限的(请参阅 [流式概念](./streaming/query_configuration.html)).
 
 
 
-### Overview
+### 概览
 
-In every table environment, the `TableConfig` offers options for configuring the current session.
+在每个 TableEnvironment 中，`TableConfig` 提供用于当前会话的配置项。
 
-For common or important configuration options, the `TableConfig` provides getters and setters methods
-with detailed inline documentation.
+对于常见或者重要的配置项，`TableConfig` 提供带有详细注释的 `getters` 和 `setters` 方法。
 
-For more advanced configuration, users can directly access the underlying key-value map. The following
-sections list all available options that can be used to adjust Flink Table & SQL API programs.
+对于更加高级的配置，用户可以直接访问底层的 key-value 配置项。以下章节列举了所有可用于调整 Flink Table 和 SQL API 程序的配置项。
 
-<span class="label label-danger">Attention</span> Because options are read at different point in time
-when performing operations, it is recommended to set configuration options early after instantiating a
-table environment.
+<span class="label label-danger">注意</span> 因为配置项会在执行操作的不同时间点被读取，所以推荐在实例化 TableEnvironment 后尽早地设置配置项。
 
-{{< tabs "44bae726-b416-4fa0-8d5d-7aa9a5409e00" >}}
+{{< tabs "ec2c3d9c-2ecd-4017-9c77-fb32cd6966cf" >}}
 {{< tab "Java" >}}
 ```java
 // instantiate table environment
@@ -91,20 +84,22 @@ configuration.set_string("table.exec.mini-batch.size", "5000");
 {{< /tab >}}
 {{< /tabs >}}
 
-### Execution Options
+<span class="label label-danger">注意</span> 目前，key-value 配置项仅被 Blink planner 支持。
 
-The following options can be used to tune the performance of the query execution.
+### 执行配置
 
-{{< generate/execution_config_configuration >}}
+以下选项可用于优化查询执行的性能。
 
-### Optimizer Options
+{% include generated/execution_config_configuration.html %}
 
-The following options can be used to adjust the behavior of the query optimizer to get a better execution plan.
+### 优化器配置
 
-{{< generate/optimizer_config_configuration >}}
+以下配置可以用于调整查询优化器的行为以获得更好的执行计划。
 
-### Table Options
+{% include generated/optimizer_config_configuration.html %}
 
-The following options can be used to adjust the behavior of the table planner.
+### Planner 配置
 
-{{< generate/table_config_configuration >}}
+以下配置可以用于调整 planner 的行为。
+
+{% include generated/table_config_configuration.html %}

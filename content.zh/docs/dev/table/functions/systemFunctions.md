@@ -1,9 +1,9 @@
 ---
-title: "System (Built-in) Functions"
+title: "系统（内置）函数"
 weight: 32
 type: docs
 aliases:
-  - /dev/table/functions/systemFunctions.html
+  - /zh/dev/table/functions/systemFunctions.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

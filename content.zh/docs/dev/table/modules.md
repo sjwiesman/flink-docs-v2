@@ -1,10 +1,10 @@
 ---
-title: "Modules"
+title: "模块"
 is_beta: true
 weight: 71
 type: docs
 aliases:
-  - /dev/table/modules.html
+  - /zh/dev/table/modules.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

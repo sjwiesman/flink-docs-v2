@@ -1,10 +1,10 @@
 ---
-title: Overview
+title: "流式概念"
 weight: 1
 type: docs
-bookToc: false
 aliases:
-  - /dev/table/streaming/
+  - /zh/dev/table/streaming/
+is_beta: false
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -25,20 +25,22 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# Streaming Concepts
+# 流式概念
 
-Flink's [Table API]({{< ref "/dev/table/tableApi" >}}) and [SQL support]({{< ref "/dev/table/sql/index" >}}) are unified APIs for batch and stream processing.
-This means that Table API and SQL queries have the same semantics regardless whether their input is bounded batch input or unbounded stream input.
+Flink 的 [Table API]({{< ref "/dev/table/tableApi" >}}) 和 [SQL]({{< ref "/dev/table/sql/index" >}}) 是流批统一的 API。
+这意味着 Table API & SQL 在无论有限的批式输入还是无限的流式输入下，都具有相同的语义。
+因为传统的关系代数以及 SQL 最开始都是为了批式处理而设计的，
+关系型查询在流式场景下不如在批式场景下容易懂。
 
-The following pages explain concepts, practical limitations, and stream-specific configuration parameters of Flink's relational APIs on streaming data.
+下面这些页面包含了概念、实际的限制，以及流式数据处理中的一些特定的配置。
 
-Where to go next?
+接下来？
 -----------------
 
-* [Dynamic Tables]({{< ref "/dev/table/streaming/dynamic_tables" >}}): Describes the concept of dynamic tables.
-* [Time attributes]({{< ref "/dev/table/streaming/time_attributes" >}}): Explains time attributes and how time attributes are handled in Table API & SQL.
-* [Versioned Tables]({{< ref "/dev/table/streaming/versioned_tables" >}}): Describes the Temporal Table concept.
-* [Joins in Continuous Queries]({{< ref "/dev/table/streaming/joins" >}}): Different supported types of Joins in Continuous Queries.
-* [Query configuration]({{< ref "/dev/table/streaming/query_configuration" >}}): Lists Table API & SQL specific configuration options.
+* [动态表]({{< ref "/dev/table/streaming/dynamic_tables" >}}): 描述了动态表的概念。
+* [时间属性]({{< ref "/dev/table/streaming/time_attributes" >}}): 解释了时间属性以及它是如何在 Table API & SQL 中使用的。
+* [流上的 Join]({{< ref "/dev/table/streaming/joins" >}}): 支持的几种流上的 Join。
+* [时态（temporal）表]({{< ref "/dev/table/streaming/versioned_tables" >}}): 描述了时态表的概念。
+* [查询配置]({{< ref "/dev/table/streaming/query_configuration" >}}): Table API & SQL 特定的配置。
 
 {{< top >}}

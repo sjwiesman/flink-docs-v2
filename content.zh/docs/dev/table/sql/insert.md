@@ -1,9 +1,9 @@
 ---
-title: "INSERT Statement"
+title: "INSERT 语句"
 weight: 6
 type: docs
 aliases:
-  - /dev/table/sql/insert.html
+  - /zh/dev/table/sql/insert.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,76 +24,78 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# INSERT Statement
+# INSERT 语句
 
 
 
-INSERT statements are used to add rows to a table.
+INSERT 语句用来向表中添加行。
 
-## Run an INSERT statement
+## 执行 INSERT 语句
 
-{{< tabs "insert" >}}
+{{< tabs "execute" >}}
 {{< tab "Java" >}}
-Single INSERT statement can be executed through the `executeSql()` method of the `TableEnvironment`. The `executeSql()` method for INSERT statement will submit a Flink job immediately, and return a `TableResult` instance which associates the submitted job. 
-Multiple INSERT statements can be executed through the `addInsertSql()` method of the `StatementSet` which can be created by the `TableEnvironment.createStatementSet()` method. The `addInsertSql()` method is a lazy execution, they will be executed only when `StatementSet.execute()` is invoked.
 
-The following examples show how to run a single INSERT statement in `TableEnvironment`, run multiple INSERT statements in `StatementSet`.
+单条 INSERT 语句，可以使用 `TableEnvironment` 中的 `executeSql()` 方法执行。`executeSql()` 方法执行 INSERT 语句时会立即提交一个 Flink 作业，并且返回一个 TableResult 对象，通过该对象可以获取 JobClient 方便的操作提交的作业。
+多条 INSERT 语句，使用 `TableEnvironment` 中的 `createStatementSet` 创建一个 `StatementSet` 对象，然后使用 `StatementSet` 中的 `addInsertSql()` 方法添加多条 INSERT 语句，最后通过 `StatementSet` 中的 `execute()` 方法来执行。
 
+以下的例子展示了如何在 `TableEnvironment` 中执行一条 INSERT 语句，或者通过 `StatementSet` 执行多条 INSERT 语句。
 {{< /tab >}}
 {{< tab "Scala" >}}
-Single INSERT statement can be executed through the `executeSql()` method of the `TableEnvironment`. The `executeSql()` method for INSERT statement will submit a Flink job immediately, and return a `TableResult` instance which associates the submitted job. 
-Multiple INSERT statements can be executed through the `addInsertSql()` method of the `StatementSet` which can be created by the `TableEnvironment.createStatementSet()` method. The `addInsertSql()` method is a lazy execution, they will be executed only when `StatementSet.execute()` is invoked.
 
-The following examples show how to run a single INSERT statement in `TableEnvironment`, run multiple INSERT statements in `StatementSet`.
+单条 INSERT 语句，可以使用 `TableEnvironment` 中的 `executeSql()` 方法执行。`executeSql()` 方法执行 INSERT 语句时会立即提交一个 Flink 作业，并且返回一个 TableResult 对象，通过该对象可以获取 JobClient 方便的操作提交的作业。
+多条 INSERT 语句，使用 `TableEnvironment` 中的 `createStatementSet` 创建一个 `StatementSet` 对象，然后使用 `StatementSet` 中的 `addInsertSql()` 方法添加多条 INSERT 语句，最后通过 `StatementSet` 中的 `execute()` 方法来执行。
+
+以下的例子展示了如何在 `TableEnvironment` 中执行一条 INSERT 语句，或者通过 `StatementSet` 执行多条 INSERT 语句。
+
 {{< /tab >}}
 {{< tab "Python" >}}
 
-Single INSERT statement can be executed through the `execute_sql()` method of the `TableEnvironment`. The `execute_sql()` method for INSERT statement will submit a Flink job immediately, and return a `TableResult` instance which associates the submitted job. 
-Multiple INSERT statements can be executed through the `add_insert_sql()` method of the `StatementSet` which can be created by the `TableEnvironment.create_statement_set()` method. The `add_insert_sql()` method is a lazy execution, they will be executed only when `StatementSet.execute()` is invoked.
+单条 INSERT 语句，可以使用 `TableEnvironment` 中的 `execute_sql()` 方法执行。`execute_sql()` 方法执行 INSERT 语句时会立即提交一个 Flink 作业，并且返回一个 TableResult 对象，通过该对象可以获取 JobClient 方便的操作提交的作业。
+多条 INSERT 语句，使用 `TableEnvironment` 中的 `create_statement_set` 创建一个 `StatementSet` 对象，然后使用 `StatementSet` 中的 `add_insert_sql()` 方法添加多条 INSERT 语句，最后通过 `StatementSet` 中的 `execute()` 方法来执行。
 
-The following examples show how to run a single INSERT statement in `TableEnvironment`, run multiple INSERT statements in `StatementSet`.
+以下的例子展示了如何在 `TableEnvironment` 中执行一条 INSERT 语句，或者通过 `StatementSet` 执行多条 INSERT 语句。
 
 {{< /tab >}}
 {{< tab "SQL CLI" >}}
 
-Single INSERT statement can be executed in [SQL CLI]({{< ref "/dev/table/sqlClient" >}}).
+可以在 [SQL CLI]({{< ref "/dev/table/sqlClient.zh" >}}) 中执行 INSERT 语句
 
-The following examples show how to run a single INSERT statement in SQL CLI.
+以下的例子展示了如何在 SQL CLI 中执行一条 INSERT 语句。
 
 {{< /tab >}}
 {{< /tabs >}}
 
-{{< tabs "15bc87ce-93fd-4fdd-8c51-3301a432c048" >}}
+{{< tabs "77ed5a01-effa-432c-b089-f922c3964c88" >}}
 {{< tab "Java" >}}
 ```java
 EnvironmentSettings settings = EnvironmentSettings.newInstance()...
 TableEnvironment tEnv = TableEnvironment.create(settings);
 
-// register a source table named "Orders" and a sink table named "RubberOrders"
+// 注册一个 "Orders" 源表，和 "RubberOrders" 结果表
 tEnv.executeSql("CREATE TABLE Orders (`user` BIGINT, product VARCHAR, amount INT) WITH (...)");
 tEnv.executeSql("CREATE TABLE RubberOrders(product VARCHAR, amount INT) WITH (...)");
 
-// run a single INSERT query on the registered source table and emit the result to registered sink table
+// 运行一条 INSERT 语句，将源表的数据输出到结果表中
 TableResult tableResult1 = tEnv.executeSql(
   "INSERT INTO RubberOrders SELECT product, amount FROM Orders WHERE product LIKE '%Rubber%'");
-// get job status through TableResult
+// 通过 TableResult 来获取作业状态
 System.out.println(tableResult1.getJobClient().get().getJobStatus());
 
 //----------------------------------------------------------------------------
-// register another sink table named "GlassOrders" for multiple INSERT queries
+// 注册一个 "GlassOrders" 结果表用于运行多 INSERT 语句
 tEnv.executeSql("CREATE TABLE GlassOrders(product VARCHAR, amount INT) WITH (...)");
 
-// run multiple INSERT queries on the registered source table and emit the result to registered sink tables
+// 运行多条 INSERT 语句，将原表数据输出到多个结果表中
 StatementSet stmtSet = tEnv.createStatementSet();
-// only single INSERT query can be accepted by `addInsertSql` method
+// `addInsertSql` 方法每次只接收单条 INSERT 语句
 stmtSet.addInsertSql(
   "INSERT INTO RubberOrders SELECT product, amount FROM Orders WHERE product LIKE '%Rubber%'");
 stmtSet.addInsertSql(
   "INSERT INTO GlassOrders SELECT product, amount FROM Orders WHERE product LIKE '%Glass%'");
-// execute all statements together
+// 执行刚刚添加的所有 INSERT 语句
 TableResult tableResult2 = stmtSet.execute();
-// get job status through TableResult
-System.out.println(tableResult2.getJobClient().get().getJobStatus());
+// 通过 TableResult 来获取作业状态
+System.out.println(tableResult1.getJobClient().get().getJobStatus());
 
 ```
 {{< /tab >}}
@@ -102,32 +104,32 @@ System.out.println(tableResult2.getJobClient().get().getJobStatus());
 val settings = EnvironmentSettings.newInstance()...
 val tEnv = TableEnvironment.create(settings)
 
-// register a source table named "Orders" and a sink table named "RubberOrders"
+// 注册一个 "Orders" 源表，和 "RubberOrders" 结果表
 tEnv.executeSql("CREATE TABLE Orders (`user` BIGINT, product STRING, amount INT) WITH (...)")
 tEnv.executeSql("CREATE TABLE RubberOrders(product STRING, amount INT) WITH (...)")
 
-// run a single INSERT query on the registered source table and emit the result to registered sink table
+// 运行一个 INSERT 语句，将源表的数据输出到结果表中
 val tableResult1 = tEnv.executeSql(
   "INSERT INTO RubberOrders SELECT product, amount FROM Orders WHERE product LIKE '%Rubber%'")
-// get job status through TableResult
+// 通过 TableResult 来获取作业状态
 println(tableResult1.getJobClient().get().getJobStatus())
 
 //----------------------------------------------------------------------------
-// register another sink table named "GlassOrders" for multiple INSERT queries
-tEnv.executeSql("CREATE TABLE GlassOrders(product VARCHAR, amount INT) WITH (...)")
+// 注册一个 "GlassOrders" 结果表用于运行多 INSERT 语句
+tEnv.executeSql("CREATE TABLE GlassOrders(product VARCHAR, amount INT) WITH (...)");
 
-// run multiple INSERT queries on the registered source table and emit the result to registered sink tables
+// 运行多个 INSERT 语句，将原表数据输出到多个结果表中
 val stmtSet = tEnv.createStatementSet()
-// only single INSERT query can be accepted by `addInsertSql` method
+// `addInsertSql` 方法每次只接收单条 INSERT 语句
 stmtSet.addInsertSql(
   "INSERT INTO RubberOrders SELECT product, amount FROM Orders WHERE product LIKE '%Rubber%'")
 stmtSet.addInsertSql(
   "INSERT INTO GlassOrders SELECT product, amount FROM Orders WHERE product LIKE '%Glass%'")
-// execute all statements together
+// 执行刚刚添加的所有 INSERT 语句
 val tableResult2 = stmtSet.execute()
-// get job status through TableResult
-println(tableResult2.getJobClient().get().getJobStatus())
-
+// 通过 TableResult 来获取作业状态
+println(tableResult1.getJobClient().get().getJobStatus())
+  
 ```
 {{< /tab >}}
 {{< tab "Python" >}}
@@ -135,31 +137,32 @@ println(tableResult2.getJobClient().get().getJobStatus())
 settings = EnvironmentSettings.new_instance()...
 table_env = StreamTableEnvironment.create(env, settings)
 
-# register a source table named "Orders" and a sink table named "RubberOrders"
-table_env.execute_sql("CREATE TABLE Orders (`user` BIGINT, product STRING, amount INT) WITH (...)")
-table_env.execute_sql("CREATE TABLE RubberOrders(product STRING, amount INT) WITH (...)")
+# 注册一个 "Orders" 源表，和 "RubberOrders" 结果表
+table_env.executeSql("CREATE TABLE Orders (`user` BIGINT, product STRING, amount INT) WITH (...)")
+table_env.executeSql("CREATE TABLE RubberOrders(product STRING, amount INT) WITH (...)")
 
-# run a single INSERT query on the registered source table and emit the result to registered sink table
+# 运行一条 INSERT 语句，将源表的数据输出到结果表中
 table_result1 = table_env \
-    .execute_sql("INSERT INTO RubberOrders SELECT product, amount FROM Orders WHERE product LIKE '%Rubber%'")
-# get job status through TableResult
-print(table_result1get_job_client().get_job_status())
+    .executeSql("INSERT INTO RubberOrders SELECT product, amount FROM Orders WHERE product LIKE '%Rubber%'")
+# 通过 TableResult 来获取作业状态
+print(table_result1.get_job_client().get_job_status())
 
 #----------------------------------------------------------------------------
-# register another sink table named "GlassOrders" for multiple INSERT queries
+# 注册一个 "GlassOrders" 结果表用于运行多 INSERT 语句
 table_env.execute_sql("CREATE TABLE GlassOrders(product VARCHAR, amount INT) WITH (...)")
 
-# run multiple INSERT queries on the registered source table and emit the result to registered sink tables
+# 运行多条 INSERT 语句，将原表数据输出到多个结果表中
 stmt_set = table_env.create_statement_set()
-# only single INSERT query can be accepted by `add_insert_sql` method
+# `add_insert_sql` 方法每次只接收单条 INSERT 语句
 stmt_set \
     .add_insert_sql("INSERT INTO RubberOrders SELECT product, amount FROM Orders WHERE product LIKE '%Rubber%'")
 stmt_set \
     .add_insert_sql("INSERT INTO GlassOrders SELECT product, amount FROM Orders WHERE product LIKE '%Glass%'")
-# execute all statements together
+# 执行刚刚添加的所有 INSERT 语句
 table_result2 = stmt_set.execute()
-# get job status through TableResult
+# 通过 TableResult 来获取作业状态
 print(table_result2.get_job_client().get_job_status())
+
 
 ```
 {{< /tab >}}
@@ -183,11 +186,11 @@ Flink SQL> INSERT INTO RubberOrders SELECT product, amount FROM Orders WHERE pro
 
 {{< top >}}
 
-## Insert from select queries
+## 将 SELECT 查询数据插入表中
 
-Query Results can be inserted into tables by using the insert clause.
+通过 INSERT 语句，可以将查询的结果插入到表中，
 
-### Syntax
+### 语法
 
 ```sql
 
@@ -200,45 +203,42 @@ part_spec:
 
 **OVERWRITE**
 
-`INSERT OVERWRITE` will overwrite any existing data in the table or partition. Otherwise, new data is appended.
+`INSERT OVERWRITE` 将会覆盖表中或分区中的任何已存在的数据。否则，新数据会追加到表中或分区中。
 
 **PARTITION**
 
-`PARTITION` clause should contain static partition columns of this inserting.
+`PARTITION` 语句应该包含需要插入的静态分区列与值。
 
-### Examples
+### 示例
 
 ```sql
--- Creates a partitioned table
+-- 创建一个分区表
 CREATE TABLE country_page_view (user STRING, cnt INT, date STRING, country STRING)
 PARTITIONED BY (date, country)
 WITH (...)
 
--- Appends rows into the static partition (date='2019-8-30', country='China')
+-- 追加行到该静态分区中 (date='2019-8-30', country='China')
 INSERT INTO country_page_view PARTITION (date='2019-8-30', country='China')
   SELECT user, cnt FROM page_view_source;
 
--- Appends rows into partition (date, country), where date is static partition with value '2019-8-30',
--- country is dynamic partition whose value is dynamic determined by each row.
+-- 追加行到分区 (date, country) 中，其中 date 是静态分区 '2019-8-30'；country 是动态分区，其值由每一行动态决定
 INSERT INTO country_page_view PARTITION (date='2019-8-30')
   SELECT user, cnt, country FROM page_view_source;
 
--- Overwrites rows into static partition (date='2019-8-30', country='China')
+-- 覆盖行到静态分区 (date='2019-8-30', country='China')
 INSERT OVERWRITE country_page_view PARTITION (date='2019-8-30', country='China')
   SELECT user, cnt FROM page_view_source;
 
--- Overwrites rows into partition (date, country), where date is static partition with value '2019-8-30',
--- country is dynamic partition whose value is dynamic determined by each row.
+-- 覆盖行到分区 (date, country) 中，其中 date 是静态分区 '2019-8-30'；country 是动态分区，其值由每一行动态决定
 INSERT OVERWRITE country_page_view PARTITION (date='2019-8-30')
   SELECT user, cnt, country FROM page_view_source;
 ```
 
+## 将值插入表中
 
-## Insert values into tables
+通过 INSERT 语句，也可以直接将值插入到表中，
 
-The INSERT...VALUES statement can be used to insert data into tables directly from SQL.
-
-### Syntax
+### 语法
 
 ```sql
 INSERT { INTO | OVERWRITE } [catalog_name.][db_name.]table_name VALUES values_row [, values_row ...]
@@ -249,9 +249,9 @@ values_row:
 
 **OVERWRITE**
 
-`INSERT OVERWRITE` will overwrite any existing data in the table. Otherwise, new data is appended.
+`INSERT OVERWRITE` 将会覆盖表中的任何已存在的数据。否则，新数据会追加到表中。
 
-### Examples
+### 示例
 
 ```sql
 

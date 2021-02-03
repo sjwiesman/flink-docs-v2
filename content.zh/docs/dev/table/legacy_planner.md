@@ -3,7 +3,7 @@ title: "Legacy Planner"
 weight: 1002
 type: docs
 aliases:
-  - /dev/table/legacy_planner.html
+  - /zh/dev/table/legacy_planner.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

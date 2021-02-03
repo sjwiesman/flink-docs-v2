@@ -1,9 +1,9 @@
 ---
-title: "SHOW Statements"
+title: "SHOW 语句"
 weight: 11
 type: docs
 aliases:
-  - /dev/table/sql/show.html
+  - /zh/dev/table/sql/show.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,11 +24,13 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# SHOW Statements
+# SHOW 语句
 
-SHOW statements are used to list all catalogs, or list all databases in the current catalog, or list all tables/views in the current catalog and the current database, or show current catalog and database, or list all functions including temp system functions, system functions, temp catalog functions and catalog functions in the current catalog and the current database.
 
-Flink SQL supports the following SHOW statements for now:
+
+SHOW 语句用于列出所有的 catalog，或者列出当前 catalog 中所有的 database，或者列出当前 catalog 和当前 database 的所有表或视图，或者列出当前正在使用的 catalog 和 database, 或者列出所有的 function，包括：临时系统 function，系统 function，临时 catalog function，当前 catalog 和 database 中的 catalog function。
+
+目前 Flink SQL 支持下列 SHOW 语句：
 - SHOW CATALOGS
 - SHOW CURRENT CATALOG
 - SHOW DATABASES
@@ -37,40 +39,38 @@ Flink SQL supports the following SHOW statements for now:
 - SHOW VIEWS
 - SHOW FUNCTIONS
 
-## Run a SHOW statement
 
-{{< tabs "show" >}}
+## 执行 SHOW 语句
+
+{{< tabs "execute" >}}
 {{< tab "Java" >}}
+可以使用 `TableEnvironment` 中的 `executeSql()` 方法执行 SHOW 语句。 若 SHOW 操作执行成功，`executeSql()` 方法返回所有对象，否则会抛出异常。
 
-SHOW statements can be executed with the `executeSql()` method of the `TableEnvironment`. The `executeSql()` method returns objects for a successful SHOW operation, otherwise will throw an exception.
-
-The following examples show how to run a SHOW statement in `TableEnvironment`.
+以下的例子展示了如何在 `TableEnvironment` 中执行一个 SHOW 语句。
 
 {{< /tab >}}
 {{< tab "Scala" >}}
+可以使用 `TableEnvironment` 中的 `executeSql()` 方法执行 SHOW 语句。 若 SHOW 操作执行成功，`executeSql()` 方法返回所有对象，否则会抛出异常。
 
-SHOW statements can be executed with the `executeSql()` method of the `TableEnvironment`. The `executeSql()` method returns objects for a successful SHOW operation, otherwise will throw an exception.
-
-The following examples show how to run a SHOW statement in `TableEnvironment`.
-
+以下的例子展示了如何在 `TableEnvironment` 中执行一个 SHOW 语句。
 {{< /tab >}}
 {{< tab "Python" >}}
 
-SHOW statements can be executed with the `execute_sql()` method of the `TableEnvironment`. The `execute_sql()` method returns objects for a successful SHOW operation, otherwise will throw an exception.
+可以使用 `TableEnvironment` 中的 `execute_sql()` 方法执行 SHOW 语句。 若 SHOW 操作执行成功，`execute_sql()` 方法返回所有对象，否则会抛出异常。
 
-The following examples show how to run a SHOW statement in `TableEnvironment`.
+以下的例子展示了如何在 `TableEnvironment` 中执行一个 SHOW 语句。
 
 {{< /tab >}}
 {{< tab "SQL CLI" >}}
 
-SHOW statements can be executed in [SQL CLI]({{< ref "/dev/table/sqlClient" >}}).
+可以在 [SQL CLI]({{< ref "/dev/table/sqlClient.zh" >}}) 中执行 SHOW 语句。
 
-The following examples show how to run a SHOW statement in SQL CLI.
+以下的例子展示了如何在 SQL CLI 中执行一个 SHOW 语句。
 
 {{< /tab >}}
 {{< /tabs >}}
 
-{{< tabs "37a50b24-61f5-46a3-a382-db3fbb613358" >}}
+{{< tabs "bc804bed-4550-4f60-a8c0-17e6d741e08d" >}}
 {{< tab "Java" >}}
 ```java
 StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
@@ -284,7 +284,7 @@ sha256
 SHOW CATALOGS
 ```
 
-Show all catalogs.
+展示所有的 catalog。
 
 ## SHOW CURRENT CATALOG
 
@@ -292,7 +292,7 @@ Show all catalogs.
 SHOW CURRENT CATALOG
 ```
 
-Show current catalog.
+显示当前正在使用的 catalog。
 
 ## SHOW DATABASES
 
@@ -300,7 +300,7 @@ Show current catalog.
 SHOW DATABASES
 ```
 
-Show all databases in the current catalog.
+展示当前 catalog 中所有的 database。
 
 ## SHOW CURRENT DATABASE
 
@@ -308,7 +308,7 @@ Show all databases in the current catalog.
 SHOW CURRENT DATABASE
 ```
 
-Show current database.
+显示当前正在使用的 database。
 
 ## SHOW TABLES
 
@@ -316,7 +316,7 @@ Show current database.
 SHOW TABLES
 ```
 
-Show all tables in the current catalog and the current database.
+展示当前 catalog 和当前 database 中所有的表。
 
 ## SHOW VIEWS
 
@@ -324,7 +324,7 @@ Show all tables in the current catalog and the current database.
 SHOW VIEWS
 ```
 
-Show all views in the current catalog and the current database.
+展示当前 catalog 和当前 database 中所有的视图。
 
 ## SHOW FUNCTIONS
 
@@ -332,4 +332,4 @@ Show all views in the current catalog and the current database.
 SHOW FUNCTIONS
 ```
 
-Show all functions including temp system functions, system functions, temp catalog functions and catalog functions in the current catalog and current database.
+展示所有的 function，包括：临时系统 function, 系统 function, 临时 catalog function，当前 catalog 和 database 中的 catalog function。

@@ -1,9 +1,9 @@
 ---
-title: "DROP Statements"
+title: "DROP 语句"
 weight: 4
 type: docs
 aliases:
-  - /dev/table/sql/drop.html
+  - /zh/dev/table/sql/drop.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -24,65 +24,73 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-# DROP Statements
+# DROP 语句
 
-DROP statements are used to remove a registered table/view/function from current or specified [Catalog]({{< ref "/dev/table/catalogs" >}}).
 
-Flink SQL supports the following DROP statements for now:
+
+DROP 语句用于从当前或指定的 [Catalog]({{< ref "/dev/table/catalogs.zh" >}}) 中删除一个已经注册的表、视图或函数。
+
+Flink SQL 目前支持以下 DROP 语句：
 
 - DROP TABLE
 - DROP DATABASE
 - DROP VIEW
 - DROP FUNCTION
 
-## Run a DROP statement
+## 执行 DROP 语句
 
-{{< tabs "drop" >}}
+{{< tabs "execute" >}}
 {{< tab "Java" >}}
+可以使用 `TableEnvironment` 中的 `executeSql()` 方法执行 DROP 语句。 若 DROP 操作执行成功，`executeSql()` 方法返回 'OK'，否则会抛出异常。
 
-DROP statements can be executed with the `executeSql()` method of the `TableEnvironment`. The `executeSql()` method returns 'OK' for a successful DROP operation, otherwise will throw an exception.
-
-The following examples show how to run a DROP statement in `TableEnvironment`.
+以下的例子展示了如何在 `TableEnvironment` 中执行一个 DROP 语句。
 
 {{< /tab >}}
 {{< tab "Scala" >}}
-DROP statements can be executed with the `executeSql()` method of the `TableEnvironment`. The `executeSql()` method returns 'OK' for a successful DROP operation, otherwise will throw an exception.
 
-The following examples show how to run a DROP statement in `TableEnvironment`.
+可以使用 `TableEnvironment` 中的 `executeSql()` 方法执行 DROP 语句。 若 DROP 操作执行成功，`executeSql()` 方法返回 'OK'，否则会抛出异常。
+
+以下的例子展示了如何在 `TableEnvironment` 中执行一个 DROP 语句。
+
+{{< /tab >}}
+{{< tab "Java" >}}
+可以使用 `TableEnvironment` 中的 `executeSql()` 方法执行 DROP 语句。 若 DROP 操作执行成功，`executeSql()` 方法返回 'OK'，否则会抛出异常。
+
+以下的例子展示了如何在 `TableEnvironment` 中执行一个 DROP 语句。
 
 {{< /tab >}}
 {{< tab "Python" >}}
 
-DROP statements can be executed with the `execute_sql()` method of the `TableEnvironment`. The `execute_sql()` method returns 'OK' for a successful DROP operation, otherwise will throw an exception.
+可以使用 `TableEnvironment` 中的 `execute_sql()` 方法执行 DROP 语句。 若 DROP 操作执行成功，`execute_sql()` 方法返回 'OK'，否则会抛出异常。
 
-The following examples show how to run a DROP statement in `TableEnvironment`.
-
+以下的例子展示了如何在 `TableEnvironment` 中执行一个 DROP 语句
 {{< /tab >}}
 {{< tab "SQL CLI" >}}
 
-DROP statements can be in [SQL CLI]({{< ref "/dev/table/sqlClient" >}}).
+可以在 [SQL CLI]({{< ref "/dev/table/sqlClient.zh" >}}) 中执行 DROP 语句。
 
-The following examples show how to run a DROP statement in SQL CLI.
+以下的例子展示了如何在 SQL CLI 中执行一个 DROP 语句。
 
 {{< /tab >}}
 {{< /tabs >}}
-{{< tabs "18a7ab59-662f-45e4-9c5e-a6d96f69388b" >}}
+
+{{< tabs "9f224244-9f9f-4af3-85b9-61225ec3fc0b" >}}
 {{< tab "Java" >}}
 ```java
 EnvironmentSettings settings = EnvironmentSettings.newInstance()...
 TableEnvironment tableEnv = TableEnvironment.create(settings);
 
-// register a table named "Orders"
+// 注册名为 “Orders” 的表
 tableEnv.executeSql("CREATE TABLE Orders (`user` BIGINT, product STRING, amount INT) WITH (...)");
 
-// a string array: ["Orders"]
+// 字符串数组： ["Orders"]
 String[] tables = tableEnv.listTables();
 // or tableEnv.executeSql("SHOW TABLES").print();
 
-// drop "Orders" table from catalog
+// 从 catalog 删除 “Orders” 表
 tableEnv.executeSql("DROP TABLE Orders");
 
-// an empty string array
+// 空字符串数组
 String[] tables = tableEnv.listTables();
 // or tableEnv.executeSql("SHOW TABLES").print();
 ```
@@ -92,17 +100,17 @@ String[] tables = tableEnv.listTables();
 val settings = EnvironmentSettings.newInstance()...
 val tableEnv = TableEnvironment.create(settings)
 
-// register a table named "Orders"
+// 注册名为 “Orders” 的表
 tableEnv.executeSql("CREATE TABLE Orders (`user` BIGINT, product STRING, amount INT) WITH (...)")
 
-// a string array: ["Orders"]
+// 字符串数组： ["Orders"]
 val tables = tableEnv.listTables()
 // or tableEnv.executeSql("SHOW TABLES").print()
 
-// drop "Orders" table from catalog
+// 从 catalog 删除 “Orders” 表
 tableEnv.executeSql("DROP TABLE Orders")
 
-// an empty string array
+// 空字符串数组
 val tables = tableEnv.listTables()
 // or tableEnv.executeSql("SHOW TABLES").print()
 ```
@@ -112,14 +120,14 @@ val tables = tableEnv.listTables()
 settings = EnvironmentSettings.new_instance()...
 table_env = StreamTableEnvironment.create(env, settings)
 
-# a string array: ["Orders"]
-tables = table_env.list_tables()
-# or table_env.execute_sql("SHOW TABLES").print()
+# 字符串数组： ["Orders"]
+tables = table_env.listTables()
+# or table_env.executeSql("SHOW TABLES").print()
 
-# drop "Orders" table from catalog
+# 从 catalog 删除 “Orders” 表
 table_env.execute_sql("DROP TABLE Orders")
 
-# an empty string array
+# 空字符串数组
 tables = table_env.list_tables()
 # or table_env.execute_sql("SHOW TABLES").print()
 ```
@@ -147,11 +155,11 @@ Flink SQL> SHOW TABLES;
 DROP TABLE [IF EXISTS] [catalog_name.][db_name.]table_name
 ```
 
-Drop a table with the given table name. If the table to drop does not exist, an exception is thrown.
+根据给定的表名删除某个表。若需要删除的表不存在，则抛出异常。
 
 **IF EXISTS**
 
-If the table does not exist, nothing happens.
+表不存在时不会进行任何操作。
 
 ## DROP DATABASE
 
@@ -159,19 +167,19 @@ If the table does not exist, nothing happens.
 DROP DATABASE [IF EXISTS] [catalog_name.]db_name [ (RESTRICT | CASCADE) ]
 ```
 
-Drop a database with the given database name. If the database to drop does not exist, an exception is thrown.
+根据给定的表名删除数据库。若需要删除的数据库不存在会抛出异常 。
 
 **IF EXISTS**
 
-If the database does not exist, nothing happens.
+若数据库不存在，不执行任何操作。
 
 **RESTRICT**
 
-Dropping a non-empty database triggers an exception. Enabled by default.
+当删除一个非空数据库时，会触发异常。（默认为开）
 
 **CASCADE**
 
-Dropping a non-empty database also drops all associated tables and functions.
+删除一个非空数据库时，把相关联的表与函数一并删除。
 
 ## DROP VIEW
 
@@ -179,35 +187,35 @@ Dropping a non-empty database also drops all associated tables and functions.
 DROP [TEMPORARY] VIEW  [IF EXISTS] [catalog_name.][db_name.]view_name
 ```
 
-Drop a view that has catalog and database namespaces. If the view to drop does not exist, an exception is thrown.
+删除一个有 catalog 和数据库命名空间的视图。若需要删除的视图不存在，则会产生异常。
 
 **TEMPORARY**
 
-Drop temporary view that has catalog and database namespaces.
+删除一个有 catalog 和数据库命名空间的临时视图。
 
 **IF EXISTS**
 
-If the view does not exist, nothing happens.
+若视图不存在，则不会进行任何操作。
 
-**MAINTAIN DEPENDENCIES**
-Flink does not maintain dependencies of view by CASCADE/RESTRICT keywords, the current way is producing postpone error message when user tries to use the view under the scenarios like the underlying table of view has been dropped.
+**依赖管理**
+Flink 没有使用 CASCADE / RESTRICT 关键字来维护视图的依赖关系，当前的方案是在用户使用视图时再提示错误信息，比如在视图的底层表已经被删除等场景。
 
 ## DROP FUNCTION
 
-```sql
+{% highlight sql%}
 DROP [TEMPORARY|TEMPORARY SYSTEM] FUNCTION [IF EXISTS] [catalog_name.][db_name.]function_name;
 ```
 
-Drop a catalog function that has catalog and database namespaces. If the function to drop does not exist, an exception is thrown.
+删除一个有 catalog 和数据库命名空间的 catalog function。若需要删除的函数不存在，则会产生异常。
 
 **TEMPORARY**
 
-Drop temporary catalog function that has catalog and database namespaces.
+删除一个有 catalog 和数据库命名空间的临时 catalog function。
 
 **TEMPORARY SYSTEM**
 
-Drop temporary system function that has no namespace.
+删除一个没有数据库命名空间的临时系统函数。
 
 **IF EXISTS**
 
-If the function doesn't exists, nothing happens.
+若函数不存在，则不会进行任何操作。
