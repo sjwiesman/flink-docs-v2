@@ -31,8 +31,8 @@ SQL is the most widely used language for data analytics. Flink's Table API and S
 In this page, we will introduce some useful optimization options and the internals of streaming aggregation which will bring great improvement in some cases.
 
 {{< hint info >}}
-The streaming aggregations optimization are only supported for [unbounded-aggregations]({{< ref "/dev/table/sql/queries" >}}#aggregations).
-Optimizations for [window aggregations]({{< ref "/dev/table/sql/queries" >}}#group-windows) will be supported in the future.
+The streaming aggregations optimization are only supported for [unbounded-aggregations]({{< ref "docs/dev/table/sql/queries" >}}#aggregations).
+Optimizations for [window aggregations]({{< ref "docs/dev/table/sql/queries" >}}#group-windows) will be supported in the future.
 {{< /hint >}}
 
 
@@ -47,7 +47,7 @@ The following figure explains how the mini-batch aggregation reduces state opera
 
 {{< img src="/fig/table-streaming/minibatch_agg.png" width="50%" height="50%" >}}
 
-MiniBatch optimization is disabled by default. In order to enable this optimization, you should set options `table.exec.mini-batch.enabled`, `table.exec.mini-batch.allow-latency` and `table.exec.mini-batch.size`. Please see [configuration]({{< ref "/dev/table/config" >}}#execution-options) page for more details.
+MiniBatch optimization is disabled by default. In order to enable this optimization, you should set options `table.exec.mini-batch.enabled`, `table.exec.mini-batch.allow-latency` and `table.exec.mini-batch.size`. Please see [configuration]({{< ref "docs/dev/table/config" >}}#execution-options) page for more details.
 
 The following examples show how to enable these options.
 

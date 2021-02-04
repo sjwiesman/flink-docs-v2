@@ -35,8 +35,6 @@ For example, users can define their own geo functions and plug them into Flink a
 Flink SQL and Table APIs. Another example is users can load an out-of-shelf Hive module to use Hive built-in 
 functions as Flink built-in functions.
 
-
-
 ## Module Types
 
 ### CoreModule
@@ -46,7 +44,7 @@ functions as Flink built-in functions.
 ### HiveModule
 
 The `HiveModule` provides Hive built-in functions as Flink's system functions to SQL and Table API users.
-Flink's [Hive documentation]({{< ref "/dev/table/connectors/hive/hive_functions" >}}) provides full details on setting up the module.
+Flink's [Hive documentation]({{< ref "docs/connectors/table/hive/hive_functions" >}}) provides full details on setting up the module.
 
 ### User-Defined Module
 

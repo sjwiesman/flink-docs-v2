@@ -286,7 +286,7 @@ The following features are not supported by the legacy planner.
 
 - [Deduplication]({{< ref "docs/dev/table/sql/queries" >}}#deduplication %})
 - [Key Value Configurations]({{< ref "docs/dev/table/config" >}}#overview)
-- [Streaming Aggregation Optimization]({{< ref "docs/dev/table/tuning/streaming_aggregation_optimization" >}})
+- [Streaming Aggregation Optimization]({{< ref "docs/dev/table/tuning" >}})
 - Streaming mode Grouping sets, Rollup and Cube aggregations
 - [Top-N]({{< ref "docs/dev/table/sql/queries" >}}#top-n)
 - [Versioned Tables]({{< ref "docs/dev/table/concepts/versioned_tables" >}})

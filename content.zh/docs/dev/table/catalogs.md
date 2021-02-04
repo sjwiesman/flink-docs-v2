@@ -43,12 +43,12 @@ Catalog 提供了元数据信息，例如数据库、表、分区、视图以及
 ### JdbcCatalog
 
 `JdbcCatalog` 使得用户可以将 Flink 通过 JDBC 协议连接到关系数据库。`PostgresCatalog` 是当前实现的唯一一种 JDBC Catalog。
-参考 [JdbcCatalog 文档]({{< ref "docs/dev/table/connectors/jdbc" >}}) 获取关于配置 JDBC catalog 的详细信息。
+参考 [JdbcCatalog 文档]({{< ref "docs/connectors/table/jdbc" >}}) 获取关于配置 JDBC catalog 的详细信息。
 
 ### HiveCatalog
 
 `HiveCatalog` 有两个用途：作为原生 Flink 元数据的持久化存储，以及作为读写现有 Hive 元数据的接口。 
-Flink 的 [Hive 文档]({{< ref "docs/dev/table/connectors/hive/index" >}}) 提供了有关设置 `HiveCatalog` 以及访问现有 Hive 元数据的详细信息。
+Flink 的 [Hive 文档]({{< ref "docs/connectors/table/hive/overview" >}}) 提供了有关设置 `HiveCatalog` 以及访问现有 Hive 元数据的详细信息。
 
 
 <span class="label label-danger">警告</span> Hive Metastore 以小写形式存储所有元数据对象名称。而 `GenericInMemoryCatalog` 区分大小写。

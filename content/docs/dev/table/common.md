@@ -216,7 +216,7 @@ Create Tables in the Catalog
 
 A `TableEnvironment` maintains a map of catalogs of tables which are created with an identifier. Each
 identifier consists of 3 parts: catalog name, database name and object name. If a catalog or database is not
-specified, the current default value will be used (see examples in the [Table identifier expanding]({{< ref "/dev/table/common" >}}#table-identifier-expanding) section).
+specified, the current default value will be used (see examples in the [Table identifier expanding](#table-identifier-expanding) section).
 
 Tables can be either virtual (`VIEWS`) or regular (`TABLES`). `VIEWS` can be created from an
 existing `Table` object, usually the result of a Table API or SQL query. `TABLES` describe
@@ -227,7 +227,7 @@ external data, such as a file, database table, or message queue.
 Tables may either be temporary, and tied to the lifecycle of a single Flink session, or permanent,
 and visible across multiple Flink sessions and clusters.
 
-Permanent tables require a [catalog]({{< ref "/dev/table/catalogs" >}}) (such as Hive Metastore)
+Permanent tables require a [catalog]({{< ref "docs/dev/table/catalogs" >}}) (such as Hive Metastore)
 to maintain metadata about the table. Once a permanent table is created, it is visible to any Flink
 session that is connected to the catalog and will continue to exist until the table is explicitly
 dropped.
@@ -304,46 +304,12 @@ registered `Table` will *not* be shared.
 
 #### Connector Tables
 
-It is also possible to create a `TABLE` as known from relational databases from a [connector]({{< ref "/dev/table/connect" >}}) declaration.
+It is also possible to create a `TABLE` as known from relational databases from a [connector]({{< ref "docs/connectors/table/overview" >}}) declaration.
 The connector describes the external system that stores the data of a table. Storage systems such as Apache Kafka or a regular file system can be declared here.
 
-{{< tabs "db1fe839-7b56-4719-807f-754195c8bc58" >}}
-{{< tab "Java" >}}
-```java
-tableEnvironment
-  .connect(...)
-  .withFormat(...)
-  .withSchema(...)
-  .inAppendMode()
-  .createTemporaryTable("MyTable")
-```
-{{< /tab >}}
-{{< tab "Scala" >}}
-```scala
-tableEnvironment
-  .connect(...)
-  .withFormat(...)
-  .withSchema(...)
-  .inAppendMode()
-  .createTemporaryTable("MyTable")
-```
-{{< /tab >}}
-{{< tab "Python" >}}
-```python
-table_environment \
-    .connect(...) \
-    .with_format(...) \
-    .with_schema(...) \
-    .in_append_mode() \
-    .create_temporary_table("MyTable")
-```
-{{< /tab >}}
-{{< tab "DDL" >}}
 ```sql
 tableEnvironment.executeSql("CREATE [TEMPORARY] TABLE MyTable (...) WITH (...)")
 ```
-{{< /tab >}}
-{{< /tabs >}}
 
 ### Expanding Table identifiers
 
@@ -420,7 +386,7 @@ The Table API is a language-integrated query API for Scala and Java. In contrast
 
 The API is based on the `Table` class which represents a table (streaming or batch) and offers methods to apply relational operations. These methods return a new `Table` object, which represents the result of applying the relational operation on the input `Table`. Some relational operations are composed of multiple method calls such as `table.groupBy(...).select()`, where `groupBy(...)` specifies a grouping of `table`, and `select(...)` the projection on the grouping of `table`.
 
-The [Table API]({{< ref "/dev/table/tableApi" >}}) document describes all Table API operations that are supported on streaming and batch tables.
+The [Table API]({{< ref "docs/dev/table/tableApi" >}}) document describes all Table API operations that are supported on streaming and batch tables.
 
 The following example shows a simple Table API aggregation query:
 
@@ -494,7 +460,7 @@ revenue = orders \
 
 Flink's SQL integration is based on [Apache Calcite](https://calcite.apache.org), which implements the SQL standard. SQL queries are specified as regular Strings.
 
-The [SQL]({{< ref "/dev/table/sql/index" >}}) document describes Flink's SQL support for streaming and batch tables.
+The [SQL]({{< ref "docs/dev/table/sql/overview" >}}) document describes Flink's SQL support for streaming and batch tables.
 
 The following example shows how to specify a query and return the result as a `Table`.
 
@@ -640,7 +606,7 @@ A `Table` is emitted by writing it to a `TableSink`. A `TableSink` is a generic 
 
 A batch `Table` can only be written to a `BatchTableSink`, while a streaming `Table` requires either an `AppendStreamTableSink`, a `RetractStreamTableSink`, or an `UpsertStreamTableSink`. 
 
-Please see the documentation about [Table Sources & Sinks]({{< ref "/dev/table/sourceSinks" >}}) for details about available sinks and instructions for how to implement a custom `TableSink`.
+Please see the documentation about [Table Sources & Sinks]({{< ref "docs/dev/table/sourcesSinks" >}}) for details about available sinks and instructions for how to implement a custom `DynamicTableSink`.
 
 The `Table.executeInsert(String tableName)` method emits the `Table` to a registered `TableSink`. The method looks up the `TableSink` from the catalog by the name and validates that the schema of the `Table` is identical to the schema of the `TableSink`. 
 
@@ -728,7 +694,7 @@ Translate and Execute a Query
 -----------------------------
 
 The behavior of translating and executing a query is different for the two planners.
-Table API and SQL queries are translated into [DataStream]({{< ref "/dev/datastream_api" >}}) programs whether their input is streaming or batch.
+Table API and SQL queries are translated into [DataStream]({{< ref "docs/dev/datastream/overview" >}}) programs whether their input is streaming or batch.
 A query is internally represented as a logical query plan and is translated in two phases:
 
 1. Optimization of the logical plan,
@@ -747,7 +713,7 @@ a Table API or SQL query is translated when:
 Integration with DataStream 
 ---------------------------
 
-Table API and SQL queries can be easily integrated with and embedded into [DataStream]({{< ref "/dev/datastream_api" >}}) programs.
+Table API and SQL queries can be easily integrated with and embedded into [DataStream]({{< ref "docs/dev/datastream/overview" >}}) programs.
 For instance, it is possible to query an external table (for example from a RDBMS), do some pre-processing, such as filtering, projecting, aggregating, or joining with metadata,
 and then further process the data with the DataStream API.
 Inversely, a Table API or SQL query can also be applied on the result of a DataStream program.
@@ -1113,7 +1079,7 @@ val table: Table = tableEnv.fromDataStream(stream, $"age" as "myAge", $"name" as
 
 #### POJO (Java and Scala)
 
-Flink supports POJOs as composite types. The rules for what determines a POJO are documented [here]({{< ref "/dev/types_serialization" >}}#pojos).
+Flink supports POJOs as composite types. The rules for what determines a POJO are documented [here]({{< ref "docs/dev/serialization/types_serialization" >}}#pojos).
 
 When converting a POJO `DataStream` into a `Table` without specifying field names, the names of the original POJO fields are used. The name mapping requires the original names and cannot be done by positions. Fields can be renamed using an alias (with the `as` keyword), reordered, and projected.
 
@@ -1253,7 +1219,7 @@ This is done through the `Table.explain()` method or `StatementSet.explain()` me
 2. the optimized logical query plan, and
 3. the physical execution plan.
 
-`TableEnvironment.explainSql()` and `TableEnvironment.executeSql()` support execute a `EXPLAIN` statement to get the plans, Please refer to [EXPLAIN]({{< ref "/dev/table/sql/explain" >}}) page.
+`TableEnvironment.explainSql()` and `TableEnvironment.executeSql()` support execute a `EXPLAIN` statement to get the plans, Please refer to [EXPLAIN]({{< ref "docs/dev/table/sql/explain" >}}) page.
 
 The following code shows an example and the corresponding output for given `Table` using `Table.explain()` method:
 

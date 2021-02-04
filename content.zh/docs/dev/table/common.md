@@ -28,8 +28,6 @@ under the License.
 
 Table API 和 SQL 集成在同一套 API 中。这套 API 的核心概念是`Table`，用作查询的输入和输出。本文介绍了 Table API 和 SQL 查询程序的通用结构、如何注册 `Table` 、如何查询 `Table` 以及如何输出 `Table` 。
 
-
-
 <a name="main-differences-between-the-two-planners"></a>
 
 两种计划器（Planner）的主要区别
@@ -374,7 +372,7 @@ table_env.register_table("projectedTable", proj_table)
 
 #### Connector Tables
 
-另外一个方式去创建 `TABLE` 是通过 [connector]({{< ref "docs/dev/table/connect" >}}) 声明。Connector 描述了存储表数据的外部系统。存储系统例如 Apache Kafka 或者常规的文件系统都可以通过这种方式来声明。
+另外一个方式去创建 `TABLE` 是通过 [connector]({{< ref "docs/connectors/table/overview" >}}) 声明。Connector 描述了存储表数据的外部系统。存储系统例如 Apache Kafka 或者常规的文件系统都可以通过这种方式来声明。
 
 {{< tabs "0b2e02bb-4185-4036-b948-85961ad05764" >}}
 {{< tab "Java" >}}
@@ -569,7 +567,7 @@ revenue = orders \
 
 Flink SQL 是基于实现了SQL标准的 [Apache Calcite](https://calcite.apache.org) 的。SQL 查询由常规字符串指定。
 
-文档 [SQL]({{< ref "docs/dev/table/sql/index" >}}) 描述了Flink对流处理和批处理表的SQL支持。
+文档 [SQL]({{< ref "docs/dev/table/sql/overview" >}}) 描述了Flink对流处理和批处理表的SQL支持。
 
 下面的示例演示了如何指定查询并将结果作为 `Table` 对象返回。
 
@@ -719,7 +717,7 @@ Table API 和 SQL 查询的混用非常简单因为它们都返回 `Table` 对�
 
 批处理 `Table` 只能写入 `BatchTableSink`，而流处理 `Table` 需要指定写入 `AppendStreamTableSink`，`RetractStreamTableSink` 或者 `UpsertStreamTableSink`。
 
-请参考文档 [Table Sources & Sinks]({{< ref "docs/dev/table/sourceSinks" >}}) 以获取更多关于可用 Sink 的信息以及如何自定义 `TableSink`。
+请参考文档 [Table Sources & Sinks]({{< ref "docs/dev/table/sourcesSinks" >}}) 以获取更多关于可用 Sink 的信息以及如何自定义 `TableSink`。
 
 方法 `Table.executeInsert(String tableName)` 将 `Table` 发送至已注册的 `TableSink`。该方法通过名称在 catalog 中查找 `TableSink` 并确认`Table` schema 和 `TableSink` schema 一致。
 
@@ -810,7 +808,7 @@ result.execute_insert("CsvSinkTable")
 
 {{< tabs "58b3e383-ade2-482d-a86f-b4f243ffce48" >}}
 {{< tab "Blink planner" >}}
-不论输入数据源是流式的还是批式的，Table API 和 SQL 查询都会被转换成 [DataStream]({{< ref "docs/dev/datastream_api" >}}) 程序。查询在内部表示为逻辑查询计划，并被翻译成两个阶段：
+不论输入数据源是流式的还是批式的，Table API 和 SQL 查询都会被转换成 [DataStream]({{< ref "docs/dev/datastream/overview" >}}) 程序。查询在内部表示为逻辑查询计划，并被翻译成两个阶段：
 
 1. 优化逻辑执行计划
 2. 翻译成 DataStream 程序
@@ -826,7 +824,7 @@ Table API 或者 SQL 查询在下列情况下会被翻译：
 <span class="label label-danger">注意</span> **从 1.11 版本开始，`sqlUpdate` 方法 和 `insertInto` 方法被废弃，从这两个方法构建的 Table 程序必须通过 `StreamTableEnvironment.execute()` 方法执行，而不能通过 `StreamExecutionEnvironment.execute()` 方法来执行。**
 {{< /tab >}}
 {{< tab "Old planner" >}}
-Table API 和 SQL 查询会被翻译成 [DataStream]({{< ref "docs/dev/datastream_api" >}}) 或者 [DataSet]({{< ref "/ dev/batch/index" >}}) 程序， 这取决于它们的输入数据源是流式的还是批式的。查询在内部表示为逻辑查询计划，并被翻译成两个阶段：
+Table API 和 SQL 查询会被翻译成 [DataStream]({{< ref "docs/dev/datastream/overview" >}}) 或者 [DataSet]({{< ref "docs/dev/dataset/overview" >}}) 程序， 这取决于它们的输入数据源是流式的还是批式的。查询在内部表示为逻辑查询计划，并被翻译成两个阶段：
 
 1. 优化逻辑执行计划
 2. 翻译成 DataStream 或 DataSet 程序
@@ -855,7 +853,7 @@ Table API 或者 SQL 查询在下列情况下会被翻译：
 
 **注意：** 下文讨论的 `DataSet` API 只与旧计划起有关。
 
-Table API 和 SQL 可以被很容易地集成并嵌入到 [DataStream]({{< ref "docs/dev/datastream_api" >}}) 和 [DataSet]({{< ref "/ dev/batch/index" >}}) 程序中。例如，可以查询外部表（例如从 RDBMS），进行一些预处理，例如过滤，投影，聚合或与元数据 join，然后使用 DataStream 或 DataSet API（以及在这些 API 之上构建的任何库，例如 CEP 或 Gelly）。相反，也可以将 Table API 或 SQL 查询应用于 DataStream 或 DataSet 程序的结果。
+Table API 和 SQL 可以被很容易地集成并嵌入到 [DataStream]({{< ref "docs/dev/datastream/overview" >}}) 和 [DataSet]({{< ref "docs/dev/dataset/overview" >}}) 程序中。例如，可以查询外部表（例如从 RDBMS），进行一些预处理，例如过滤，投影，聚合或与元数据 join，然后使用 DataStream 或 DataSet API（以及在这些 API 之上构建的任何库，例如 CEP 或 Gelly）。相反，也可以将 Table API 或 SQL 查询应用于 DataStream 或 DataSet 程序的结果。
 
 这种交互可以通过 `DataStream` 或 `DataSet` 与 `Table` 的相互转化实现。本节我们会介绍这些转化是如何实现的。
 
@@ -1290,7 +1288,7 @@ val table: Table = tableEnv.fromDataStream(stream, $"age" as "myAge", $"name" as
 
 #### POJO 类型 （Java 和 Scala）
 
-Flink 支持 POJO 类型作为复合类型。确定 POJO 类型的规则记录在[这里]({{< ref "docs/dev/types_serialization" >}}#pojos).
+Flink 支持 POJO 类型作为复合类型。确定 POJO 类型的规则记录在[这里]({{< ref "docs/dev/serialization/types_serialization" >}}#pojos).
 
 在不指定字段名称的情况下将 POJO 类型的 `DataStream` 或 `DataSet` 转换成 `Table` 时，将使用原始 POJO 类型字段的名称。名称映射需要原始名称，并且不能按位置进行。字段可以使用别名（带有 `as` 关键字）来重命名，重新排序和投影。
 

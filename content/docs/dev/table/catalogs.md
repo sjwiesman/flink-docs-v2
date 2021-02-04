@@ -47,12 +47,12 @@ The `GenericInMemoryCatalog` is an in-memory implementation of a catalog. All ob
 ### JdbcCatalog
 
 The `JdbcCatalog` enables users to connect Flink to relational databases over JDBC protocol. `PostgresCatalog` is the only implementation of JDBC Catalog at the moment.
-See [JdbcCatalog documentation]({{< ref "docs/dev/table/connectors/jdbc" >}}) for more details on setting up the catalog.
+See [JdbcCatalog documentation]({{< ref "docs/connectors/table/jdbc" >}}) for more details on setting up the catalog.
 
 ### HiveCatalog
 
 The `HiveCatalog` serves two purposes; as persistent storage for pure Flink metadata, and as an interface for reading and writing existing Hive metadata. 
-Flink's [Hive documentation]({{< ref "docs/dev/table/connectors/hive/index" >}}) provides full details on setting up the catalog and interfacing with an existing Hive installation.
+Flink's [Hive documentation]({{< ref "docs/connectors/table/hive/overview" >}}) provides full details on setting up the catalog and interfacing with an existing Hive installation.
 
 
 {% warn %} The Hive Metastore stores all meta-object names in lower case. This is unlike `GenericInMemoryCatalog` which is case-sensitive

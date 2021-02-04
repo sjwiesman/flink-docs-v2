@@ -220,7 +220,7 @@ result = orders.filter(orders.a.is_not_null & orders.b.is_not_null & orders.c.is
 {{< /tab >}}
 {{< /tabs >}}
 
-Since the Table API is a unified API for batch and streaming data, both example programs can be executed on batch and streaming inputs without any modification of the table program itself. In both cases, the program produces the same results given that streaming records are not late (see [Streaming Concepts]({{< ref "docs/dev/table/streaming/index" >}}) for details).
+Since the Table API is a unified API for batch and streaming data, both example programs can be executed on batch and streaming inputs without any modification of the table program itself. In both cases, the program produces the same results given that streaming records are not late (see [Streaming Concepts]({{< ref "docs/dev/table/concepts/overview" >}}) for details).
 
 {{< top >}}
 

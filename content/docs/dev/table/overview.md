@@ -35,7 +35,7 @@ and specify the same result regardless of whether the input is continuous (strea
 
 The Table API and SQL interfaces integrate seamlessly with each other and Flink's DataStream API. 
 You can easily switch between all APIs and libraries which build upon them.
-For instance, you can detect patterns from a table using [`MATCH_RECOGNIZE` clause]({{< ref "/dev/table/streaming/match_recognize" >}})
+For instance, you can detect patterns from a table using [`MATCH_RECOGNIZE` clause]({{< ref "docs/dev/table/concepts/match_recognize" >}})
 and later use the DataStream API to build alerting based on the matched patterns.
 
 ## Table Program Dependencies
@@ -98,8 +98,8 @@ following set of modules.
 
 ### Extension Dependencies
 
-If you want to implement a [custom format or connector]({{< ref "/dev/table/sourceSinks" >}}) 
-for (de)serializing rows or a set of [user-defined functions]({{< ref "/dev/table/functions/udfs" >}}),
+If you want to implement a [custom format or connector]({{< ref "docs/dev/table/sourcesSinks" >}}) 
+for (de)serializing rows or a set of [user-defined functions]({{< ref "docs/dev/table/functions/udfs" >}}),
 the following dependency is sufficient and can be used for JAR files for the SQL Client:
 
 ```xml
@@ -116,13 +116,13 @@ the following dependency is sufficient and can be used for JAR files for the SQL
 Where to go next?
 -----------------
 
-* [Concepts & Common API]({{< ref "/dev/table/common" >}}): Shared concepts and APIs of the Table API and SQL.
-* [Data Types]({{< ref "/dev/table/types" >}}): Lists pre-defined data types and their properties.
-* [Streaming Concepts]({{< ref "/dev/table/streaming/index" >}}): Streaming-specific documentation for the Table API or SQL such as configuration of time attributes and handling of updating results.
-* [Connect to External Systems]({{< ref "/dev/table/connect" >}}): Available connectors and formats for reading and writing data to external systems.
-* [Table API]({{< ref "/dev/table/tableApi" >}}): Supported operations and API for the Table API.
-* [SQL]({{< ref "/dev/table/sql/index" >}}): Supported operations and syntax for SQL.
-* [Built-in Functions]({{< ref "/dev/table/functions/systemFunctions" >}}): Supported functions in Table API and SQL.
-* [SQL Client]({{< ref "/dev/table/sqlClient" >}}): Play around with Flink SQL and submit a table program to a cluster without programming knowledge.
+* [Concepts & Common API]({{< ref "docs/dev/table/common" >}}): Shared concepts and APIs of the Table API and SQL.
+* [Data Types]({{< ref "docs/dev/table/types" >}}): Lists pre-defined data types and their properties.
+* [Streaming Concepts]({{< ref "docs/dev/table/concepts/overview" >}}): Streaming-specific documentation for the Table API or SQL such as configuration of time attributes and handling of updating results.
+* [Connect to External Systems]({{< ref "docs/connectors/table/overview" >}}): Available connectors and formats for reading and writing data to external systems.
+* [Table API]({{< ref "docs/dev/table/tableApi" >}}): Supported operations and API for the Table API.
+* [SQL]({{< ref "docs/dev/table/sql/overview" >}}): Supported operations and syntax for SQL.
+* [Built-in Functions]({{< ref "docs/dev/table/functions/systemFunctions" >}}): Supported functions in Table API and SQL.
+* [SQL Client]({{< ref "docs/dev/table/sqlClient" >}}): Play around with Flink SQL and submit a table program to a cluster without programming knowledge.
 
 {{< top >}}
