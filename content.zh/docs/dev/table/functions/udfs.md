@@ -43,7 +43,7 @@ under the License.
 - *表值聚合函数* 将多行数据里的标量值转换成新的行数据；
 - *异步表值函数* 是异步查询外部数据系统的特殊函数。
 
-<span class="label label-danger">注意</span> 标量和表值函数已经使用了新的基于[数据类型]({{< ref "/dev/table/types.zh" >}})的类型系统，聚合函数仍然使用基于 `TypeInformation` 的旧类型系统。
+<span class="label label-danger">注意</span> 标量和表值函数已经使用了新的基于[数据类型]({{< ref "docs/dev/table/types" >}})的类型系统，聚合函数仍然使用基于 `TypeInformation` 的旧类型系统。
 
 以下示例展示了如何创建一个基本的标量函数，以及如何在 Table API 和 SQL 里调用这个函数。
 
@@ -692,7 +692,7 @@ env.sqlQuery("SELECT HashFunction(myField) FROM MyTable")
 {{< /tab >}}
 {{< /tabs >}}
 
-如果你打算使用 Python 实现或调用标量函数，详情可参考 [Python 标量函数]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs.zh" >}}#scalar-functions)。
+如果你打算使用 Python 实现或调用标量函数，详情可参考 [Python 标量函数]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}#scalar-functions)。
 
 {{< top >}}
 
@@ -847,7 +847,7 @@ env.sqlQuery(
 
 如果你打算使用 Scala，不要把表值函数声明为 Scala `object`，Scala `object` 是单例对象，将导致并发问题。
 
-如果你打算使用 Python 实现或调用表值函数，详情可参考 [Python 表值函数]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs.zh" >}}#table-functions)。
+如果你打算使用 Python 实现或调用表值函数，详情可参考 [Python 表值函数]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}#table-functions)。
 
 {{< top >}}
 
@@ -1322,7 +1322,7 @@ t_env.sql_query("SELECT user, wAvg(points, level) AS avgPoints FROM userScores G
 {{< /tab >}}
 {{< /tabs >}}
 
-如果你打算使用 Python 实现或调用聚合函数，详情可参考 [Python 聚合函数]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs.zh" >}}#aggregate-functions)。
+如果你打算使用 Python 实现或调用聚合函数，详情可参考 [Python 聚合函数]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}#aggregate-functions)。
 
 {{< top >}}
 
