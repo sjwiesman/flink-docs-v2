@@ -34,10 +34,10 @@ under the License.
 
 If you’re interested in playing around with Flink, try one of our tutorials:
 
-* [Fraud Detection with the DataStream API]({{< ref "/docs/try-flink/datastream" >}})
-* [Real Time Reporting with the Table API]({{< ref "/docs/try-flink/table_api" >}})
-* Intro to PyFlink
-* [Flink Operations Playground]({{< ref "/docs/try-flink/operations" >}})
+* [Fraud Detection with the DataStream API]({{< ref "docs/try-flink/datastream" >}})
+* [Real Time Reporting with the Table API]({{< ref "docs/try-flink/table_api" >}})
+* [Intro to PyFlink]({{< ref "docs/dev/python/overview" >}})
+* [Flink Operations Playground]({{< ref "docs/try-flink/flink-operations-playground" >}})
 
 ## Learn Flink
 
@@ -56,7 +56,7 @@ If you get stuck, check out our [community support resources](https://flink.apac
 The reference documentation covers all the details. Some starting points:
 
 {{< columns >}}
-* [DataStream API]({{< ref "/docs/dev/datastream/overview" >}})
+* [DataStream API]({{< ref "docs/dev/datastream/overview" >}})
 * Table API & SQL
 * [Stateful Functions](https://ci.apache.org/projects/flink/flink-statefun-docs-stable/)
 

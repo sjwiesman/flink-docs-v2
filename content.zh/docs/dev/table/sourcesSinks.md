@@ -35,14 +35,14 @@ of a dynamic table is stored in external systems (such as databases, key-value s
 _Dynamic sources_ and _dynamic sinks_ can be used to read and write data from and to an external system. In
 the documentation, sources and sinks are often summarized under the term _connector_.
 
-Flink provides pre-defined connectors for Kafka, Hive, and different file systems. See the [connector section]({{< ref "/dev/table/connectors/index" >}})
+Flink provides pre-defined connectors for Kafka, Hive, and different file systems. See the [connector section]({{< ref "docs/dev/table/connectors/index" >}})
 for more information about built-in table sources and sinks.
 
 This page focuses on how to develop a custom, user-defined connector.
 
 <span class="label label-danger">Attention</span> New table source and table sink interfaces have been
 introduced in Flink 1.11 as part of [FLIP-95](https://cwiki.apache.org/confluence/display/FLINK/FLIP-95%3A+New+TableSource+and+TableSink+interfaces).
-Also the factory interfaces have been reworked. If necessary, take a look at the [old table sources and sinks page]({{< ref "/dev/table/legacySourceSinks" >}}).
+Also the factory interfaces have been reworked. If necessary, take a look at the [old table sources and sinks page]({{< ref "docs/dev/table/legacySourceSinks" >}}).
 Those interfaces are still supported for backwards compatibility.
 
 

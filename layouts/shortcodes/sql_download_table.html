@@ -58,8 +58,10 @@ and SQL Client with SQL JAR bundles.</p>
   </thead>
   <tbody>
     {{ range $connector.versions }}
+      <tr>
       <td style="text-align: left">{{ .version }}</td>
-      <td style="text-align: left"><code class="highlighter-rouge">{{- partial "docs/interpolate" .maven -}}</code></td>
+      <td style="text-align: left">
+        <code class="highlighter-rouge">{{- partial "docs/interpolate" .maven -}}</code></td>
       {{ if eq .builtin true }}
       <td style="text-align: left">Built-in</td>
       {{ else if eq .nosqljar true}}
@@ -72,6 +74,7 @@ and SQL Client with SQL JAR bundles.</p>
       {{ else }}
       <td>Only available for stable releases.</td>
       {{ end }}
+      </tr>
     {{ end }}
   </tbody>
 </table>

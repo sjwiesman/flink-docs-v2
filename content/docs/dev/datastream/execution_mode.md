@@ -129,7 +129,7 @@ operations on different processes/machines (TaskManagers) and how data is
 shuffled (sent) between them.
 
 Multiple operations/operators can be chained together using a feature called
-[chaining]({{< ref "/dev/stream/operators/index" >}}#task-chaining-and-resource-groups).
+[chaining]({{< ref "docs/dev/stream/operators/index" >}}#task-chaining-and-resource-groups).
 A group of one or multiple (chained)
 operators that Flink considers as a unit of scheduling is called a _task_.
 Often the term _subtask_ is used to refer to the individual instances of tasks
@@ -223,7 +223,7 @@ aforementioned backtracking to earlier results in case of a failure.
 
 ### State Backends / State
 
-In `STREAMING` mode, Flink uses a [StateBackend]({{< ref "/dev/stream/state/state_backends" >}}) to control how state is stored and how
+In `STREAMING` mode, Flink uses a [StateBackend]({{< ref "docs/dev/datastream/state/state_backends" >}}) to control how state is stored and how
 checkpointing works.
 
 In `BATCH` mode, the configured state backend is ignored. Instead, the input of
@@ -249,7 +249,7 @@ network shuffle, and state backend (see above), or a conscious choice by the sys
 There are three general types of input that we can differentiate:
 
 - _broadcast input_: input from a broadcast stream (see also [Broadcast
-  State]({{< ref "/dev/stream/state/broadcast_state" >}}))
+  State]({{< ref "docs/dev/stream/state/broadcast_state" >}}))
 - _regular input_: input that is neither broadcast nor keyed
 - _keyed input_: input from a `KeyedStream`
 
@@ -266,7 +266,7 @@ For functions that consume from multiple keyed inputs &mdash; such as a `KeyedCo
 
 ### Event Time / Watermarks
 
-When it comes to supporting [event time]({{< ref "/dev/event_time" >}}), Flink’s
+When it comes to supporting [event time]({{< ref "docs/dev/event_time" >}}), Flink’s
 streaming runtime builds on the pessimistic assumption that events may come
 out-of-order, _i.e._ an event with timestamp `t` may come after an event with
 timestamp `t+1`. Because of this, the system can never be sure that no more
@@ -317,7 +317,7 @@ input is processed.
 ### Failure Recovery
 
 In `STREAMING` execution mode, Flink uses checkpoints for failure recovery.
-Take a look at the [checkpointing documentation]({{< ref "/dev/stream/state/checkpointing" >}}) for hands-on documentation about this and
+Take a look at the [checkpointing documentation]({{< ref "docs/dev/stream/state/checkpointing" >}}) for hands-on documentation about this and
 how to configure it. There is also a more introductory section about [fault
 tolerance via state snapshots]({{< ref "/learn-flink/fault_tolerance" >}}) that
 explains the concepts at a higher level.
@@ -342,8 +342,8 @@ others are not supported.
 
 Behavior Change in BATCH mode:
 
-* "Rolling" operations such as [reduce()]({{< ref "/dev/stream/operators/index" >}}#reduce) 
-  or [sum()]({{< ref "/dev/stream/operators/index" >}}#aggregations)
+* "Rolling" operations such as [reduce()]({{< ref "docs/dev/stream/operators/index" >}}#reduce) 
+  or [sum()]({{< ref "docs/dev/stream/operators/index" >}}#aggregations)
   emit an incremental update for every new record that arrives in `STREAMING`
   mode. In `BATCH` mode, these operations are not "rolling". They emit only the
   final result.
@@ -353,7 +353,7 @@ Unsupported in BATCH mode:
 
 * [Checkpointing]({{< ref "/concepts/stateful-stream-processing" >}}#stateful-stream-processing) 
   and any operations that depend on checkpointing do not work.
-* [Iterations]({{< ref "/dev/stream/operators/index" >}}#iterate)
+* [Iterations]({{< ref "docs/dev/stream/operators/index" >}}#iterate)
 
 Custom operators should be implemented with care, otherwise they might behave
 improperly. See also additional explanations below for more details.
@@ -366,14 +366,14 @@ does not use checkpointing.
 It is important to remember that because there are no checkpoints, certain
 features such as [CheckpointListener]({{ site.javadocs_baseurl
 }}/api/java/org/apache/flink/api/common/state/CheckpointListener.html) and, as
-a result,  Kafka's [EXACTLY_ONCE]({{< ref "/dev/connectors/kafka" >}}
+a result,  Kafka's [EXACTLY_ONCE]({{< ref "docs/dev/connectors/kafka" >}}
 #kafka-producers-and-fault-tolerance) mode or `StreamingFileSink`'s
-[OnCheckpointRollingPolicy]({{< ref "/dev/connectors/streamfile_sink" >}}#rolling-policy)
+[OnCheckpointRollingPolicy]({{< ref "docs/dev/connectors/streamfile_sink" >}}#rolling-policy)
 won't work. If you need a transactional sink that works in
 `BATCH` mode make sure it uses the Unified Sink API as proposed in
 [FLIP-143](https://cwiki.apache.org/confluence/x/KEJ4CQ).
 
-You can still use all the [state primitives]({{< ref "/dev/stream/state/state" >}}#working-with-state),
+You can still use all the [state primitives]({{< ref "docs/dev/stream/state/state" >}}#working-with-state),
 it's just that the mechanism used for failure recovery will be different.
 
 ### Writing Custom Operators

@@ -110,16 +110,16 @@ table_env = BatchTableEnvironment.create(environment_settings=env_settings)
 
 ```
 
-For more details about the different ways to create a `TableEnvironment`, please refer to the [TableEnvironment Documentation]({{< ref "/dev/python/table-api-users-guide/table_environment" >}}#create-a-tableenvironment).
+For more details about the different ways to create a `TableEnvironment`, please refer to the [TableEnvironment Documentation]({{< ref "docs/dev/python/table/table_environment" >}}#create-a-tableenvironment).
 
 The `TableEnvironment` is responsible for:
 
 * Creating `Table`s
 * Registering `Table`s as a temporary view
-* Executing SQL queries, see [SQL]({{< ref "/dev/table/sql/index" >}}) for more details
-* Registering user-defined (scalar, table, or aggregation) functions, see [General User-defined Functions]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}) and [Vectorized User-defined Functions]({{< ref "/dev/python/table-api-users-guide/udfs/vectorized_python_udfs" >}}) for more details
-* Configuring the job, see [Python Configuration]({{< ref "/dev/python/python_config" >}}) for more details
-* Managing Python dependencies, see [Dependency Management]({{< ref "/dev/python/table-api-users-guide/dependency_management" >}}) for more details
+* Executing SQL queries, see [SQL]({{< ref "docs/dev/table/sql/overview" >}}) for more details
+* Registering user-defined (scalar, table, or aggregation) functions, see [General User-defined Functions]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}) and [Vectorized User-defined Functions]({{< ref "docs/dev/python/table/udfs/vectorized_python_udfs" >}}) for more details
+* Configuring the job, see [Python Configuration]({{< ref "docs/dev/python/python_config" >}}) for more details
+* Managing Python dependencies, see [Dependency Management]({{< ref "docs/dev/python/table/dependency_management" >}}) for more details
 * Submitting the jobs for execution
 
 Currently there are 2 planners available: flink planner and blink planner.
@@ -289,7 +289,7 @@ The `Table` object offers many methods for applying relational operations.
 These methods return new `Table` objects representing the result of applying the relational operations on the input `Table`. 
 These relational operations may be composed of multiple method calls, such as `table.group_by(...).select(...)`.
 
-The [Table API]({{< ref "/dev/table/tableApi" >}}?code_tab=python) documentation describes all Table API operations that are supported on streaming and batch tables.
+The [Table API]({{< ref "docs/dev/table/tableApi" >}}?code_tab=python) documentation describes all Table API operations that are supported on streaming and batch tables.
 
 The following example shows a simple Table API aggregation query:
 
@@ -326,7 +326,7 @@ The result is:
 
 Flink's SQL integration is based on [Apache Calcite](https://calcite.apache.org), which implements the SQL standard. SQL queries are specified as Strings.
 
-The [SQL]({{< ref "/dev/table/sql/index" >}}) documentation describes Flink's SQL support for streaming and batch tables.
+The [SQL]({{< ref "docs/dev/table/sql/overview" >}}) documentation describes Flink's SQL support for streaming and batch tables.
 
 The following example shows a simple SQL aggregation query:
 
@@ -484,7 +484,7 @@ Emit Results
 
 ### Collect Results to Client
 
-You can call the "to_pandas" method to [convert a `Table` object to a pandas DataFrame]({{< ref "/dev/python/table-api-users-guide/conversion_of_pandas" >}}#convert-pyflink-table-to-pandas-dataframe):
+You can call the "to_pandas" method to [convert a `Table` object to a pandas DataFrame]({{< ref "docs/dev/python/table/conversion_of_pandas" >}}#convert-pyflink-table-to-pandas-dataframe):
 
 ```python
 
@@ -599,7 +599,7 @@ This is done through the `Table.explain()` or `StatementSet.explain()` methods. 
 2. the optimized logical query plan, and
 3. the physical execution plan.
 
-`TableEnvironment.explain_sql()` and `TableEnvironment.execute_sql()` support executing an `EXPLAIN` statement to get the plans. Please refer to the [EXPLAIN]({{< ref "/dev/table/sql/explain" >}}) page for more details.
+`TableEnvironment.explain_sql()` and `TableEnvironment.execute_sql()` support executing an `EXPLAIN` statement to get the plans. Please refer to the [EXPLAIN]({{< ref "docs/dev/table/sql/explain" >}}) page for more details.
 
 The following code shows how to use the `Table.explain()` method:
 

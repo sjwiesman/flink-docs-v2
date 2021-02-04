@@ -289,7 +289,7 @@ The following features are not supported by the legacy planner.
 - [Streaming Aggregation Optimization]({{< ref "docs/dev/table/tuning/streaming_aggregation_optimization" >}})
 - Streaming mode Grouping sets, Rollup and Cube aggregations
 - [Top-N]({{< ref "docs/dev/table/sql/queries" >}}#top-n)
-- [Versioned Tables]({{< ref "docs/dev/table/streaming/versioned_tables" >}})
+- [Versioned Tables]({{< ref "docs/dev/table/concepts/versioned_tables" >}})
 
 ## Unsupported Built-In Functions
 

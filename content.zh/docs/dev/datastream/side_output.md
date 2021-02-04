@@ -52,11 +52,11 @@ val outputTag = OutputTag[String]("side-output")
 
 可以通过以下方法将数据发送到旁路输出：
 
-- [ProcessFunction]({{< ref "/dev/stream/operators/process_function.zh" >}})
-- [KeyedProcessFunction]({{< ref "/dev/stream/operators/process_function.zh" >}}#the-keyedprocessfunction)
+- [ProcessFunction]({{< ref "docs/dev/datastream/operators/process_function" >}})
+- [KeyedProcessFunction]({{< ref "docs/dev/datastream/operators/process_function" >}}#the-keyedprocessfunction)
 - CoProcessFunction
 - KeyedCoProcessFunction
-- [ProcessWindowFunction]({{< ref "/dev/stream/operators/windows.zh" >}}#processwindowfunction)
+- [ProcessWindowFunction]({{< ref "docs/dev/datastream/operators/windows" >}}#processwindowfunction)
 - ProcessAllWindowFunction
 
 你可以使用在上述方法中向用户暴露的 `Context` 参数，将数据发送到由 `OutputTag` 标识的旁路输出。这是从 `ProcessFunction` 发送数据到旁路输出的示例：

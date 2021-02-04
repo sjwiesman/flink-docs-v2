@@ -32,16 +32,14 @@ Flink 可以基于几种不同的 *时间* 概念来处理数据。
 - *事件时间* 指的是数据本身携带的时间。这个时间是在事件产生时的时间。
 - *摄入时间* 指的是数据进入 Flink 的时间；在系统内部，会把它当做事件时间来处理。
 
-对于时间相关的更多信息，可以参考 [事件时间和Watermark]({{< ref "/dev/event_time" >}})。
+对于时间相关的更多信息，可以参考 [事件时间和Watermark]({{< ref "docs/concepts/time" >}})。
 
 本页面说明了如何在 Flink Table API & SQL 里面定义时间以及相关的操作。
-
-
 
 时间属性介绍
 -------------------------------
 
-像窗口（在 [Table API]({{< ref "/dev/table/tableApi" >}}#group-windows) 和 [SQL]({{< ref "/docs/ dev/table/sql/queries" >}}#group-windows) ）这种基于时间的操作，需要有时间信息。因此，Table API 中的表就需要提供*逻辑时间属性*来表示时间，以及支持时间相关的操作。
+像窗口（在 [Table API]({{< ref "docs/dev/table/tableApi" >}}#group-windows) 和 [SQL]({{< ref "docs/dev/table/sql/queries" >}}#group-windows) ）这种基于时间的操作，需要有时间信息。因此，Table API 中的表就需要提供*逻辑时间属性*来表示时间，以及支持时间相关的操作。
 
 每种类型的表都可以有时间属性，可以在用CREATE TABLE DDL创建表的时候指定、也可以在 `DataStream` 中指定、也可以在定义 `TableSource` 时指定。一旦时间属性定义好，它就可以像普通列一样使用，也可以在时间相关的操作中使用。
 
@@ -96,7 +94,7 @@ env.set_stream_time_characteristic(TimeCharacteristic.ProcessingTime)  # default
 
 ### 在创建表的 DDL 中定义
 
-处理时间属性可以在创建表的 DDL 中用计算列的方式定义，用 `PROCTIME()` 就可以定义处理时间。关于计算列，更多信息可以参考：[CREATE TABLE DDL]({{< ref "/dev/table/sql/create" >}}#create-table) 
+处理时间属性可以在创建表的 DDL 中用计算列的方式定义，用 `PROCTIME()` 就可以定义处理时间。关于计算列，更多信息可以参考：[CREATE TABLE DDL]({{< ref "docs/dev/table/sql/create" >}}#create-table) 
 
 ```sql
 

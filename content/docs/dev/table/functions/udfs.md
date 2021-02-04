@@ -31,8 +31,8 @@ User-defined functions (UDFs) are extension points to call frequently used logic
 User-defined functions can be implemented in a JVM language (such as Java or Scala) or Python.
 An implementer can use arbitrary third party libraries within a UDF.
 This page will focus on JVM-based languages, please refer to the PyFlink documentation
-for details on writing [general]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}) 
- and [vectorized]({{< ref "/dev/python/table-api-users-guide/udfs/vectorized_python_udfs" >}}) UDFs in Python.
+for details on writing [general]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}) 
+ and [vectorized]({{< ref "docs/dev/python/table/udfs/vectorized_python_udfs" >}}) UDFs in Python.
 
 Overview
 --------
@@ -264,7 +264,7 @@ class SumFunction extends ScalarFunction {
 
 ### Type Inference
 
-The table ecosystem (similar to the SQL standard) is a strongly typed API. Therefore, both function parameters and return types must be mapped to a [data type]({{< ref "/dev/table/types" >}}).
+The table ecosystem (similar to the SQL standard) is a strongly typed API. Therefore, both function parameters and return types must be mapped to a [data type]({{< ref "docs/dev/table/types" >}}).
 
 From a logical perspective, the planner needs information about expected types, precision, and scale. From a JVM perspective, the planner needs information about how internal data structures are represented as JVM objects when calling a user-defined function.
 
@@ -278,7 +278,7 @@ If more advanced type inference logic is required, an implementer can explicitly
 
 The automatic type inference inspects the function's class and evaluation methods to derive data types for the arguments and result of a function. `@DataTypeHint` and `@FunctionHint` annotations support the automatic extraction.
 
-For a full list of classes that can be implicitly mapped to a data type, see the [data type extraction section]({{< ref "/dev/table/types" >}}#data-type-extraction).
+For a full list of classes that can be implicitly mapped to a data type, see the [data type extraction section]({{< ref "docs/dev/table/types" >}}#data-type-extraction).
 
 **`@DataTypeHint`**
 
@@ -656,7 +656,7 @@ env.sqlQuery("SELECT myField, hashCode(myField) FROM MyTable")
 Scalar Functions
 ----------------
 
-A user-defined scalar function maps zero, one, or multiple scalar values to a new scalar value. Any data type listed in the [data types section]({{< ref "/dev/table/types" >}}) can be used as a parameter or return type of an evaluation method.
+A user-defined scalar function maps zero, one, or multiple scalar values to a new scalar value. Any data type listed in the [data types section]({{< ref "docs/dev/table/types" >}}) can be used as a parameter or return type of an evaluation method.
 
 In order to define a scalar function, one has to extend the base class `ScalarFunction` in `org.apache.flink.table.functions` and implement one or more evaluation methods named `eval(...)`.
 
@@ -726,7 +726,7 @@ env.sqlQuery("SELECT HashFunction(myField) FROM MyTable")
 {{< /tab >}}
 {{< /tabs >}}
 
-If you intend to implement or call functions in Python, please refer to the [Python Scalar Functions]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}#scalar-functions) documentation for more details.
+If you intend to implement or call functions in Python, please refer to the [Python Scalar Functions]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}#scalar-functions) documentation for more details.
 
 {{< top >}}
 
@@ -881,7 +881,7 @@ env.sqlQuery(
 
 If you intend to implement functions in Scala, do not implement a table function as a Scala `object`. Scala `object`s are singletons and will cause concurrency issues.
 
-If you intend to implement or call functions in Python, please refer to the [Python Table Functions]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}#table-functions) documentation for more details.
+If you intend to implement or call functions in Python, please refer to the [Python Table Functions]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}#table-functions) documentation for more details.
 
 {{< top >}}
 
@@ -917,7 +917,7 @@ includes the generic argument `ACC` of the class for determining an accumulator 
 argument `T` for determining an accumulator data type. Input arguments are derived from one or more
 `accumulate(...)` methods. See the [Implementation Guide](#implementation-guide) for more details.
 
-If you intend to implement or call functions in Python, please refer to the [Python Functions]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}})
+If you intend to implement or call functions in Python, please refer to the [Python Functions]({{< ref "docs/dev/python/table/udfs/python_udfs" >}})
 documentation for more details.
 
 The following example shows how to define your own aggregate function and call it in a query.
@@ -1215,7 +1215,7 @@ def merge(accumulator: ACC, iterable: java.lang.Iterable[ACC]): Unit
 {{< /tab >}}
 {{< /tabs >}}
 
-If you intend to implement or call functions in Python, please refer to the [Python Aggregate Functions]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}#aggregate-functions) documentation for more details.
+If you intend to implement or call functions in Python, please refer to the [Python Aggregate Functions]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}#aggregate-functions) documentation for more details.
 
 {{< top >}}
 
@@ -1255,7 +1255,7 @@ includes the generic argument `ACC` of the class for determining an accumulator 
 argument `T` for determining an accumulator data type. Input arguments are derived from one or more
 `accumulate(...)` methods. See the [Implementation Guide](#implementation-guide) for more details.
 
-If you intend to implement or call functions in Python, please refer to the [Python Functions]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}})
+If you intend to implement or call functions in Python, please refer to the [Python Functions]({{< ref "docs/dev/python/table/udfs/python_udfs" >}})
 documentation for more details.
 
 The following example shows how to define your own table aggregate function and call it in a query.

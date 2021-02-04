@@ -28,7 +28,7 @@ under the License.
 
 The Table API is a unified, relational API for stream and batch processing. Table API queries can be run on batch or streaming input without modifications. The Table API is a super set of the SQL language and is specially designed for working with Apache Flink. The Table API is a language-integrated API for Scala, Java and Python. Instead of specifying queries as String values as common with SQL, Table API queries are defined in a language-embedded style in Java, Scala or Python with IDE support like autocompletion and syntax validation. 
 
-The Table API shares many concepts and parts of its API with Flink's SQL integration. Have a look at the [Common Concepts & API]({{< ref "docs/dev/table/common" >}}) to learn how to register tables or to create a `Table` object. The [Streaming Concepts]({{< ref "docs/dev/table/concepts/index" >}}) pages discuss streaming specific concepts such as dynamic tables and time attributes.
+The Table API shares many concepts and parts of its API with Flink's SQL integration. Have a look at the [Common Concepts & API]({{< ref "docs/dev/table/common" >}}) to learn how to register tables or to create a `Table` object. The [Streaming Concepts]({{< ref "docs/dev/table/concepts/overview" >}}) pages discuss streaming specific concepts such as dynamic tables and time attributes.
 
 The following examples assume a registered table called `Orders` with attributes `(a, b, c, rowtime)`. The `rowtime` field is either a logical [time attribute]({{< ref "docs/dev/table/concepts/time_attributes" >}}) in streaming or a regular timestamp field in batch.
 
@@ -220,7 +220,7 @@ result = orders.filter(orders.a.is_not_null & orders.b.is_not_null & orders.c.is
 {{< /tab >}}
 {{< /tabs >}}
 
-Since the Table API is a unified API for batch and streaming data, both example programs can be executed on batch and streaming inputs without any modification of the table program itself. In both cases, the program produces the same results given that streaming records are not late (see [Streaming Concepts]({{< ref "docs/dev/table/concepts/index" >}}) for details).
+Since the Table API is a unified API for batch and streaming data, both example programs can be executed on batch and streaming inputs without any modification of the table program itself. In both cases, the program produces the same results given that streaming records are not late (see [Streaming Concepts]({{< ref "docs/dev/table/concepts/overview" >}}) for details).
 
 {{< top >}}
 

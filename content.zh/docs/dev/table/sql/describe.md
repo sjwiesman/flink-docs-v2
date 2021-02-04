@@ -51,7 +51,7 @@ The following examples show how to run a DESCRIBE statement in `TableEnvironment
 {{< /tab >}}
 {{< tab "SQL CLI" >}}
 
-DESCRIBE statements can be executed in [SQL CLI]({{< ref "/dev/table/sqlClient" >}}).
+DESCRIBE statements can be executed in [SQL CLI]({{< ref "docs/dev/table/sqlClient" >}}).
 
 The following examples show how to run a DESCRIBE statement in SQL CLI.
 

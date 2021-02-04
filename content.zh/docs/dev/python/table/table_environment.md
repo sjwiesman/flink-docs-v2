@@ -197,8 +197,8 @@ TableEnvironment API
         执行指定的语句并返回执行结果。
         执行语句可以是 DDL/DML/DQL/SHOW/DESCRIBE/EXPLAIN/USE。 <br> <br>
         注意，对于 "INSERT INTO" 语句，这是一个异步操作，通常在向远程集群提交作业时才需要使用。
-        但是，如果在本地集群或者 IDE 中执行作业时，你需要等待作业执行完成，这时你可以查阅 <a href="{{< ref "/dev/python/faq" >}}#wait-for-jobs-to-finish-when-executing-jobs-in-mini-cluster">这里</a> 来获取更多细节。 <br>
-        更多关于 SQL 语句的细节，可查阅 <a href="{{< ref "/dev/table/sql/index" >}}">SQL</a> 文档。
+        但是，如果在本地集群或者 IDE 中执行作业时，你需要等待作业执行完成，这时你可以查阅 <a href="{{< ref "docs/dev/python/faq" >}}#wait-for-jobs-to-finish-when-executing-jobs-in-mini-cluster">这里</a> 来获取更多细节。 <br>
+        更多关于 SQL 语句的细节，可查阅 <a href="{{< ref "docs/dev/table/sql/index" >}}">SQL</a> 文档。
       </td>
       <td class="text-center">
         <a href="{{ site.pythondocs_baseurl }}/api/python/pyflink.table.html#pyflink.table.TableEnvironment.execute_sql">链接</a>
@@ -399,7 +399,7 @@ TableEnvironment API
 
 这些 APIs 用来注册 UDFs 或者 删除已注册的 UDFs。
 注意，`execute_sql` API 也可以用于注册/删除 UDFs。
-关于不同类型 UDFs 的详细信息，可查阅 [用户自定义函数]({{< ref "/dev/table/functions/index" >}})。
+关于不同类型 UDFs 的详细信息，可查阅 [用户自定义函数]({{< ref "docs/dev/table/functions/index" >}})。
 
 <table class="table table-bordered">
   <thead>
@@ -546,7 +546,7 @@ TableEnvironment API
 ### 依赖管理
 
 这些 APIs 用来管理 Python UDFs 所需要的 Python 依赖。
-更多细节可查阅 [依赖管理]({{< ref "/dev/python/table-api-users-guide/dependency_management" >}}#python-dependency-in-python-program)。
+更多细节可查阅 [依赖管理]({{< ref "docs/dev/python/table/dependency_management" >}}#python-dependency-in-python-program)。
 
 <table class="table table-bordered">
   <thead>
@@ -613,7 +613,7 @@ TableEnvironment API
       <td>
         返回 table config，可以通过 table config 来定义 Table API 的运行时行为。
         你可以在 <a href="{{< ref "/deployment/config" >}}">配置</a> 和
-        <a href="{{< ref "/dev/python/python_config" >}}">Python 配置</a> 中找到所有可用的配置选项。 <br> <br>
+        <a href="{{< ref "docs/dev/python/python_config" >}}">Python 配置</a> 中找到所有可用的配置选项。 <br> <br>
         下面的代码示例展示了如何通过这个 API 来设置配置选项：
 ```python
 # set the parallelism to 8
@@ -630,7 +630,7 @@ table_env.get_config().get_configuration().set_string(
 
 ### Catalog APIs
 
-这些 APIs 用于访问 catalog 和模块。你可以在 [模块]({{< ref "/dev/table/modules" >}}) 和 [catalog]({{< ref "/dev/table/catalogs" >}}) 文档中找到更详细的介绍。
+这些 APIs 用于访问 catalog 和模块。你可以在 [模块]({{< ref "docs/dev/table/modules" >}}) 和 [catalog]({{< ref "docs/dev/table/catalogs" >}}) 文档中找到更详细的介绍。
 
 <table class="table table-bordered">
   <thead>

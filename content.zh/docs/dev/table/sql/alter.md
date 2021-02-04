@@ -28,7 +28,7 @@ under the License.
 
 
 
-ALTER 语句用于修改一个已经在 [Catalog]({{< ref "/dev/table/catalogs.zh" >}}) 中注册的表、视图或函数定义。
+ALTER 语句用于修改一个已经在 [Catalog]({{< ref "docs/dev/table/catalogs" >}}) 中注册的表、视图或函数定义。
 
 Flink SQL 目前支持以下 ALTER 语句：
 
@@ -58,7 +58,7 @@ Flink SQL 目前支持以下 ALTER 语句：
 {{< /tab >}}
 {{< tab "SQL CLI" >}}
 
-可以在 [SQL CLI]({{< ref "/dev/table/sqlClient.zh" >}}) 中执行 ALTER 语句。
+可以在 [SQL CLI]({{< ref "docs/dev/table/sqlClient" >}}) 中执行 ALTER 语句。
 
 以下的例子展示了如何在 SQL CLI 中执行一个 ALTER 语句。
 
@@ -176,9 +176,9 @@ ALTER [TEMPORARY|TEMPORARY SYSTEM] FUNCTION
 
 修改一个有 catalog 和数据库命名空间的 catalog function ，需要指定一个新的 identifier ，可指定 language tag 。若函数不存在，删除会抛出异常。
 
-如果 language tag 是 JAVA 或者 SCALA ，则 identifier 是 UDF 实现类的全限定名。关于 JAVA/SCALA UDF 的实现，请参考 [自定义函数]({{< ref "/dev/table/functions/udfs.zh" >}})。
+如果 language tag 是 JAVA 或者 SCALA ，则 identifier 是 UDF 实现类的全限定名。关于 JAVA/SCALA UDF 的实现，请参考 [自定义函数]({{< ref "docs/dev/table/functions/udfs" >}})。
 
-如果 language tag 是 PYTHON ， 则 identifier 是 UDF 对象的全限定名，例如 `pyflink.table.tests.test_udf.add`。关于 PYTHON UDF 的实现，请参考 [Python UDFs]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs.zh" >}})。
+如果 language tag 是 PYTHON ， 则 identifier 是 UDF 对象的全限定名，例如 `pyflink.table.tests.test_udf.add`。关于 PYTHON UDF 的实现，请参考 [Python UDFs]({{< ref "docs/dev/python/table/udfs/python_udfs" >}})。
 
 **TEMPORARY**
 

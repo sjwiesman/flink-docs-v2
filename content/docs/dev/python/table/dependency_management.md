@@ -30,7 +30,7 @@ under the License.
 
 # Java Dependency in Python Program
 
-If third-party Java dependencies are used, you can specify the dependencies with the following Python Table APIs or through [command line arguments]({{< ref "/deployment/cli" >}}#usage) directly when submitting the job.
+If third-party Java dependencies are used, you can specify the dependencies with the following Python Table APIs or through [command line arguments]({{< ref "docs/deployment/cli" >}}#usage) directly when submitting the job.
 
 ```python
 # Specify a list of jar URLs via "pipeline.jars". The jars are separated by ";" 
@@ -46,7 +46,7 @@ table_env.get_config().get_configuration().set_string("pipeline.classpaths", "fi
 
 # Python Dependency in Python Program
 
-If third-party Python dependencies are used, you can specify the dependencies with the following Python Table APIs or through [command line arguments]({{< ref "/deployment/cli" >}}#usage) directly when submitting the job.
+If third-party Python dependencies are used, you can specify the dependencies with the following Python Table APIs or through [command line arguments]({{< ref "docs/deployment/cli" >}}#usage) directly when submitting the job.
 
 #### add_python_file(file_path)
 
@@ -129,8 +129,8 @@ tEnv.createTemporaryView("source", tEnv.fromValues(1L, 2L, 3L).as("a"));
 tEnv.executeSql("select add_one(a) as a from source").collect();
 ```
 
-You can refer to the SQL statement about [CREATE FUNCTION]({{< ref "/ dev/table/sql/create" >}}#create-function) for more details
+You can refer to the SQL statement about [CREATE FUNCTION]({{< ref "docs/dev/table/sql/create" >}}#create-function) for more details
 on how to create Python user-defined functions using SQL statements.
 
-The Python dependencies could be specified via the Python [config options]({{< ref "/ dev/python/python_config" >}}#python-options),
-such as **python.archives**, **python.files**, **python.requirements**, **python.client.executable**, **python.executable**. etc or through [command line arguments]({{< ref "/deployment/cli" >}}#usage) when submitting the job.
+The Python dependencies could be specified via the Python [config options]({{< ref "docs/ dev/python/python_config" >}}#python-options),
+such as **python.archives**, **python.files**, **python.requirements**, **python.client.executable**, **python.executable**. etc or through [command line arguments]({{< ref "docs/deployment/cli" >}}#usage) when submitting the job.

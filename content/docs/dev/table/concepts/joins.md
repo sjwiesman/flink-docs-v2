@@ -29,7 +29,7 @@ under the License.
 Flink SQL supports complex and flexible join operations over dynamic tables. 
 There are several different types of joins to account for the wide variety of semantics queries may require. 
 
-For full syntax of each join, please check the join sections in [Table API](../tableApi.html#joins) and [SQL]({{< ref "/dev/table/sql/queries" >}}#joins).
+For full syntax of each join, please check the join sections in [Table API](../tableApi.html#joins) and [SQL]({{< ref "docs/dev/table/sql/queries" >}}#joins).
 
 
 
@@ -73,7 +73,7 @@ Temporal Joins
 
 ### Event Time Temporal Join
 
-Temporal joins allow joining against a [versioned table]({{< ref "/dev/table/streaming/versioned_tables" >}}).
+Temporal joins allow joining against a [versioned table]({{< ref "docs/dev/table/concepts/versioned_tables" >}}).
 This means a table can be enriched with changing metadata and retrieve its value at a certain point in time. 
 
 Temporal joins take an arbitrary table (left input/probe site) and correlate each row to the corresponding row's relevant version in the versioned table (right input/build side). 

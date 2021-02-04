@@ -28,7 +28,7 @@ under the License.
 
 
 
-DROP 语句用于从当前或指定的 [Catalog]({{< ref "/dev/table/catalogs.zh" >}}) 中删除一个已经注册的表、视图或函数。
+DROP 语句用于从当前或指定的 [Catalog]({{< ref "docs/dev/table/catalogs" >}}) 中删除一个已经注册的表、视图或函数。
 
 Flink SQL 目前支持以下 DROP 语句：
 
@@ -67,7 +67,7 @@ Flink SQL 目前支持以下 DROP 语句：
 {{< /tab >}}
 {{< tab "SQL CLI" >}}
 
-可以在 [SQL CLI]({{< ref "/dev/table/sqlClient.zh" >}}) 中执行 DROP 语句。
+可以在 [SQL CLI]({{< ref "docs/dev/table/sqlClient" >}}) 中执行 DROP 语句。
 
 以下的例子展示了如何在 SQL CLI 中执行一个 DROP 语句。
 

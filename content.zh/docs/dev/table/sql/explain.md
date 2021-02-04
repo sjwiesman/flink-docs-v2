@@ -30,7 +30,6 @@ under the License.
 
 EXPLAIN statements are used to explain the logical and optimized query plans of a query or an INSERT statement.
 
-
 ## Run an EXPLAIN statement
 
 {{< tabs "explain" >}}
@@ -56,7 +55,7 @@ The following examples show how to run an EXPLAIN statement in `TableEnvironment
 {{< /tab >}}
 {{< tab "SQL CLI" >}}
 
-EXPLAIN statements can be executed in [SQL CLI]({{< ref "/dev/table/sqlClient" >}}).
+EXPLAIN statements can be executed in [SQL CLI]({{< ref "docs/dev/table/sqlClient" >}}).
 
 The following examples show how to run an EXPLAIN statement in SQL CLI.
 
@@ -224,5 +223,5 @@ Stage 2 : Data Source
 EXPLAIN PLAN FOR <query_statement_or_insert_statement>
 ```
 
-For query syntax, please refer to [Queries]({{< ref "/dev/table/sql/queries" >}}#supported-syntax) page.
-For INSERT, please refer to [INSERT]({{< ref "/dev/table/sql/insert" >}}) page.
+For query syntax, please refer to [Queries]({{< ref "docs/dev/table/sql/queries" >}}#supported-syntax) page.
+For INSERT, please refer to [INSERT]({{< ref "docs/dev/table/sql/insert" >}}) page.

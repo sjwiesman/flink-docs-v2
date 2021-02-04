@@ -151,12 +151,12 @@ data.map (new RichMapFunction[String, Int] {
 Rich functions provide, in addition to the user-defined function (map,
 reduce, etc), four methods: `open`, `close`, `getRuntimeContext`, and
 `setRuntimeContext`. These are useful for parameterizing the function
-(see [Passing Parameters to Functions]({{< ref "/dev/batch/index" >}}#passing-parameters-to-functions)),
+(see [Passing Parameters to Functions]({{< ref "docs/dev/dataset/overview" >}}#passing-parameters-to-functions)),
 creating and finalizing local state, accessing broadcast variables (see
-[Broadcast Variables]({{< ref "/dev/batch/index" >}}#broadcast-variables)), and for accessing runtime
+[Broadcast Variables]({{< ref "docs/dev/dataset/overview" >}}#broadcast-variables)), and for accessing runtime
 information such as accumulators and counters (see
 [Accumulators and Counters](#accumulators--counters)), and information
-on iterations (see [Iterations]({{< ref "/dev/batch/iterations" >}})).
+on iterations (see [Iterations]({{< ref "docs/dev/dataset/iterations" >}})).
 
 {{< top >}}
 

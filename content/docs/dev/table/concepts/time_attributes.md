@@ -31,7 +31,7 @@ Flink can process data based on different notions of time.
 - *Processing time* refers to the machine's system time (also known as "wall-clock time") that is executing the respective operation.
 - *Event time* refers to the processing of streaming data based on timestamps that are attached to each row. The timestamps can encode when an event happened.
 
-For more information about time handling in Flink, see the introduction about [event time and watermarks]({{< ref "/dev/event_time" >}}).
+For more information about time handling in Flink, see the introduction about [event time and watermarks]({{< ref "docs/concepts/time" >}}).
 
 Introduction to Time Attributes
 -------------------------------
@@ -51,13 +51,13 @@ Event time allows a table program to produce results based on timestamps in ever
 
 Additionally, event time allows for unified syntax for table programs in both batch and streaming environments. A time attribute in a streaming environment can be a regular column of a row in a batch environment.
 
-To handle out-of-order events and to distinguish between on-time and late events in streaming, Flink needs to know the timestamp for each row, and it also needs regular indications of how far along in event time the processing has progressed so far (via so-called [watermarks]({{< ref "/dev/event_time" >}})).
+To handle out-of-order events and to distinguish between on-time and late events in streaming, Flink needs to know the timestamp for each row, and it also needs regular indications of how far along in event time the processing has progressed so far (via so-called [watermarks]({{< ref "docs/concepts/time" >}})).
 
 Event time attributes can be defined in `CREATE` table DDL or during DataStream-to-Table conversion.
 
 ### Defining in DDL
 
-The event time attribute is defined using a `WATERMARK` statement in `CREATE` table DDL. A watermark statement defines a watermark generation expression on an existing event time field, which marks the event time field as the event time attribute. Please see [CREATE TABLE DDL]({{< ref "/dev/table/sql/create" >}}#create-table) for more information about watermark statement and watermark strategies.
+The event time attribute is defined using a `WATERMARK` statement in `CREATE` table DDL. A watermark statement defines a watermark generation expression on an existing event time field, which marks the event time field as the event time attribute. Please see [CREATE TABLE DDL]({{< ref "docs/dev/table/sql/create" >}}#create-table) for more information about watermark statement and watermark strategies.
 
 ```sql
 
@@ -80,7 +80,7 @@ GROUP BY TUMBLE(user_action_time, INTERVAL '10' MINUTE);
 
 ### During DataStream-to-Table Conversion
 
-When converting a `DataStream` to a table, an event time attribute can be defined with the `.rowtime` property during schema definition. [Timestamps and watermarks]({{< ref "/dev/event_time" >}}) must have already been assigned in the `DataStream` being converted.
+When converting a `DataStream` to a table, an event time attribute can be defined with the `.rowtime` property during schema definition. [Timestamps and watermarks]({{< ref "docs/concepts/time" >}}) must have already been assigned in the `DataStream` being converted.
 
 There are two ways of defining the time attribute when converting a `DataStream` into a `Table`. Depending on whether the specified `.rowtime` field name exists in the schema of the `DataStream`, the timestamp is either (1) appended as a new column, or it
 (2) replaces an existing column.
@@ -155,7 +155,7 @@ There are three ways to define a processing time attribute.
 
 ### Defining in DDL
 
-The processing time attribute is defined as a computed column in `CREATE` table DDL using the system `PROCTIME()` function. Please see [CREATE TABLE DDL]({{< ref "/dev/table/sql/create" >}}#create-table) for more information about computed column.
+The processing time attribute is defined as a computed column in `CREATE` table DDL using the system `PROCTIME()` function. Please see [CREATE TABLE DDL]({{< ref "docs/dev/table/sql/create" >}}#create-table) for more information about computed column.
 
 ```sql
 
@@ -172,7 +172,6 @@ FROM user_actions
 GROUP BY TUMBLE(user_action_time, INTERVAL '10' MINUTE);
 
 ```
-
 
 ### During DataStream-to-Table Conversion
 

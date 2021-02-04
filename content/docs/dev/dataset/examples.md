@@ -28,7 +28,7 @@ under the License.
 
 The following example programs showcase different applications of Flink
 from simple word counting to graph algorithms. The code samples illustrate the
-use of [Flink's DataSet API]({{< ref "/dev/batch/index" >}}).
+use of [Flink's DataSet API]({{< ref "docs/dev/dataset/overview" >}}).
 
 The full source code of the following and more examples can be found in the {{< gh_link file="flink-examples/flink-examples-batch" name="flink-examples-batch" >}} module of the Flink source repository.
 

@@ -183,7 +183,7 @@ data1.join(data2).
 
 
 
-For more information on the semantics of each method, please refer to the [DataStream]({{< ref "/dev/datastream_api" >}}) API documentation.
+For more information on the semantics of each method, please refer to the [DataStream]({{< ref "docs/dev/datastream/overview" >}}) API documentation.
 
 To use this extension exclusively, you can add the following `import`:
 

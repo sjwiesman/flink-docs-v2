@@ -33,7 +33,7 @@ These legacy features remain documented here for those users that have not yet o
 
 The temporal table function is the legacy way of defining something akin to a [versioned table]({{< ref "docs/dev/table/concepts/versioned_tables" >}})
 that can be used in a temporal table join.
-Please define temporal joins using [versioned tables]({{< ref "docs/dev/table/streaming/versioned_tables" >}}) in new queries.
+Please define temporal joins using [versioned tables]({{< ref "docs/dev/table/concepts/versioned_tables" >}}) in new queries.
 
 Unlike a versioned table, temporal table functions can only be defined on top of append-only streams 
 &mdash; it does not support changelog inputs.

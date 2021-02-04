@@ -47,12 +47,12 @@ The `GenericInMemoryCatalog` is an in-memory implementation of a catalog. All ob
 ### JdbcCatalog
 
 The `JdbcCatalog` enables users to connect Flink to relational databases over JDBC protocol. `PostgresCatalog` is the only implementation of JDBC Catalog at the moment.
-See [JdbcCatalog documentation]({{< ref "/dev/table/connectors/jdbc" >}}) for more details on setting up the catalog.
+See [JdbcCatalog documentation]({{< ref "docs/dev/table/connectors/jdbc" >}}) for more details on setting up the catalog.
 
 ### HiveCatalog
 
 The `HiveCatalog` serves two purposes; as persistent storage for pure Flink metadata, and as an interface for reading and writing existing Hive metadata. 
-Flink's [Hive documentation]({{< ref "/dev/table/connectors/hive/index" >}}) provides full details on setting up the catalog and interfacing with an existing Hive installation.
+Flink's [Hive documentation]({{< ref "docs/dev/table/connectors/hive/index" >}}) provides full details on setting up the catalog and interfacing with an existing Hive installation.
 
 
 {% warn %} The Hive Metastore stores all meta-object names in lower case. This is unlike `GenericInMemoryCatalog` which is case-sensitive
@@ -147,7 +147,7 @@ mytable
 {{< /tabs >}}
 
 
-For detailed information, please check out [Flink SQL CREATE DDL]({{< ref "/dev/table/sql/create" >}}).
+For detailed information, please check out [Flink SQL CREATE DDL]({{< ref "docs/dev/table/sql/create" >}}).
 
 ### Using Java, Scala or Python
 
@@ -285,7 +285,7 @@ tables = catalog.list_tables("mydb")
 ## Catalog API
 
 Note: only catalog program APIs are listed here. Users can achieve many of the same funtionalities with SQL DDL. 
-For detailed DDL information, please refer to [SQL CREATE DDL]({{< ref "/dev/table/sql/create" >}}).
+For detailed DDL information, please refer to [SQL CREATE DDL]({{< ref "docs/dev/table/sql/create" >}}).
 
 
 ### Database operations

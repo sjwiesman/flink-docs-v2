@@ -27,7 +27,7 @@ under the License.
 
 # Streaming Concepts
 
-Flink's [Table API]({{< ref "/dev/table/tableApi" >}}) and [SQL support]({{< ref "/dev/table/sql/index" >}}) are unified APIs for batch and stream processing.
+Flink's [Table API]({{< ref "docs/dev/table/tableApi" >}}) and [SQL support]({{< ref "docs/dev/table/sql/overview" >}}) are unified APIs for batch and stream processing.
 This means that Table API and SQL queries have the same semantics regardless whether their input is bounded batch input or unbounded stream input.
 
 The following pages explain concepts, practical limitations, and stream-specific configuration parameters of Flink's relational APIs on streaming data.
@@ -35,10 +35,10 @@ The following pages explain concepts, practical limitations, and stream-specific
 Where to go next?
 -----------------
 
-* [Dynamic Tables]({{< ref "/dev/table/streaming/dynamic_tables" >}}): Describes the concept of dynamic tables.
-* [Time attributes]({{< ref "/dev/table/streaming/time_attributes" >}}): Explains time attributes and how time attributes are handled in Table API & SQL.
-* [Versioned Tables]({{< ref "/dev/table/streaming/versioned_tables" >}}): Describes the Temporal Table concept.
-* [Joins in Continuous Queries]({{< ref "/dev/table/streaming/joins" >}}): Different supported types of Joins in Continuous Queries.
-* [Query configuration]({{< ref "/dev/table/streaming/query_configuration" >}}): Lists Table API & SQL specific configuration options.
+* [Dynamic Tables]({{< ref "docs/dev/table/concepts/dynamic_tables" >}}): Describes the concept of dynamic tables.
+* [Time attributes]({{< ref "docs/dev/table/concepts/time_attributes" >}}): Explains time attributes and how time attributes are handled in Table API & SQL.
+* [Versioned Tables]({{< ref "docs/dev/table/concepts/versioned_tables" >}}): Describes the Temporal Table concept.
+* [Joins in Continuous Queries]({{< ref "docs/dev/table/concepts/joins" >}}): Different supported types of Joins in Continuous Queries.
+* [Query configuration]({{< ref "docs/dev/table/config" >}}): Lists Table API & SQL specific configuration options.
 
 {{< top >}}

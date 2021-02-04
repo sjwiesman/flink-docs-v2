@@ -26,7 +26,7 @@ under the License.
 
 # 时态表（Temporal Tables）
 
-时态表（Temporal Table）是一张随时间变化的表 -- 在 Flink 中称为[动态表]({{< ref "docs/dev/table/streaming/dynamic_tables" >}})，时态表中的每条记录都关联了一个或多个时间段，所有的 Flink 表都是时态的（动态的）。
+时态表（Temporal Table）是一张随时间变化的表 -- 在 Flink 中称为[动态表]({{< ref "docs/dev/table/concepts/dynamic_tables" >}})，时态表中的每条记录都关联了一个或多个时间段，所有的 Flink 表都是时态的（动态的）。
 
 时态表包含表的一个或多个有版本的表快照，时态表可以是一张跟踪所有变更记录的表（例如数据库表的 changelog，包含多个表快照），也可以是物化所有变更之后的表（例如数据库表，只有最新表快照）。
 
@@ -250,7 +250,7 @@ currency_time currency   rate
 通过 `LookupableTableSource` 定义的表意味着该表具备了在运行时通过一个或多个 key 去查询外部存储系统的能力，当前支持在 基于处理时间的时态表 join 中使用的表包括
 [JDBC]({{< ref "docs/dev/table/connectors/jdbc" >}}), [HBase]({{< ref "docs/dev/table/connectors/hbase" >}}) 和 [Hive]({{< ref "docs/dev/table/connectors/hive/hive_read_write" >}}#temporal-table-join)。
 
-另请参阅 [LookupableTableSource]({{< ref "docs/dev/table/sourceSinks" >}}#lookup-table-source)页面了解更多信息。
+另请参阅 [LookupableTableSource]({{< ref "docs/dev/table/sourcesSinks" >}}#lookup-table-source)页面了解更多信息。
 
 在基于处理时间的时态表 Join 中支持任意表作为时态表会在不远的将来支持。
 
