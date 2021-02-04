@@ -95,31 +95,31 @@ underlying cluster:
   documentation on [specifying a user](http://mesos.apache.org/documentation/latest/fetcher/#specifying-a-user-name)
   for further details).
 
-The `run` action requires `--target` to be set to `remote`. Refer to the [CLI documentation]({{< ref "/deployment/cli" >}}) 
+The `run` action requires `--target` to be set to `remote`. Refer to the [CLI documentation]({{< ref "docs/deployment/cli" >}}) 
 for further details on that parameter.
 
-The Flink on Mesos cluster is now deployed in [Session Mode]({{< ref "/deployment/index" >}}#session-mode).
+The Flink on Mesos cluster is now deployed in [Session Mode]({{< ref "docs/deployment/overview" >}}#session-mode).
 Note that you can run multiple Flink jobs on a Session cluster. Each job needs to be submitted to the 
 cluster. TaskManagers are deployed on the Mesos workers as needed. Keep in mind that you can only run as 
 many jobs as the Mesos cluster allows in terms of resources provided by the Mesos workers. Play around 
 with Flink's parameters to find the right resource utilization for your needs.
 
-Check out [Flink's Mesos configuration]({{< ref "/deployment/config" >}}#mesos) to further influence 
+Check out [Flink's Mesos configuration]({{< ref "docs/deployment/config" >}}#mesos) to further influence 
 the resources Flink on Mesos is going to allocate.
 
 ## Deployment Modes
 
 For production use, we recommend deploying Flink Applications in the 
-[Per-Job Mode]({{< ref "/deployment/index" >}}#per-job-mode), as it provides a better isolation 
+[Per-Job Mode]({{< ref "docs/deployment/overview" >}}#per-job-mode), as it provides a better isolation 
 for each job.
 
 ### Application Mode
 
-Flink on Mesos does not support [Application Mode]({{< ref "/deployment/index" >}}#application-mode).
+Flink on Mesos does not support [Application Mode]({{< ref "docs/deployment/overview" >}}#application-mode).
 
 ### Per-Job Cluster Mode
 
-A job which is executed in [Per-Job Cluster Mode]({{< ref "/deployment/index" >}}#per-job-mode) spins 
+A job which is executed in [Per-Job Cluster Mode]({{< ref "docs/deployment/overview" >}}#per-job-mode) spins 
 up a dedicated Flink cluster that is only used for that specific job. No extra job submission is 
 needed. `bin/mesos-appmaster-job.sh` is used as the startup script. It will start a Flink cluster 
 for a dedicated job which is passed as a JobGraph file. This file can be created by applying the 
@@ -172,18 +172,18 @@ Flink on Mesos offers two ways to distribute the Flink and user binaries within 
 1. **Using Mesos' Artifact Server**: The Artifact Server provides the resources which are moved by 
    [Mesos' Fetcher](http://mesos.apache.org/documentation/latest/fetcher/) into the Mesos worker's 
    [sandbox folders](http://mesos.apache.org/documentation/latest/sandbox/). It can be explicitly 
-   specified by setting [mesos.resourcemanager.tasks.container.type]({{< ref "/deployment/config" >}}#mesos-resourcemanager-tasks-container-type) 
+   specified by setting [mesos.resourcemanager.tasks.container.type]({{< ref "docs/deployment/config" >}}#mesos-resourcemanager-tasks-container-type) 
    to `mesos`. This is the default option and is used in the example commands of this page.
 2. **Using Docker containerization**: This enables the user to provide user libraries and other 
    customizations as part of a Docker image. Docker utilization can be enabled by setting 
-   [mesos.resourcemanager.tasks.container.type]({{< ref "/deployment/config" >}}#mesos-resourcemanager-tasks-container-type) 
-   to `docker` and by providing the image name through [mesos.resourcemanager.tasks.container.image.name]({{< ref "/deployment/config" >}}#mesos-resourcemanager-tasks-container-image-name).
+   [mesos.resourcemanager.tasks.container.type]({{< ref "docs/deployment/config" >}}#mesos-resourcemanager-tasks-container-type) 
+   to `docker` and by providing the image name through [mesos.resourcemanager.tasks.container.image.name]({{< ref "docs/deployment/config" >}}#mesos-resourcemanager-tasks-container-image-name).
 
 ### High Availability on Mesos
 
 You will need to run a service like Marathon or Apache Aurora which takes care of restarting the 
 JobManager process in case of node or process failures. In addition, Zookeeper needs to be configured 
-as described in the [High Availability section of the Flink docs]({{< ref "/deployment/ha/index" >}}).
+as described in the [High Availability section of the Flink docs]({{< ref "docs/deployment/ha/overview" >}}).
 
 #### Marathon
 

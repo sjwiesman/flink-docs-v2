@@ -32,8 +32,8 @@ This *Getting Started* guide describes how to deploy a *Session cluster* on [Kub
 
 ### Introduction
 
-This page describes deploying a [standalone]({{< ref "/deployment/resource-providers/standalone/index" >}}) Flink cluster on top of Kubernetes, using Flink's standalone deployment.
-We generally recommend new users to deploy Flink on Kubernetes using [native Kubernetes deployments]({{< ref "/deployment/resource-providers/native_kubernetes" >}}).
+This page describes deploying a [standalone]({{< ref "docs/deployment/resource-providers/standalone/overview" >}}) Flink cluster on top of Kubernetes, using Flink's standalone deployment.
+We generally recommend new users to deploy Flink on Kubernetes using [native Kubernetes deployments]({{< ref "docs/deployment/resource-providers/native_kubernetes" >}}).
 
 ### Preparation
 
@@ -52,8 +52,8 @@ Each job needs to be submitted to the cluster after the cluster has been deploye
 
 A *Flink Session cluster* deployment in Kubernetes has at least three components:
 
-* a *Deployment* which runs a [JobManager]({{< ref "/concepts/glossary" >}}#flink-jobmanager)
-* a *Deployment* for a pool of [TaskManagers]({{< ref "/concepts/glossary" >}}#flink-taskmanager)
+* a *Deployment* which runs a [JobManager]({{< ref "docs/concepts/glossary" >}}#flink-jobmanager)
+* a *Deployment* for a pool of [TaskManagers]({{< ref "docs/concepts/glossary" >}}#flink-taskmanager)
 * a *Service* exposing the *JobManager's* REST and UI ports
 
 Using the file contents provided in the [the common resource definitions](#common-cluster-resource-definitions), create the following files, and create the respective components with the `kubectl` command:
@@ -106,13 +106,13 @@ A basic *Flink Application cluster* deployment in Kubernetes has three component
 Check [the Application cluster specific resource definitions](#application-cluster-resource-definitions) and adjust them accordingly:
 
 The `args` attribute in the `jobmanager-job.yaml` has to specify the main class of the user job.
-See also [how to specify the JobManager arguments]({{< ref "/deployment/resource-providers/standalone/docker" >}}#jobmanager-additional-command-line-arguments) to understand
+See also [how to specify the JobManager arguments]({{< ref "docs/deployment/resource-providers/standalone/docker" >}}#jobmanager-additional-command-line-arguments) to understand
 how to pass other `args` to the Flink image in the `jobmanager-job.yaml`.
 
 The *job artifacts* should be available from the `job-artifacts-volume` in [the resource definition examples](#application-cluster-resource-definitions).
 The definition examples mount the volume as a local directory of the host assuming that you create the components in a minikube cluster.
 If you do not use a minikube cluster, you can use any other type of volume, available in your Kubernetes cluster, to supply the *job artifacts*.
-Alternatively, you can build [a custom image]({{< ref "/deployment/resource-providers/standalone/docker" >}}#advanced-customization) which already contains the artifacts instead.
+Alternatively, you can build [a custom image]({{< ref "docs/deployment/resource-providers/standalone/docker" >}}#advanced-customization) which already contains the artifacts instead.
 
 After creating [the common cluster components](#common-cluster-resource-definitions), use [the Application cluster specific resource definitions](#application-cluster-resource-definitions) to launch the cluster with the `kubectl` command:
 
@@ -142,7 +142,7 @@ Deployment of a Session cluster is explained in the [Getting Started](#getting-s
 
 ### Configuration
 
-All configuration options are listed on the [configuration page]({{< ref "/deployment/config" >}}). Configuration options can be added to the `flink-conf.yaml` section of the `flink-configuration-configmap.yaml` config map.
+All configuration options are listed on the [configuration page]({{< ref "docs/deployment/config" >}}). Configuration options can be added to the `flink-conf.yaml` section of the `flink-configuration-configmap.yaml` config map.
 
 ### Accessing Flink in Kubernetes
 
@@ -190,11 +190,11 @@ You can now access the logs by running `kubectl logs flink-jobmanager-589967dcfc
 
 ### High-Availability with Standalone Kubernetes
 
-For high availability on Kubernetes, you can use the [existing high availability services]({{< ref "/deployment/ha/index" >}}).
+For high availability on Kubernetes, you can use the [existing high availability services]({{< ref "docs/deployment/ha/overview" >}}).
 
 Session Mode and Application Mode clusters support using the Kubernetes high availability service. Users just need to add the following Flink config options to [flink-configuration-configmap.yaml](#common-cluster-resource-definitions). All other yamls do not need to be updated.
 
-<span class="label label-info">Note</span> The filesystem which corresponds to the scheme of your configured HA storage directory must be available to the runtime. Refer to [custom Flink image]({{< ref "/deployment/resource-providers/standalone/docker" >}}#advanced-customization) and [enable plugins]({{< ref "/deployment/resource-providers/standalone/docker" >}}#using-filesystem-plugins) for more information.
+<span class="label label-info">Note</span> The filesystem which corresponds to the scheme of your configured HA storage directory must be available to the runtime. Refer to [custom Flink image]({{< ref "docs/deployment/resource-providers/standalone/docker" >}}#advanced-customization) and [enable plugins]({{< ref "docs/deployment/resource-providers/standalone/docker" >}}#using-filesystem-plugins) for more information.
 
 ```yaml
 apiVersion: v1
@@ -218,7 +218,7 @@ data:
 
 You can access the queryable state of TaskManager if you create a `NodePort` service for it:
   1. Run `kubectl create -f taskmanager-query-state-service.yaml` to create the `NodePort` service for the `taskmanager` pod. The example of `taskmanager-query-state-service.yaml` can be found in [appendix](#common-cluster-resource-definitions).
-  2. Run `kubectl get svc flink-taskmanager-query-state` to get the `&lt;node-port&gt;` of this service. Then you can create the [QueryableStateClient(&lt;public-node-ip&gt;, &lt;node-port&gt;]({{< ref "/dev/stream/state/queryable_state" >}}#querying-state) to submit the state queries.
+  2. Run `kubectl get svc flink-taskmanager-query-state` to get the `&lt;node-port&gt;` of this service. Then you can create the [QueryableStateClient(&lt;public-node-ip&gt;, &lt;node-port&gt;]({{< ref "docs/dev/datastream/fault-tolerance/queryable_state" >}}#querying-state) to submit the state queries.
 
 {{< top >}}
 

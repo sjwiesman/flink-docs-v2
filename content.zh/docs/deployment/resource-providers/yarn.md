@@ -82,7 +82,7 @@ Congratulations! You have successfully run a Flink application by deploying Flin
 
 ## Deployment Modes Supported by Flink on YARN
 
-For production use, we recommend deploying Flink Applications in the [Per-job or Application Mode]({{< ref "/deployment/index" >}}#deployment-modes), as these modes provide a better isolation for the Applications.
+For production use, we recommend deploying Flink Applications in the [Per-job or Application Mode]({{< ref "docs/deployment/overview" >}}#deployment-modes), as these modes provide a better isolation for the Applications.
 
 ### Application Mode
 
@@ -165,7 +165,7 @@ You can **re-attach to a YARN session** using the following command:
 ./bin/yarn-session.sh -id application_XXXX_YY
 ```
 
-Besides passing [configuration]({{< ref "/deployment/config" >}}) via the `conf/flink-conf.yaml` file, you can also pass any configuration at submission time to the `./bin/yarn-session.sh` client using `-Dkey=value` arguments.
+Besides passing [configuration]({{< ref "docs/deployment/config" >}}) via the `conf/flink-conf.yaml` file, you can also pass any configuration at submission time to the `./bin/yarn-session.sh` client using `-Dkey=value` arguments.
 
 The YARN session client also has a few "shortcut arguments" for commonly used settings. They can be listed with `./bin/yarn-session.sh -h`.
 
@@ -175,7 +175,7 @@ The YARN session client also has a few "shortcut arguments" for commonly used se
 
 ### Configuring Flink on YARN
 
-The YARN-specific configurations are listed on the [configuration page]({{< ref "/deployment/config" >}}#yarn).
+The YARN-specific configurations are listed on the [configuration page]({{< ref "docs/deployment/config" >}}#yarn).
 
 The following configuration parameters are managed by Flink on YARN, as they might get overwritten by the framework at runtime:
 - `jobmanager.rpc.address` (dynamically set to the address of the JobManager container by Flink on YARN)
@@ -188,17 +188,17 @@ If you need to pass additional Hadoop configuration files to Flink, you can do s
 
 A JobManager running on YARN will request additional TaskManagers, if it can not run all submitted jobs with the existing resources. In particular when running in Session Mode, the JobManager will, if needed, allocate additional TaskManagers as additional jobs are submitted. Unused TaskManagers are freed up again after a timeout.
 
-The memory configurations for JobManager and TaskManager processes will be respected by the YARN implementation. The number of reported VCores is by default equal to the number of configured slots per TaskManager. The [yarn.containers.vcores]({{< ref "/deployment/config" >}}#yarn-containers-vcores) allows overwriting the number of vcores with a custom value. In order for this parameter to work you should enable CPU scheduling in your YARN cluster.
+The memory configurations for JobManager and TaskManager processes will be respected by the YARN implementation. The number of reported VCores is by default equal to the number of configured slots per TaskManager. The [yarn.containers.vcores]({{< ref "docs/deployment/config" >}}#yarn-containers-vcores) allows overwriting the number of vcores with a custom value. In order for this parameter to work you should enable CPU scheduling in your YARN cluster.
 
-Failed containers (including the JobManager) are replaced by YARN. The maximum number of JobManager container restarts is configured via [yarn.application-attempts]({{< ref "/deployment/config" >}}#yarn-application-attempts) (default 1). The YARN Application will fail once all attempts are exhausted.
+Failed containers (including the JobManager) are replaced by YARN. The maximum number of JobManager container restarts is configured via [yarn.application-attempts]({{< ref "docs/deployment/config" >}}#yarn-application-attempts) (default 1). The YARN Application will fail once all attempts are exhausted.
 
 ### High-Availability on YARN
 
-High-Availability on YARN is achieved through a combination of YARN and a [high availability service]({{< ref "/deployment/ha/index" >}}).
+High-Availability on YARN is achieved through a combination of YARN and a [high availability service]({{< ref "docs/deployment/ha/overview" >}}).
 
 Once a HA service is configured, it will persist JobManager metadata and perform leader elections.
 
-YARN is taking care of restarting failed JobManagers. The maximum number of JobManager restarts is defined through two configuration parameters. First Flink's [yarn.application-attempts]({{< ref "/deployment/config" >}}#yarn-application-attempts) configuration will default 2. This value is limited by YARN's [yarn.resourcemanager.am.max-attempts](https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-common/yarn-default.xml), which also defaults to 2.
+YARN is taking care of restarting failed JobManagers. The maximum number of JobManager restarts is defined through two configuration parameters. First Flink's [yarn.application-attempts]({{< ref "docs/deployment/config" >}}#yarn-application-attempts) configuration will default 2. This value is limited by YARN's [yarn.resourcemanager.am.max-attempts](https://hadoop.apache.org/docs/stable/hadoop-yarn/hadoop-yarn-common/yarn-default.xml), which also defaults to 2.
 
 Note that Flink is managing the `high-availability.cluster-id` configuration parameter when deploying on YARN.
 Flink sets it per default to the YARN application id.
@@ -232,11 +232,11 @@ Some YARN clusters use firewalls for controlling the network traffic between the
 In those setups, Flink jobs can only be submitted to a YARN session from within the cluster's network (behind the firewall).
 If this is not feasible for production use, Flink allows to configure a port range for its REST endpoint, used for the client-cluster communication. With this range configured, users can also submit jobs to Flink crossing the firewall.
 
-The configuration parameter for specifying the REST endpoint port is [rest.bind-port]({{< ref "/deployment/config" >}}#rest-bind-port). This configuration option accepts single ports (for example: "50010"), ranges ("50000-50025"), or a combination of both.
+The configuration parameter for specifying the REST endpoint port is [rest.bind-port]({{< ref "docs/deployment/config" >}}#rest-bind-port). This configuration option accepts single ports (for example: "50010"), ranges ("50000-50025"), or a combination of both.
 
 ### User jars & Classpath
 
-By default Flink will include the user jars into the system classpath when running a single job. This behavior can be controlled with the [yarn.per-job-cluster.include-user-jar]({{< ref "/deployment/config" >}}#yarn-per-job-cluster-include-user-jar) parameter.
+By default Flink will include the user jars into the system classpath when running a single job. This behavior can be controlled with the [yarn.per-job-cluster.include-user-jar]({{< ref "docs/deployment/config" >}}#yarn-per-job-cluster-include-user-jar) parameter.
 
 When setting this to `DISABLED` Flink will include the jar in the user classpath instead.
 

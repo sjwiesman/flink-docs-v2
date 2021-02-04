@@ -36,7 +36,7 @@ This *Getting Started* section guides you through the local setup (on one machin
 There are official Docker images for Apache Flink available [on Docker Hub](https://hub.docker.com/_/flink).
 You can use the Docker images to deploy a *Session* or *Application cluster* on Docker. This page focuses on the setup of Flink on Docker, Docker Swarm and Docker Compose.
 
-Deployment into managed containerized environments, such as [standalone Kubernetes]({{< ref "/deployment/resource-providers/standalone/kubernetes" >}}) or [native Kubernetes]({{< ref "/deployment/resource-providers/native_kubernetes" >}}), are described on separate pages.
+Deployment into managed containerized environments, such as [standalone Kubernetes]({{< ref "docs/deployment/resource-providers/standalone/kubernetes" >}}) or [native Kubernetes]({{< ref "docs/deployment/resource-providers/native_kubernetes" >}}), are described on separate pages.
 
 
 ### Starting a Session Cluster on Docker
@@ -87,17 +87,17 @@ To shut down the cluster, either terminate (e.g. with `CTRL-C`) the JobManager a
 
 The Flink image contains a regular Flink distribution with its default configuration and a standard entry point script.
 You can run its entry point in the following modes:
-* [JobManager]({{< ref "/concepts/glossary" >}}#flink-jobmanager) for [a Session cluster](#starting-a-session-cluster-on-docker)
-* [JobManager]({{< ref "/concepts/glossary" >}}#flink-jobmanager) for [a Application cluster](#application-mode-on-docker)
-* [TaskManager]({{< ref "/concepts/glossary" >}}#flink-taskmanager) for any cluster
+* [JobManager]({{< ref "docs/concepts/glossary" >}}#flink-jobmanager) for [a Session cluster](#starting-a-session-cluster-on-docker)
+* [JobManager]({{< ref "docs/concepts/glossary" >}}#flink-jobmanager) for [a Application cluster](#application-mode-on-docker)
+* [TaskManager]({{< ref "docs/concepts/glossary" >}}#flink-taskmanager) for any cluster
 
 This allows you to deploy a standalone cluster (Session or Application Mode) in any containerised environment, for example:
 * manually in a local Docker setup,
-* [in a Kubernetes cluster]({{< ref "/deployment/resource-providers/standalone/kubernetes" >}}),
+* [in a Kubernetes cluster]({{< ref "docs/deployment/resource-providers/standalone/kubernetes" >}}),
 * [with Docker Compose](#flink-with-docker-compose),
 * [with Docker swarm](#flink-with-docker-swarm).
 
-<span class="label label-info">Note</span> [The native Kubernetes]({{< ref "/deployment/resource-providers/native_kubernetes" >}}) also runs the same image by default
+<span class="label label-info">Note</span> [The native Kubernetes]({{< ref "docs/deployment/resource-providers/native_kubernetes" >}}) also runs the same image by default
 and deploys TaskManagers on demand so that you do not have to do it manually.
 
 The next chapters describe how to start a single Flink Docker container for various purposes.
@@ -199,7 +199,7 @@ If the main function of the user job main class accepts arguments, you can also 
 
 ### Per-Job Mode on Docker
 
-[Per-Job Mode]({{< ref "/deployment/index" >}}#per-job-mode) is not supported by Flink on Docker.
+[Per-Job Mode]({{< ref "docs/deployment/overview" >}}#per-job-mode) is not supported by Flink on Docker.
 
 ### Session Mode on Docker
 
@@ -256,7 +256,7 @@ blob.server.port: 6124
 $ docker run --env FLINK_PROPERTIES=${FLINK_PROPERTIES} flink:{{< stable >}}{{< version >}}-scala{{< scala_version >}}{{< /stable >}}{{< unstable >}}latest{{< /unstable >}} <jobmanager|standalone-job|taskmanager>
 ```
 
-The [`jobmanager.rpc.address`]({{< ref "/deployment/config" >}}#jobmanager-rpc-address) option must be configured, others are optional to set.
+The [`jobmanager.rpc.address`]({{< ref "docs/deployment/config" >}}#jobmanager-rpc-address) option must be configured, others are optional to set.
 
 The environment variable `FLINK_PROPERTIES` should contain a list of Flink cluster configuration options separated by new line,
 the same way as in the `flink-conf.yaml`. `FLINK_PROPERTIES` takes precedence over configurations in `flink-conf.yaml`.
@@ -290,7 +290,7 @@ The `flink-conf.yaml` file must have write permission so that the Docker entry p
 
 ### Using filesystem plugins
 
-As described in the [plugins]({{< ref "/deployment/filesystems/plugins" >}}) documentation page: In order to use plugins they must be
+As described in the [plugins]({{< ref "docs/deployment/filesystems/plugins" >}}) documentation page: In order to use plugins they must be
 copied to the correct location in the Flink installation in the Docker container for them to work.
 
 If you want to enable plugins provided with Flink (in the `opt/` directory of the Flink distribution), you can pass the environment variable `ENABLE_BUILT_IN_PLUGINS` when you run the Flink image.
@@ -469,13 +469,13 @@ The next sections show examples of configuration files to run Flink.
 
 * To submit a job to a *Session cluster* via the command line, you can either
 
-  * use [Flink CLI]({{< ref "/deployment/cli" >}}) on the host if it is installed:
+  * use [Flink CLI]({{< ref "docs/deployment/cli" >}}) on the host if it is installed:
 
     ```sh
     $ ./bin/flink run --detached --class ${JOB_CLASS_NAME} /job.jar
     ```
 
-  * or copy the JAR to the JobManager container and submit the job using the [CLI]({{< ref "/deployment/cli" >}}) from there, for example:
+  * or copy the JAR to the JobManager container and submit the job using the [CLI]({{< ref "docs/deployment/cli" >}}) from there, for example:
 
     ```sh
     $ JOB_CLASS_NAME="com.job.ClassName"

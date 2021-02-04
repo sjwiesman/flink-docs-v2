@@ -51,7 +51,7 @@ If you have problems setting up a Kubernetes cluster, then take a look at [how t
 
 ### Starting a Flink Session on Kubernetes
 
-Once you have your Kubernetes cluster running and `kubectl` is configured to point to it, you can launch a Flink cluster in [Session Mode]({{< ref "/deployment/index" >}}#session-mode) via
+Once you have your Kubernetes cluster running and `kubectl` is configured to point to it, you can launch a Flink cluster in [Session Mode]({{< ref "docs/deployment/overview" >}}#session-mode) via
 
 ```bash
 # (1) Start Kubernetes session
@@ -78,14 +78,14 @@ Congratulations! You have successfully run a Flink application by deploying Flin
 
 ## Deployment Modes
 
-For production use, we recommend deploying Flink Applications in the [Application Mode]({{< ref "/deployment/index" >}}#application-mode), as these modes provide a better isolation for the Applications.
+For production use, we recommend deploying Flink Applications in the [Application Mode]({{< ref "docs/deployment/overview" >}}#application-mode), as these modes provide a better isolation for the Applications.
 
 ### Application Mode
 
-The [Application Mode]({{< ref "/deployment/index" >}}#application-mode) requires that the user code is bundled together with the Flink image because it runs the user code's `main()` method on the cluster.
+The [Application Mode]({{< ref "docs/deployment/overview" >}}#application-mode) requires that the user code is bundled together with the Flink image because it runs the user code's `main()` method on the cluster.
 The Application Mode makes sure that all Flink components are properly cleaned up after the termination of the application.
 
-The Flink community provides a [base Docker image]({{< ref "/deployment/resource-providers/standalone/docker" >}}#docker-hub-flink-images) which can be used to bundle the user code:
+The Flink community provides a [base Docker image]({{< ref "docs/deployment/resource-providers/standalone/docker" >}}#docker-hub-flink-images) which can be used to bundle the user code:
 
 ```dockerfile
 FROM flink
@@ -163,11 +163,11 @@ $ echo 'stop' | ./bin/kubernetes-session.sh \
 
 ### Configuring Flink on Kubernetes
 
-The Kubernetes-specific configuration options are listed on the [configuration page]({{< ref "/deployment/config" >}}#kubernetes).
+The Kubernetes-specific configuration options are listed on the [configuration page]({{< ref "docs/deployment/config" >}}#kubernetes).
 
 ### Accessing Flink's Web UI
 
-Flink's Web UI and REST endpoint can be exposed in several ways via the [kubernetes.rest-service.exposed.type]({{< ref "/deployment/config" >}}#kubernetes-rest-service-exposed-type) configuration option.
+Flink's Web UI and REST endpoint can be exposed in several ways via the [kubernetes.rest-service.exposed.type]({{< ref "docs/deployment/config" >}}#kubernetes-rest-service-exposed-type) configuration option.
 
 - **ClusterIP**: Exposes the service on a cluster-internal IP.
   The Service is only reachable within the cluster.
@@ -214,11 +214,11 @@ If the pod is running, you can also use `kubectl exec -it <pod-name> bash` to tu
 
 Flink will automatically de-allocate idling TaskManagers in order to not waste resources.
 This behaviour can make it harder to access the logs of the respective pods.
-You can increase the time before idling TaskManagers are released by configuring [resourcemanager.taskmanager-timeout]({{< ref "/deployment/config" >}}#resourcemanager-taskmanager-timeout) so that you have more time to inspect the log files.
+You can increase the time before idling TaskManagers are released by configuring [resourcemanager.taskmanager-timeout]({{< ref "docs/deployment/config" >}}#resourcemanager-taskmanager-timeout) so that you have more time to inspect the log files.
 
 #### Changing the Log Level Dynamically
 
-If you have configured your logger to [detect configuration changes automatically]({{< ref "/deployment/advanced/logging" >}}), then you can dynamically adapt the log level by changing the respective ConfigMap (assuming that the cluster id is `my-first-flink-cluster`):
+If you have configured your logger to [detect configuration changes automatically]({{< ref "docs/deployment/advanced/logging" >}}), then you can dynamically adapt the log level by changing the respective ConfigMap (assuming that the cluster id is `my-first-flink-cluster`):
 
 ```bash
 $ kubectl edit cm flink-config-my-first-flink-cluster
@@ -226,8 +226,8 @@ $ kubectl edit cm flink-config-my-first-flink-cluster
 
 ### Using Plugins
 
-In order to use [plugins]({{< ref "/deployment/filesystems/plugins" >}}), you must copy them to the correct location in the Flink JobManager/TaskManager pod.
-You can use the [built-in plugins]({{< ref "/deployment/resource-providers/standalone/docker" >}}#using-plugins) without mounting a volume or building a custom Docker image.
+In order to use [plugins]({{< ref "docs/deployment/filesystems/plugins" >}}), you must copy them to the correct location in the Flink JobManager/TaskManager pod.
+You can use the [built-in plugins]({{< ref "docs/deployment/resource-providers/standalone/docker" >}}#using-plugins) without mounting a volume or building a custom Docker image.
 For example, use the following command to enable the S3 plugin for your Flink session cluster.
 
 ```bash
@@ -239,8 +239,8 @@ $ ./bin/kubernetes-session.sh
 ### Custom Docker Image
 
 If you want to use a custom Docker image, then you can specify it via the configuration option `kubernetes.container.image`.
-The Flink community provides a rich [Flink Docker image]({{< ref "/deployment/resource-providers/standalone/docker" >}}) which can be a good starting point.
-See [how to customize Flink's Docker image]({{< ref "/deployment/resource-providers/standalone/docker" >}}#customize-flink-image) for how to enable plugins, add dependencies and other options.
+The Flink community provides a rich [Flink Docker image]({{< ref "docs/deployment/resource-providers/standalone/docker" >}}) which can be a good starting point.
+See [how to customize Flink's Docker image]({{< ref "docs/deployment/resource-providers/standalone/docker" >}}#customize-flink-image) for how to enable plugins, add dependencies and other options.
 
 ### Using Secrets
 
@@ -278,7 +278,7 @@ For more details see the [official Kubernetes documentation](https://kubernetes.
 
 ### High-Availability on Kubernetes
 
-For high availability on Kubernetes, you can use the [existing high availability services]({{< ref "/deployment/ha/index" >}}).
+For high availability on Kubernetes, you can use the [existing high availability services]({{< ref "docs/deployment/ha/overview" >}}).
 
 ### Manual Resource Cleanup
 
@@ -298,7 +298,7 @@ Currently, all Kubernetes versions `>= 1.9` are supported.
 
 [Namespaces in Kubernetes](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) divide cluster resources between multiple users via [resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/).
 Flink on Kubernetes can use namespaces to launch Flink clusters.
-The namespace can be configured via [kubernetes.namespace]({{< ref "/deployment/config" >}}#kubernetes-namespace).
+The namespace can be configured via [kubernetes.namespace]({{< ref "docs/deployment/config" >}}#kubernetes-namespace).
 
 ### RBAC
 

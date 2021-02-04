@@ -32,9 +32,9 @@ This *Getting Started* section guides you through the local setup (on one machin
 
 ### Introduction
 
-The standalone mode is the most barebone way of deploying Flink: The Flink services described in the [deployment overview]({{< ref "/deployment/index" >}}) are just launched as processes on the operating system. Unlike deploying Flink with a resource provider such as [Kubernetes]({{< ref "/deployment/resource-providers/native_kubernetes" >}}) or [YARN]({{< ref "/deployment/resource-providers/yarn" >}}), you have to take care of restarting failed processes, or allocation and de-allocation of resources during operation.
+The standalone mode is the most barebone way of deploying Flink: The Flink services described in the [deployment overview]({{< ref "docs/deployment/overview" >}}) are just launched as processes on the operating system. Unlike deploying Flink with a resource provider such as [Kubernetes]({{< ref "docs/deployment/resource-providers/native_kubernetes" >}}) or [YARN]({{< ref "docs/deployment/resource-providers/yarn" >}}), you have to take care of restarting failed processes, or allocation and de-allocation of resources during operation.
 
-In the additional subpages of the standalone mode resource provider, we describe additional deployment methods which are based on the standalone mode: [Deployment in Docker containers]({{< ref "/deployment/resource-providers/standalone/docker" >}}), and on [Kubernetes]({{< ref "/deployment/resource-providers/standalone/kubernetes" >}}).
+In the additional subpages of the standalone mode resource provider, we describe additional deployment methods which are based on the standalone mode: [Deployment in Docker containers]({{< ref "docs/deployment/resource-providers/standalone/docker" >}}), and on [Kubernetes]({{< ref "docs/deployment/resource-providers/standalone/kubernetes" >}}).
 
 ### Preparation
 
@@ -112,7 +112,7 @@ Local deployment in Session Mode has already been described in the [introduction
 
 ### Configuration
 
-All available configuration options are listed on the [configuration page]({{< ref "/deployment/config" >}}), in particular the [Basic Setup]({{< ref "/deployment/config" >}}#basic-setup) section contains good advise on configuring the ports, memory, parallelism etc.
+All available configuration options are listed on the [configuration page]({{< ref "docs/deployment/config" >}}), in particular the [Basic Setup]({{< ref "docs/deployment/config" >}}#basic-setup) section contains good advise on configuring the ports, memory, parallelism etc.
 
 ### Debugging
 
@@ -125,7 +125,7 @@ Alternatively, logs are available from the Flink web frontend (both for the JobM
 By default, Flink is logging on the "INFO" log level, which provides basic information for all obvious issues. For cases where Flink seems to behave wrongly, reducing the log level to "DEBUG" is advised. The logging level is controlled via the `conf/log4.properties` file.
 Setting `rootLogger.level = DEBUG` will boostrap Flink on the DEBUG log level.
 
-There's a dedicated page on the [logging]({{< ref "/deployment/advanced/logging" >}}) in Flink.
+There's a dedicated page on the [logging]({{< ref "docs/deployment/advanced/logging" >}}) in Flink.
 
 ### Component Management Scripts
 
@@ -164,7 +164,7 @@ worker2
 worker3
 ```
 
-Note that the configuration key [jobmanager.rpc.address]({{< ref "/deployment/config" >}}#jobmanager-rpc-address) needs to be set to `master1` for this to work.
+Note that the configuration key [jobmanager.rpc.address]({{< ref "docs/deployment/config" >}}#jobmanager-rpc-address) needs to be set to `master1` for this to work.
 
 We show a third example with a standby JobManager in the [high-availability section](#setting-up-high-availability).
 
@@ -205,7 +205,7 @@ This error occurs because git is automatically transforming UNIX line endings to
 
 ### Setting up High-Availability
 
-In order to enable HA for a standalone cluster, you have to use the [ZooKeeper HA services]({{< ref "/deployment/ha/zookeeper_ha" >}}).
+In order to enable HA for a standalone cluster, you have to use the [ZooKeeper HA services]({{< ref "docs/deployment/ha/zookeeper_ha" >}}).
 
 Additionally, you have to configure your cluster to start multiple JobManagers.
 
@@ -219,7 +219,7 @@ master1:webUIPort1
 masterX:webUIPortX
 ```
 
-By default, the JobManager will pick a *random port* for inter process communication. You can change this via the [high-availability.jobmanager.port]({{< ref "/deployment/config" >}}#high-availability-jobmanager-port) key. This key accepts single ports (e.g. `50010`), ranges (`50000-50025`), or a combination of both (`50010,50011,50020-50025,50050-50075`).
+By default, the JobManager will pick a *random port* for inter process communication. You can change this via the [high-availability.jobmanager.port]({{< ref "docs/deployment/config" >}}#high-availability-jobmanager-port) key. This key accepts single ports (e.g. `50010`), ranges (`50000-50025`), or a combination of both (`50010,50011,50020-50025,50050-50075`).
 
 #### Example: Standalone HA Cluster with 2 JobManagers
 

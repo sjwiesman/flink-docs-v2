@@ -28,10 +28,10 @@ under the License.
 
 Flink附带了一个集成的交互式Python Shell。
 它既能够运行在本地启动的local模式，也能够运行在集群启动的cluster模式下。
-本地安装Flink，请看[本地安装]({{< ref "/deployment/resource-providers/standalone/index.zh" >}})页面。
-您也可以从源码安装Flink，请看[从源码构建 Flink]({{< ref "/flinkDev/building.zh" >}})页面。
+本地安装Flink，请看[本地安装]({{< ref "docs/deployment/resource-providers/standalone/overview" >}})页面。
+您也可以从源码安装Flink，请看[从源码构建 Flink]({{< ref "docs/flinkDev/building" >}})页面。
 
-<span class="label label-info">注意</span> Python Shell会调用“python”命令。关于Python执行环境的要求，请参考Python Table API[环境安装]({{< ref "/dev/python/installation.zh" >}})。
+<span class="label label-info">注意</span> Python Shell会调用“python”命令。关于Python执行环境的要求，请参考Python Table API[环境安装]({{< ref "docs/dev/python/installation" >}})。
 
 你可以通过PyPi安装PyFlink，然后使用Python Shell:
 
