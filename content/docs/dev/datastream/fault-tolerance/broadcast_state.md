@@ -27,7 +27,7 @@ under the License.
 # The Broadcast State Pattern
 
 In this section you will learn about how to use broadcast state in practise. Please refer to [Stateful Stream
-Processing]({{< ref "/concepts/stateful-stream-processing" >}})
+Processing]({{< ref "docs/concepts/stateful-stream-processing" >}})
 to learn about the concepts behind stateful stream processing. 
 
 ## Provided APIs

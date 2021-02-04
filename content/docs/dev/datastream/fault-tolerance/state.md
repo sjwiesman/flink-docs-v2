@@ -28,7 +28,7 @@ under the License.
 
 In this section you will learn about the APIs that Flink provides for writing
 stateful programs. Please take a look at [Stateful Stream
-Processing]({{< ref "/concepts/stateful-stream-processing" >}})
+Processing]({{< ref "docs/concepts/stateful-stream-processing" >}})
 to learn about the concepts behind stateful stream processing.
 
 ## Keyed DataStream
@@ -138,7 +138,7 @@ want to retrieve, you create either a `ValueStateDescriptor`, a `ListStateDescri
 a `ReducingStateDescriptor`, or a `MapStateDescriptor`.
 
 State is accessed using the `RuntimeContext`, so it is only possible in *rich functions*.
-Please see [here]({{< ref "/dev/user_defined_functions" >}}#rich-functions) for
+Please see [here]({{< ref "docs/dev/datastream/user_defined_functions" >}}#rich-functions) for
 information about that, but we will also see an example shortly. The `RuntimeContext` that
 is available in a `RichFunction` has these methods for accessing state:
 
@@ -546,7 +546,7 @@ val counts: DataStream[(String, Int)] = stream
 ## Operator State
 
 *Operator State* (or *non-keyed state*) is state that is is bound to one
-parallel operator instance. The [Kafka Connector]({{< ref "/dev/connectors/kafka" >}}) is a good motivating example for the use of
+parallel operator instance. The [Kafka Connector]({{< ref "docs/connectors/datastream/kafka" >}}) is a good motivating example for the use of
 Operator State in Flink. Each parallel instance of the Kafka consumer maintains
 a map of topic partitions and offsets as its Operator State.
 

@@ -26,13 +26,13 @@ under the License.
 
 # State Backends
 
-用 [Data Stream API]({{< ref "/dev/datastream_api" >}}) 编写的程序通常以各种形式保存状态：
+用 [Data Stream API]({{< ref "docs/dev/datastream/overview" >}}) 编写的程序通常以各种形式保存状态：
 
 - 在 Window 触发之前要么收集元素、要么聚合
 - 转换函数可以使用 key/value 格式的状态接口来存储状态
 - 转换函数可以实现 `CheckpointedFunction` 接口，使其本地变量具有容错能力
 
-另请参阅 Streaming API 指南中的 [状态部分]({{< ref "/dev/stream/state/index" >}}) 。
+另请参阅 Streaming API 指南中的 [状态部分]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}) 。
 
 在启动 CheckPoint 机制时，状态会随着 CheckPoint 而持久化，以防止数据丢失、保障恢复时的一致性。
 状态内部的存储格式、状态在 CheckPoint 时如何持久化以及持久化在哪里均取决于选择的 **State Backend**。
@@ -67,7 +67,7 @@ new MemoryStateBackend(MAX_MEM_STATE_SIZE, false);
 MemoryStateBackend 的限制：
 
   - 默认情况下，每个独立的状态大小限制是 5 MB。在 MemoryStateBackend 的构造器中可以增加其大小。
-  - 无论配置的最大状态内存大小（MAX_MEM_STATE_SIZE）有多大，都不能大于 akka frame 大小（看[配置参数]({{< ref "/deployment/config" >}})）。
+  - 无论配置的最大状态内存大小（MAX_MEM_STATE_SIZE）有多大，都不能大于 akka frame 大小（看[配置参数]({{< ref "docs/deployment/config" >}})）。
   - 聚合后的状态必须能够放进 JobManager 的内存中。
 
 MemoryStateBackend 适用场景：
@@ -75,7 +75,7 @@ MemoryStateBackend 适用场景：
   - 本地开发和调试。
   - 状态很小的 Job，例如：由每次只处理一条记录的函数（Map、FlatMap、Filter 等）构成的 Job。Kafka Consumer 仅仅需要非常小的状态。
 
-建议同时将 [managed memory]({{< ref "/deployment/memory/mem_setup_tm" >}}#managed-memory) 设为0，以保证将最大限度的内存分配给 JVM 上的用户代码。
+建议同时将 [managed memory]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory) 设为0，以保证将最大限度的内存分配给 JVM 上的用户代码。
 
 ### FsStateBackend
 
@@ -96,7 +96,7 @@ FsStateBackend 适用场景:
   - 状态比较大、窗口比较长、key/value 状态比较大的 Job。
   - 所有高可用的场景。
 
-建议同时将 [managed memory]({{< ref "/deployment/memory/mem_setup_tm" >}}#managed-memory) 设为0，以保证将最大限度的内存分配给 JVM 上的用户代码。
+建议同时将 [managed memory]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory) 设为0，以保证将最大限度的内存分配给 JVM 上的用户代码。
 
 <a name="the-rocksdbstatebackend" />
 
@@ -124,13 +124,13 @@ RocksDBStateBackend 的适用场景：
 然而，这也意味着使用 RocksDBStateBackend 将会使应用程序的最大吞吐量降低。
 所有的读写都必须序列化、反序列化操作，这个比基于堆内存的 state backend 的效率要低很多。
 
-请同时参考 [Task Executor 内存配置]({{< ref "/deployment/memory/mem_tuning" >}}#rocksdb-state-backend) 中关于 RocksDBStateBackend 的建议。
+请同时参考 [Task Executor 内存配置]({{< ref "docs/deployment/memory/mem_tuning" >}}#rocksdb-state-backend) 中关于 RocksDBStateBackend 的建议。
 
-RocksDBStateBackend 是目前唯一支持增量 CheckPoint 的 State Backend (见 [这里]({{< ref "/ops/state/large_state_tuning" >}}))。
+RocksDBStateBackend 是目前唯一支持增量 CheckPoint 的 State Backend (见 [这里]({{< ref "docs/ops/state/large_state_tuning" >}}))。
 
-可以使用一些 RocksDB 的本地指标(metrics)，但默认是关闭的。你能在 [这里]({{< ref "/deployment/config" >}}#rocksdb-native-metrics) 找到关于 RocksDB 本地指标的文档。
+可以使用一些 RocksDB 的本地指标(metrics)，但默认是关闭的。你能在 [这里]({{< ref "docs/deployment/config" >}}#rocksdb-native-metrics) 找到关于 RocksDB 本地指标的文档。
 
-The total memory amount of RocksDB instance(s) per slot can also be bounded, please refer to documentation [here]({{< ref "/ops/state/large_state_tuning" >}}#bounding-rocksdb-memory-usage) for details.
+The total memory amount of RocksDB instance(s) per slot can also be bounded, please refer to documentation [here]({{< ref "docs/ops/state/large_state_tuning" >}}#bounding-rocksdb-memory-usage) for details.
 
 # Choose The Right State Backend
 
@@ -179,7 +179,7 @@ env.setStateBackend(new FsStateBackend("hdfs://namenode:40010/flink/checkpoints"
 ```
 
 <div class="alert alert-info" markdown="span">
-  <strong>注意:</strong> 由于 RocksDB 是 Flink 默认分发包的一部分，所以如果你没在代码中使用 RocksDB，则不需要添加此依赖。而且可以在 `flink-conf.yaml` 文件中通过 `state.backend` 配置 State Backend，以及更多的 [checkpointing]({{< ref "/deployment/config" >}}#checkpointing) 和 [RocksDB 特定的]({{< ref "/docs/deployment/config" >}}#rocksdb-state-backend) 参数。
+  <strong>注意:</strong> 由于 RocksDB 是 Flink 默认分发包的一部分，所以如果你没在代码中使用 RocksDB，则不需要添加此依赖。而且可以在 `flink-conf.yaml` 文件中通过 `state.backend` 配置 State Backend，以及更多的 [checkpointing]({{< ref "docs/deployment/config" >}}#checkpointing) 和 [RocksDB 特定的]({{< ref "docs/deployment/config" >}}#rocksdb-state-backend) 参数。
 </div>
 
 
@@ -192,7 +192,7 @@ env.setStateBackend(new FsStateBackend("hdfs://namenode:40010/flink/checkpoints"
 例如： RocksDBStateBackend 对应为 `org.apache.flink.contrib.streaming.state.RocksDBStateBackendFactory`。
 
 `state.checkpoints.dir` 选项指定了所有 State Backend 写 CheckPoint 数据和写元数据文件的目录。
-你能在 [这里]({{< ref "/ops/state/checkpoints" >}}#directory-structure) 找到关于 CheckPoint 目录结构的详细信息。
+你能在 [这里]({{< ref "docs/ops/state/checkpoints" >}}#directory-structure) 找到关于 CheckPoint 目录结构的详细信息。
 
 配置文件的部分示例如下所示：
 
@@ -231,7 +231,7 @@ Flink 致力于控制整个进程的内存消耗，以确保 Flink 任务管理�
 
 为了达到上述目标，Flink 默认将 RocksDB 的可用内存配置为任务管理器的单槽（per-slot）托管内存量。这将为大多数应用程序提供良好的开箱即用体验，即大多数应用程序不需要调整 RocksDB 配置，简单的增加 Flink 的托管内存即可改善内存相关性能问题。
 
-当然，您也可以选择不使用 Flink 自带的内存管理，而是手动为 RocksDB 的每个列族（ColumnFamily）分配内存（每个算子的每个 state 都对应一个列族）。这为专业用户提供了对 RocksDB 进行更细粒度控制的途径，但同时也意味着用户需要自行保证总内存消耗不会超过（尤其是容器）环境的限制。请参阅 [large state tuning]({{< ref "/ops/state/large_state_tuning" >}}#tuning-rocksdb-memory) 了解有关大状态数据性能调优的一些指导原则。
+当然，您也可以选择不使用 Flink 自带的内存管理，而是手动为 RocksDB 的每个列族（ColumnFamily）分配内存（每个算子的每个 state 都对应一个列族）。这为专业用户提供了对 RocksDB 进行更细粒度控制的途径，但同时也意味着用户需要自行保证总内存消耗不会超过（尤其是容器）环境的限制。请参阅 [large state tuning]({{< ref "docs/ops/state/large_state_tuning" >}}#tuning-rocksdb-memory) 了解有关大状态数据性能调优的一些指导原则。
 
 **RocksDB 使用托管内存**
 
@@ -267,7 +267,7 @@ Flink还提供了两个参数来控制*写路径*（MemTable）和*读路径*（
 ### 开启 RocksDB 原生监控指标
 
 您可以选择使用 Flink 的监控指标系统来汇报 RocksDB 的原生指标，并且可以选择性的指定特定指标进行汇报。
-请参阅 [configuration docs]({{< ref "/deployment/config" >}}#rocksdb-native-metrics) 了解更多详情。
+请参阅 [configuration docs]({{< ref "docs/deployment/config" >}}#rocksdb-native-metrics) 了解更多详情。
 
 <div class="alert alert-warning">
   <strong>注意：</strong> 启用 RocksDB 的原生指标可能会对应用程序的性能产生负面影响。
@@ -307,7 +307,7 @@ Flink还提供了两个参数来控制*写路径*（MemTable）和*读路径*（
 
 一个实现了 `ConfigurableRocksDBOptionsFactory` 接口的 `RocksDBOptionsFactory` 可以直接从配置文件（`flink-conf.yaml`）中读取设定。
 
-`state.backend.rocksdb.options-factory` 的默认配置是 `org.apache.flink.contrib.streaming.state.DefaultConfigurableOptionsFactory`，它默认会将 [这里定义]({{< ref "/deployment/config" >}}#advanced-rocksdb-state-backends-options) 的所有配置项全部加载。
+`state.backend.rocksdb.options-factory` 的默认配置是 `org.apache.flink.contrib.streaming.state.DefaultConfigurableOptionsFactory`，它默认会将 [这里定义]({{< ref "docs/deployment/config" >}}#advanced-rocksdb-state-backends-options) 的所有配置项全部加载。
 因此您可以简单的通过关闭 RocksDB 使用托管内存的功能并将需要的设置选项加入配置文件来配置底层的列族选项。
 
 下面是自定义 `ConfigurableRocksDBOptionsFactory` 的一个示例 (开发完成后，请将您的实现类全名设置到 `state.backend.rocksdb.options-factory`).

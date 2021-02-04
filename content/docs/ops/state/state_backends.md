@@ -26,13 +26,13 @@ under the License.
 
 # State Backends
 
-Programs written in the [Data Stream API]({{< ref "/dev/datastream_api" >}}) often hold state in various forms:
+Programs written in the [Data Stream API]({{< ref "docs/dev/datastream/overview" >}}) often hold state in various forms:
 
 - Windows gather elements or aggregates until they are triggered
 - Transformation functions may use the key/value state interface to store values
 - Transformation functions may implement the `CheckpointedFunction` interface to make their local variables fault tolerant
 
-See also [state section]({{< ref "/dev/stream/state/index" >}}) in the streaming API guide.
+See also [state section]({{< ref "docs/dev/datastream/fault-tolerance/overview" >}}) in the streaming API guide.
 
 When checkpointing is activated, such state is persisted upon checkpoints to guard against data loss and recover consistently.
 How the state is represented internally, and how and where it is persisted upon checkpoints depends on the
@@ -67,7 +67,7 @@ new MemoryStateBackend(MAX_MEM_STATE_SIZE, false);
 Limitations of the MemoryStateBackend:
 
   - The size of each individual state is by default limited to 5 MB. This value can be increased in the constructor of the MemoryStateBackend.
-  - Irrespective of the configured maximal state size, the state cannot be larger than the akka frame size (see [Configuration]({{< ref "/deployment/config" >}})).
+  - Irrespective of the configured maximal state size, the state cannot be larger than the akka frame size (see [Configuration]({{< ref "docs/deployment/config" >}})).
   - The aggregate state must fit into the JobManager memory.
 
 The MemoryStateBackend is encouraged for:
@@ -75,7 +75,7 @@ The MemoryStateBackend is encouraged for:
   - Local development and debugging
   - Jobs that do hold little state, such as jobs that consist only of record-at-a-time functions (Map, FlatMap, Filter, ...). The Kafka Consumer requires very little state.
 
-It is also recommended to set [managed memory]({{< ref "/deployment/memory/mem_setup_tm" >}}#managed-memory) to zero.
+It is also recommended to set [managed memory]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory) to zero.
 This will ensure that the maximum amount of memory is allocated for user code on the JVM.
 
 ### The FsStateBackend
@@ -95,7 +95,7 @@ The FsStateBackend is encouraged for:
   - Jobs with large state, long windows, large key/value states.
   - All high-availability setups.
 
-It is also recommended to set [managed memory]({{< ref "/deployment/memory/mem_setup_tm" >}}#managed-memory) to zero.
+It is also recommended to set [managed memory]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory) to zero.
 This will ensure that the maximum amount of memory is allocated for user code on the JVM.
 
 ### The RocksDBStateBackend
@@ -125,13 +125,13 @@ This also means, however, that the maximum throughput that can be achieved will 
 this state backend. All reads/writes from/to this backend have to go through de-/serialization to retrieve/store the state objects, which is also more expensive than always working with the
 on-heap representation as the heap-based backends are doing.
 
-Check also recommendations about the [task executor memory configuration]({{< ref "/deployment/memory/mem_tuning" >}}#rocksdb-state-backend) for the RocksDBStateBackend.
+Check also recommendations about the [task executor memory configuration]({{< ref "docs/deployment/memory/mem_tuning" >}}#rocksdb-state-backend) for the RocksDBStateBackend.
 
-RocksDBStateBackend is currently the only backend that offers incremental checkpoints (see [here]({{< ref "/ops/state/large_state_tuning" >}})). 
+RocksDBStateBackend is currently the only backend that offers incremental checkpoints (see [here]({{< ref "docs/ops/state/large_state_tuning" >}})). 
 
-Certain RocksDB native metrics are available but disabled by default, you can find full documentation [here]({{< ref "/deployment/config" >}}#rocksdb-native-metrics)
+Certain RocksDB native metrics are available but disabled by default, you can find full documentation [here]({{< ref "docs/deployment/config" >}}#rocksdb-native-metrics)
 
-The total memory amount of RocksDB instance(s) per slot can also be bounded, please refer to documentation [here]({{< ref "/ops/state/large_state_tuning" >}}#bounding-rocksdb-memory-usage) for details.
+The total memory amount of RocksDB instance(s) per slot can also be bounded, please refer to documentation [here]({{< ref "docs/ops/state/large_state_tuning" >}}#bounding-rocksdb-memory-usage) for details.
 
 # Choose The Right State Backend
 
@@ -179,7 +179,7 @@ If you want to use the `RocksDBStateBackend` in your IDE or configure it program
 ```
 
 <div class="alert alert-info" markdown="span">
-  <strong>Note:</strong> Since RocksDB is part of the default Flink distribution, you do not need this dependency if you are not using any RocksDB code in your job and configure the state backend via `state.backend` and further [checkpointing]({{< ref "/deployment/config" >}}#checkpointing) and [RocksDB-specific]({{< ref "/deployment/config" >}}#rocksdb-state-backend) parameters in your `flink-conf.yaml`.
+  <strong>Note:</strong> Since RocksDB is part of the default Flink distribution, you do not need this dependency if you are not using any RocksDB code in your job and configure the state backend via `state.backend` and further [checkpointing]({{< ref "docs/deployment/config" >}}#checkpointing) and [RocksDB-specific]({{< ref "docs/deployment/config" >}}#rocksdb-state-backend) parameters in your `flink-conf.yaml`.
 </div>
 
 
@@ -192,7 +192,7 @@ name of the class that implements the state backend factory [StateBackendFactory
 such as `org.apache.flink.contrib.streaming.state.RocksDBStateBackendFactory` for RocksDBStateBackend.
 
 The `state.checkpoints.dir` option defines the directory to which all backends write checkpoint data and meta data files.
-You can find more details about the checkpoint directory structure [here]({{< ref "/ops/state/checkpoints" >}}#directory-structure).
+You can find more details about the checkpoint directory structure [here]({{< ref "docs/ops/state/checkpoints" >}}#directory-structure).
 
 A sample section in the configuration file could look as follows:
 
@@ -231,7 +231,7 @@ Flink aims to control the total process memory consumption to make sure that the
 
 To achieve that, Flink by default configures RocksDB's memory allocation to the amount of managed memory of the TaskManager (or, more precisely, task slot). This should give good out-of-the-box experience for most applications, meaning most applications should not need to tune any of the detailed RocksDB settings. The primary mechanism for improving memory-related performance issues would be to simply increase Flink's managed memory.
 
-Users can choose to deactivate that feature and let RocksDB allocate memory independently per ColumnFamily (one per state per operator). This offers expert users ultimately more fine grained control over RocksDB, but means that users need to take care themselves that the overall memory consumption does not exceed the limits of the environment. See [large state tuning]({{< ref "/ops/state/large_state_tuning" >}}#tuning-rocksdb-memory) for some guideline about large state performance tuning.
+Users can choose to deactivate that feature and let RocksDB allocate memory independently per ColumnFamily (one per state per operator). This offers expert users ultimately more fine grained control over RocksDB, but means that users need to take care themselves that the overall memory consumption does not exceed the limits of the environment. See [large state tuning]({{< ref "docs/ops/state/large_state_tuning" >}}#tuning-rocksdb-memory) for some guideline about large state performance tuning.
 
 **Managed Memory for RocksDB**
 
@@ -271,7 +271,7 @@ Set the configuration option `state.backend.rocksdb.timer-service.factory` to `h
 ### Enabling RocksDB Native Metrics
 
 You can optionally access RockDB's native metrics through Flink's metrics system, by enabling certain metrics selectively.
-See [configuration docs]({{< ref "/deployment/config" >}}#rocksdb-native-metrics) for details.
+See [configuration docs]({{< ref "docs/deployment/config" >}}#rocksdb-native-metrics) for details.
 
 {{< hint warning >}}
 Enabling RocksDB's native metrics may have a negative performance impact on your application.
@@ -317,7 +317,7 @@ allocating more memory than configured.
 
 When a `RocksDBOptionsFactory` implements the `ConfigurableRocksDBOptionsFactory` interface, it can directly read settings from the configuration (`flink-conf.yaml`).
 
-The default value for `state.backend.rocksdb.options-factory` is in fact `org.apache.flink.contrib.streaming.state.DefaultConfigurableOptionsFactory` which picks up all config options [defined here]({{< ref "/deployment/config" >}}#advanced-rocksdb-state-backends-options) by default. Hence, you can configure low-level Column Family options simply by turning off managed memory for RocksDB and putting the relevant entries in the configuration.
+The default value for `state.backend.rocksdb.options-factory` is in fact `org.apache.flink.contrib.streaming.state.DefaultConfigurableOptionsFactory` which picks up all config options [defined here]({{< ref "docs/deployment/config" >}}#advanced-rocksdb-state-backends-options) by default. Hence, you can configure low-level Column Family options simply by turning off managed memory for RocksDB and putting the relevant entries in the configuration.
 
 Below is an example how to define a custom ConfigurableOptionsFactory (set class name under `state.backend.rocksdb.options-factory`).
 

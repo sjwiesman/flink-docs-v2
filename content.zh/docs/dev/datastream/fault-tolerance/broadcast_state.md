@@ -27,7 +27,7 @@ under the License.
 # Broadcast State 模式
 
 你将在本节中了解到如何实际使用 broadcast state。想了解更多有状态流处理的概念，请参考
-[Stateful Stream Processing]({{< ref "/concepts/stateful-stream-processing.zh" >}})。
+[Stateful Stream Processing]({{< ref "docs/concepts/stateful-stream-processing" >}})。
 
 ## 提供的 API
 

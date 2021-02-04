@@ -43,11 +43,11 @@ The last section explains some best practices concerning planning how many resou
 ## Monitoring State and Checkpoints
 
 The easiest way to monitor checkpoint behavior is via the UI's checkpoint section. The documentation
-for [checkpoint monitoring]({{< ref "/ops/monitoring/checkpoint_monitoring" >}}) shows how to access the available checkpoint
+for [checkpoint monitoring]({{< ref "docs/ops/monitoring/checkpoint_monitoring" >}}) shows how to access the available checkpoint
 metrics.
 
-The two numbers (both exposed via Task level [metrics]({{< ref "/ops/metrics" >}}#checkpointing)
-and in the [web interface]({{< ref "/ops/monitoring/checkpoint_monitoring" >}})) that are of particular interest when scaling
+The two numbers (both exposed via Task level [metrics]({{< ref "docs/ops/metrics" >}}#checkpointing)
+and in the [web interface]({{< ref "docs/ops/monitoring/checkpoint_monitoring" >}})) that are of particular interest when scaling
 up checkpoints are:
 
   - The time until operators receive their first checkpoint barrier
@@ -66,7 +66,7 @@ slowly, due to some back-pressure (not enough resources to process the incoming 
 via increased end-to-end latency of processed records. Note that those numbers can be occasionally high in the presence of
 a transient backpressure, data skew, or network issues.
 
-[Unaligned checkpoints]({{< ref "/ops/state/checkpoints" >}}#unaligned-checkpoints) can be used to speed up the propagation time
+[Unaligned checkpoints]({{< ref "docs/ops/state/checkpoints" >}}#unaligned-checkpoints) can be used to speed up the propagation time
 of the checkpoint barriers. However please note, that this does not solve the underlying problem that's causing the backpressure
 in the first place (and end-to-end records latency will remain high).
 
@@ -100,7 +100,7 @@ When a savepoint is manually triggered, it may be in process concurrently with a
 ## Tuning RocksDB
 
 The state storage workhorse of many large scale Flink streaming applications is the *RocksDB State Backend*.
-The backend scales well beyond main memory and reliably stores large [keyed state]({{< ref "/dev/stream/state/state" >}}).
+The backend scales well beyond main memory and reliably stores large [keyed state]({{< ref "docs/dev/stream/state/state" >}}).
 
 RocksDB's performance can vary with configuration, this section outlines some best-practices for tuning jobs that use the RocksDB State Backend.
 
@@ -109,7 +109,7 @@ RocksDB's performance can vary with configuration, this section outlines some be
 When it comes to reducing the time that checkpoints take, activating incremental checkpoints should be one of the first considerations.
 Incremental checkpoints can dramatically reduce the checkpointing time in comparison to full checkpoints, because incremental checkpoints only record the changes compared to the previous completed checkpoint, instead of producing a full, self-contained backup of the state backend.
 
-See [Incremental Checkpoints in RocksDB]({{< ref "/ops/state/state_backends" >}}#incremental-checkpoints) for more background information.
+See [Incremental Checkpoints in RocksDB]({{< ref "docs/ops/state/state_backends" >}}#incremental-checkpoints) for more background information.
 
 ### Timers in RocksDB or on JVM Heap
 
@@ -118,13 +118,13 @@ Timers are stored in RocksDB by default, which is the more robust and scalable c
 When performance-tuning jobs that have few timers only (no windows, not using timers in ProcessFunction), putting those timers on the heap can increase performance.
 Use this feature carefully, as heap-based timers may increase checkpointing times and naturally cannot scale beyond memory.
 
-See [this section]({{< ref "/ops/state/state_backends" >}}#timers-heap-vs-rocksdb) for details on how to configure heap-based timers.
+See [this section]({{< ref "docs/ops/state/state_backends" >}}#timers-heap-vs-rocksdb) for details on how to configure heap-based timers.
 
 ### Tuning RocksDB Memory
 
 The performance of the RocksDB State Backend much depends on the amount of memory that it has available. To increase performance, adding memory can help a lot, or adjusting to which functions memory goes.
 
-By default, the RocksDB State Backend uses Flink's managed memory budget for RocksDBs buffers and caches (`state.backend.rocksdb.memory.managed: true`). Please refer to the [RocksDB Memory Management]({{< ref "/ops/state/state_backends" >}}#memory-management) for background on how that mechanism works.
+By default, the RocksDB State Backend uses Flink's managed memory budget for RocksDBs buffers and caches (`state.backend.rocksdb.memory.managed: true`). Please refer to the [RocksDB Memory Management]({{< ref "docs/ops/state/state_backends" >}}#memory-management) for background on how that mechanism works.
 
 To tune memory-related performance issues, the following steps may be helpful:
 
@@ -138,7 +138,7 @@ To tune memory-related performance issues, the following steps may be helpful:
   
     Compared to the managed memory setup (constant memory pool), not using managed memory means that RocksDB allocates memory proportional to the number of states in the application (memory footprint changes with application changes). As a rule of thumb, the non-managed mode has (unless ColumnFamily options are applied) an upper bound of roughly "140MB * num-states-across-all-tasks * num-slots". Timers count as state as well!
 
-  - If your application has many states and you see frequent MemTable flushes (write-side bottleneck), but you cannot give more memory you can increase the ratio of memory going to the write buffers (`state.backend.rocksdb.memory.write-buffer-ratio`). See [RocksDB Memory Management]({{< ref "/ops/state/state_backends" >}}#memory-management) for details.
+  - If your application has many states and you see frequent MemTable flushes (write-side bottleneck), but you cannot give more memory you can increase the ratio of memory going to the write buffers (`state.backend.rocksdb.memory.write-buffer-ratio`). See [RocksDB Memory Management]({{< ref "docs/ops/state/state_backends" >}}#memory-management) for details.
 
   - An advanced option (*expert mode*) to reduce the number of MemTable flushes in setups with many states, is to tune RocksDB's ColumnFamily options (arena block size, max background flush threads, etc.) via a `RocksDBOptionsFactory`:
 
@@ -172,7 +172,7 @@ This section discusses how to decide how many resources should be used for a Fli
 The basic rules of thumb for capacity planning are:
 
   - Normal operation should have enough capacity to not operate under constant *back pressure*.
-    See [back pressure monitoring]({{< ref "/ops/monitoring/back_pressure" >}}) for details on how to check whether the application runs under back pressure.
+    See [back pressure monitoring]({{< ref "docs/ops/monitoring/back_pressure" >}}) for details on how to check whether the application runs under back pressure.
 
   - Provision some extra resources on top of the resources needed to run the program back-pressure-free during failure-free time.
     These resources are needed to "catch up" with the input data that accumulated during the time the application
@@ -283,7 +283,7 @@ that the task-local state is an in-memory consisting of heap objects, and not st
 Task-local recovery is *deactivated by default* and can be activated through Flink's configuration with the key `state.backend.local-recovery` as specified
 in `CheckpointingOptions.LOCAL_RECOVERY`. The value for this setting can either be *true* to enable or *false* (default) to disable local recovery.
 
-Note that [unaligned checkpoints]({{< ref "/ops/state/checkpoints" >}}#unaligned-checkpoints) currently do not support task-local recovery.
+Note that [unaligned checkpoints]({{< ref "docs/ops/state/checkpoints" >}}#unaligned-checkpoints) currently do not support task-local recovery.
 
 ### Details on task-local recovery for different state backends
 

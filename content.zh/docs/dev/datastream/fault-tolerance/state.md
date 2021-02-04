@@ -28,7 +28,7 @@ under the License.
 
 In this section you will learn about the APIs that Flink provides for writing
 stateful programs. Please take a look at [Stateful Stream
-Processing]({{< ref "/concepts/stateful-stream-processing.zh" >}})
+Processing]({{< ref "docs/concepts/stateful-stream-processing" >}})
 to learn about the concepts behind stateful stream processing.
 
 ## Keyed DataStream
@@ -119,7 +119,7 @@ keyed state 接口提供不同类型状态的访问接口，这些状态都作�
 状态所持有值的类型，并且可能包含用户指定的函数，例如`ReduceFunction`。 根据不同的状态类型，可以创建`ValueStateDescriptor`，`ListStateDescriptor`，
 `ReducingStateDescriptor` 或 `MapStateDescriptor`。
 
-状态通过 `RuntimeContext` 进行访问，因此只能在 *rich functions* 中使用。请参阅[这里]({{< ref "/dev/user_defined_functions.zh" >}}#rich-functions)获取相关信息，
+状态通过 `RuntimeContext` 进行访问，因此只能在 *rich functions* 中使用。请参阅[这里]({{< ref "docs/dev/datastream/user_defined_functions" >}}#rich-functions)获取相关信息，
 但是我们很快也会看到一个例子。`RichFunction` 中 `RuntimeContext` 提供如下方法：
 
 * `ValueState<T> getState(ValueStateDescriptor<T>)`
@@ -485,7 +485,7 @@ val counts: DataStream[(String, Int)] = stream
 ## Operator State
 
 *Operator State* (or *non-keyed state*) is state that is is bound to one
-parallel operator instance. The [Kafka Connector]({{< ref "/dev/connectors/kafka.zh" >}}) is a good motivating example for the use of
+parallel operator instance. The [Kafka Connector]({{< ref "docs/connectors/datastream/kafka" >}}) is a good motivating example for the use of
 Operator State in Flink. Each parallel instance of the Kafka consumer maintains
 a map of topic partitions and offsets as its Operator State.
 

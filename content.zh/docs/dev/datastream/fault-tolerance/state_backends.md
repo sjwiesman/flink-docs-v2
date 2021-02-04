@@ -34,7 +34,7 @@ Flink 提供了多种 state backends，它用于指定状态的存储方式和�
 
 但是，配置文件中指定的默认 state backend 会被 Job 中指定的 state backend 覆盖，如下所示。
 
-关于可用的 state backend 更多详细信息，包括其优点、限制和配置参数等，请参阅[部署和运维]({{< ref "/ops/state/state_backends" >}})的相应部分。
+关于可用的 state backend 更多详细信息，包括其优点、限制和配置参数等，请参阅[部署和运维]({{< ref "docs/ops/state/state_backends" >}})的相应部分。
 
 {{< tabs "03941da4-5c40-4bb8-97ce-dd14c08bb9a9" >}}
 {{< tab "Java" >}}

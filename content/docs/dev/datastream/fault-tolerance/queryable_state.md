@@ -33,7 +33,7 @@ under the License.
 {{< /hint >}}
 
 In a nutshell, this feature exposes Flink's managed keyed (partitioned) state
-(see [Working with State]({{< ref "/dev/stream/state/state" >}})) to the outside world and 
+(see [Working with State]({{< ref "docs/dev/datastream/fault-tolerance/state" >}})) to the outside world and 
 allows the user to query a job's state from outside Flink. For some scenarios, queryable state 
 eliminates the need for distributed operations/transactions with external systems such as key-value 
 stores which are often the bottleneck in practice. In addition, this feature may be particularly 
@@ -61,7 +61,7 @@ The Queryable State feature consists of three main entities:
  3. the `QueryableStateServer` which runs on each `TaskManager` and is responsible for serving the locally stored state.
  
 The client connects to one of the proxies and sends a request for the state associated with a specific 
-key, `k`. As stated in [Working with State]({{< ref "/dev/stream/state/state" >}}), keyed state is organized in 
+key, `k`. As stated in [Working with State]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}), keyed state is organized in 
 *Key Groups*, and each `TaskManager` is assigned a number of these key groups. To discover which `TaskManager` is 
 responsible for the key group holding `k`, the proxy will ask the `JobManager`. Based on the answer, the proxy will 
 then query the `QueryableStateServer` running on that `TaskManager` for the state associated with `k`, and forward the
@@ -74,7 +74,7 @@ To enable queryable state on your Flink cluster, you need to do the following:
  1. copy the `flink-queryable-state-runtime{{ site.scala_version_suffix }}-{{site.version }}.jar` 
 from the `opt/` folder of your [Flink distribution](https://flink.apache.org/downloads.html "Apache Flink: Downloads"), 
 to the `lib/` folder.
- 2. set the property `queryable-state.enable` to `true`. See the [Configuration]({{< ref "/deployment/config" >}}#queryable-state) documentation for details and additional parameters.
+ 2. set the property `queryable-state.enable` to `true`. See the [Configuration]({{< ref "docs/deployment/config" >}}#queryable-state) documentation for details and additional parameters.
 
 To verify that your cluster is running with queryable state enabled, check the logs of any 
 task manager for the line: `"Started the Queryable State Proxy Server @ ..."`.
@@ -133,7 +133,7 @@ This acts like the Scala API's `flatMapWithState`.
 ### Managed Keyed State
 
 Managed keyed state of an operator
-(see [Using Managed Keyed State]({{< ref "/dev/stream/state/state" >}}#using-managed-keyed-state))
+(see [Using Managed Keyed State]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}#using-managed-keyed-state))
 can be made queryable by making the appropriate state descriptor queryable via
 `StateDescriptor.setQueryable(String queryableStateName)`, as in the example below:
 ```java
@@ -160,22 +160,20 @@ queryable. Now it is time to see how to query this state.
 For this you can use the `QueryableStateClient` helper class. This is available in the `flink-queryable-state-client` 
 jar which must be explicitly included as a dependency in the `pom.xml` of your project along with `flink-core`, as shown below:
 
-<div data-lang="java" markdown="1">
 ```xml
 <dependency>
   <groupId>org.apache.flink</groupId>
   <artifactId>flink-core</artifactId>
-  <version>{{ site.version }}</version>
+  <version>{{< version >}}</version>
 </dependency>
 <dependency>
   <groupId>org.apache.flink</groupId>
   <artifactId>flink-queryable-state-client-java</artifactId>
-  <version>{{ site.version }}</version>
+  <version>{{< version >}}</version>
 </dependency>
 ```
-</div>
 
-For more on this, you can check how to [set up a Flink program]({{< ref "/dev/project-configuration" >}}).
+For more on this, you can check how to [set up a Flink program]({{< ref "docs/dev/datastream/project-configuration" >}}).
 
 The `QueryableStateClient` will submit your query to the internal proxy, which will then process your query and return 
 the final result. The only requirement to initialize the client is to provide a valid `TaskManager` hostname (remember 
@@ -224,7 +222,7 @@ and `AggregatingState`.
 ### Example
 
 The following example extends the `CountWindowAverage` example
-(see [Using Managed Keyed State]({{< ref "/dev/stream/state/state" >}}#using-managed-keyed-state))
+(see [Using Managed Keyed State]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}#using-managed-keyed-state))
 by making it queryable and shows how to query this value:
 
 ```java

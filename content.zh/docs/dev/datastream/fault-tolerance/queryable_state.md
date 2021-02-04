@@ -32,7 +32,7 @@ under the License.
 {{< /hint >}}
 
 简而言之, 这个特性将 Flink 的 managed keyed (partitioned) state
-(参考 [Working with State]({{< ref "/dev/stream/state/state" >}})) 暴露给外部，从而用户可以在 Flink 外部查询作业 state。
+(参考 [Working with State]({{< ref "docs/dev/datastream/fault-tolerance/state" >}})) 暴露给外部，从而用户可以在 Flink 外部查询作业 state。
 在某些场景中，Queryable State 消除了对外部系统的分布式操作以及事务的需求，比如 KV 存储系统，而这些外部系统往往会成为瓶颈。除此之外，这个特性对于调试作业非常有用。
 
 {{< hint warning >}}
@@ -48,7 +48,7 @@ under the License.
  2. `QueryableStateClientProxy`，运行在每个 `TaskManager` 上(*即* Flink 集群内部)，负责接收客户端的查询请求，从所负责的 Task Manager 获取请求的 state，并返回给客户端；
  3. `QueryableStateServer`, 运行在 `TaskManager` 上，负责服务本地存储的 state。
 
-客户端连接到一个代理，并发送请求获取特定 `k` 对应的 state。 如 [Working with State]({{< ref "/dev/stream/state/state.zh" >}}) 所述，keyed state 按照
+客户端连接到一个代理，并发送请求获取特定 `k` 对应的 state。 如 [Working with State]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}) 所述，keyed state 按照
 *Key Groups* 进行划分，每个 `TaskManager` 会分配其中的一些 key groups。代理会询问 `JobManager` 以找到 `k` 所属 key group 的 TaskManager。根据返回的结果, 代理将会向运行在 `TaskManager` 上的 `QueryableStateServer` 查询 `k` 对应的 state， 并将结果返回给客户端。
 
 ## 激活 Queryable State
@@ -57,7 +57,7 @@ under the License.
 
  1. 将 `flink-queryable-state-runtime{{ site.scala_version_suffix }}-{{site.version }}.jar`
 从 [Flink distribution](https://flink.apache.org/downloads.html "Apache Flink: Downloads") 的 `opt/` 目录拷贝到 `lib/` 目录；
- 2. 将参数 `queryable-state.enable` 设置为 `true`。详细信息以及其它配置可参考文档 [Configuration]({{< ref "/deployment/config.zh" >}}#queryable-state)。
+ 2. 将参数 `queryable-state.enable` 设置为 `true`。详细信息以及其它配置可参考文档 [Configuration]({{< ref "docs/deployment/config" >}}#queryable-state)。
 
 为了验证集群的 queryable state 已经被激活，可以检查任意 task manager 的日志中是否包含 "Started the Queryable State Proxy Server @ ..."。
 
@@ -106,7 +106,7 @@ stream.keyBy(value -> value.f0).asQueryableState("query-name")
 ### Managed Keyed State
 
 operator 中的 Managed keyed state
-(参考 [Using Managed Keyed State]({{< ref "/dev/stream/state/state.zh" >}}#using-managed-keyed-state))
+(参考 [Using Managed Keyed State]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}#using-managed-keyed-state))
 可以通过 `StateDescriptor.setQueryable(String queryableStateName)` 将 state descriptor 设置成可查询的，从而使 state 可查询，如下所示：
 
 ```java
@@ -135,17 +135,17 @@ descriptor.setQueryable("query-name"); // queryable state name
 <dependency>
   <groupId>org.apache.flink</groupId>
   <artifactId>flink-core</artifactId>
-  <version>{{ site.version }}</version>
+  <version>{{< version >}}</version>
 </dependency>
 <dependency>
   <groupId>org.apache.flink</groupId>
   <artifactId>flink-queryable-state-client-java</artifactId>
-  <version>{{ site.version }}</version>
+  <version>{{< version >}}</version>
 </dependency>
 ```
 </div>
 
-关于依赖的更多信息, 可以参考如何 [配置 Flink 项目]({{< ref "/dev/project-configuration.zh" >}}).
+关于依赖的更多信息, 可以参考如何 [配置 Flink 项目]({{< ref "docs/dev/datastream/project-configuration" >}}).
 
 `QueryableStateClient` 将提交你的请求到内部代理，代理会处理请求并返回结果。客户端的初始化只需要提供一个有效的 `TaskManager` 主机名
 (每个 task manager 上都运行着一个 queryable state 代理)，以及代理监听的端口号。关于如何配置代理以及端口号可以参考 [Configuration Section](#configuration).
@@ -186,7 +186,7 @@ CompletableFuture<S> getKvState(
 ### 示例
 
 下面的例子扩展自 `CountWindowAverage`
-(参考 [Using Managed Keyed State]({{< ref "/dev/stream/state/state.zh" >}}#using-managed-keyed-state))，
+(参考 [Using Managed Keyed State]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}#using-managed-keyed-state))，
 将其中的 state 设置成可查询的，并展示了如何进行查询：
 
 ```java
