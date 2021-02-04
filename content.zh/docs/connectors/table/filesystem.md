@@ -87,7 +87,7 @@ path
         ├── part-0.parquet
 ```
 
-The file system table supports both partition inserting and overwrite inserting. See [INSERT Statement]({{< ref "/dev/table/sql/insert" >}}). When you insert overwrite to a partitioned table, only the corresponding partition will be overwritten, not the entire table.
+The file system table supports both partition inserting and overwrite inserting. See [INSERT Statement]({{< ref "docs/dev/table/sql/insert" >}}). When you insert overwrite to a partitioned table, only the corresponding partition will be overwritten, not the entire table.
 
 ## File Formats
 
@@ -98,13 +98,13 @@ The file system connector supports multiple formats:
  - Avro: [Apache Avro](http://avro.apache.org). Support compression by configuring `avro.codec`.
  - Parquet: [Apache Parquet](http://parquet.apache.org). Compatible with Hive.
  - Orc: [Apache Orc](http://orc.apache.org). Compatible with Hive.
- - Debezium-JSON: [debezium-json]({{< ref "/dev/table/connectors/formats/debezium" >}}).
- - Canal-JSON: [canal-json]({{< ref "/dev/table/connectors/formats/canal" >}}).
- - Raw: [raw]({{< ref "/dev/table/connectors/formats/raw" >}}).
+ - Debezium-JSON: [debezium-json]({{< ref "docs/connectors/table/formats/debezium" >}}).
+ - Canal-JSON: [canal-json]({{< ref "docs/connectors/table/formats/canal" >}}).
+ - Raw: [raw]({{< ref "docs/connectors/table/formats/raw" >}}).
 
 ## Streaming Sink
 
-The file system connector supports streaming writes, based on Flink's [Streaming File Sink]({{< ref "/dev/connectors/streamfile_sink" >}})
+The file system connector supports streaming writes, based on Flink's [Streaming File Sink]({{< ref "docs/connectors/datastream/streamfile_sink" >}})
 to write records to file. Row-encoded Formats are csv and json. Bulk-encoded Formats are parquet, orc and avro.
 
 You can write SQL directly, insert the stream data into the non-partitioned table.

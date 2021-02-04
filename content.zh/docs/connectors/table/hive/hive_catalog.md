@@ -33,7 +33,7 @@ Hive Metastore service instance in their production to manage all of their metad
 For users who have both Hive and Flink deployments, `HiveCatalog` enables them to use Hive Metastore to manage Flink's metadata.
 
 For users who have just Flink deployment, `HiveCatalog` is the only persistent catalog provided out-of-box by Flink.
-Without a persistent catalog, users using [Flink SQL CREATE DDL]({{< ref "dos/dev/table/sql/create" >}}) have to repeatedly
+Without a persistent catalog, users using [Flink SQL CREATE DDL]({{< ref "docs/dev/table/sql/create" >}}) have to repeatedly
 create meta-objects like a Kafka table in each session, which wastes a lot of time. `HiveCatalog` fills this gap by empowering
 users to create tables and other meta-objects only once, and reference and manage them with convenience later on across sessions.
 
@@ -42,12 +42,12 @@ users to create tables and other meta-objects only once, and reference and manag
 
 ### Dependencies
 
-Setting up a `HiveCatalog` in Flink requires the same [dependencies]({{< ref "docs/dev/table/connectors/hive/overview" >}}#dependencies) 
+Setting up a `HiveCatalog` in Flink requires the same [dependencies]({{< ref "docs/connectors/table/hive/overview" >}}#dependencies) 
 as those of an overall Flink-Hive integration.
 
 ### Configuration
 
-Setting up a `HiveCatalog` in Flink requires the same [configuration]({{< ref "docs/dev/table/connectors/hive/overview" >}}#connecting-to-hive) 
+Setting up a `HiveCatalog` in Flink requires the same [configuration]({{< ref "docs/connectors/table/hive/overview" >}}#connecting-to-hive) 
 as those of an overall Flink-Hive integration.
 
 

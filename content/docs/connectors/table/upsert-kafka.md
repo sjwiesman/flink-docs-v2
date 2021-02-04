@@ -150,7 +150,7 @@ Connector Options
       <td style="word-wrap: break-word;">(none)</td>
       <td>String</td>
       <td><p>The format used to deserialize and serialize the key part of Kafka messages.
-      Please refer to the <a href="{{< ref "docs/dev/connectors/table/formats/overview" >}}">formats</a> page
+      Please refer to the <a href="{{< ref "docs/connectors/table/formats/overview" >}}">formats</a> page
       for more details and more format options.</p>
       <span class="label label-danger">Attention</span> Compared to the regular Kafka connector, the
       key fields are specified by the <code>PRIMARY KEY</code> syntax.
@@ -175,7 +175,7 @@ Connector Options
       <td style="word-wrap: break-word;">(none)</td>
       <td>String</td>
       <td>The format used to deserialize and serialize the value part of Kafka messages.
-      Please refer to the <a href="{{< ref "dpcs/dev/connectors/table/formats/overview" >}}">formats</a> page
+      Please refer to the <a href="{{< ref "docs/connectors/table/formats/overview" >}}">formats</a> page
       for more details and more format options.
       </td>
     </tr>
@@ -204,7 +204,7 @@ Features
 
 ### Key and Value Formats
 
-See the [regular Kafka connector]({{< ref "docs/dev/connectors/datastresam/kafka" >}}#key-and-value-formats) for more
+See the [regular Kafka connector]({{< ref "docs/connectors/datastream/kafka" >}}#key-and-value-formats) for more
 explanation around key and value formats. However, note that this connector requires both a key and
 value format where the key fields are derived from the `PRIMARY KEY` constraint.
 
@@ -245,12 +245,12 @@ keys. The primary key definition will also control which fields should end up in
 ### Consistency Guarantees
 
 By default, an Upsert Kafka sink ingests data with at-least-once guarantees into a Kafka topic if
-the query is executed with [checkpointing enabled]({{< ref "/dev/stream/state/checkpointing" >}}#enabling-and-configuring-checkpointing).
+the query is executed with [checkpointing enabled]({{< ref "docs/dev/datastream/fault-tolerance/checkpointing" >}}#enabling-and-configuring-checkpointing).
 
 This means, Flink may write duplicate records with the same key into the Kafka topic. But as the
 connector is working in the upsert mode, the last record on the same key will take effect when
 reading back as a source. Therefore, the upsert-kafka connector achieves idempotent writes just like
-the [HBase sink]({{< ref "/dev/table/connectors/hbase" >}}).
+the [HBase sink]({{< ref "docs/connectors/table/hbase" >}}).
 
 ### Source Per-Partition Watermarks
 
@@ -258,10 +258,10 @@ Flink supports to emit per-partition watermarks for Upsert Kafka. Watermarks are
 consumer. The per-partition watermarks are merged in the same way as watermarks are merged during streaming
 shuffles. The output watermark of the source is determined by the minimum watermark among the partitions
 it reads. If some partitions in the topics are idle, the watermark generator will not advance. You can
-alleviate this problem by setting the [`'table.exec.source.idle-timeout'`]({{< ref "/dev/table/config" >}}#table-exec-source-idle-timeout)
+alleviate this problem by setting the [`'table.exec.source.idle-timeout'`]({{< ref "docs/dev/table/config" >}}#table-exec-source-idle-timeout)
 option in the table configuration.
 
-Please refer to [Kafka watermark strategies]({{< ref "/dev/event_timestamps_watermarks" >}}#watermark-strategies-and-the-kafka-connector)
+Please refer to [Kafka watermark strategies]({{< ref "docs/dev/datastream/event-time/generating_watermarks" >}}#watermark-strategies-and-the-kafka-connector)
 for more details.
 
 Data Type Mapping

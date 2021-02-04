@@ -88,7 +88,7 @@ GROUP BY user_region;
 Available Metadata
 ------------------
 
-See the [regular Kafka connector]({{< ref "/dev/connectors/kafka" >}}#available-metadata) for a list
+See the [regular Kafka connector]({{< ref "docs/connectors/datastream/kafka" >}}#available-metadata) for a list
 of all available metadata fields.
 
 连接器参数
@@ -227,9 +227,9 @@ Upsert Kafka 始终以 upsert 方式工作，并且需要在 DDL 中定义主键
 
 ### 一致性保证
 
-默认情况下，如果[启用 checkpoint]({{< ref "/dev/stream/state/checkpointing" >}}#enabling-and-configuring-checkpointing)，Upsert Kafka sink 会保证至少一次将数据插入 Kafka topic。
+默认情况下，如果[启用 checkpoint]({{< ref "docs/dev/datastream/fault-tolerance/checkpointing" >}}#enabling-and-configuring-checkpointing)，Upsert Kafka sink 会保证至少一次将数据插入 Kafka topic。
 
-这意味着，Flink 可以将具有相同 key 的重复记录写入 Kafka topic。但由于该连接器以 upsert 的模式工作，该连接器作为 source 读入时，可以确保具有相同主键值下仅最后一条消息会生效。因此，upsert-kafka 连接器可以像 [HBase sink]({{< ref "/dev/table/connectors/hbase" >}}) 一样实现幂等写入。
+这意味着，Flink 可以将具有相同 key 的重复记录写入 Kafka topic。但由于该连接器以 upsert 的模式工作，该连接器作为 source 读入时，可以确保具有相同主键值下仅最后一条消息会生效。因此，upsert-kafka 连接器可以像 [HBase sink]({{< ref "docs/connectors/table/hbase" >}}) 一样实现幂等写入。
 
 ### 为每个分区生成相应的 watermark
 
@@ -238,7 +238,7 @@ Flink 支持根据 Upsert Kafka 的 每个分区的数据特性发送相应的 w
 consumer 负责的部分分区是 idle 的，那么整体的 watermark 并不会前进。在这种情况下，可以通过设置合适的 [table.exec.source.idle-timeout]({{< ref "docs/dev/table/config" >}}#table-exec-source-idle-timeout)
 来缓解这个问题。
 
-如想获得更多细节，请查阅 [Kafka watermark strategies]({{< ref "/dev/event_timestamps_watermarks" >}}#watermark-strategies-and-the-kafka-connector).
+如想获得更多细节，请查阅 [Kafka watermark strategies]({{< ref "docs/dev/datastream/event-time/generating_watermarks" >}}#watermark-strategies-and-the-kafka-connector).
 
 数据类型映射
 ----------------

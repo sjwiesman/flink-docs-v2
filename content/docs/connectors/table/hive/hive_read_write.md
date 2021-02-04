@@ -90,7 +90,7 @@ of new files in the folder and read new files incrementally.
   </tbody>
 </table>
 
-[SQL Hints]({{< ref "/dev/table/sql/hints" >}}) can be used to apply configurations to a Hive table
+[SQL Hints]({{< ref "docs/dev/table/sql/hints" >}}) can be used to apply configurations to a Hive table
 without changing its definition in the Hive metastore.
 
 ```sql
@@ -168,7 +168,7 @@ following parameters in `TableConfig` (note that these parameters affect all sou
 ## Temporal Table Join
 
 You can use a Hive table as a temporal table, and then a stream can correlate the Hive table by temporal join. 
-Please see [temporal join]({{< ref "/dev/table/streaming/joins" >}}#temporal-joins) for more information about the temporal join.
+Please see [temporal join]({{< ref "docs/dev/table/concepts/joins" >}}#temporal-joins) for more information about the temporal join.
 
 Flink supports processing-time temporal join Hive Table, the processing-time temporal join always joins the latest version of temporal table.
 Flink supports temporal join both partitioned table and Hive non-partitioned table, for partitioned table, Flink supports tracking the latest partition of Hive table automatically.
@@ -348,7 +348,7 @@ overwrite is not supported for streaming write.
 The below shows how the streaming sink can be used to write a streaming query to write data from Kafka into a Hive table with partition-commit,
 and runs a batch query to read that data back out. 
 
-Please see the [streaming sink]({{< ref "/dev/table/connectors/filesystem" >}}#streaming-sink) for a full list of available configurations.
+Please see the [streaming sink]({{< ref "docs/connectors/table/filesystem" >}}#streaming-sink) for a full list of available configurations.
 
 ```sql
 

@@ -39,7 +39,7 @@ Flink 与 Hive 的集成包含两个层面。
 `HiveCatalog`的设计提供了与 Hive 良好的兼容性，用户可以"开箱即用"的访问其已有的 Hive 数仓。
 您不需要修改现有的 Hive Metastore，也不需要更改表的数据位置或分区。
 
-* 我们强烈建议用户使用 [Blink planner]({{< ref "docs/dev/table/index" >}}#dependency-structure) 与 Hive 集成。
+* 我们强烈建议用户使用 [Blink planner]({{< ref "docs/dev/table/overview" >}}#dependency-structure) 与 Hive 集成。
 
 ## 支持的Hive版本
 
@@ -433,4 +433,4 @@ USE CATALOG myhive;
 
 ## DML
 
-Flink 支持 DML 写入 Hive 表，请参考[读写 Hive 表]({{< ref "/dev/table/connectors/hive/hive_read_write" >}})
+Flink 支持 DML 写入 Hive 表，请参考[读写 Hive 表]({{< ref "docs/connectors/table/hive/hive_read_write" >}})

@@ -3,7 +3,7 @@ title: "Overview"
 weight: 1
 type: docs
 aliases:
-  - /dev/table/connectors/hive/
+  - docs/connectors/table/hive/
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -282,8 +282,8 @@ You're supposed to add dependencies as stated above at runtime.
 
 ## Connecting To Hive
 
-Connect to an existing Hive installation using the [catalog interface]({{< ref "/dev/table/catalogs" >}}) 
-and [HiveCatalog]({{< ref "/dev/table/connectors/hive/hive_catalog" >}}) through the table environment or YAML configuration.
+Connect to an existing Hive installation using the [catalog interface]({{< ref "docs/dev/table/catalogs" >}}) 
+and [HiveCatalog]({{< ref "docs/connectors/table/hive/hive_catalog" >}}) through the table environment or YAML configuration.
 
 Please note while HiveCatalog doesn't require a particular planner, reading/writing Hive tables only works with blink planner.
 Therefore it's highly recommended that you use blink planner when connecting to your Hive warehouse.
@@ -436,9 +436,9 @@ Below are the options supported when creating a `HiveCatalog` instance with YAML
 
 ## DDL
 
-It's recommended to use [Hive dialect]({{< ref "/dev/table/connectors/hive/hive_dialect" >}}) to execute DDLs to create
+It's recommended to use [Hive dialect]({{< ref "docs/connectors/table/hive/hive_dialect" >}}) to execute DDLs to create
 Hive tables, views, partitions, functions within Flink.
 
 ## DML
 
-Flink supports DML writing to Hive tables. Please refer to details in [Reading & Writing Hive Tables]({{< ref "/dev/table/connectors/hive/hive_read_write" >}})
+Flink supports DML writing to Hive tables. Please refer to details in [Reading & Writing Hive Tables]({{< ref "docs/connectors/table/hive/hive_read_write" >}})

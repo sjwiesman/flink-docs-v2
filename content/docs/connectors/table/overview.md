@@ -31,7 +31,7 @@ Flink's Table API & SQL programs can be connected to other external systems for 
 
 This page describes how to register table sources and table sinks in Flink using the natively supported connectors. After a source or sink has been registered, it can be accessed by Table API & SQL statements.
 
-If you want to implement your own *custom* table source or sink, have a look at the [user-defined sources & sinks page]({{< ref "docs/dev/table/sourceSinks" >}}).
+If you want to implement your own *custom* table source or sink, have a look at the [user-defined sources & sinks page]({{< ref "docs/dev/table/sourcessinks" >}}).
 
 Supported Connectors
 ------------
@@ -49,44 +49,44 @@ Flink natively support various connectors. The following tables list all availab
     </thead>
     <tbody>
     <tr>
-      <td><a href="{{< ref "docs/dev/table/connectors/filesystem" >}}">Filesystem</a></td>
+      <td><a href="{{< ref "docs/connectors/table/filesystem" >}}">Filesystem</a></td>
       <td></td>
       <td>Bounded and Unbounded Scan, Lookup</td>
       <td>Streaming Sink, Batch Sink</td>
     </tr>
     <tr>
-      <td><a href="{{< ref "docs/dev/table/connectors/elasticsearch" >}}">Elasticsearch</a></td>
+      <td><a href="{{< ref "docs/connectors/table/elasticsearch" >}}">Elasticsearch</a></td>
       <td>6.x & 7.x</td>
       <td>Not supported</td>
       <td>Streaming Sink, Batch Sink</td>
     </tr>
     <tr>
-      <td><a href="{{< ref "docs/dev/table/connectors/kafka" >}}">Apache Kafka</a></td>
+      <td><a href="{{< ref "docs/connectors/table/kafka" >}}">Apache Kafka</a></td>
       <td>0.10+</td>
       <td>Unbounded Scan</td>
       <td>Streaming Sink, Batch Sink</td>
     </tr>
     <tr>
-      <td><a href="{{< ref "docs/dev/table/connectors/kinesis" >}}">Amazon Kinesis Data Streams</a></td>
+      <td><a href="{{< ref "docs/connectors/table/kinesis" >}}">Amazon Kinesis Data Streams</a></td>
       <td></td>
       <td>Unbounded Scan</td>
       <td>Streaming Sink</td>
     </tr>
     <tr>
-      <td><a href="{{< ref "docs/dev/table/connectors/jdbc" >}}">JDBC</a></td>
+      <td><a href="{{< ref "docs/connectors/table/jdbc" >}}">JDBC</a></td>
       <td></td>
       <td>Bounded Scan, Lookup</td>
       <td>Streaming Sink, Batch Sink</td>
     </tr>
     <tr>
-      <td><a href="{{< ref "docs/dev/table/connectors/hbase" >}}">Apache HBase</a></td>
+      <td><a href="{{< ref "docs/connectors/table/hbase" >}}">Apache HBase</a></td>
       <td>1.4.x & 2.2.x</td>
       <td>Bounded Scan, Lookup</td>
       <td>Streaming Sink, Batch Sink</td>
     </tr>
     <tr>
-      <td><a href="{{< ref "docs/dev/table/connectors/hive/index" >}}">Apache Hive</a></td>
-      <td><a href="{{< ref "docs/dev/table/connectors/hive/index" >}}#supported-hive-versions">Supported Versions</a></td>
+      <td><a href="{{< ref "docs/connectors/table/hive/overview" >}}">Apache Hive</a></td>
+      <td><a href="{{< ref "docs/connectors/table/hive/overview" >}}#supported-hive-versions">Supported Versions</a></td>
       <td>Unbounded Scan, Bounded Scan, Lookup</td>
       <td>Streaming Sink, Batch Sink</td>
     </tr>
@@ -127,7 +127,7 @@ CREATE TABLE MyUserTable (
 {{< /tab >}}
 {{< /tabs >}}
 
-The desired connection properties are converted into string-based key-value pairs. [Factories]({{< ref "/dev/table/sourceSinks" >}})
+The desired connection properties are converted into string-based key-value pairs. [Factories]({{< ref "docs/dev/table/sourcessinks" >}})
 will create configured table sources, table sinks, and corresponding formats from the key-value pairs
 based on factory identifiers (`kafka` and `json` in this example). All factories that can be found via
 Java's [Service Provider Interfaces (SPI)](https://docs.oracle.com/javase/tutorial/sound/SPI-intro.html)
@@ -227,7 +227,7 @@ CREATE TABLE MyTable (
 ### Metadata
 
 Some connectors and formats expose additional metadata fields that can be accessed in metadata columns
-next to the physical payload columns. See the [`CREATE TABLE` section]({{< ref "/dev/table/sql/create" >}}#columns)
+next to the physical payload columns. See the [`CREATE TABLE` section]({{< ref "docs/dev/table/sql/create" >}}#columns)
 for more information about metadata columns.
 
 ### Primary Key

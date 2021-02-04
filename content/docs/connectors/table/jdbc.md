@@ -40,7 +40,6 @@ Dependencies
 
 {{< sql_download_table "jdbc" >}}
 
-
 A driver dependency is also required to connect to a specified database. Here are drivers currently supported:
 
 | Driver      |      Group Id      |      Artifact Id       |      JAR         |
@@ -255,7 +254,7 @@ Flink uses the primary key that defined in DDL when writing data to external dat
 
 In upsert mode, Flink will insert a new row or update the existing row according to the primary key, Flink can ensure the idempotence in this way. To guarantee the output result is as expected, it's recommended to define primary key for the table and make sure the primary key is one of the unique key sets or primary key of the underlying database table. In append mode, Flink will interpret all records as INSERT messages, the INSERT operation may fail if a primary key or unique constraint violation happens in the underlying database.
 
-See [CREATE TABLE DDL]({{< ref "/dev/table/sql/create" >}}#create-table) for more details about PRIMARY KEY syntax.
+See [CREATE TABLE DDL]({{< ref "docs/dev/table/sql/create" >}}#create-table) for more details about PRIMARY KEY syntax.
 
 ### Partitioned Scan
 
@@ -469,7 +468,7 @@ Flink supports connect to several databases which uses dialect like MySQL, Postg
       <tr>
         <th class="text-left">MySQL type<a href="https://dev.mysql.com/doc/man/8.0/en/data-types.html"></a></th>
         <th class="text-left">PostgreSQL type<a href="https://www.postgresql.org/docs/12/datatype.html"></a></th>
-        <th class="text-left">Flink SQL type<a href="{{< ref "/dev/table/types" >}}"></a></th>
+        <th class="text-left">Flink SQL type<a href="{{< ref "docs/dev/table/types" >}}"></a></th>
       </tr>
     </thead>
     <tbody>

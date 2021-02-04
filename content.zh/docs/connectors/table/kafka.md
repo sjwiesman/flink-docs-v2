@@ -234,7 +234,7 @@ Connector Options
       <td style="word-wrap: break-word;">(none)</td>
       <td>String</td>
       <td>The format used to deserialize and serialize the value part of Kafka messages.
-      Please refer to the <a href="{{< ref "/dev/table/connectors/formats/index" >}}">formats</a> page for
+      Please refer to the <a href="{{< ref "docs/connectors/table/formats/overview" >}}">formats</a> page for
       more details and more format options.
       Note: Either this option or the <code>'value.format'</code> option are required.
       </td>
@@ -245,7 +245,7 @@ Connector Options
       <td style="word-wrap: break-word;">(none)</td>
       <td>String</td>
       <td>The format used to deserialize and serialize the key part of Kafka messages.
-      Please refer to the <a href="{{< ref "/dev/table/connectors/formats/index" >}}">formats</a> page
+      Please refer to the <a href="{{< ref "docs/connectors/table/formats/overview" >}}">formats</a> page
       for more details and more format options. Note: If a key format is defined, the <code>'key.fields'</code>
       option is required as well. Otherwise the Kafka records will have an empty key.
       </td>
@@ -279,7 +279,7 @@ Connector Options
       <td style="word-wrap: break-word;">(none)</td>
       <td>String</td>
       <td>The format used to deserialize and serialize the value part of Kafka messages.
-      Please refer to the <a href="{{< ref "/dev/table/connectors/formats/index" >}}">formats</a> page
+      Please refer to the <a href="{{< ref "docs/connectors/table/formats/overview" >}}">formats</a> page
       for more details and more format options.
       Note: Either this option or the <code>'format'</code> option are required.
       </td>
@@ -362,7 +362,7 @@ Features
 ### Key and Value Formats
 
 Both the key and value part of a Kafka record can be serialized to and deserialized from raw bytes using
-one of the given [formats]({{< ref "/dev/table/connectors/formats/index" >}}).
+one of the given [formats]({{< ref "docs/connectors/table/formats/overview" >}}).
 
 **Value Format**
 
@@ -477,7 +477,7 @@ The config option `topic-pattern`  will use regular expression to discover the m
 
 To allow the consumer to discover dynamically created topics after the job started running, set a non-negative value for `scan.topic-partition-discovery.interval`. This allows the consumer to discover partitions of new topics with names that also match the specified pattern.
 
-Please refer to [Kafka DataStream Connector documentation]({{< ref "/dev/connectors/kafka" >}}#kafka-consumers-topic-and-partition-discovery) for more about topic and partition discovery.
+Please refer to [Kafka DataStream Connector documentation]({{< ref "docs/connectors/datastream/kafka" >}}#kafka-consumers-topic-and-partition-discovery) for more about topic and partition discovery.
 
 Note that topic list and topic pattern only work in sources. In sinks, Flink currently only supports a single topic.
 
@@ -502,9 +502,9 @@ e.g. an option value `partition:0,offset:42;partition:1,offset:300` indicates of
 ### Changelog Source
 
 Flink natively supports Kafka as a changelog source. If messages in Kafka topic is change event captured from other databases using CDC tools, then you can use a CDC format to interpret messages as INSERT/UPDATE/DELETE messages into Flink SQL system.
-Flink provides two CDC formats [debezium-json]({{< ref "docs/dev/connectors/table/formats/debezium" >}}) and [canal-json]({{< ref "docs/dev/connectors/table/formats/canal" >}}) to interpret change events captured by [Debezium](https://debezium.io/) and [Canal](https://github.com/alibaba/canal/wiki).
+Flink provides two CDC formats [debezium-json]({{< ref "docs/connectors/table/formats/debezium" >}}) and [canal-json]({{< ref "docs/connectors/table/formats/canal" >}}) to interpret change events captured by [Debezium](https://debezium.io/) and [Canal](https://github.com/alibaba/canal/wiki).
 The changelog source is a very useful feature in many cases, such as synchronizing incremental data from databases to other systems, auditing logs, materialized views on databases, temporal join changing history of a database table and so on.
-See more about how to use the CDC formats in [debezium-json]({{< ref "/dev/table/connectors/formats/debezium" >}}) and [canal-json]({{< ref "docs/dev/table/connectors/formats/canal" >}}).
+See more about how to use the CDC formats in [debezium-json]({{< ref "docs/connectors/table/formats/debezium" >}}) and [canal-json]({{< ref "docs/connectors/table/formats/canal" >}}).
 
 ### Sink Partitioning
 
@@ -515,7 +515,7 @@ In order to control the routing of rows into partitions, a custom sink partition
 
 ### Consistency guarantees
 
-By default, a Kafka sink ingests data with at-least-once guarantees into a Kafka topic if the query is executed with [checkpointing enabled]({{< ref "docs/dev/stream/state/checkpointing" >}}#enabling-and-configuring-checkpointing).
+By default, a Kafka sink ingests data with at-least-once guarantees into a Kafka topic if the query is executed with [checkpointing enabled]({{< ref "docs/dev/datastream/fault-tolerance/checkpointing" >}}#enabling-and-configuring-checkpointing).
 
 With Flink's checkpointing enabled, the `kafka` connector can provide exactly-once delivery guarantees.
 
@@ -528,7 +528,7 @@ Besides enabling Flink's checkpointing, you can also choose three different mode
  or `read_uncommitted` - the latter one is the default value) for any application consuming records
  from Kafka.
 
-Please refer to [Kafka documentation]({{< ref "docs/dev/connectors/kafka" >}}#kafka-producers-and-fault-tolerance) for more caveats about delivery guarantees.
+Please refer to [Kafka documentation]({{< ref "docs/connectors/datastream/kafka" >}}#kafka-producers-and-fault-tolerance) for more caveats about delivery guarantees.
 
 ### Source Per-Partition Watermarks
 
@@ -539,13 +539,13 @@ it reads. If some partitions in the topics are idle, the watermark generator wil
 alleviate this problem by setting the [`'table.exec.source.idle-timeout'`]({{< ref "docs/dev/table/config" >}}#table-exec-source-idle-timeout)
 option in the table configuration.
 
-Please refer to [Kafka watermark strategies]({{< ref "docs/dev/event_timestamps_watermarks" >}}#watermark-strategies-and-the-kafka-connector)
+Please refer to [Kafka watermark strategies]({{< ref "docs/dev/datastream/event-time/generating_watermarks" >}}#watermark-strategies-and-the-kafka-connector)
 for more details.
 
 Data Type Mapping
 ----------------
 
 Kafka stores message keys and values as bytes, so Kafka doesn't have schema or data types. The Kafka messages are deserialized and serialized by formats, e.g. csv, json, avro.
-Thus, the data type mapping is determined by specific formats. Please refer to [Formats]({{< ref "docs/dev/table/connectors/formats/overview" >}}) pages for more details.
+Thus, the data type mapping is determined by specific formats. Please refer to [Formats]({{< ref "docs/connectors/table/formats/overview" >}}) pages for more details.
 
 {{< top >}}

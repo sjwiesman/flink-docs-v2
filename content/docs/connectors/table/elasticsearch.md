@@ -227,7 +227,7 @@ Connector Options
       <td style="word-wrap: break-word;">json</td>
       <td>String</td>
       <td>Elasticsearch connector supports to specify a format. The format must produce a valid json document.
-       By default uses built-in <code>'json'</code> format. Please refer to <a href="{{< ref "/dev/table/connectors/formats/index" >}}">JSON Format</a> page for more details.
+       By default uses built-in <code>'json'</code> format. Please refer to <a href="{{< ref "docs/connectors/table/formats/overview" >}}">JSON Format</a> page for more details.
       </td>
     </tr>
     </tbody>
@@ -247,7 +247,7 @@ The Elasticsearch connector generates a document ID string for every row by conc
 Certain types are not allowed as primary key field as they do not have a good string representation, e.g. `BYTES`, `ROW`, `ARRAY`, `MAP`, etc.
 If no primary key is specified, Elasticsearch will generate a document id automatically.
 
-See [CREATE TABLE DDL]({{< ref "/dev/table/sql/create" >}}#create-table) for more details about PRIMARY KEY syntax.
+See [CREATE TABLE DDL]({{< ref "docs/dev/table/sql/create" >}}#create-table) for more details about PRIMARY KEY syntax.
 
 ### Dynamic Index
 
@@ -265,6 +265,6 @@ Data Type Mapping
 ----------------
 
 Elasticsearch stores document in a JSON string. So the data type mapping is between Flink data type and JSON data type.
-Flink uses built-in `'json'` format for Elasticsearch connector. Please refer to [JSON Format]({{< ref "/dev/table/connectors/formats/json" >}}) page for more type mapping details.
+Flink uses built-in `'json'` format for Elasticsearch connector. Please refer to [JSON Format]({{< ref "docs/connectors/table/formats/json" >}}) page for more type mapping details.
 
 {{< top >}}
