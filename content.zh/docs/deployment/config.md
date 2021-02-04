@@ -40,13 +40,13 @@ The options in this section are the ones most commonly needed for a basic distri
 
 **Hostnames / Ports**
 
-These options are only necessary for *standalone* application- or session deployments ([simple standalone]({{< ref "/deployment/resource-providers/standalone/index" >}}) or [Kubernetes]({{< ref "/deployment/resource-providers/standalone/kubernetes" >}})).
+These options are only necessary for *standalone* application- or session deployments ([simple standalone]({{< ref "docs/deployment/resource-providers/standalone/overview" >}}) or [Kubernetes]({{< ref "docs/deployment/resource-providers/standalone/kubernetes" >}})).
 
-If you use Flink with [Yarn]({{< ref "/deployment/resource-providers/yarn" >}}), [Mesos]({{< ref "/deployment/resource-providers/mesos" >}}), or the [*active* Kubernetes integration]({{< ref "/deployment/resource-providers/native_kubernetes" >}}), the hostnames and ports are automatically discovered.
+If you use Flink with [Yarn]({{< ref "docs/deployment/resource-providers/yarn" >}}), [Mesos]({{< ref "docs/deployment/resource-providers/mesos" >}}), or the [*active* Kubernetes integration]({{< ref "docs/deployment/resource-providers/native_kubernetes" >}}), the hostnames and ports are automatically discovered.
 
   - `rest.address`, `rest.port`: These are used by the client to connect to Flink. Set this to the hostname where the JobManager runs, or to the hostname of the (Kubernetes) service in front of the JobManager's REST interface.
 
-  - The `jobmanager.rpc.address` (defaults to *"localhost"*) and `jobmanager.rpc.port` (defaults to *6123*) config entries are used by the TaskManager to connect to the JobManager/ResourceManager. Set this to the hostname where the JobManager runs, or to the hostname of the (Kubernetes internal) service for the JobManager. This option is ignored on [setups with high-availability]({{< ref "/deployment/ha/index" >}}) where the leader election mechanism is used to discover this automatically.
+  - The `jobmanager.rpc.address` (defaults to *"localhost"*) and `jobmanager.rpc.port` (defaults to *6123*) config entries are used by the TaskManager to connect to the JobManager/ResourceManager. Set this to the hostname where the JobManager runs, or to the hostname of the (Kubernetes internal) service for the JobManager. This option is ignored on [setups with high-availability]({{< ref "docs/deployment/ha/overview" >}}) where the leader election mechanism is used to discover this automatically.
 
 **Memory Sizes** 
 
@@ -62,7 +62,7 @@ These value are configured as memory sizes, for example *1536m* or *2g*.
 **Parallelism**
 
   - `taskmanager.numberOfTaskSlots`: The number of slots that a TaskManager offers *(default: 1)*. Each slot can take one task or pipeline.
-    Having multiple slots in a TaskManager can help amortize certain constant overheads (of the JVM, application libraries, or network connections) across parallel tasks or pipelines. See the [Task Slots and Resources]({{< ref "/concepts/flink-architecture" >}}#task-slots-and-resources) concepts section for details.
+    Having multiple slots in a TaskManager can help amortize certain constant overheads (of the JVM, application libraries, or network connections) across parallel tasks or pipelines. See the [Task Slots and Resources]({{< ref "docs/concepts/flink-architecture" >}}#task-slots-and-resources) concepts section for details.
 
      Running more smaller TaskManagers with one slot each is a good starting point and leads to the best isolation between tasks. Dedicating the same resources to fewer larger TaskManagers with more slots can help to increase resource utilization, at the cost of weaker isolation between the tasks (more tasks share the same JVM).
 
@@ -158,8 +158,8 @@ Flink tries to shield users as much as possible from the complexity of configuri
 In most cases, users should only need to set the values `taskmanager.memory.process.size` or `taskmanager.memory.flink.size` (depending on how the setup), and possibly adjusting the ratio of JVM heap and Managed Memory via `taskmanager.memory.managed.fraction`. The other options below can be used for performance tuning and fixing memory related errors.
 
 For a detailed explanation of how these options interact,
-see the documentation on [TaskManager]({{< ref "/deployment/memory/mem_setup_tm" >}}) and
-[JobManager]({{< ref "/deployment/memory/mem_setup_jobmanager" >}} ) memory configurations.
+see the documentation on [TaskManager]({{< ref "docs/deployment/memory/mem_setup_tm" >}}) and
+[JobManager]({{< ref "docs/deployment/memory/mem_setup_jobmanager" >}} ) memory configurations.
 
 {{< generate/common_memory_section >}}
 
@@ -176,7 +176,7 @@ Options for configuring Flink's security and secure interaction with external sy
 
 ### SSL
 
-Flink's network connections can be secured via SSL. Please refer to the [SSL Setup Docs]({{< ref "/deployment/security/security-ssl" >}}) for detailed setup guide and background.
+Flink's network connections can be secured via SSL. Please refer to the [SSL Setup Docs]({{< ref "docs/deployment/security/security-ssl" >}}) for detailed setup guide and background.
 
 {{< generate/security_ssl_section >}}
 
@@ -191,7 +191,7 @@ These options are necessary when connecting to a secured ZooKeeper quorum.
 
 **Kerberos-based Authentication / Authorization**
 
-Please refer to the [Flink and Kerberos Docs]({{< ref "/deployment/security/security-kerberos" >}}) for a setup guide and a list of external system to which Flink can authenticate itself via Kerberos.
+Please refer to the [Flink and Kerberos Docs]({{< ref "docs/deployment/security/security-kerberos" >}}) for a setup guide and a list of external system to which Flink can authenticate itself via Kerberos.
 
 {{< generate/security_auth_kerberos_section >}}
 
@@ -203,7 +203,7 @@ Please refer to the [Flink and Kerberos Docs]({{< ref "/deployment/security/secu
 This section contains options related to integrating Flink with resource orchestration frameworks, like Kubernetes, Yarn, Mesos, etc.
 
 Note that is not always necessary to integrate Flink with the resource orchestration framework.
-For example, you can easily deploy Flink applications on Kubernetes without Flink knowing that it runs on Kubernetes (and without specifying any of the Kubernetes config options here.) See [this setup guide]({{< ref "/deployment/resource-providers/standalone/kubernetes" >}}) for an example.
+For example, you can easily deploy Flink applications on Kubernetes without Flink knowing that it runs on Kubernetes (and without specifying any of the Kubernetes config options here.) See [this setup guide]({{< ref "docs/deployment/resource-providers/standalone/kubernetes" >}}) for an example.
 
 The options in this section are necessary for setups where Flink itself actively requests and releases resources from the orchestrators.
 
@@ -228,7 +228,7 @@ The options in this section are necessary for setups where Flink itself actively
 
 # State Backends
 
-Please refer to the [State Backend Documentation]({{< ref "/ops/state/state_backends" >}}) for background on State Backends.
+Please refer to the [State Backend Documentation]({{< ref "docs/ops/state/state_backends" >}}) for background on State Backends.
 
 ### RocksDB State Backend
 
@@ -241,7 +241,7 @@ These are the options commonly needed to configure the RocksDB state backend. Se
 
 # Metrics
 
-Please refer to the [metrics system documentation]({{< ref "/ops/metrics" >}}) for background on Flink's metrics infrastructure.
+Please refer to the [metrics system documentation]({{< ref "docs/ops/metrics" >}}) for background on Flink's metrics infrastructure.
 
 {{< generate/metric_configuration >}}
 
@@ -263,7 +263,7 @@ Enabling RocksDB's native metrics may cause degraded performance and should be s
 
 The history server keeps the information of completed jobs (graphs, runtimes, statistics). To enable it, you have to enable "job archiving" in the JobManager (`jobmanager.archive.fs.dir`).
 
-See the [History Server Docs]({{< ref "/deployment/advanced/historyserver" >}}) for details.
+See the [History Server Docs]({{< ref "docs/deployment/advanced/historyserver" >}}) for details.
 
 {{< generate/history_server_configuration >}}
 
@@ -277,7 +277,7 @@ See the [History Server Docs]({{< ref "/deployment/advanced/historyserver" >}}) 
 ### Queryable State
 
 *Queryable State* is an experimental features that gives lets you access Flink's internal state like a key/value store.
-See the [Queryable State Docs]({{< ref "/dev/stream/state/queryable_state" >}}) for details.
+See the [Queryable State Docs]({{< ref "docs/dev/datastream/fault-tolerance/queryable_state" >}}) for details.
 
 {{< generate/queryable_state_configuration >}}
 
@@ -294,7 +294,7 @@ See the [Queryable State Docs]({{< ref "/dev/stream/state/queryable_state" >}}) 
 
 Flink dynamically loads the code for jobs submitted to a session cluster. In addition, Flink tries to hide many dependencies in the classpath from the application. This helps to reduce dependency conflicts between the application code and the dependencies in the classpath.
 
-Please refer to the [Debugging Classloading Docs]({{< ref "/ops/debugging/debugging_classloading" >}}) for details.
+Please refer to the [Debugging Classloading Docs]({{< ref "docs/ops/debugging/debugging_classloading" >}}) for details.
 
 {{< generate/expert_class_loading_section >}}
 

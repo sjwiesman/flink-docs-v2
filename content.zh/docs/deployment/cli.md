@@ -36,9 +36,9 @@ It connects to the running JobManager specified in `conf/flink-config.yaml`.
 ## Job Lifecycle Management
 
 A prerequisite for the commands listed in this section to work is to have a running Flink deployment 
-like [Kubernetes]({{< ref "/deployment/resource-providers/native_kubernetes" >}}), 
-[YARN]({{< ref "/deployment/resource-providers/yarn" >}}) or any other option available. Feel free to 
-[start a Flink cluster locally]({{< ref "/deployment/resource-providers/standalone/index" >}}#starting-a-standalone-cluster-session-mode) 
+like [Kubernetes]({{< ref "docs/deployment/resource-providers/native_kubernetes" >}}), 
+[YARN]({{< ref "docs/deployment/resource-providers/yarn" >}}) or any other option available. Feel free to 
+[start a Flink cluster locally]({{< ref "docs/deployment/resource-providers/standalone/overview" >}}#starting-a-standalone-cluster-session-mode) 
 to try the commands on your own machine.
  
 ### Submitting a Job
@@ -76,7 +76,7 @@ $ export JOB_ID="cca7bc1061d61cf15238e92312c2fc20"
 ```
 
 There is another action called `run-application` available to run the job in 
-[Application Mode]({{< ref "/deployment/index" >}}#application-mode). This documentation does not address
+[Application Mode]({{< ref "docs/deployment/overview" >}}#application-mode). This documentation does not address
 this action individually as it works similarly to the `run` action in terms of the CLI frontend.
 
 ### Job Monitoring
@@ -96,7 +96,7 @@ Jobs that were submitted but not started, yet, would be listed under "Scheduled 
 
 ### Creating a Savepoint
 
-[Savepoints]({{< ref "/ops/state/savepoints" >}}) can be created to save the current state a job is 
+[Savepoints]({{< ref "docs/ops/state/savepoints" >}}) can be created to save the current state a job is 
 in. All that's needed is the JobID:
 ```bash
 $ ./bin/flink savepoint \
@@ -110,7 +110,7 @@ Savepoint completed. Path: file:/tmp/flink-savepoints/savepoint-cca7bc-bb1e257f0
 You can resume your program from this savepoint with the run command.
 ```
 The savepoint folder is optional and needs to be specified if 
-[state.savepoints.dir]({{< ref "/deployment/config" >}}#state-savepoints-dir) isn't set.
+[state.savepoints.dir]({{< ref "docs/deployment/config" >}}#state-savepoints-dir) isn't set.
 
 The path to the savepoint can be used later on to [restart the Flink job](#starting-a-job-from-a-savepoint).
 
@@ -161,7 +161,7 @@ Suspending job "cca7bc1061d61cf15238e92312c2fc20" with a savepoint.
 Savepoint completed. Path: file:/tmp/flink-savepoints/savepoint-cca7bc-bb1e257f0dab
 ```
 We have to use `--savepointPath` to specify the savepoint folder if 
-[state.savepoints.dir]({{< ref "/deployment/config" >}}#state-savepoints-dir) isn't set.
+[state.savepoints.dir]({{< ref "docs/deployment/config" >}}#state-savepoints-dir) isn't set.
 
 If the `--drain` flag is specified, then a `MAX_WATERMARK` will be emitted before the last checkpoint 
 barrier. This will make all registered event-time timers fire, thus flushing out any state that 
@@ -251,7 +251,7 @@ Here's an overview of actions supported by Flink's CLI tool:
         <tr>
             <td><code class="highlighter-rouge">run-application</code></td>
             <td>
-                This action executes jobs in <a href="{{< ref "/deployment/index" >}}#application-mode">
+                This action executes jobs in <a href="{{< ref "docs/deployment/overview" >}}#application-mode">
                 Application Mode</a>. Other than that, it requires the same parameters as the 
                 <code class="highlighter-rouge">run</code> action.
             </td>
@@ -274,7 +274,7 @@ Here's an overview of actions supported by Flink's CLI tool:
             <td>
                 This action can be used to create or disposing savepoints for a given job. It might be
                 necessary to specify a savepoint directory besides the JobID, if the 
-                <a href="{{< ref "/deployment/config" >}}#state-savepoints-dir">state.savepoints.dir</a> 
+                <a href="{{< ref "docs/deployment/config" >}}#state-savepoints-dir">state.savepoints.dir</a> 
                 parameter was not specified in <code class="highlighter-rouge">conf/flink-config.yaml</code>.
             </td>
         </tr>
@@ -304,22 +304,22 @@ or the usage information of each individual action `bin/flink <action> --help`.
  
 ### REST API
 
-The Flink cluster can be also managed using the [REST API]({{< ref "/ops/rest_api" >}}). The commands 
+The Flink cluster can be also managed using the [REST API]({{< ref "docs/ops/rest_api" >}}). The commands 
 described in previous sections are a subset of what is offered by Flink's REST endpoints. Therefore, 
 tools like `curl` can be used to get even more out of Flink.
 
 ### Selecting Deployment Targets
 
 Flink is compatible with multiple cluster management frameworks like 
-[Kubernetes]({{< ref "/deployment/resource-providers/native_kubernetes" >}}) or 
-[YARN]({{< ref "/deployment/resource-providers/yarn" >}}) which are described in more detail in the 
-Resource Provider section. Jobs can be submitted in different [Deployment Modes]({{< ref "/deployment/index" >}}#deployment-modes). 
+[Kubernetes]({{< ref "docs/deployment/resource-providers/native_kubernetes" >}}) or 
+[YARN]({{< ref "docs/deployment/resource-providers/yarn" >}}) which are described in more detail in the 
+Resource Provider section. Jobs can be submitted in different [Deployment Modes]({{< ref "docs/deployment/overview" >}}#deployment-modes). 
 The parameterization of a job submission differs based on the underlying framework and Deployment Mode. 
 
 `bin/flink` offers a parameter `--target` to handle the different options. In addition to that, jobs 
-have to be submitted using either `run` (for [Session]({{< ref "/deployment/index" >}}#session-mode) 
-and [Per-Job Mode]({{< ref "/deployment/index" >}}#per-job-mode)) or `run-application` (for 
-[Application Mode]({{< ref "/deployment/index" >}}#application-mode)). See the following summary of 
+have to be submitted using either `run` (for [Session]({{< ref "docs/deployment/overview" >}}#session-mode) 
+and [Per-Job Mode]({{< ref "docs/deployment/overview" >}}#per-job-mode)) or `run-application` (for 
+[Application Mode]({{< ref "docs/deployment/overview" >}}#application-mode)). See the following summary of 
 parameter combinations: 
 * YARN
   * `./bin/flink run --target yarn-session`: Submission to an already running Flink on YARN cluster
@@ -334,7 +334,7 @@ parameter combinations:
   * `./bin/flink run --target local`: Local submission using a MiniCluster in Session Mode
   * `./bin/flink run --target remote`: Submission to an already running Flink cluster
 
-The `--target` will overwrite the [execution.target]({{< ref "/deployment/config" >}}#execution-target) 
+The `--target` will overwrite the [execution.target]({{< ref "docs/deployment/config" >}}#execution-target) 
 specified in the `config/flink-config.yaml`.
 
 For more details on the commands and the available options, please refer to the Resource Provider-specific 
@@ -388,14 +388,14 @@ $ ./bin/flink run \
       --python examples/python/table/batch/word_count.py
 ```
 
-- Run a PyFlink job using a [YARN cluster in Per-Job Mode]({{< ref "/deployment/resource-providers/yarn" >}}#per-job-cluster-mode):
+- Run a PyFlink job using a [YARN cluster in Per-Job Mode]({{< ref "docs/deployment/resource-providers/yarn" >}}#per-job-cluster-mode):
 ```bash
 $ ./bin/flink run \
       --target yarn-per-job
       --python examples/python/table/batch/word_count.py
 ```
 
-- Run a PyFlink application on a native Kubernetes cluster having the cluster ID `<ClusterId>`, it requires a docker image with PyFlink installed, please refer to [Enabling PyFlink in docker]({{< ref "/deployment/resource-providers/standalone/docker" >}}#enabling-python):
+- Run a PyFlink application on a native Kubernetes cluster having the cluster ID `<ClusterId>`, it requires a docker image with PyFlink installed, please refer to [Enabling PyFlink in docker]({{< ref "docs/deployment/resource-providers/standalone/docker" >}}#enabling-python):
 ```bash
 $ ./bin/flink run-application \
       --target kubernetes-application \
@@ -409,7 +409,7 @@ $ ./bin/flink run-application \
       --pyFiles /opt/flink/examples/python/table/batch/word_count.py
 ```
 
-To learn more available options, please refer to [Kubernetes]({{< ref "/deployment/resource-providers/native_kubernetes" >}})
-or [YARN]({{< ref "/deployment/resource-providers/yarn" >}}) which are described in more detail in the
+To learn more available options, please refer to [Kubernetes]({{< ref "docs/deployment/resource-providers/native_kubernetes" >}})
+or [YARN]({{< ref "docs/deployment/resource-providers/yarn" >}}) which are described in more detail in the
 Resource Provider section.
 {{< top >}}

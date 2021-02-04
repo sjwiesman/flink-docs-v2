@@ -27,7 +27,7 @@ under the License.
 # Metric Reporters
 
 Flink allows reporting metrics to external systems.
-For more information about Flink's metric system go to the [metric system documentation]({{< ref "/ops/metrics" >}}).
+For more information about Flink's metric system go to the [metric system documentation]({{< ref "docs/ops/metrics" >}}).
 
 
 ## Reporter
@@ -63,7 +63,7 @@ metrics.reporter.my_other_reporter.port: 10000
 ```
 
 **Important:** The jar containing the reporter must be accessible when Flink is started. Reporters that support the
- `factory.class` property can be loaded as [plugins]({{< ref "/deployment/filesystems/plugins" >}}). Otherwise the jar must be placed
+ `factory.class` property can be loaded as [plugins]({{< ref "docs/deployment/filesystems/plugins" >}}). Otherwise the jar must be placed
  in the /lib folder. Reporters that are shipped with Flink (i.e., all reporters documented on this page) are available
  by default.
 
