@@ -37,7 +37,7 @@ The `CollectionEnvironment` is executing the Flink program on Java collections. 
 ## Debugging
 
 If you are running Flink programs locally, you can also debug your program like any other Java program. You can either use `System.out.println()` to write out some internal variables or you can use the debugger. It is possible to set breakpoints within `map()`, `reduce()` and all the other methods.
-Please also refer to the [debugging section]({{< ref "/dev/batch/index.zh" >}}#debugging) in the Java API documentation for a guide to testing and local debugging utilities in the Java API.
+Please also refer to the [debugging section]({{< ref "docs/dev/dataset/overview" >}}#debugging) in the Java API documentation for a guide to testing and local debugging utilities in the Java API.
 
 ## Maven Dependency
 
@@ -57,7 +57,7 @@ The `LocalEnvironment` is a handle to local execution for Flink programs. Use it
 
 The local environment is instantiated via the method `ExecutionEnvironment.createLocalEnvironment()`. By default, it will use as many local threads for execution as your machine has CPU cores (hardware contexts). You can alternatively specify the desired parallelism. The local environment can be configured to log to the console using `enableLogging()`/`disableLogging()`.
 
-In most cases, calling `ExecutionEnvironment.getExecutionEnvironment()` is the even better way to go. That method returns a `LocalEnvironment` when the program is started locally (outside the command line interface), and it returns a pre-configured environment for cluster execution, when the program is invoked by the [command line interface]({{< ref "/deployment/cli.zh" >}}).
+In most cases, calling `ExecutionEnvironment.getExecutionEnvironment()` is the even better way to go. That method returns a `LocalEnvironment` when the program is started locally (outside the command line interface), and it returns a pre-configured environment for cluster execution, when the program is invoked by the [command line interface]({{< ref "docs/deployment/cli" >}}).
 
 ```java
 public static void main(String[] args) throws Exception {

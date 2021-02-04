@@ -30,9 +30,8 @@ User-defined functions are important features, because they significantly extend
 
 **NOTE:** Python UDF execution requires Python version (3.5, 3.6, 3.7 or 3.8) with PyFlink installed. It's required on both the client side and the cluster side. 
 
-
-
 ## Scalar Functions
+
 It supports to use Python scalar functions in Python Table API programs. In order to define a Python scalar function,
 one can extend the base class `ScalarFunction` in `pyflink.table.udf` and implement an evaluation method.
 The behavior of a Python scalar function is defined by the evaluation method which is named `eval`.
@@ -234,7 +233,7 @@ def iterable_func(x):
 
 A user-defined aggregate function (_UDAGG_) maps scalar values of multiple rows to a new scalar value.
 
-**NOTE:** Currently the general user-defined aggregate function is only supported in the GroupBy aggregation of the blink planner in streaming mode. For batch mode or windowed aggregation, it's currently not supported and it is recommended to use the [Vectorized Aggregate Functions]({{< ref "/dev/python/table-api-users-guide/udfs/vectorized_python_udfs" >}}#vectorized-aggregate-functions).
+**NOTE:** Currently the general user-defined aggregate function is only supported in the GroupBy aggregation of the blink planner in streaming mode. For batch mode or windowed aggregation, it's currently not supported and it is recommended to use the [Vectorized Aggregate Functions]({{< ref "docs/dev/python/table/udfs/vectorized_python_udfs" >}}#vectorized-aggregate-functions).
 
 The behavior of an aggregate function is centered around the concept of an accumulator. The _accumulator_
 is an intermediate data structure that stores the aggregated values until a final aggregation result
@@ -247,9 +246,8 @@ aggregate function will be called to compute the aggregated result.
 
 The following example illustrates the aggregation process:
 
-<center>
-<img alt="UDAGG mechanism" src="{% link /fig/udagg-mechanism-python.png %}" width="80%">
-</center>
+{{< img alt="UDAGG mechanism" src="/fig/udagg-mechanism-python.png" width="80%" >}}
+
 
 In the above example, we assume a table that contains data about beverages. The table consists of three columns (`id`, `name`,
 and `price`) and 5 rows. We would like to find the highest price of all beverages in the table, i.e., perform
@@ -395,4 +393,4 @@ Please refer to the [documentation of the corresponding classes]({{ site.pythond
 **NOTE:** For reducing the data transmission cost between Python UDF worker and Java process caused by accessing the data in Flink states(e.g. accumulators and data views), 
 there is a cached layer between the raw state handler and the Python state backend. You can adjust the values of these configuration options to change the behavior of the cache layer for best performance:
 `python.state.cache-size`, `python.map-state.read-cache-size`, `python.map-state.write-cache-size`, `python.map-state.iterate-response-batch-size`.
-For more details please refer to the [Python Configuration Documentation]({{< ref "/dev/python/python_config" >}}).
+For more details please refer to the [Python Configuration Documentation]({{< ref "docs/dev/python/python_config" >}}).

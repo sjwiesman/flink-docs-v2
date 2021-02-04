@@ -112,16 +112,16 @@ table_env = BatchTableEnvironment.create(environment_settings=env_settings)
 
 ```
 
-关于创建 `TableEnvironment` 的更多细节，请查阅 [TableEnvironment 文档]({{< ref "/dev/python/table-api-users-guide/table_environment" >}}#create-a-tableenvironment)。
+关于创建 `TableEnvironment` 的更多细节，请查阅 [TableEnvironment 文档]({{< ref "docs/dev/python/table/table_environment" >}}#create-a-tableenvironment)。
 
 `TableEnvironment` 可以用来:
 
 * 创建 `Table`
 * 将 `Table` 注册成临时表
-* 执行 SQL 查询，更多细节可查阅 [SQL]({{< ref "/dev/table/sql/index" >}})
-* 注册用户自定义的 (标量，表值，或者聚合) 函数, 更多细节可查阅 [普通的用户自定义函数]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}) 和 [向量化的用户自定义函数]({{< ref "/dev/python/table-api-users-guide/udfs/vectorized_python_udfs" >}})
-* 配置作业，更多细节可查阅 [Python 配置]({{< ref "/dev/python/python_config" >}})
-* 管理 Python 依赖，更多细节可查阅 [依赖管理]({{< ref "/dev/python/table-api-users-guide/dependency_management" >}})
+* 执行 SQL 查询，更多细节可查阅 [SQL]({{< ref "docs/dev/table/sql/overview" >}})
+* 注册用户自定义的 (标量，表值，或者聚合) 函数, 更多细节可查阅 [普通的用户自定义函数]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}) 和 [向量化的用户自定义函数]({{< ref "docs/dev/python/table/udfs/vectorized_python_udfs" >}})
+* 配置作业，更多细节可查阅 [Python 配置]({{< ref "docs/dev/python/python_config" >}})
+* 管理 Python 依赖，更多细节可查阅 [依赖管理]({{< ref "docs/dev/python/table/dependency_management" >}})
 * 提交作业执行
 
 目前有2个可用的执行器 : flink 执行器 和 blink 执行器。
@@ -290,7 +290,7 @@ new_table.to_pandas()
 这些方法返回新的 `Table` 对象，表示对输入 `Table` 应用关系操作之后的结果。
 这些关系操作可以由多个方法调用组成，例如 `table.group_by(...).select(...)`。
 
-[Table API]({{< ref "/dev/table/tableApi" >}}?code_tab=python) 文档描述了流和批处理上所有支持的 Table API 操作。
+[Table API]({{< ref "docs/dev/table/tableApi" >}}?code_tab=python) 文档描述了流和批处理上所有支持的 Table API 操作。
 
 以下示例展示了一个简单的 Table API 聚合查询：
 
@@ -327,7 +327,7 @@ revenue.to_pandas()
 
 Flink 的 SQL 基于 [Apache Calcite](https://calcite.apache.org)，它实现了标准的 SQL。SQL 查询语句使用字符串来表达。
 
-[SQL]({{< ref "/dev/table/sql/index" >}}) 文档描述了 Flink 对流和批处理所支持的 SQL。
+[SQL]({{< ref "docs/dev/table/sql/overview" >}}) 文档描述了 Flink 对流和批处理所支持的 SQL。
 
 下面示例展示了一个简单的 SQL 聚合查询：
 
@@ -485,7 +485,7 @@ table.to_pandas()
 
 ### 将结果数据收集到客户端
 
-你可以调用 "to_pandas" 方法来 [将一个 `Table` 对象转化成 pandas DataFrame]({{< ref "/dev/python/table-api-users-guide/conversion_of_pandas" >}}#convert-pyflink-table-to-pandas-dataframe):
+你可以调用 "to_pandas" 方法来 [将一个 `Table` 对象转化成 pandas DataFrame]({{< ref "docs/dev/python/table/conversion_of_pandas" >}}#convert-pyflink-table-to-pandas-dataframe):
 
 ```python
 
@@ -600,7 +600,7 @@ Table API 提供了一种机制来查看 `Table` 的逻辑查询计划和优化�
 2. 优化后的逻辑查询计划，
 3. 物理执行计划。
 
-`TableEnvironment.explain_sql()` 和 `TableEnvironment.execute_sql()` 支持执行 `EXPLAIN` 语句获得执行计划。更多细节请查阅 [EXPLAIN]({{< ref "/dev/table/sql/explain" >}})。
+`TableEnvironment.explain_sql()` 和 `TableEnvironment.execute_sql()` 支持执行 `EXPLAIN` 语句获得执行计划。更多细节请查阅 [EXPLAIN]({{< ref "docs/dev/table/sql/explain" >}})。
 
 以下代码展示了如何使用 `Table.explain()` 方法：
 

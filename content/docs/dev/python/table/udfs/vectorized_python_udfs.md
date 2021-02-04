@@ -30,19 +30,17 @@ Vectorized Python user-defined functions are functions which are executed by tra
 The performance of vectorized Python user-defined functions are usually much higher than non-vectorized Python user-defined functions as the serialization/deserialization
 overhead and invocation overhead are much reduced. Besides, users could leverage the popular Python libraries such as Pandas, Numpy, etc for the vectorized Python user-defined functions implementation.
 These Python libraries are highly optimized and provide high-performance data structures and functions. It shares the similar way as the
-[non-vectorized user-defined functions]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}) on how to define vectorized user-defined functions.
+[non-vectorized user-defined functions]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}) on how to define vectorized user-defined functions.
 Users only need to add an extra parameter `func_type="pandas"` in the decorator `udf` or `udaf` to mark it as a vectorized user-defined function.
 
 **NOTE:** Python UDF execution requires Python version (3.5, 3.6, 3.7 or 3.8) with PyFlink installed. It's required on both the client side and the cluster side. 
-
-
 
 ## Vectorized Scalar Functions
 
 Vectorized Python scalar functions take `pandas.Series` as the inputs and return a `pandas.Series` of the same length as the output.
 Internally, Flink will split the input elements into batches, convert a batch of input elements into `Pandas.Series`
 and then call user-defined vectorized Python scalar functions for each batch of input elements. Please refer to the config option
-[python.fn-execution.arrow.batch.size]({{< ref "/dev/python/python_config" >}}#python-fn-execution-arrow-batch-size) for more details
+[python.fn-execution.arrow.batch.size]({{< ref "docs/dev/python/python_config" >}}#python-fn-execution-arrow-batch-size) for more details
 on how to configure the batch size.
 
 Vectorized Python scalar function could be used in any places where non-vectorized Python scalar functions could be used.
@@ -73,7 +71,7 @@ Vectorized Python aggregate functions takes one or more `pandas.Series` as the i
 
 Vectorized Python aggregate function could be used in `GroupBy Aggregation`(Batch), `GroupBy Window Aggregation`(Batch and Stream) and 
 `Over Window Aggregation`(Batch and Stream bounded over window). For more details on the usage of Aggregations, you can refer
-to [the relevant documentation]({{< ref "/dev/table/tableApi" >}}?code_tab=python#aggregations).
+to [the relevant documentation]({{< ref "docs/dev/table/tableApi" >}}?code_tab=python#aggregations).
 
 <span class="label label-info">Note</span> Pandas UDAF does not support partial aggregation. Besides, all the data for a group or window will be loaded into memory at the same time during execution and so you must make sure that the data of a group or window could fit into the memory.
 

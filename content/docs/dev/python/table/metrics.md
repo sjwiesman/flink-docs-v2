@@ -167,11 +167,11 @@ function_context
 
 ### System Scope
 
-You can refer to the Java metric document for more details on [System Scope]({{< ref "/ops/metrics" >}}#system-scope).
+You can refer to the Java metric document for more details on [System Scope]({{< ref "docs/ops/metrics" >}}#system-scope).
 
 ### List of all Variables
 
-You can refer to the Java metric document for more details on [List of all Variables]({{< ref "/ops/metrics" >}}#list-of-all-variables).
+You can refer to the Java metric document for more details on [List of all Variables]({{< ref "docs/ops/metrics" >}}#list-of-all-variables).
 
 ### User Variables
 
@@ -194,11 +194,11 @@ function_context
 
 You can refer to the Java metric document for more details on the following sections:
 
-- [Reporter]({{< ref "/deployment/metric_reporters" >}}).
-- [System metrics]({{< ref "/ops/metrics" >}}#system-metrics).
-- [Latency tracking]({{< ref "/ops/metrics" >}}#latency-tracking).
-- [REST API integration]({{< ref "/ops/metrics" >}}#rest-api-integration).
-- [Dashboard integration]({{< ref "/ops/metrics" >}}#dashboard-integration).
+- [Reporter]({{< ref "docs/deployment/metric_reporters" >}}).
+- [System metrics]({{< ref "docs/ops/metrics" >}}#system-metrics).
+- [Latency tracking]({{< ref "docs/ops/metrics" >}}#latency-tracking).
+- [REST API integration]({{< ref "docs/ops/metrics" >}}#rest-api-integration).
+- [Dashboard integration]({{< ref "docs/ops/metrics" >}}#dashboard-integration).
 
 
 {{< top >}}

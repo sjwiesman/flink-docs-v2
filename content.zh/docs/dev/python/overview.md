@@ -3,6 +3,8 @@ title: Overview
 type: docs
 weight: 1
 bookToc: false
+aliases: 
+  - /zh/dev/python/
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
@@ -35,7 +37,7 @@ to leverage the full capabilities of the Flink ecosystem. Depending on the level
 need, there are two different APIs that can be used in PyFlink:
 
 * The **PyFlink Table API** allows you to write powerful relational queries in a way that is similar to using SQL or working with tabular data in Python.
-* At the same time, the **PyFlink DataStream API** gives you lower-level control over the core building blocks of Flink, [state]({{< ref "docs/concepts/stateful-stream-processing" >}}) and [time]({{< ref "docs/concepts/timely-stream-processing" >}}), to build more complex stream processing use cases.
+* At the same time, the **PyFlink DataStream API** gives you lower-level control over the core building blocks of Flink, [state]({{< ref "docs/concepts/stateful-stream-processing" >}}) and [time]({{< ref "docs/concepts/time" >}}), to build more complex stream processing use cases.
 
 {{< columns >}}
 
@@ -52,8 +54,8 @@ If you’re interested in playing around with Flink, try one of our tutorials:
 
 The reference documentation covers all the details. Some starting points:
 
-* [PyFlink DataStream API]({{< ref "docs/dev/python/table-/overview" >}})
-* [PyFlink Table API &amp; SQL]({{< ref "docs/dev/python/datastream/overview" >}})
+* [PyFlink DataStream API]({{< ref "docs/dev/python/table/table_environment" >}})
+* [PyFlink Table API &amp; SQL]({{< ref "docs/dev/python/datastream/operators" >}})
 
 {{< /columns >}}
 

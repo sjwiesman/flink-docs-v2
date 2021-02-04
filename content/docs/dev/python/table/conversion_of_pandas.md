@@ -28,8 +28,6 @@ under the License.
 
 PyFlink Table API supports conversion to and from Pandas DataFrame.
 
-
-
 ## Convert Pandas DataFrame to PyFlink Table
 
 Pandas DataFrames can be converted into a PyFlink Table.

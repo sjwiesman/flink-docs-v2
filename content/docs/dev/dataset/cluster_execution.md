@@ -34,7 +34,7 @@ are two ways to send a program to a cluster for execution:
 The command line interface lets you submit packaged programs (JARs) to a cluster
 (or single machine setup).
 
-Please refer to the [Command Line Interface]({{< ref "/deployment/cli" >}}) documentation for
+Please refer to the [Command Line Interface]({{< ref "docs/deployment/cli" >}}) documentation for
 details.
 
 ## Remote Environment

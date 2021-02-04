@@ -26,7 +26,7 @@ under the License.
 
 # Batch 示例
 
-以下示例展示了 Flink 从简单的WordCount到图算法的应用。示例代码展示了 [Flink's DataSet API]({{< ref "/dev/batch/index" >}}) 的使用。
+以下示例展示了 Flink 从简单的WordCount到图算法的应用。示例代码展示了 [Flink's DataSet API]({{< ref "docs/dev/dataset/overview" >}}) 的使用。
 
 完整的源代码可以在 Flink 源代码库的 {{< gh_link file="flink-examples/flink-examples-batch" file="flink-examples-batch" >}} 模块找到。
 

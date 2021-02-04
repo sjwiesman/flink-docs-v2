@@ -194,7 +194,7 @@ $ python WordCount.py
 ```
 
 上述命令会构建Python Table API程序，并在本地mini cluster中运行。如果想将作业提交到远端集群执行，
-可以参考[作业提交示例]({{< ref "/deployment/cli.zh" >}}#submitting-pyflink-jobs)。
+可以参考[作业提交示例]({{< ref "docs/deployment/cli" >}}#submitting-pyflink-jobs)。
 
 最后，你可以通过如下命令查看你的运行结果：
 

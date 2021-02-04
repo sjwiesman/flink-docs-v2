@@ -30,7 +30,7 @@ Flink exposes a metric system that allows gathering and exposing metrics to exte
 
 ## Registering metrics
 
-You can access the metric system from any user function that extends [RichFunction]({{< ref "/dev/user_defined_functions" >}}#rich-functions) by calling `getRuntimeContext().getMetricGroup()`.
+You can access the metric system from any user function that extends [RichFunction]({{< ref "docs/dev/datastream/user_defined_functions" >}}#rich-functions) by calling `getRuntimeContext().getMetricGroup()`.
 This method returns a `MetricGroup` object on which you can create and register new metrics.
 
 ### Metric types
@@ -538,7 +538,7 @@ counter = getRuntimeContext()
 
 ## Reporter
 
-For information on how to set up Flink's metric reporters please take a look at the [metric reporters documentation]({{< ref "/deployment/metric_reporters" >}}).
+For information on how to set up Flink's metric reporters please take a look at the [metric reporters documentation]({{< ref "docs/deployment/metric_reporters" >}}).
 
 ## System metrics
 
@@ -1150,7 +1150,7 @@ Note that for failed checkpoints, metrics are updated on a best efforts basis an
     <tr>
       <th rowspan="2"><strong>Task</strong></th>
       <td>checkpointAlignmentTime</td>
-      <td>The time in nanoseconds that the last barrier alignment took to complete, or how long the current alignment has taken so far (in nanoseconds). This is the time between receiving first and the last checkpoint barrier. You can find more information in the [Monitoring State and Checkpoints section]({{< ref "/ops/state/large_state_tuning" >}}#monitoring-state-and-checkpoints)</td>
+      <td>The time in nanoseconds that the last barrier alignment took to complete, or how long the current alignment has taken so far (in nanoseconds). This is the time between receiving first and the last checkpoint barrier. You can find more information in the [Monitoring State and Checkpoints section]({{< ref "docs/ops/state/large_state_tuning" >}}#monitoring-state-and-checkpoints)</td>
       <td>Gauge</td>
     </tr>
     <tr>
@@ -1162,7 +1162,7 @@ Note that for failed checkpoints, metrics are updated on a best efforts basis an
 </table>
 
 ### RocksDB
-Certain RocksDB native metrics are available but disabled by default, you can find full documentation [here]({{< ref "/deployment/config" >}}#rocksdb-native-metrics)
+Certain RocksDB native metrics are available but disabled by default, you can find full documentation [here]({{< ref "docs/deployment/config" >}}#rocksdb-native-metrics)
 
 ### IO
 <table class="table table-bordered">
@@ -1178,48 +1178,48 @@ Certain RocksDB native metrics are available but disabled by default, you can fi
     <tr>
       <th rowspan="1"><strong>Job (only available on TaskManager)</strong></th>
       <td>[&lt;source_id&gt;.[&lt;source_subtask_index&gt;.]]&lt;operator_id&gt;.&lt;operator_subtask_index&gt;.latency</td>
-      <td>The latency distributions from a given source (subtask) to an operator subtask (in milliseconds), depending on the <a href="{{< ref "/deployment/config" >}}#metrics-latency-granularity">latency granularity</a>.</td>
+      <td>The latency distributions from a given source (subtask) to an operator subtask (in milliseconds), depending on the <a href="{{< ref "docs/deployment/config" >}}#metrics-latency-granularity">latency granularity</a>.</td>
       <td>Histogram</td>
     </tr>
     <tr>
       <th rowspan="14"><strong>Task</strong></th>
       <td>numBytesInLocal</td>
-      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
+      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "docs/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
       <td>Counter</td>
     </tr>
     <tr>
       <td>numBytesInLocalPerSecond</td>
-      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
+      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "docs/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
       <td>Meter</td>
     </tr>
     <tr>
       <td>numBytesInRemote</td>
-      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
+      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "docs/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
       <td>Counter</td>
     </tr>
     <tr>
       <td>numBytesInRemotePerSecond</td>
-      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
+      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "docs/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
       <td>Meter</td>
     </tr>
     <tr>
       <td>numBuffersInLocal</td>
-      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
+      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "docs/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
       <td>Counter</td>
     </tr>
     <tr>
       <td>numBuffersInLocalPerSecond</td>
-      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
+      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "docs/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
       <td>Meter</td>
     </tr>
     <tr>
       <td>numBuffersInRemote</td>
-      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
+      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "docs/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
       <td>Counter</td>
     </tr>
     <tr>
       <td>numBuffersInRemotePerSecond</td>
-      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
+      <td><span class="label label-danger">Attention:</span> deprecated, use <a href="{{< ref "docs/ops/metrics" >}}#default-shuffle-service">Default shuffle service metrics</a>.</td>
       <td>Meter</td>
     </tr>
     <tr>
@@ -1611,7 +1611,7 @@ logged by `SystemResourcesMetricsInitializer` during the startup.
 
 Flink allows to track the latency of records travelling through the system. This feature is disabled by default.
 To enable the latency tracking you must set the `latencyTrackingInterval` to a positive number in either the
-[Flink configuration]({{< ref "/deployment/config" >}}#metrics-latency-interval) or `ExecutionConfig`.
+[Flink configuration]({{< ref "docs/deployment/config" >}}#metrics-latency-interval) or `ExecutionConfig`.
 
 At the `latencyTrackingInterval`, the sources will periodically emit a special record, called a `LatencyMarker`.
 The marker contains a timestamp from the time when the record has been emitted at the sources.
@@ -1625,7 +1625,7 @@ the markers will reflect that.
 
 The `LatencyMarker`s are used to derive a distribution of the latency between the sources of the topology and each 
 downstream operator. These distributions are reported as histogram metrics. The granularity of these distributions can 
-be controlled in the [Flink configuration]({{< ref "/deployment/config" >}}#metrics-latency-interval). For the highest 
+be controlled in the [Flink configuration]({{< ref "docs/deployment/config" >}}#metrics-latency-interval). For the highest 
 granularity `subtask` Flink will derive the latency distribution between every source subtask and every downstream 
 subtask, which results in quadratic (in the terms of the parallelism) number of histograms. 
 
@@ -1638,7 +1638,7 @@ purposes.
 
 ## REST API integration
 
-Metrics can be queried through the [Monitoring REST API]({{< ref "/ops/rest_api" >}}).
+Metrics can be queried through the [Monitoring REST API]({{< ref "docs/ops/rest_api" >}}).
 
 Below is a list of available endpoints, with a sample JSON response. All endpoints are of the sample form `http://hostname:8081/jobmanager/metrics`, below we list only the *path* part of the URLs.
 

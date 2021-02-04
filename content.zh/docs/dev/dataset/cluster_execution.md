@@ -36,7 +36,7 @@ Flink 程序可以分布式运行在多机器集群上。有两种方式可以�
 
 命令行界面使你可以将打包的程序（JARs）提交到集群（或单机设置）。
 
-有关详细信息，请参阅[命令行界面]({{< ref "/deployment/cli.zh" >}})文档。
+有关详细信息，请参阅[命令行界面]({{< ref "docs/deployment/cli" >}})文档。
 
 <a name="remote-environment"></a>
 

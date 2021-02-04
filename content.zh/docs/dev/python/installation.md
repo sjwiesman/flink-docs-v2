@@ -50,11 +50,11 @@ $ ls /usr/bin/python*
 ln -s /usr/bin/python3 python
 ```
 
-除了软链接的方式，你也可以选择创建一个Python virtual env（`venv`）的方式。关于如何创建一个virtual env，你可以参考[准备Python虚拟环境]({{< ref "/dev/python/faq.zh" >}}#preparing-python-virtual-environment)
+除了软链接的方式，你也可以选择创建一个Python virtual env（`venv`）的方式。关于如何创建一个virtual env，你可以参考[准备Python虚拟环境]({{< ref "docs/dev/python/faq" >}}#preparing-python-virtual-environment)
 
 如果你不想使用软链接的方式改变系统`python`解释器的指向的话，你可以使用配置的方式指定Python解释器。
-关于指定编译作业使用的Python解释器，你可以参考[python client executable]({{< ref "/dev/python/python_config.zh" >}}#python-client-executable)
-关于指定执行python udf worker使用Python解释器，你可以参考[python executable]({{< ref "/dev/python/python_config.zh" >}}#python-executable)
+关于指定编译作业使用的Python解释器，你可以参考[python client executable]({{< ref "docs/dev/python/python_config" >}}#python-client-executable)
+关于指定执行python udf worker使用Python解释器，你可以参考[python executable]({{< ref "docs/dev/python/python_config" >}}#python-executable)
 
 ## PyFlink 安装
 
@@ -71,6 +71,6 @@ $ python -m pip install apache-flink
 ```
 {{< /unstable >}}
 
-您也可以从源码手动构建PyFlink，具体可以参见[开发指南]({{< ref "/flinkDev/building.zh" >}}#build-pyflink).
+您也可以从源码手动构建PyFlink，具体可以参见[开发指南]({{< ref "docs/flinkDev/building" >}}#build-pyflink).
 
 <span class="label label-info">注意</span> 从Flink 1.11版本开始, PyFlink作业支持在Windows系统上运行，因此您也可以在Windows上开发和调试PyFlink作业了。
