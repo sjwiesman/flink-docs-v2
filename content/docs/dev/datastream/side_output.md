@@ -27,8 +27,6 @@ under the License.
 
 # Side Outputs
 
-
-
 In addition to the main stream that results from `DataStream` operations, you can also produce any
 number of additional side output result streams. The type of data in the result streams does not
 have to match the type of data in the main stream and the types of the different side outputs can
@@ -59,11 +57,11 @@ contains.
 
 Emitting data to a side output is possible from the following functions:
 
-- [ProcessFunction]({{< ref "/dev/stream/operators/process_function" >}})
-- [KeyedProcessFunction]({{< ref "/dev/stream/operators/process_function" >}}#the-keyedprocessfunction)
+- [ProcessFunction]({{< ref "docs/dev/datastream/operators/process_function" >}})
+- [KeyedProcessFunction]({{< ref "docs/dev/datastream/operators/process_function" >}}#the-keyedprocessfunction)
 - CoProcessFunction
 - KeyedCoProcessFunction
-- [ProcessWindowFunction]({{< ref "/dev/stream/operators/windows" >}}#processwindowfunction)
+- [ProcessWindowFunction]({{< ref "docs/dev/datastream/operators/windows" >}}#processwindowfunction)
 - ProcessAllWindowFunction
 
 You can use the `Context` parameter, which is exposed to users in the above functions, to emit

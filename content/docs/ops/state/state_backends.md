@@ -32,7 +32,7 @@ Programs written in the [Data Stream API]({{< ref "docs/dev/datastream/overview"
 - Transformation functions may use the key/value state interface to store values
 - Transformation functions may implement the `CheckpointedFunction` interface to make their local variables fault tolerant
 
-See also [state section]({{< ref "docs/dev/datastream/fault-tolerance/overview" >}}) in the streaming API guide.
+See also [state section]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}) in the streaming API guide.
 
 When checkpointing is activated, such state is persisted upon checkpoints to guard against data loss and recover consistently.
 How the state is represented internally, and how and where it is persisted upon checkpoints depends on the

@@ -37,9 +37,6 @@ under the License.
 在启动 CheckPoint 机制时，状态会随着 CheckPoint 而持久化，以防止数据丢失、保障恢复时的一致性。
 状态内部的存储格式、状态在 CheckPoint 时如何持久化以及持久化在哪里均取决于选择的 **State Backend**。
 
-* ToC
-
-
 # 可用的 State Backends
 
 Flink 内置了以下这些开箱即用的 state backends ：

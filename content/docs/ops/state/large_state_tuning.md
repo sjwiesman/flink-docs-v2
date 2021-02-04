@@ -100,7 +100,7 @@ When a savepoint is manually triggered, it may be in process concurrently with a
 ## Tuning RocksDB
 
 The state storage workhorse of many large scale Flink streaming applications is the *RocksDB State Backend*.
-The backend scales well beyond main memory and reliably stores large [keyed state]({{< ref "docs/dev/stream/state/state" >}}).
+The backend scales well beyond main memory and reliably stores large [keyed state]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}).
 
 RocksDB's performance can vary with configuration, this section outlines some best-practices for tuning jobs that use the RocksDB State Backend.
 

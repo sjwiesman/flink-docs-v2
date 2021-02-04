@@ -32,7 +32,7 @@ that users deploy on Flink means this isn't always possible. To provide the most
 Flink allows both high level and fine-grained tuning of memory allocation within clusters.
 
 The further described memory configuration is applicable starting with the release version *1.10* for TaskManager and
-*1.11* for JobManager processes. If you upgrade Flink from earlier versions, check the [migration guide]({{< ref "/deployment/memory/mem_migration" >}})
+*1.11* for JobManager processes. If you upgrade Flink from earlier versions, check the [migration guide]({{< ref "docs/deployment/memory/mem_migration" >}})
 because many changes were introduced with the *1.10* and *1.11* releases.
 
 ## Configure Total Memory
@@ -49,31 +49,31 @@ The simplest way to setup memory in Flink is to configure either of the two foll
 
 | &nbsp;&nbsp;**Component**&nbsp;&nbsp; | &nbsp;&nbsp;**Option for TaskManager**&nbsp;&nbsp;                                 | &nbsp;&nbsp;**Option for JobManager**&nbsp;&nbsp;                                |
 | :------------------------------------ | :---------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------- |
-| Total Flink memory                    | [`taskmanager.memory.flink.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-flink-size)     | [`jobmanager.memory.flink.size`]({{< ref "/deployment/config" >}}#jobmanager-memory-flink-size)     |
-| Total process memory                  | [`taskmanager.memory.process.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-process-size) | [`jobmanager.memory.process.size`]({{< ref "/deployment/config" >}}#jobmanager-memory-process-size) |
+| Total Flink memory                    | [`taskmanager.memory.flink.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-flink-size)     | [`jobmanager.memory.flink.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-flink-size)     |
+| Total process memory                  | [`taskmanager.memory.process.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-process-size) | [`jobmanager.memory.process.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-process-size) |
 {:.table-bordered}
 <br/>
 
 {{< hint info >}}
-For local execution, see detailed information for [TaskManager]({{< ref "/deployment/memory/mem_setup_tm" >}}#local-execution) and [JobManager]({{< ref "/deployment/memory/mem_setup_jobmanager" >}}#local-execution) processes.
+For local execution, see detailed information for [TaskManager]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#local-execution) and [JobManager]({{< ref "docs/deployment/memory/mem_setup_jobmanager" >}}#local-execution) processes.
 {{< /hint >}}
 
 The rest of the memory components will be adjusted automatically, based on default values or additionally configured options.
-See also how to set up other components for [TaskManager]({{< ref "/deployment/memory/mem_setup_tm" >}}) and [JobManager]({{< ref "/deployment/memory/mem_setup_jobmanager" >}}) memory.
+See also how to set up other components for [TaskManager]({{< ref "docs/deployment/memory/mem_setup_tm" >}}) and [JobManager]({{< ref "docs/deployment/memory/mem_setup_jobmanager" >}}) memory.
 
-Configuring *total Flink memory* is better suited for [standalone deployments]({{< ref "/deployment/resource-providers/standalone/index" >}})
+Configuring *total Flink memory* is better suited for [standalone deployments]({{< ref "docs/deployment/resource-providers/standalone/overview" >}})
 where you want to declare how much memory is given to Flink itself. The *total Flink memory* splits up into *JVM Heap*
 and *Off-heap* memory.
-See also [how to configure memory for standalone deployments]({{< ref "/deployment/memory/mem_tuning" >}}#configure-memory-for-standalone-deployment).
+See also [how to configure memory for standalone deployments]({{< ref "docs/deployment/memory/mem_tuning" >}}#configure-memory-for-standalone-deployment).
 
 If you configure *total process memory* you declare how much memory in total should be assigned to the Flink *JVM process*.
 For the containerized deployments it corresponds to the size of the requested container, see also
-[how to configure memory for containers]({{< ref "/deployment/memory/mem_tuning" >}}#configure-memory-for-containers)
-([Kubernetes]({{< ref "/deployment/resource-providers/standalone/kubernetes" >}}), [Yarn]({{< ref "/deployment/resource-providers/yarn" >}}) or [Mesos]({{< ref "/deployment/resource-providers/mesos" >}})).
+[how to configure memory for containers]({{< ref "docs/deployment/memory/mem_tuning" >}}#configure-memory-for-containers)
+([Kubernetes]({{< ref "docs/deployment/resource-providers/standalone/kubernetes" >}}), [Yarn]({{< ref "docs/deployment/resource-providers/yarn" >}}) or [Mesos]({{< ref "docs/deployment/resource-providers/mesos" >}})).
 
 Another way to set up the memory is to configure the required internal components of the *total Flink memory* which are
-specific to the concrete Flink process. Check how to configure them for [TaskManager]({{< ref "/deployment/memory/mem_setup_tm" >}}#configure-heap-and-managed-memory)
-and for [JobManager]({{< ref "/deployment/memory/mem_setup_jobmanager" >}}#configure-jvm-heap).
+specific to the concrete Flink process. Check how to configure them for [TaskManager]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#configure-heap-and-managed-memory)
+and for [JobManager]({{< ref "docs/deployment/memory/mem_setup_jobmanager" >}}#configure-jvm-heap).
 
 One of the three mentioned ways has to be used to configure Flink’s memory
 (except for local execution), or the Flink startup will fail. This means that one of the following option subsets,
@@ -81,9 +81,9 @@ which do not have default values, have to be configured explicitly:
 
 | &nbsp;&nbsp;**for TaskManager:**&nbsp;&nbsp;                                                                                                                                        | &nbsp;&nbsp;**for JobManager:**&nbsp;&nbsp;                                      |
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------- |
-| [`taskmanager.memory.flink.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-flink-size)                                                                                                       | [`jobmanager.memory.flink.size`]({{< ref "/deployment/config" >}}#jobmanager-memory-flink-size)     |
-| [`taskmanager.memory.process.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-process-size)                                                                                                   | [`jobmanager.memory.process.size`]({{< ref "/deployment/config" >}}#jobmanager-memory-process-size) |
-| [`taskmanager.memory.task.heap.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-task-heap-size) <br/> and [`taskmanager.memory.managed.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-managed-size) | [`jobmanager.memory.heap.size`]({{< ref "/deployment/config" >}}#jobmanager-memory-heap-size)       |
+| [`taskmanager.memory.flink.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-flink-size)                                                                                                       | [`jobmanager.memory.flink.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-flink-size)     |
+| [`taskmanager.memory.process.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-process-size)                                                                                                   | [`jobmanager.memory.process.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-process-size) |
+| [`taskmanager.memory.task.heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-task-heap-size) <br/> and [`taskmanager.memory.managed.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-managed-size) | [`jobmanager.memory.heap.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-heap-size)       |
 {:.table-bordered}
 <br/>
 
@@ -105,16 +105,16 @@ or derived memory component sizes:
 | *-XX:MaxMetaspaceSize*                                                                 | JVM Metaspace                                      | JVM Metaspace                                     |
 {:.table-bordered}
 (\*) Keep in mind that you might not be able to use the full amount of heap memory depending on the GC algorithm used. Some GC algorithms allocate a certain amount of heap memory for themselves. 
-This will lead to a different maximum being returned by the [Heap metrics]({{< ref "/ops/metrics" >}}#memory).
+This will lead to a different maximum being returned by the [Heap metrics]({{< ref "docs/ops/metrics" >}}#memory).
 <br/>
 (\*\*) Notice, that the native non-direct usage of memory in user code can be also accounted for as a part of the off-heap memory.
 <br/>
 (\*\*\*) The *JVM Direct memory limit* is added for JobManager process only if the corresponding option
-[`jobmanager.memory.enable-jvm-direct-memory-limit`]({{< ref "/deployment/config" >}}#jobmanager-memory-enable-jvm-direct-memory-limit) is set. 
+[`jobmanager.memory.enable-jvm-direct-memory-limit`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-enable-jvm-direct-memory-limit) is set. 
 <br/><br/>
 
-Check also the detailed memory model for [TaskManager]({{< ref "/deployment/memory/mem_setup_tm" >}}#detailed-memory-model) and
-[JobManager]({{< ref "/deployment/memory/mem_setup_jobmanager" >}}#detailed-configuration) to understand how to configure the relevant components.
+Check also the detailed memory model for [TaskManager]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#detailed-memory-model) and
+[JobManager]({{< ref "docs/deployment/memory/mem_setup_jobmanager" >}}#detailed-configuration) to understand how to configure the relevant components.
 
 ## Capped Fractionated Components
 
@@ -123,8 +123,8 @@ This section describes the configuration details of options which can be a fract
 * *JVM Overhead* can be a fraction of the *total process memory*
 * *Network memory* can be a fraction of the *total Flink memory* (only for TaskManager)
 
-Check also the detailed memory model for [TaskManager]({{< ref "/deployment/memory/mem_setup_tm" >}}#detailed-memory-model) and
-[JobManager]({{< ref "/deployment/memory/mem_setup_jobmanager" >}}#detailed-configuration) to understand how to configure the relevant components.
+Check also the detailed memory model for [TaskManager]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#detailed-memory-model) and
+[JobManager]({{< ref "docs/deployment/memory/mem_setup_jobmanager" >}}#detailed-configuration) to understand how to configure the relevant components.
 
 The size of those components always has to be between its maximum and minimum value, otherwise Flink startup will fail.
 The maximum and minimum values have defaults or can be explicitly set by corresponding configuration options.

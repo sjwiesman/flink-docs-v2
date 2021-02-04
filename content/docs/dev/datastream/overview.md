@@ -35,8 +35,7 @@ The execution can happen in a local JVM, or on clusters of many machines.
 
 In order to create your own Flink DataStream program, we encourage you to start
 with [anatomy of a Flink Program](#anatomy-of-a-flink-program) and gradually
-add your own [stream transformations]({{< ref "/dev/stream/operators/index" >}}). The remaining sections act as references
-for additional operations and advanced features.
+add your own [stream transformations]({{< ref "docs/dev/datastream/operators/overview" >}}). The remaining sections act as references for additional operations and advanced features.
 
 What is a DataStream?
 ----------------------
@@ -69,8 +68,7 @@ program consists of the same basic parts:
 4. Specify where to put the results of your computations,
 5. Trigger the program execution
 
-
-{{< tabs "6d0b787a-2ad8-4a56-9260-c1eff2035377" >}}
+{{< tabs "fa68701c-59e8-4509-858e-3e8a123eeacf" >}}
 {{< tab "Java" >}}
 
 
@@ -95,7 +93,7 @@ Typically, you only need to use `getExecutionEnvironment()`, since this will do
 the right thing depending on the context: if you are executing your program
 inside an IDE or as a regular Java program it will create a local environment
 that will execute your program on your local machine. If you created a JAR file
-from your program, and invoke it through the [command line]({{< ref "/deployment/cli" >}}), the Flink cluster manager will execute your main method and
+from your program, and invoke it through the [command line]({{< ref "docs/deployment/cli" >}}), the Flink cluster manager will execute your main method and
 `getExecutionEnvironment()` will return an execution environment for executing
 your program on a cluster.
 
@@ -164,7 +162,7 @@ Typically, you only need to use `getExecutionEnvironment()`, since this will do
 the right thing depending on the context: if you are executing your program
 inside an IDE or as a regular Java program it will create a local environment
 that will execute your program on your local machine. If you created a JAR file
-from your program, and invoke it through the [command line]({{< ref "/deployment/cli" >}}), the Flink cluster manager will execute your main method and
+from your program, and invoke it through the [command line]({{< ref "docs/deployment/cli" >}}), the Flink cluster manager will execute your main method and
 `getExecutionEnvironment()` will return an execution environment for executing
 your program on a cluster.
 
@@ -248,7 +246,7 @@ Example Program
 The following program is a complete, working example of streaming window word count application, that counts the
 words coming from a web socket in 5 second windows. You can copy &amp; paste the code to run it locally.
 
-{{< tabs "14fa5bf6-6e72-41c2-a0b8-e101ee0e3b14" >}}
+{{< tabs "7ef5e21b-c24f-404f-af39-e21231b15e0d" >}}
 {{< tab "Java" >}}
 
 ```java
@@ -288,6 +286,7 @@ public class WindowWordCount {
 
 }
 ```
+
 {{< /tab >}}
 {{< tab "Scala" >}}
 ```scala
@@ -331,7 +330,7 @@ word count program. If you want to see counts greater than 1, type the same word
 Data Sources
 ------------
 
-{{< tabs "b55abb9a-d6ca-4ba1-a8e7-773c880a3583" >}}
+{{< tabs "8104e62c-db79-40b0-8519-0063e9be791f" >}}
 {{< tab "Java" >}}
 
 Sources are where your program reads its input from. You can attach a source to your program by
@@ -384,7 +383,7 @@ Collection-based:
 Custom:
 
 - `addSource` - Attach a new source function. For example, to read from Apache Kafka you can use
-    `addSource(new FlinkKafkaConsumer<>(...))`. See [connectors]({{< ref "/dev/connectors/index" >}}) for more details.
+    `addSource(new FlinkKafkaConsumer<>(...))`. See [connectors]({{< ref "docs/connectors/datastream/overview" >}}) for more details.
 
 {{< /tab >}}
 {{< tab "Scala" >}}
@@ -439,7 +438,7 @@ Collection-based:
 Custom:
 
 - `addSource` - Attach a new source function. For example, to read from Apache Kafka you can use
-    `addSource(new FlinkKafkaConsumer<>(...))`. See [connectors]({{< ref "/dev/connectors/index" >}}) for more details.
+    `addSource(new FlinkKafkaConsumer<>(...))`. See [connectors]({{< ref "docs/connectors/datastream/overview" >}}) for more details.
 
 {{< /tab >}}
 {{< /tabs >}}
@@ -449,14 +448,14 @@ Custom:
 DataStream Transformations
 --------------------------
 
-Please see [operators]({{< ref "/dev/stream/operators/index" >}}) for an overview of the available stream transformations.
+Please see [operators]({{< ref "docs/dev/datastream/operators/overview" >}}) for an overview of the available stream transformations.
 
 {{< top >}}
 
 Data Sinks
 ----------
 
-{{< tabs "79428c5d-b01e-478d-b950-4ce35a6b8721" >}}
+{{< tabs "355a7803-ea54-44b2-9970-e0cdd58a959b" >}}
 {{< tab "Java" >}}
 
 Data sinks consume DataStreams and forward them to files, sockets, external systems, or print them.
@@ -484,8 +483,6 @@ greater than 1, the output will also be prepended with the identifier of the tas
 
 {{< /tab >}}
 {{< tab "Scala" >}}
-
-
 
 Data sinks consume DataStreams and forward them to files, sockets, external systems, or print them.
 Flink comes with a variety of built-in output formats that are encapsulated behind operations on the
@@ -528,12 +525,12 @@ for exactly-once semantics.
 Iterations
 ----------
 
-{{< tabs "7a03b242-c624-498a-9da6-12cebb70c525" >}}
+{{< tabs "c4cc97af-7ce1-4333-a010-3072b34d5540" >}}
 {{< tab "Java" >}}
 
 Iterative streaming programs implement a step function and embed it into an `IterativeStream`. As a DataStream
 program may never finish, there is no maximum number of iterations. Instead, you need to specify which part
-of the stream is fed back to the iteration and which part is forwarded downstream using a [side output]({{< ref "/dev/stream/side_output" >}})
+of the stream is fed back to the iteration and which part is forwarded downstream using a [side output]({{< ref "docs/dev/datastream/side_output" >}})
 or a `filter`. Here, we show an example using filters. First, we define an `IterativeStream`
 
 ```java
@@ -594,7 +591,7 @@ DataStream<Long> lessThanZero = minusOne.filter(new FilterFunction<Long>() {
 
 Iterative streaming programs implement a step function and embed it into an `IterativeStream`. As a DataStream
 program may never finish, there is no maximum number of iterations. Instead, you need to specify which part
-of the stream is fed back to the iteration and which part is forwarded downstream using a [side output]({{< ref "/dev/stream/side_output" >}})
+of the stream is fed back to the iteration and which part is forwarded downstream using a [side output]({{< ref "docs/dev/datastream/side_output" >}})
 or a `filter`. Here, we show an example iteration where the body (the part of the computation that is repeated)
 is a simple map transformation, and the elements that are fed back are distinguished by the elements that
 are forwarded downstream using filters.
@@ -632,7 +629,7 @@ Execution Parameters
 
 The `StreamExecutionEnvironment` contains the `ExecutionConfig` which allows to set job specific configuration values for the runtime.
 
-Please refer to [execution configuration]({{< ref "/dev/execution_configuration" >}})
+Please refer to [execution configuration]({{< ref "docs/deployment/config" >}})
 for an explanation of most parameters. These parameters pertain specifically to the DataStream API:
 
 - `setAutoWatermarkInterval(long milliseconds)`: Set the interval for automatic watermark emission. You can
@@ -642,7 +639,7 @@ for an explanation of most parameters. These parameters pertain specifically to 
 
 ### Fault Tolerance
 
-[State & Checkpointing]({{< ref "/dev/stream/state/checkpointing" >}}) describes how to enable and configure Flink's checkpointing mechanism.
+[State & Checkpointing]({{< ref "docs/dev/datastream/fault-tolerance/checkpointing" >}}) describes how to enable and configure Flink's checkpointing mechanism.
 
 ### Controlling Latency
 
@@ -655,7 +652,7 @@ buffers are sent automatically even if they are not full. The default value for 
 
 Usage:
 
-{{< tabs "c783a2c7-fc52-485b-8c42-84420553cbfc" >}}
+{{< tabs "6988880d-fb9f-4f2e-93b6-54cb85fe374c" >}}
 {{< tab "Java" >}}
 ```java
 LocalStreamEnvironment env = StreamExecutionEnvironment.createLocalEnvironment();
@@ -699,7 +696,7 @@ program.
 
 A LocalEnvironment is created and used as follows:
 
-{{< tabs "95646c8e-2318-4507-9b71-f7868e8708a9" >}}
+{{< tabs "d4afc70f-dce0-43af-8a81-6714fecb34b2" >}}
 {{< tab "Java" >}}
 ```java
 final StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironment();
@@ -731,7 +728,7 @@ easily replaced by sources and sinks that read from / write to external systems.
 
 Collection data sources can be used as follows:
 
-{{< tabs "0a97797d-f52c-427f-b318-460e64d6e5db" >}}
+{{< tabs "d2a2ad42-e763-42bb-abbe-f812adf28953" >}}
 {{< tab "Java" >}}
 ```java
 final StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironment();
@@ -774,7 +771,7 @@ parallelism = 1).
 
 Flink also provides a sink to collect DataStream results for testing and debugging purposes. It can be used as follows:
 
-{{< tabs "57fa3349-a501-4f86-93b8-76552b2e9b66" >}}
+{{< tabs "125e228e-13b5-4c77-93a7-c0f436fcdd2f" >}}
 {{< tab "Java" >}}
 ```java
 import org.apache.flink.streaming.experimental.DataStreamUtils
@@ -796,17 +793,12 @@ val myOutput: Iterator[(String, Int)] = DataStreamUtils.collect(myResult.javaStr
 {{< /tab >}}
 {{< /tabs >}}
 
-{{< top >}}
-
-**Note:** `flink-streaming-contrib` module is removed from Flink 1.5.0.
-Its classes have been moved into `flink-streaming-java` and `flink-streaming-scala`.
-
 Where to go next?
 -----------------
 
-* [Operators]({{< ref "/dev/stream/operators/index" >}}): Specification of available streaming operators.
-* [Event Time]({{< ref "/dev/event_time" >}}): Introduction to Flink's notion of time.
-* [State & Fault Tolerance]({{< ref "/dev/stream/state/index" >}}): Explanation of how to develop stateful applications.
-* [Connectors]({{< ref "/dev/connectors/index" >}}): Description of available input and output connectors.
+* [Operators]({{< ref "docs/dev/datastream/operators/overview" >}}): Specification of available streaming operators.
+* [Event Time]({{< ref "docs/concepts/time" >}}): Introduction to Flink's notion of time.
+* [State & Fault Tolerance]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}): Explanation of how to develop stateful applications.
+* [Connectors]({{< ref "docs/connectors/datastream/overview" >}}): Description of available input and output connectors.
 
 {{< top >}}

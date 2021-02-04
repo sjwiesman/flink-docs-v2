@@ -28,7 +28,7 @@ under the License.
 
 ## What is a Savepoint? How is a Savepoint different from a Checkpoint?
 
-A Savepoint is a consistent image of the execution state of a streaming job, created via Flink's [checkpointing mechanism]({{< ref "/learn-flink/fault_tolerance" >}}). You can use Savepoints to stop-and-resume, fork,
+A Savepoint is a consistent image of the execution state of a streaming job, created via Flink's [checkpointing mechanism]({{< ref "docs/learn-flink/fault_tolerance" >}}). You can use Savepoints to stop-and-resume, fork,
 or update your Flink jobs. Savepoints consist of two parts: a directory with (typically large) binary files on stable storage (e.g. HDFS, S3, ...) and a (relatively small) meta data file. The files on stable storage represent the net data of the job's execution state
 image. The meta data file of a Savepoint contains (primarily) pointers to all files on stable storage that are part of the Savepoint, in form of relative paths.
 
@@ -83,7 +83,7 @@ In the above example, the print sink is stateless and hence not part of the save
 
 ## Operations
 
-You can use the [command line client]({{< ref "/deployment/cli" >}}#savepoints) to *trigger savepoints*, *cancel a job with a savepoint*, *resume from savepoints*, and *dispose savepoints*.
+You can use the [command line client]({{< ref "docs/deployment/cli" >}}#savepoints) to *trigger savepoints*, *cancel a job with a savepoint*, *resume from savepoints*, and *dispose savepoints*.
 
 With Flink >= 1.2.0 it is also possible to *resume from savepoints* using the webui.
 
@@ -116,7 +116,7 @@ Since Flink 1.11.0, savepoints can generally be moved by moving (or copying) the
 {{< hint info >}}
 There are two exceptions: 
 
-1) if [*entropy injection*]({{< ref "/deployment/filesystems/s3" >}}#entropy-injection-for-s3-file-systems) is activated: In that case the savepoint directory will not contain all savepoint data files,
+1) if [*entropy injection*]({{< ref "docs/deployment/filesystems/s3" >}}#entropy-injection-for-s3-file-systems) is activated: In that case the savepoint directory will not contain all savepoint data files,
 because the injected path entropy spreads the files over many directories. Lacking a common savepoint root directory, the savepoints will contain absolute path references, which prevent moving the directory.
 
 2) The job contains task-owned state, such as `GenericWriteAhreadLog` sink.
@@ -234,7 +234,7 @@ If you did not assign IDs, the auto generated IDs of the stateful operators will
 
 If the savepoint was triggered with Flink >= 1.2.0 and using no deprecated state API like `Checkpointed`, you can simply restore the program from a savepoint and specify a new parallelism.
 
-If you are resuming from a savepoint triggered with Flink < 1.2.0 or using now deprecated APIs you first have to migrate your job and savepoint to Flink >= 1.2.0 before being able to change the parallelism. See the [upgrading jobs and Flink versions guide]({{< ref "/ops/upgrading" >}}).
+If you are resuming from a savepoint triggered with Flink < 1.2.0 or using now deprecated APIs you first have to migrate your job and savepoint to Flink >= 1.2.0 before being able to change the parallelism. See the [upgrading jobs and Flink versions guide]({{< ref "docs/ops/upgrading" >}}).
 
 ### Can I move the Savepoint files on stable storage?
 

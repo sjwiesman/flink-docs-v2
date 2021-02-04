@@ -32,7 +32,7 @@ Checkpoints make state in Flink fault tolerant by allowing state and the
 corresponding stream positions to be recovered, thereby giving the application
 the same semantics as a failure-free execution.
 
-See [Checkpointing]({{< ref "/dev/stream/state/checkpointing" >}}) for how to enable and
+See [Checkpointing]({{< ref "docs/dev/datastream/fault-tolerance/checkpointing" >}}) for how to enable and
 configure checkpoints for your program.
 
 ## Retained Checkpoints
@@ -57,7 +57,7 @@ The `ExternalizedCheckpointCleanup` mode configures what happens with checkpoint
 
 ### Directory Structure
 
-Similarly to [savepoints]({{< ref "/ops/state/savepoints" >}}), a checkpoint consists
+Similarly to [savepoints]({{< ref "docs/ops/state/savepoints" >}}), a checkpoint consists
 of a meta data file and, depending on the state backend, some additional data
 files. The meta data file and data files are stored in the directory that is
 configured via `state.checkpoints.dir` in the configuration files, 
@@ -97,7 +97,7 @@ env.setStateBackend(new RocksDBStateBackend("hdfs:///checkpoints-data/"));
 
 ### Difference to Savepoints
 
-Checkpoints have a few differences from [savepoints]({{< ref "/ops/state/savepoints" >}}). They
+Checkpoints have a few differences from [savepoints]({{< ref "docs/ops/state/savepoints" >}}). They
 - use a state backend specific (low-level) data format, may be incremental.
 - do not support Flink specific features like rescaling.
 
@@ -105,7 +105,7 @@ Checkpoints have a few differences from [savepoints]({{< ref "/ops/state/savepoi
 
 A job may be resumed from a checkpoint just as from a savepoint
 by using the checkpoint's meta data file instead (see the
-[savepoint restore guide]({{< ref "/deployment/cli" >}}#restore-a-savepoint)). Note that if the
+[savepoint restore guide]({{< ref "docs/deployment/cli" >}}#restore-a-savepoint)). Note that if the
 meta data file is not self-contained, the jobmanager needs to have access to
 the data files it refers to (see [Directory Structure](#directory-structure)
 above).
@@ -121,7 +121,7 @@ Unaligned checkpoints may produce corrupted checkpoints in 1.12.0 and 1.12.1 and
 {{< /hint >}}
 
 Starting with Flink 1.11, checkpoints can be unaligned. 
-[Unaligned checkpoints]({{< ref "/concepts/stateful-stream-processing" >}}#unaligned-checkpointing) contain in-flight data (i.e., data stored in
+[Unaligned checkpoints]({{< ref "docs/concepts/stateful-stream-processing" >}}#unaligned-checkpointing) contain in-flight data (i.e., data stored in
 buffers) as part of the checkpoint state, which allows checkpoint barriers to
 overtake these buffers. Thus, the checkpoint duration becomes independent of the
 current throughput as checkpoint barriers are effectively not embedded into 

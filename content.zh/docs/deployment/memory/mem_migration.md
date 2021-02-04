@@ -26,7 +26,7 @@ under the License.
 
 # 升级指南
 
-在 *1.10* 和 *1.11* 版本中，Flink 分别对 [TaskManager]({{< ref "/deployment/memory/mem_setup_tm" >}}) 和 [JobManager]({{< ref "/deployment/memory/mem_setup_jobmanager.zh" >}}) 的内存配置方法做出了较大的改变。
+在 *1.10* 和 *1.11* 版本中，Flink 分别对 [TaskManager]({{< ref "docs/deployment/memory/mem_setup_tm" >}}) 和 [JobManager]({{< ref "docs/deployment/memory/mem_setup_jobmanager" >}}) 的内存配置方法做出了较大的改变。
 部分配置参数被移除了，或是语义上发生了变化。
 本篇升级指南将介绍如何将 [*Flink 1.9 及以前版本*](https://ci.apache.org/projects/flink/flink-docs-release-1.9/ops/mem_setup.html)的 TaskManager 内存配置升级到 *Flink 1.10 及以后版本*，
 以及如何将 *Flink 1.10 及以前版本*的 JobManager 内存配置升级到 *Flink 1.11 及以后版本*。
@@ -42,17 +42,17 @@ under the License.
 
 <span class="label label-info">提示</span>
 在 *1.10/1.11* 版本之前，Flink 不要求用户一定要配置 TaskManager/JobManager 内存相关的参数，因为这些参数都具有默认值。
-[新的内存配置]({{< ref "/deployment/memory/mem_setup.zh" >}}#configure-total-memory)要求用户至少指定下列配置参数（或参数组合）的其中之一，否则 Flink 将无法启动。
+[新的内存配置]({{< ref "docs/deployment/memory/mem_setup" >}}#configure-total-memory)要求用户至少指定下列配置参数（或参数组合）的其中之一，否则 Flink 将无法启动。
 
 | &nbsp;&nbsp;**TaskManager:**&nbsp;&nbsp;                                                                                                                                        | &nbsp;&nbsp;**JobManager:**&nbsp;&nbsp;                                      |
 | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-------------------------------------------------------------------------------- |
-| [`taskmanager.memory.flink.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-flink-size)                                                                                                       | [`jobmanager.memory.flink.size`]({{< ref "/deployment/config.zh" >}}#jobmanager-memory-flink-size)     |
-| [`taskmanager.memory.process.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-process-size)                                                                                                   | [`jobmanager.memory.process.size`]({{< ref "/deployment/config.zh" >}}#jobmanager-memory-process-size) |
-| [`taskmanager.memory.task.heap.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-task-heap-size) 和 <br/> [`taskmanager.memory.managed.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-managed-size) | [`jobmanager.memory.heap.size`]({{< ref "/deployment/config.zh" >}}#jobmanager-memory-heap-size)       |
+| [`taskmanager.memory.flink.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-flink-size)                                                                                                       | [`jobmanager.memory.flink.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-flink-size)     |
+| [`taskmanager.memory.process.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-process-size)                                                                                                   | [`jobmanager.memory.process.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-process-size) |
+| [`taskmanager.memory.task.heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-task-heap-size) 和 <br/> [`taskmanager.memory.managed.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-managed-size) | [`jobmanager.memory.heap.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-heap-size)       |
 {:.table-bordered}
 <br/>
 
-Flink 自带的[默认 flink-conf.yaml](#default-configuration-in-flink-confyaml) 文件指定了 [`taskmanager.memory.process.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-process-size)（*>= 1.10*）和 [`jobmanager.memory.process.size`]({{< ref "/deployment/config.zh" >}}#jobmanager-memory-process-size) (*>= 1.11*)，以便与此前的行为保持一致。
+Flink 自带的[默认 flink-conf.yaml](#default-configuration-in-flink-confyaml) 文件指定了 [`taskmanager.memory.process.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-process-size)（*>= 1.10*）和 [`jobmanager.memory.process.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-process-size) (*>= 1.11*)，以便与此前的行为保持一致。
 
 可以使用这张[电子表格](https://docs.google.com/spreadsheets/d/1mJaMkMPfDJJ-w6nMXALYmTc4XxiV30P5U7DzgwLkSoE)来估算和比较原本的和新的内存配置下的计算结果。
 
@@ -109,7 +109,7 @@ Flink 自带的[默认 flink-conf.yaml](#default-configuration-in-flink-confyaml
             <td><h5>taskmanager.heap.size</h5></td>
             <td>
                 <ul>
-                  <li><a href="{%link deployment/resource-providers/standalone/index" >}}">独立部署模式（Standalone Deployment）</a>下：<a href="{%link deployment/config" >}}#taskmanager-memory-flink-size">taskmanager.memory.flink.size</a></li>
+                  <li><a href="{%link deployment/resource-providers/standalone/overview" >}}">独立部署模式（Standalone Deployment）</a>下：<a href="{%link deployment/config" >}}#taskmanager-memory-flink-size">taskmanager.memory.flink.size</a></li>
                   <li>容器化部署模式（Containerized Deployement）下：<a href="{%link deployment/config" >}}#taskmanager-memory-process-size">taskmanager.memory.process.size</a></li>
                 </ul>
                 请参考<a href="#total-memory-previously-heap-memory">如何升级总内存</a>。
@@ -136,7 +136,7 @@ Flink 自带的[默认 flink-conf.yaml](#default-configuration-in-flink-confyaml
 
 尽管网络内存的配置参数没有发生太多变化，我们仍建议您检查其配置结果。
 网络内存的大小可能会受到其他内存部分大小变化的影响，例如总内存变化时，根据占比计算出的网络内存也可能发生变化。
-请参考[内存模型详解]({{< ref "/deployment/memory/mem_setup_tm.zh" >}}#detailed-memory-model)。
+请参考[内存模型详解]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#detailed-memory-model)。
 
 容器切除（Cut-Off）内存相关的配置参数（`containerized.heap-cutoff-ratio` 和 `containerized.heap-cutoff-min`）将不再对 TaskManager 进程生效。
 请参考[如何升级容器切除内存](#container-cut-off-memory)。
@@ -152,12 +152,12 @@ Flink 自带的[默认 flink-conf.yaml](#default-configuration-in-flink-confyaml
 Flink 在 Mesos 上还有另一个具有同样语义的配置参数 `mesos.resourcemanager.tasks.mem`，目前也已经被弃用。
 
 如果配置了上述弃用的参数，同时又没有配置与之对应的新配置参数，那它们将按如下规则对应到新的配置参数。
-* 独立部署模式（Standalone Deployment）下：Flink 总内存（[`taskmanager.memory.flink.size`]({{< ref "/deployment/config.zh" >}}#taskmanager-memory-flink-size)）
-* 容器化部署模式（Containerized Deployement）下（Yarn、Mesos）：进程总内存（[`taskmanager.memory.process.size`]({{< ref "/deployment/config.zh" >}}#taskmanager-memory-process-size)）
+* 独立部署模式（Standalone Deployment）下：Flink 总内存（[`taskmanager.memory.flink.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-flink-size)）
+* 容器化部署模式（Containerized Deployement）下（Yarn、Mesos）：进程总内存（[`taskmanager.memory.process.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-process-size)）
 
 建议您尽早使用新的配置参数取代启用的配置参数，它们在今后的版本中可能会被彻底移除。
 
-请参考[如何配置总内存]({{< ref "/deployment/memory/mem_setup.zh" >}}#configure-total-memory).
+请参考[如何配置总内存]({{< ref "docs/deployment/memory/mem_setup" >}}#configure-total-memory).
 
 <a name="jvm-heap-memory" />
 
@@ -168,44 +168,44 @@ Flink 在 Mesos 上还有另一个具有同样语义的配置参数 `mesos.resou
 请参考[如何升级托管内存](#managed-memory)。
 
 现在，如果仅配置了*Flink总内存*或*进程总内存*，JVM 的堆空间依然是根据总内存减去所有其他非堆内存得到的。
-请参考[如何配置总内存]({{< ref "/deployment/memory/mem_setup.zh" >}}#configure-total-memory)。
+请参考[如何配置总内存]({{< ref "docs/deployment/memory/mem_setup" >}}#configure-total-memory)。
 
-此外，你现在可以更直接地控制用于任务和算子的 JVM 的堆内存（[`taskmanager.memory.task.heap.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-task-heap-size)），详见[任务堆内存]({{< ref "/deployment/memory/mem_setup_tm.zh" >}}#task-operator-heap-memory)。
-如果流处理作业选择使用 Heap State Backend（[MemoryStateBackend]({{< ref "/ops/state/state_backends.zh" >}}#memorystatebackend)
-或 [FsStateBackend]({{< ref "/ops/state/state_backends.zh" >}}#fsstatebackend)），那么它同样需要使用 JVM 堆内存。
+此外，你现在可以更直接地控制用于任务和算子的 JVM 的堆内存（[`taskmanager.memory.task.heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-task-heap-size)），详见[任务堆内存]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#task-operator-heap-memory)。
+如果流处理作业选择使用 Heap State Backend（[MemoryStateBackend]({{< ref "docs/ops/state/state_backends" >}}#memorystatebackend)
+或 [FsStateBackend]({{< ref "docs/ops/state/state_backends" >}}#fsstatebackend)），那么它同样需要使用 JVM 堆内存。
 
-Flink 现在总是会预留一部分 JVM 堆内存供框架使用（[`taskmanager.memory.framework.heap.size`]({{< ref "/deployment/config.zh" >}}#taskmanager-memory-framework-heap-size)）。
-请参考[框架内存]({{< ref "/deployment/memory/mem_setup_tm.zh" >}}#framework-memory)。
+Flink 现在总是会预留一部分 JVM 堆内存供框架使用（[`taskmanager.memory.framework.heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-framework-heap-size)）。
+请参考[框架内存]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#framework-memory)。
 
 <a name="managed-memory" />
 
 ### 托管内存
 
-请参考[如何配置托管内存]({{< ref "/deployment/memory/mem_setup_tm.zh" >}}#managed-memory)。
+请参考[如何配置托管内存]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory)。
 
 <a name="explicit-size" />
 
 #### 明确的大小
 
-原本用于指定明确的托管内存大小的配置参数（`taskmanager.memory.size`）已被弃用，与它具有相同语义的新配置参数为 [`taskmanager.memory.managed.size`]({{< ref "/deployment/config.zh" >}}#taskmanager-memory-managed-size)。
+原本用于指定明确的托管内存大小的配置参数（`taskmanager.memory.size`）已被弃用，与它具有相同语义的新配置参数为 [`taskmanager.memory.managed.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-managed-size)。
 建议使用新的配置参数，原本的配置参数在今后的版本中可能会被彻底移除。
 
 <a name="fraction" />
 
 #### 占比
 
-此前，如果不指定明确的大小，也可以将托管内存配置为占用总内存减去网络内存和容器切除内存（仅在 [Yarn]({{< ref "/deployment/resource-providers/yarn.zh" >}}) 和
-[Mesos]({{< ref "/deployment/resource-providers/mesos.zh" >}}) 上）之后剩余部分的固定比例（`taskmanager.memory.fraction`）。
+此前，如果不指定明确的大小，也可以将托管内存配置为占用总内存减去网络内存和容器切除内存（仅在 [Yarn]({{< ref "docs/deployment/resource-providers/yarn" >}}) 和
+[Mesos]({{< ref "docs/deployment/resource-providers/mesos" >}}) 上）之后剩余部分的固定比例（`taskmanager.memory.fraction`）。
 该配置参数已经被彻底移除，配置它不会产生任何效果。
-请使用新的配置参数 [`taskmanager.memory.managed.fraction`]({{< ref "/deployment/config.zh" >}}#taskmanager-memory-managed-fraction)。
-在未通过 [`taskmanager.memory.managed.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-managed-size) 指定明确大小的情况下，新的配置参数将指定[托管内存]({{< ref "/deployment/memory/mem_setup_tm" >}}#managed-memory)在 [Flink 总内存]({{< ref "/deployment/memory/mem_setup.zh" >}}#configure-total-memory)中的所占比例。
+请使用新的配置参数 [`taskmanager.memory.managed.fraction`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-managed-fraction)。
+在未通过 [`taskmanager.memory.managed.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-managed-size) 指定明确大小的情况下，新的配置参数将指定[托管内存]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory)在 [Flink 总内存]({{< ref "docs/deployment/memory/mem_setup" >}}#configure-total-memory)中的所占比例。
 
 <a name="rocksdb-state" />
 
 #### RocksDB State Backend
 
-流处理作业如果选择使用 [RocksDBStateBackend]({{< ref "/ops/state/state_backends" >}}#rocksdbstatebackend)，它使用的本地内存现在也被归为[托管内存]({{< ref "/deployment/memory/mem_setup_tm.zh" >}}#managed-memory)。
-默认情况下，RocksDB 将限制其内存用量不超过[托管内存]({{< ref "/deployment/memory/mem_setup_tm" >}}#managed-memory)大小，以避免在 [Yarn]({{< ref "/deployment/resource-providers/yarn" >}}) 或 [Mesos]({{< ref "/deployment/resource-providers/mesos" >}}) 上容器被杀。你也可以通过设置 [state.backend.rocksdb.memory.managed]({{< ref "/deployment/config.zh" >}}#state-backend-rocksdb-memory-managed) 来关闭 RocksDB 的内存控制。
+流处理作业如果选择使用 [RocksDBStateBackend]({{< ref "docs/ops/state/state_backends" >}}#rocksdbstatebackend)，它使用的本地内存现在也被归为[托管内存]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory)。
+默认情况下，RocksDB 将限制其内存用量不超过[托管内存]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory)大小，以避免在 [Yarn]({{< ref "docs/deployment/resource-providers/yarn" >}}) 或 [Mesos]({{< ref "docs/deployment/resource-providers/mesos" >}}) 上容器被杀。你也可以通过设置 [state.backend.rocksdb.memory.managed]({{< ref "docs/deployment/config" >}}#state-backend-rocksdb-memory-managed) 来关闭 RocksDB 的内存控制。
 请参考[如何升级容器切除内存](#container-cut-off-memory)。
 
 <a name="other-changes" />
@@ -213,9 +213,9 @@ Flink 现在总是会预留一部分 JVM 堆内存供框架使用（[`taskmanage
 #### 其他变化
 
 此外，Flink 1.10 对托管内存还引入了下列变化：
-* [托管内存]({{< ref "/deployment/memory/mem_setup_tm.zh" >}}#managed-memory)现在总是在堆外。配置参数 `taskmanager.memory.off-heap` 已被彻底移除，配置它不会产生任何效果。
-* [托管内存]({{< ref "/deployment/memory/mem_setup_tm.zh" >}}#managed-memory)现在使用本地内存而非直接内存。这意味着托管内存将不在 JVM 直接内存限制的范围内。
-* [托管内存]({{< ref "/deployment/memory/mem_setup_tm.zh" >}}#managed-memory)现在总是惰性分配的。配置参数 `taskmanager.memory.preallocate` 已被彻底移除，配置它不会产生任何效果。
+* [托管内存]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory)现在总是在堆外。配置参数 `taskmanager.memory.off-heap` 已被彻底移除，配置它不会产生任何效果。
+* [托管内存]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory)现在使用本地内存而非直接内存。这意味着托管内存将不在 JVM 直接内存限制的范围内。
+* [托管内存]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory)现在总是惰性分配的。配置参数 `taskmanager.memory.preallocate` 已被彻底移除，配置它不会产生任何效果。
 
 <a name="migrate-job-manager-memory-configuration" />
 
@@ -225,25 +225,25 @@ Flink 现在总是会预留一部分 JVM 堆内存供框架使用（[`taskmanage
 * `jobmanager.heap.size`
 * `jobmanager.heap.mb`
 
-尽管这两个参数以“堆（Heap）”命名，在此之前它们实际上只有在[独立部署模式]({{< ref "/deployment/resource-providers/standalone/index.zh" >}})才完全对应于 *JVM 堆内存*。
-在容器化部署模式下（[Kubernetes]({{< ref "/deployment/resource-providers/standalone/kubernetes" >}}) 和 [Yarn]({{< ref "/deployment/resource-providers/yarn.zh" >}})），它们指定的内存还包含了其他堆外内存部分。
+尽管这两个参数以“堆（Heap）”命名，在此之前它们实际上只有在[独立部署模式]({{< ref "docs/deployment/resource-providers/standalone/overview" >}})才完全对应于 *JVM 堆内存*。
+在容器化部署模式下（[Kubernetes]({{< ref "docs/deployment/resource-providers/standalone/kubernetes" >}}) 和 [Yarn]({{< ref "docs/deployment/resource-providers/yarn" >}})），它们指定的内存还包含了其他堆外内存部分。
 *JVM 堆空间*的实际大小，是参数指定的大小减去容器切除（Cut-Off）内存后剩余的部分。
 容器切除内存在 *1.11* 及以上版本中已被彻底移除。
 
-上述两个参数此前对 [Mesos]({{< ref "/deployment/resource-providers/mesos.zh" >}}) 部署模式并不生效。
+上述两个参数此前对 [Mesos]({{< ref "docs/deployment/resource-providers/mesos" >}}) 部署模式并不生效。
 Flink 在 Mesos 上启动 JobManager 进程时并未设置任何 JVM 内存参数。
-从 *1.11* 版本开始，Flink 将采用与[独立部署模式]({{< ref "/deployment/resource-providers/standalone/index.zh" >}})相同的方式设置这些参数。
+从 *1.11* 版本开始，Flink 将采用与[独立部署模式]({{< ref "docs/deployment/resource-providers/standalone/overview" >}})相同的方式设置这些参数。
 
 这两个配置参数目前已被弃用。
 如果配置了上述弃用的参数，同时又没有配置与之对应的新配置参数，那它们将按如下规则对应到新的配置参数。
-* 独立部署模式（Standalone Deployment）、Mesos 部署模式下：JVM 堆内存（[`jobmanager.memory.heap.size`]({{< ref "/deployment/config.zh" >}}#jobmanager-memory-heap-size)）
-* 容器化部署模式（Containerized Deployement）下（Kubernetes、Yarn）：进程总内存（[`jobmanager.memory.process.size`]({{< ref "/deployment/config.zh" >}}#jobmanager-memory-process-size)）
+* 独立部署模式（Standalone Deployment）、Mesos 部署模式下：JVM 堆内存（[`jobmanager.memory.heap.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-heap-size)）
+* 容器化部署模式（Containerized Deployement）下（Kubernetes、Yarn）：进程总内存（[`jobmanager.memory.process.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-process-size)）
 
 建议您尽早使用新的配置参数取代启用的配置参数，它们在今后的版本中可能会被彻底移除。
 
-如果仅配置了 *Flink 总内存*或*进程总内存*，那么 [JVM 堆内存]({{< ref "/deployment/memory/mem_setup_jobmanager.zh" >}}#configure-jvm-heap)将是总内存减去其他内存部分后剩余的部分。
-请参考[如何配置总内存]({{< ref "/deployment/memory/mem_setup.zh" >}}#configure-total-memory)。
-此外，也可以通过配置 [`jobmanager.memory.heap.size`]({{< ref "/deployment/config" >}}#jobmanager-memory-heap-size) 的方式直接指定 [JVM 堆内存]({{< ref "/deployment/memory/mem_setup_jobmanager.zh" >}}#configure-jvm-heap)。
+如果仅配置了 *Flink 总内存*或*进程总内存*，那么 [JVM 堆内存]({{< ref "docs/deployment/memory/mem_setup_jobmanager" >}}#configure-jvm-heap)将是总内存减去其他内存部分后剩余的部分。
+请参考[如何配置总内存]({{< ref "docs/deployment/memory/mem_setup" >}}#configure-total-memory)。
+此外，也可以通过配置 [`jobmanager.memory.heap.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-heap-size) 的方式直接指定 [JVM 堆内存]({{< ref "docs/deployment/memory/mem_setup_jobmanager" >}}#configure-jvm-heap)。
 
 <a name="flink-jvm-process-memory-limits" />
 
@@ -251,11 +251,11 @@ Flink 在 Mesos 上启动 JobManager 进程时并未设置任何 JVM 内存参�
 
 从 *1.10* 版本开始，Flink 通过设置相应的 JVM 参数，对 TaskManager 进程使用的 *JVM Metaspace* 和 *JVM 直接内存*进行限制。
 从 *1.11* 版本开始，Flink 同样对 JobManager 进程使用的 *JVM Metaspace* 进行限制。
-此外，还可以通过设置 [`jobmanager.memory.enable-jvm-direct-memory-limit`]({{< ref "/deployment/config.zh" >}}#jobmanager-memory-enable-jvm-direct-memory-limit) 对 JobManager 进程的 *JVM 直接内存*进行限制。
-请参考 [JVM 参数]({{< ref "/deployment/memory/mem_setup.zh" >}}#jvm-parameters)。
+此外，还可以通过设置 [`jobmanager.memory.enable-jvm-direct-memory-limit`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-enable-jvm-direct-memory-limit) 对 JobManager 进程的 *JVM 直接内存*进行限制。
+请参考 [JVM 参数]({{< ref "docs/deployment/memory/mem_setup" >}}#jvm-parameters)。
 
-Flink 通过设置上述 JVM 内存限制降低内存泄漏问题的排查难度，以避免出现[容器内存溢出]({{< ref "/deployment/memory/mem_trouble.zh" >}}#container-memory-exceeded)等问题。
-请参考常见问题中关于 [JVM Metaspace]({{< ref "/deployment/memory/mem_trouble" >}}#outofmemoryerror-metaspace) 和 [JVM 直接内存]({{< ref "/deployment/memory/mem_trouble.zh" >}}#outofmemoryerror-direct-buffer-memory) *OutOfMemoryError* 异常的描述。
+Flink 通过设置上述 JVM 内存限制降低内存泄漏问题的排查难度，以避免出现[容器内存溢出]({{< ref "docs/deployment/memory/mem_trouble" >}}#container-memory-exceeded)等问题。
+请参考常见问题中关于 [JVM Metaspace]({{< ref "docs/deployment/memory/mem_trouble" >}}#outofmemoryerror-metaspace) 和 [JVM 直接内存]({{< ref "docs/deployment/memory/mem_trouble" >}}#outofmemoryerror-direct-buffer-memory) *OutOfMemoryError* 异常的描述。
 
 <a name="container-cut-off-memory" />
 
@@ -271,24 +271,24 @@ Flink 通过设置上述 JVM 内存限制降低内存泄漏问题的排查难度
 
 ### TaskManager
 
-流处理作业如果使用了 [RocksDBStateBackend]({{< ref "/ops/state/state_backends" >}}#the-rocksdbstatebackend)，RocksDB 使用的本地内存现在将被归为[托管内存]({{< ref "/deployment/memory/mem_setup_tm.zh" >}}#managed-memory)。
-默认情况下，RocksDB 将限制其内存用量不超过[托管内存]({{< ref "/deployment/memory/mem_setup_tm.zh" >}}#managed-memory)大小。
-请同时参考[如何升级托管内存](#managed-memory)以及[如何配置托管内存]({{< ref "/deployment/memory/mem_setup_tm.zh" >}}#managed-memory)。
+流处理作业如果使用了 [RocksDBStateBackend]({{< ref "docs/ops/state/state_backends" >}}#the-rocksdbstatebackend)，RocksDB 使用的本地内存现在将被归为[托管内存]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory)。
+默认情况下，RocksDB 将限制其内存用量不超过[托管内存]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory)大小。
+请同时参考[如何升级托管内存](#managed-memory)以及[如何配置托管内存]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#managed-memory)。
 
 其他堆外（直接或本地）内存开销，现在可以通过下列配置参数进行设置：
-* 任务堆外内存（[`taskmanager.memory.task.off-heap.size`]({{< ref "/deployment/config.zh" >}}#taskmanager-memory-task-off-heap-size)）
-* 框架堆外内存（[`taskmanager.memory.framework.off-heap.size`]({{< ref "/deployment/config.zh" >}}#taskmanager-memory-framework-off-heap-size)）
-* JVM Metaspace（[`taskmanager.memory.jvm-metaspace.size`]({{< ref "/deployment/config.zh" >}}#taskmanager-memory-jvm-metaspace-size)）
-* [JVM 开销]({{< ref "/deployment/memory/mem_setup_tm.zh" >}}#detailed-memory-model)
+* 任务堆外内存（[`taskmanager.memory.task.off-heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-task-off-heap-size)）
+* 框架堆外内存（[`taskmanager.memory.framework.off-heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-framework-off-heap-size)）
+* JVM Metaspace（[`taskmanager.memory.jvm-metaspace.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-jvm-metaspace-size)）
+* [JVM 开销]({{< ref "docs/deployment/memory/mem_setup_tm" >}}#detailed-memory-model)
 
 <a name="for-jobmanagers" />
 
 ### JobManager
 
 可以通过下列配置参数设置堆外（直接或本地）内存开销：
-* 堆外内存 ([`jobmanager.memory.off-heap.size`]({{< ref "/deployment/config.zh" >}}#jobmanager-memory-off-heap-size))
-* JVM Metaspace ([`jobmanager.memory.jvm-metaspace.size`]({{< ref "/deployment/config.zh" >}}#jobmanager-memory-jvm-metaspace-size))
-* [JVM 开销]({{< ref "/deployment/memory/mem_setup_jobmanager.zh" >}}#detailed-configuration)
+* 堆外内存 ([`jobmanager.memory.off-heap.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-off-heap-size))
+* JVM Metaspace ([`jobmanager.memory.jvm-metaspace.size`]({{< ref "docs/deployment/config" >}}#jobmanager-memory-jvm-metaspace-size))
+* [JVM 开销]({{< ref "docs/deployment/memory/mem_setup_jobmanager" >}}#detailed-configuration)
 
 <a name="default-configuration-in-flink-confyaml" />
 
@@ -296,13 +296,13 @@ Flink 通过设置上述 JVM 内存限制降低内存泄漏问题的排查难度
 
 本节描述 Flink 自带的默认 `flink-conf.yaml` 文件中的变化。
 
-原本的 TaskManager 总内存（`taskmanager.heap.size`）被新的配置项 [`taskmanager.memory.process.size`]({{< ref "/deployment/config.zh" >}}#taskmanager-memory-process-size) 所取代。
+原本的 TaskManager 总内存（`taskmanager.heap.size`）被新的配置项 [`taskmanager.memory.process.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-process-size) 所取代。
 默认值从 1024Mb 增加到了 1728Mb。
 
-原本的 JobManager 总内存（`jobmanager.heap.size`）被新的配置项 [`jobmanager.memory.process.size`]({{< ref "/deployment/config.zh" >}}#taskmanager-memory-process-size) 所取代。
+原本的 JobManager 总内存（`jobmanager.heap.size`）被新的配置项 [`jobmanager.memory.process.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-process-size) 所取代。
 默认值从 1024Mb 增加到了 1600Mb。
 
-请参考[如何配置总内存]({{< ref "/deployment/memory/mem_setup.zh" >}}#configure-total-memory)。
+请参考[如何配置总内存]({{< ref "docs/deployment/memory/mem_setup" >}}#configure-total-memory)。
 
 <div class="alert alert-warning">
   <strong>注意：</strong> 使用新的默认 `flink-conf.yaml` 可能会造成各内存部分的大小发生变化，从而产生性能变化。

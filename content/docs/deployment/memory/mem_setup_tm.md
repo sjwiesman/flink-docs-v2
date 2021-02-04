@@ -30,11 +30,11 @@ The TaskManager runs user code in Flink.
 Configuring memory usage for your needs can greatly reduce Flink's resource footprint and improve Job stability.
 
 The further described memory configuration is applicable starting with the release version *1.10*. If you upgrade Flink
-from earlier versions, check the [migration guide]({{< ref "/deployment/memory/mem_migration" >}}) because many changes were introduced with the *1.10* release.
+from earlier versions, check the [migration guide]({{< ref "docs/deployment/memory/mem_migration" >}}) because many changes were introduced with the *1.10* release.
 
 {{< hint info >}}
 This memory setup guide is relevant **only for TaskManagers**!
-The TaskManager memory components have a similar but more sophisticated structure compared to the [memory model of the JobManager process]({{< ref "/deployment/memory/mem_setup_jobmanager" >}}).
+The TaskManager memory components have a similar but more sophisticated structure compared to the [memory model of the JobManager process]({{< ref "docs/deployment/memory/mem_setup_jobmanager" >}}).
 {{< /hint >}}
 
 ## Configure Total Memory
@@ -51,7 +51,7 @@ and by the JVM to run the process. The *total Flink memory* consumption includes
 If you run Flink locally (e.g. from your IDE) without creating a cluster, then only a subset of the memory configuration
 options are relevant, see also [local execution](#local-execution) for more details.
 
-Otherwise, the simplest way to setup memory for TaskManagers is to [configure the total memory]({{< ref "/deployment/memory/mem_setup" >}}#configure-total-memory).
+Otherwise, the simplest way to setup memory for TaskManagers is to [configure the total memory]({{< ref "docs/deployment/memory/mem_setup" >}}#configure-total-memory).
 A more fine-grained approach is described in more detail [here](#configure-heap-and-managed-memory).
 
 The rest of the memory components will be adjusted automatically, based on default values or additionally configured options.
@@ -74,29 +74,29 @@ If you have configured the task heap and managed memory explicitly, it is recomm
 ### Task (Operator) Heap Memory
 
 If you want to guarantee that a certain amount of JVM Heap is available for your user code, you can set the *task heap memory*
-explicitly ([`taskmanager.memory.task.heap.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-task-heap-size)).
+explicitly ([`taskmanager.memory.task.heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-task-heap-size)).
 It will be added to the JVM Heap size and will be dedicated to Flink’s operators running the user code.
 
 ### Managed Memory
 
 *Managed memory* is managed by Flink and is allocated as native memory (off-heap). The following workloads use *managed memory*:
-* Streaming jobs can use it for [RocksDB state backend]({{< ref "/ops/state/state_backends" >}}#the-rocksdbstatebackend).
-* [Batch jobs]({{< ref "/dev/batch/index" >}}) can use it for sorting, hash tables, caching of intermediate results.
-* Both streaming and batch jobs can use it for executing [User Defined Functions in Python processes]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}).
+* Streaming jobs can use it for [RocksDB state backend]({{< ref "docs/ops/state/state_backends" >}}#the-rocksdbstatebackend).
+* [Batch jobs]({{< ref "docs/dev/dataset/overview" >}}) can use it for sorting, hash tables, caching of intermediate results.
+* Both streaming and batch jobs can use it for executing [User Defined Functions in Python processes]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}).
 
 The size of *managed memory* can be
-* either configured explicitly via [`taskmanager.memory.managed.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-managed-size)
-* or computed as a fraction of *total Flink memory* via [`taskmanager.memory.managed.fraction`]({{< ref "/deployment/config" >}}#taskmanager-memory-managed-fraction).
+* either configured explicitly via [`taskmanager.memory.managed.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-managed-size)
+* or computed as a fraction of *total Flink memory* via [`taskmanager.memory.managed.fraction`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-managed-fraction).
 
 *Size* will override *fraction*, if both are set.
-If neither *size* nor *fraction* is explicitly configured, the [default fraction]({{< ref "/deployment/config" >}}#taskmanager-memory-managed-fraction) will be used.
+If neither *size* nor *fraction* is explicitly configured, the [default fraction]({{< ref "docs/deployment/config" >}}#taskmanager-memory-managed-fraction) will be used.
 
-See also [how to configure memory for state backends]({{< ref "/deployment/memory/mem_tuning" >}}#configure-memory-for-state-backends) and [batch jobs]({{< ref "/deployment/memory/mem_tuning" >}}#configure-memory-for-batch-jobs).
+See also [how to configure memory for state backends]({{< ref "docs/deployment/memory/mem_tuning" >}}#configure-memory-for-state-backends) and [batch jobs]({{< ref "docs/deployment/memory/mem_tuning" >}}#configure-memory-for-batch-jobs).
 
 #### Consumer Weights
 
 If your job contains multiple types of managed memory consumers, you can also control how managed memory should be shared across these types.
-The configuration option [`taskmanager.memory.managed.consumer-weights`]({{< ref "/deployment/config" >}}#taskmanager-memory-managed-consumer-weights) allows you to set a weight for each type, to which Flink will reserve managed memory proportionally.
+The configuration option [`taskmanager.memory.managed.consumer-weights`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-managed-consumer-weights) allows you to set a weight for each type, to which Flink will reserve managed memory proportionally.
 Valid consumer types are:
 * `DATAPROC`: for RocksDB state backend in streaming and built-in algorithms in batch.
 * `PYTHON`: for Python processes.
@@ -116,13 +116,13 @@ This could only happen when the weights are explicitly configured/overwritten.
 ## Configure Off-heap Memory (direct or native)
 
 The off-heap memory which is allocated by user code should be accounted for in *task off-heap memory*
-([`taskmanager.memory.task.off-heap.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-task-off-heap-size)).
+([`taskmanager.memory.task.off-heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-task-off-heap-size)).
 
 You can also adjust the [framework off-heap memory](#framework-memory).
 You should only change this value if you are sure that the Flink framework needs more memory. 
 
 Flink includes the *framework off-heap memory* and *task off-heap memory* into the *direct memory* limit of the JVM,
-see also [JVM parameters]({{< ref "/deployment/memory/mem_setup" >}}#jvm-parameters).
+see also [JVM parameters]({{< ref "docs/deployment/memory/mem_setup" >}}#jvm-parameters).
 
 <span class="label label-info">Note</span> Although, native non-direct memory usage can be accounted for as a part of the
 *framework off-heap memory* or *task off-heap memory*, it will result in a higher JVM's *direct memory* limit in this case.
@@ -141,14 +141,14 @@ which affect the size of the respective components:
 
 | &nbsp;&nbsp;**Component**&nbsp;&nbsp;                              | &nbsp;&nbsp;**Configuration options**&nbsp;&nbsp;                                                                                                                                                                                                                                                         | &nbsp;&nbsp;**Description**&nbsp;&nbsp;                                                                                                                                                                                                                                     |
 | :------------------------------------------------------------------| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Framework Heap Memory](#framework-memory)                         | [`taskmanager.memory.framework.heap.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-framework-heap-size)                                                                                                                                                                                                         | JVM Heap memory dedicated to Flink framework (advanced option)                                                                                                                                                                                                              |
-| [Task Heap Memory](#task-operator-heap-memory)                     | [`taskmanager.memory.task.heap.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-task-heap-size)                                                                                                                                                                                                                   | JVM Heap memory dedicated to Flink application to run operators and user code                                                                                                                                                                                               |
-| [Managed memory](#managed-memory)                                  | [`taskmanager.memory.managed.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-managed-size) <br/> [`taskmanager.memory.managed.fraction`]({{< ref "/deployment/config" >}}#taskmanager-memory-managed-fraction)                                                                                                                     | Native memory managed by Flink, reserved for sorting, hash tables, caching of intermediate results and RocksDB state backend                                                                                                                                                |
-| [Framework Off-heap Memory](#framework-memory)                     | [`taskmanager.memory.framework.off-heap.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-framework-off-heap-size)                                                                                                                                                                                                 | [Off-heap direct (or native) memory](#configure-off-heap-memory-direct-or-native) dedicated to Flink framework (advanced option)                                                                                                                                            |
-| [Task Off-heap Memory](#configure-off-heap-memory-direct-or-native)| [`taskmanager.memory.task.off-heap.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-task-off-heap-size)                                                                                                                                                                                                           | [Off-heap direct (or native) memory](#configure-off-heap-memory-direct-or-native) dedicated to Flink application to run operators                                                                                                                                           |
-| Network Memory                                                     | [`taskmanager.memory.network.min`]({{< ref "/deployment/config" >}}#taskmanager-memory-network-min) <br/> [`taskmanager.memory.network.max`]({{< ref "/deployment/config" >}}#taskmanager-memory-network-max) <br/> [`taskmanager.memory.network.fraction`]({{< ref "/deployment/config" >}}#taskmanager-memory-network-fraction)                               | Direct memory reserved for data record exchange between tasks (e.g. buffering for the transfer over the network), it is a [capped fractionated component]({{< ref "/deployment/memory/mem_setup" >}}#capped-fractionated-components) of the [total Flink memory]({{< ref "/deployment/memory/mem_setup" >}}#configure-total-memory) |
-| [JVM metaspace]({{< ref "/deployment/memory/mem_setup" >}}#jvm-parameters)                     | [`taskmanager.memory.jvm-metaspace.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-jvm-metaspace-size)                                                                                                                                                                                                           | Metaspace size of the Flink JVM process                                                                                                                                                                                                                                     |
-| JVM Overhead                                                       | [`taskmanager.memory.jvm-overhead.min`]({{< ref "/deployment/config" >}}#taskmanager-memory-jvm-overhead-min) <br/> [`taskmanager.memory.jvm-overhead.max`]({{< ref "/deployment/config" >}}#taskmanager-memory-jvm-overhead-max) <br/> [`taskmanager.memory.jvm-overhead.fraction`]({{< ref "/deployment/config" >}}#taskmanager-memory-jvm-overhead-fraction) | Native memory reserved for other JVM overhead: e.g. thread stacks, code cache, garbage collection space etc, it is a [capped fractionated component]({{< ref "/deployment/memory/mem_setup" >}}#capped-fractionated-components) of the [total process memory]({{< ref "/deployment/memory/mem_setup" >}}#configure-total-memory)    |
+| [Framework Heap Memory](#framework-memory)                         | [`taskmanager.memory.framework.heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-framework-heap-size)                                                                                                                                                                                                         | JVM Heap memory dedicated to Flink framework (advanced option)                                                                                                                                                                                                              |
+| [Task Heap Memory](#task-operator-heap-memory)                     | [`taskmanager.memory.task.heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-task-heap-size)                                                                                                                                                                                                                   | JVM Heap memory dedicated to Flink application to run operators and user code                                                                                                                                                                                               |
+| [Managed memory](#managed-memory)                                  | [`taskmanager.memory.managed.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-managed-size) <br/> [`taskmanager.memory.managed.fraction`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-managed-fraction)                                                                                                                     | Native memory managed by Flink, reserved for sorting, hash tables, caching of intermediate results and RocksDB state backend                                                                                                                                                |
+| [Framework Off-heap Memory](#framework-memory)                     | [`taskmanager.memory.framework.off-heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-framework-off-heap-size)                                                                                                                                                                                                 | [Off-heap direct (or native) memory](#configure-off-heap-memory-direct-or-native) dedicated to Flink framework (advanced option)                                                                                                                                            |
+| [Task Off-heap Memory](#configure-off-heap-memory-direct-or-native)| [`taskmanager.memory.task.off-heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-task-off-heap-size)                                                                                                                                                                                                           | [Off-heap direct (or native) memory](#configure-off-heap-memory-direct-or-native) dedicated to Flink application to run operators                                                                                                                                           |
+| Network Memory                                                     | [`taskmanager.memory.network.min`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-network-min) <br/> [`taskmanager.memory.network.max`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-network-max) <br/> [`taskmanager.memory.network.fraction`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-network-fraction)                               | Direct memory reserved for data record exchange between tasks (e.g. buffering for the transfer over the network), it is a [capped fractionated component]({{< ref "docs/deployment/memory/mem_setup" >}}#capped-fractionated-components) of the [total Flink memory]({{< ref "docs/deployment/memory/mem_setup" >}}#configure-total-memory) |
+| [JVM metaspace]({{< ref "docs/deployment/memory/mem_setup" >}}#jvm-parameters)                     | [`taskmanager.memory.jvm-metaspace.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-jvm-metaspace-size)                                                                                                                                                                                                           | Metaspace size of the Flink JVM process                                                                                                                                                                                                                                     |
+| JVM Overhead                                                       | [`taskmanager.memory.jvm-overhead.min`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-jvm-overhead-min) <br/> [`taskmanager.memory.jvm-overhead.max`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-jvm-overhead-max) <br/> [`taskmanager.memory.jvm-overhead.fraction`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-jvm-overhead-fraction) | Native memory reserved for other JVM overhead: e.g. thread stacks, code cache, garbage collection space etc, it is a [capped fractionated component]({{< ref "docs/deployment/memory/mem_setup" >}}#capped-fractionated-components) of the [total process memory]({{< ref "docs/deployment/memory/mem_setup" >}}#configure-total-memory)    |
 {:.table-bordered}
 <br/>
 
@@ -171,10 +171,10 @@ then all components are ignored except for the following:
 
 | &nbsp;&nbsp;**Memory component**&nbsp;&nbsp; | &nbsp;&nbsp;**Relevant options**&nbsp;&nbsp;                                                    | &nbsp;&nbsp;**Default value for the local execution**&nbsp;&nbsp;               |
 | :------------------------------------------- | :---------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------ |
-| Task heap                                    | [`taskmanager.memory.task.heap.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-task-heap-size)         | infinite                                                                        |
-| Task off-heap                                | [`taskmanager.memory.task.off-heap.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-task-off-heap-size) | infinite                                                                        |
-| Managed memory                               | [`taskmanager.memory.managed.size`]({{< ref "/deployment/config" >}}#taskmanager-memory-managed-size)             | 128Mb                                                                           |
-| Network memory                               | [`taskmanager.memory.network.min`]({{< ref "/deployment/config" >}}#taskmanager-memory-network-min) <br /> [`taskmanager.memory.network.max`]({{< ref "/deployment/config" >}}#taskmanager-memory-network-max) | 64Mb |
+| Task heap                                    | [`taskmanager.memory.task.heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-task-heap-size)         | infinite                                                                        |
+| Task off-heap                                | [`taskmanager.memory.task.off-heap.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-task-off-heap-size) | infinite                                                                        |
+| Managed memory                               | [`taskmanager.memory.managed.size`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-managed-size)             | 128Mb                                                                           |
+| Network memory                               | [`taskmanager.memory.network.min`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-network-min) <br /> [`taskmanager.memory.network.max`]({{< ref "docs/deployment/config" >}}#taskmanager-memory-network-max) | 64Mb |
 {:.table-bordered}
 <br/>
 
