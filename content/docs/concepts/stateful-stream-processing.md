@@ -43,16 +43,16 @@ Some examples of stateful operations:
     to events that occurred in the past.
 
 Flink needs to be aware of the state in order to make it fault tolerant using
-[checkpoints]({{< ref "/dev/stream/state/checkpointing" >}})
-and [savepoints]({{< ref "/ops/state/savepoints.md" >}}).
+[checkpoints]({{< ref "docs/dev/datastream/fault-tolerance/checkpointing" >}})
+and [savepoints]({{< ref "docs/ops/state/savepoints" >}}).
 
 Knowledge about the state also allows for rescaling Flink applications, meaning
 that Flink takes care of redistributing state across parallel instances.
 
-[Queryable state]({{< ref "/dev/stream/state/queryable_state" >}}) allows you to access state from outside of Flink during runtime.
+[Queryable state]({{< ref "docs/dev/datastream/fault-tolerance/queryable_state" >}}) allows you to access state from outside of Flink during runtime.
 
 When working with state, it might also be useful to read about [Flink's state
-backends]({{< ref "/ops/state/state_backends" >}}). Flink
+backends]({{< ref "docs/ops/state/state_backends" >}}). Flink
 provides different state backends that specify how and where state is stored.
 
 {{< top >}}
@@ -104,7 +104,7 @@ processed as part of the restarted parallel dataflow are guaranteed to not have
 affected the previously checkpointed state.
 
 {{< hint warning >}}
-By default, checkpointing is disabled. See [Checkpointing]({{< ref "/dev/stream/state/checkpointing" >}}) for details on how to enable and configure checkpointing.
+By default, checkpointing is disabled. See [Checkpointing]({{< ref "docs/dev/datastream/fault-tolerance/checkpointing" >}}) for details on how to enable and configure checkpointing.
 {{< /hint >}}
 
 {{< hint info >}}
@@ -112,7 +112,7 @@ For this mechanism to realize its full guarantees, the data
 stream source (such as message queue or broker) needs to be able to rewind the
 stream to a defined recent point. [Apache Kafka](http://kafka.apache.org) has
 this ability and Flink's connector to Kafka exploits this. See [Fault
-Tolerance Guarantees of Data Sources and Sinks]({{< ref "/dev/connectors/guarantees" >}}) for more information about the guarantees
+Tolerance Guarantees of Data Sources and Sinks]({{< ref "docs/connectors/datastream/guarantees" >}}) for more information about the guarantees
 provided by Flink's connectors.
 {{< /hint >}}
 
@@ -210,7 +210,7 @@ snapshot barriers from their input streams, and before emitting the barriers to
 their output streams. At that point, all updates to the state from records
 before the barriers have been made, and no updates that depend on records
 from after the barriers have been applied. Because the state of a snapshot may
-be large, it is stored in a configurable *[state backend]({{< ref "ops/state/state_backends" >}})*. By default, this is the JobManager's
+be large, it is stored in a configurable *[state backend]({{< ref "docs/ops/state/state_backends" >}})*. By default, this is the JobManager's
 memory, but for production use a distributed reliable storage should be
 configured (such as HDFS). After the state has been stored, the operator
 acknowledges the checkpoint, emits the snapshot barrier into the output
@@ -223,9 +223,8 @@ The resulting snapshot now contains:
   - For each operator, a pointer to the state that was stored as part of the
     snapshot
 
-<div style="text-align: center">
-  {{< img src="/fig/checkpointing.svg" alt="Illustration of the Checkpointing Mechanism" width="75%" >}}
-</div>
+{{< img src="/fig/checkpointing.svg" alt="Illustration of the Checkpointing Mechanism" width="75%" >}}
+
 
 #### Recovery
 
@@ -240,7 +239,7 @@ If state was snapshotted incrementally, the operators start with the state of
 the latest full snapshot and then apply a series of incremental snapshot
 updates to that state.
 
-See [Restart Strategies]({{< ref "/dev/task_failure_recovery" >}}#restart-strategies) for more information.
+See [Restart Strategies]({{< ref "docs/dev/execution/task_failure_recovery" >}}#restart-strategies) for more information.
 
 ### Unaligned Checkpointing
 
@@ -273,7 +272,7 @@ as possible. It's especially suited for applications with at least one slow
 moving data path, where alignment times can reach hours. However, since it's
 adding additional I/O pressure, it doesn't help when the I/O to the state 
 backends is the bottleneck. See the more in-depth discussion in 
-[ops]({{< ref "/ops/state/checkpoints" >}}#unaligned-checkpoints)
+[ops]({{< ref "docs/ops/state/checkpoints" >}}#unaligned-checkpoints)
 for other limitations.
 
 Note that savepoints will always be aligned.
@@ -287,7 +286,7 @@ performs the same steps as during [recovery of aligned checkpoints](#recovery).
 ### State Backends
 
 The exact data structures in which the key/values indexes are stored depends on
-the chosen [state backend]({{< ref "/ops/state/state_backends" >}}). One state backend stores data in an in-memory
+the chosen [state backend]({{< ref "docs/ops/state/state_backends" >}}). One state backend stores data in an in-memory
 hash map, another state backend uses [RocksDB](http://rocksdb.org) as the
 key/value store.  In addition to defining the data structure that holds the
 state, the state backends also implement the logic to take a point-in-time
@@ -305,7 +304,7 @@ All programs that use checkpointing can resume execution from a **savepoint**.
 Savepoints allow both updating your programs and your Flink cluster without
 losing any state.
 
-[Savepoints]({{< ref "/ops/state/savepoints" >}}) are
+[Savepoints]({{< ref "docs/ops/state/savepoints" >}}) are
 **manually triggered checkpoints**, which take a snapshot of the program and
 write it out to a state backend. They rely on the regular checkpointing
 mechanism for this.
@@ -345,13 +344,13 @@ give *exactly once* guarantees even in *at least once* mode.
 
 ## State and Fault Tolerance in Batch Programs
 
-Flink executes [batch programs]({{< ref "/dev/batch/index" >}}) as a special case of
+Flink executes [batch programs]({{< ref "docs/dev/dataset/overview" >}}) as a special case of
 streaming programs, where the streams are bounded (finite number of elements).
 A *DataSet* is treated internally as a stream of data. The concepts above thus
 apply to batch programs in the same way as well as they apply to streaming
 programs, with minor exceptions:
 
-  - [Fault tolerance for batch programs]({{< ref "/dev/task_failure_recovery" >}})
+  - [Fault tolerance for batch programs]({{< ref "docs/dev/execution/task_failure_recovery" >}})
     does not use checkpointing.  Recovery happens by fully replaying the
     streams.  That is possible, because inputs are bounded. This pushes the
     cost more towards the recovery, but makes the regular processing cheaper,
@@ -362,6 +361,6 @@ programs, with minor exceptions:
 
   - The DataSet API introduces special synchronized (superstep-based)
     iterations, which are only possible on bounded streams. For details, check
-    out the [iteration docs]({{< ref "/dev/batch/iterations" >}}).
+    out the [iteration docs]({{< ref "docs/dev/dataset/iterations" >}}).
 
 {{< top >}}

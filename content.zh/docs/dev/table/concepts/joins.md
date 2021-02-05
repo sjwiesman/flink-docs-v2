@@ -101,7 +101,7 @@ ON table1.column-name1 = table2.column-name1
 例如，在探针侧表新插入一条事件时间时间为 `12:30:00` 的记录，它将和构建侧表时间点为 `12:30:00` 的版本根据[时态表的概念]({{< ref "docs/dev/table/concepts/versioned_tables" >}})进行 Join 运算。
 因此，新插入的记录仅与时间戳小于等于 `12:30:00` 的记录进行 Join 计算（由主键决定哪些时间点的数据将参与计算）。
 
-通过定义事件时间，[watermarks]({{< ref "/ dev/event_time" >}}) 允许 Join 运算不断向前滚动，丢弃不再需要的构建侧快照。因为不再需要时间戳更低或相等的记录。
+通过定义事件时间，[watermarks]({{< ref "docs/concepts/time" >}}) 允许 Join 运算不断向前滚动，丢弃不再需要的构建侧快照。因为不再需要时间戳更低或相等的记录。
 
 下面的例子展示了订单流关联产品表这个场景举例，`orders` 表包含了来自 Kafka 的实时订单流，`product_changelog` 表来自数据库表 `products` 的 changelog , 产品的价格在数据库表 `products` 中是随时间实时变化的。
 

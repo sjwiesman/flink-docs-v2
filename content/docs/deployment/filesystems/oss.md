@@ -29,7 +29,7 @@ under the License.
 ## OSS: Object Storage Service
 
 [Aliyun Object Storage Service](https://www.aliyun.com/product/oss) (Aliyun OSS) is widely used, particularly popular among China’s cloud users, and it provides cloud object storage for a variety of use cases.
-You can use OSS with Flink for **reading** and **writing data** as well in conjunction with the [streaming **state backends**]({{< ref "/ops/state/state_backends" >}})
+You can use OSS with Flink for **reading** and **writing data** as well in conjunction with the [streaming **state backends**]({{< ref "docs/ops/state/state_backends" >}})
 
 
 

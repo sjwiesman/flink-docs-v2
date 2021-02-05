@@ -305,5 +305,5 @@ Framework will generate an additional stateful operator, and use the primary key
 Data Type Mapping
 ----------------
 
-Currently, the Canal format uses JSON format for serialization and deserialization. Please refer to [JSON format documentation]({{< ref "docs/dev/table/connectors/formats/json" >}}#data-type-mapping) for more details about the data type mapping.
+Currently, the Canal format uses JSON format for serialization and deserialization. Please refer to [JSON format documentation]({{< ref "docs/connectors/table/formats/json" >}}#data-type-mapping) for more details about the data type mapping.
 

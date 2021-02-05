@@ -26,7 +26,7 @@ under the License.
 
 ## Introduction
 
-Timely stream processing is an extension of [stateful stream processing]({{< ref "/concepts/stateful-stream-processing" >}}) in which time plays some role in the
+Timely stream processing is an extension of [stateful stream processing]({{< ref "docs/concepts/stateful-stream-processing" >}}) in which time plays some role in the
 computation. Among other things, this is the case when you do time series
 analysis, when doing aggregations based on certain time periods (typically
 called windows), or when you do event processing where the time when an event
@@ -180,7 +180,7 @@ evaluation of event time windows.
 For this reason, streaming programs may explicitly expect some *late* elements.
 Late elements are elements that arrive after the system's event time clock (as
 signaled by the watermarks) has already passed the time of the late element's
-timestamp. See [Allowed Lateness]({{< ref "/dev/stream/operators/windows" >}}#allowed-lateness) for more information on
+timestamp. See [Allowed Lateness]({{< ref "docs/dev/datastream/operators/windows" >}}#allowed-lateness) for more information on
 how to work with late elements in event time windows.
 
 ## Windowing
@@ -199,6 +199,6 @@ overlap), and *session windows* (punctuated by a gap of inactivity).
 {{< img src="/fig/windows.svg" alt="Time- and Count Windows" class="offset" width="80%" >}}
 
 Please check out this [blog post](https://flink.apache.org/news/2015/12/04/Introducing-windows.html) for
-additional examples of windows or take a look a [window documentation]({{< ref "/dev/stream/operators/windows" >}}) of the DataStream API.
+additional examples of windows or take a look a [window documentation]({{< ref "docs/dev/datastream/operators/windows" >}}) of the DataStream API.
 
 {{< top >}}

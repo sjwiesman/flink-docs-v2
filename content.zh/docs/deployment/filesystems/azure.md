@@ -27,7 +27,7 @@ under the License.
 # Azure Blob 存储
 
 [Azure Blob 存储](https://docs.microsoft.com/en-us/azure/storage/) 是一项由 Microsoft 管理的服务，能提供多种应用场景下的云存储。
-Azure Blob 存储可与 Flink 一起使用以**读取**和**写入数据**，以及与[流 State Backend]({{< ref "/ops/state/state_backends.zh" >}}) 结合使用。
+Azure Blob 存储可与 Flink 一起使用以**读取**和**写入数据**，以及与[流 State Backend]({{< ref "docs/ops/state/state_backends" >}}) 结合使用。
 
 
 

@@ -411,7 +411,7 @@ public static class ControlFunction extends RichCoFlatMapFunction<String, String
 
 ## 延展阅读
 
-- [数据流转换]({{< ref "docs/dev/stream/operators/overview" >}}#datastream-transformations)
+- [数据流转换]({{< ref "docs/dev/datastream/operators/overview" >}}#datastream-transformations)
 - [有状态流的处理]({{< ref "docs/concepts/stateful-stream-processing" >}})
 
 {{< top >}}

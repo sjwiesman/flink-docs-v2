@@ -120,7 +120,7 @@ Furthermore, loggers are whitelisted, so that they are configured properly.
 
 ## Metric Reporters
 
-All [metric reporters]({{< ref "/deployment/metric_reporters" >}}) that Flink provides can be used as plugins.
-See the [metrics]({{< ref "/ops/metrics" >}}) documentation for more details.
+All [metric reporters]({{< ref "docs/deployment/metric_reporters" >}}) that Flink provides can be used as plugins.
+See the [metrics]({{< ref "docs/ops/metrics" >}}) documentation for more details.
 
 {{< top >}}

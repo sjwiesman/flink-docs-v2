@@ -67,15 +67,15 @@ Planner 的作用主要是把关系型的操作翻译成可执行的、经过优
 <!-- Either... -->
 <dependency>
   <groupId>org.apache.flink</groupId>
-  <artifactId>flink-table-api-java-bridge{{ site.scala_version_suffix }}</artifactId>
-  <version>{{site.version}}</version>
+  <artifactId>flink-table-api-java-bridge{{< scala_version >}}</artifactId>
+  <version>{{< version >}}</version>
   <scope>provided</scope>
 </dependency>
 <!-- or... -->
 <dependency>
   <groupId>org.apache.flink</groupId>
-  <artifactId>flink-table-api-scala-bridge{{ site.scala_version_suffix }}</artifactId>
-  <version>{{site.version}}</version>
+  <artifactId>flink-table-api-scala-bridge{{< scala_version >}}</artifactId>
+  <version>{{< version >}}</version>
   <scope>provided</scope>
 </dependency>
 ```
@@ -86,15 +86,15 @@ Planner 的作用主要是把关系型的操作翻译成可执行的、经过优
 <!-- Either... (for the old planner that was available before Flink 1.9) -->
 <dependency>
   <groupId>org.apache.flink</groupId>
-  <artifactId>flink-table-planner{{ site.scala_version_suffix }}</artifactId>
-  <version>{{site.version}}</version>
+  <artifactId>flink-table-planner{{< scala_version >}}</artifactId>
+  <version>{{< version >}}</version>
   <scope>provided</scope>
 </dependency>
 <!-- or.. (for the new Blink planner) -->
 <dependency>
   <groupId>org.apache.flink</groupId>
-  <artifactId>flink-table-planner-blink{{ site.scala_version_suffix }}</artifactId>
-  <version>{{site.version}}</version>
+  <artifactId>flink-table-planner-blink{{< scala_version >}}</artifactId>
+  <version>{{< version >}}</version>
   <scope>provided</scope>
 </dependency>
 ```
@@ -104,8 +104,8 @@ Planner 的作用主要是把关系型的操作翻译成可执行的、经过优
 ```xml
 <dependency>
   <groupId>org.apache.flink</groupId>
-  <artifactId>flink-streaming-scala{{ site.scala_version_suffix }}</artifactId>
-  <version>{{site.version}}</version>
+  <artifactId>flink-streaming-scala{{< scala_version >}}</artifactId>
+  <version>{{< version >}}</version>
   <scope>provided</scope>
 </dependency>
 ```
@@ -118,7 +118,7 @@ Planner 的作用主要是把关系型的操作翻译成可执行的、经过优
 <dependency>
   <groupId>org.apache.flink</groupId>
   <artifactId>flink-table-common</artifactId>
-  <version>{{site.version}}</version>
+  <version>{{< version >}}</version>
   <scope>provided</scope>
 </dependency>
 ```

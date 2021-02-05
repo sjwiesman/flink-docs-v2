@@ -39,61 +39,61 @@ Flink 支持以下格式：
     </thead>
     <tbody>
         <tr>
-          <td><a href="{{< ref "docs/dev/table/connectors/formats/csv" >}}">CSV</a></td>
-          <td><a href="{{< ref "docs/dev/table/connectors/kafka" >}}">Apache Kafka</a>,
-          <a href="{{< ref "docs/dev/table/connectors/upsert-kafka" >}}">Upsert Kafka</a>,
-          <a href="{{< ref "docs/dev/table/connectors/kinesis" >}}">Amazon Kinesis Data Streams</a>,
-          <a href="{{< ref "docs/dev/table/connectors/filesystem" >}}">Filesystem</a></td>
+          <td><a href="{{< ref "docs/connectors/table/formats/csv" >}}">CSV</a></td>
+          <td><a href="{{< ref "docs/connectors/table/kafka" >}}">Apache Kafka</a>,
+          <a href="{{< ref "docs/connectors/table/upsert-kafka" >}}">Upsert Kafka</a>,
+          <a href="{{< ref "docs/connectors/table/kinesis" >}}">Amazon Kinesis Data Streams</a>,
+          <a href="{{< ref "docs/connectors/table/filesystem" >}}">Filesystem</a></td>
         </tr>
         <tr>
-         <td><a href="{{< ref "docs/dev/table/connectors/formats/json" >}}">JSON</a></td>
-         <td><a href="{{< ref "docs/dev/table/connectors/kafka" >}}">Apache Kafka</a>,
-          <a href="{{< ref "docs/dev/table/connectors/upsert-kafka" >}}">Upsert Kafka</a>,
-          <a href="{{< ref "docs/dev/table/connectors/kinesis" >}}">Amazon Kinesis Data Streams</a>,
-          <a href="{{< ref "docs/dev/table/connectors/filesystem" >}}">Filesystem</a>,
-          <a href="{{< ref "docs/dev/table/connectors/elasticsearch" >}}">Elasticsearch</a></td>
+         <td><a href="{{< ref "docs/connectors/table/formats/json" >}}">JSON</a></td>
+         <td><a href="{{< ref "docs/connectors/table/kafka" >}}">Apache Kafka</a>,
+          <a href="{{< ref "docs/connectors/table/upsert-kafka" >}}">Upsert Kafka</a>,
+          <a href="{{< ref "docs/connectors/table/kinesis" >}}">Amazon Kinesis Data Streams</a>,
+          <a href="{{< ref "docs/connectors/table/filesystem" >}}">Filesystem</a>,
+          <a href="{{< ref "docs/connectors/table/elasticsearch" >}}">Elasticsearch</a></td>
         </tr>
         <tr>
-          <td><a href="{{< ref "docs/dev/table/connectors/formats/avro" >}}">Apache Avro</a></td>
-          <td><a href="{{< ref "docs/dev/table/connectors/kafka" >}}">Apache Kafka</a>,
-           <a href="{{< ref "docs/dev/table/connectors/upsert-kafka" >}}">Upsert Kafka</a>,
-           <a href="{{< ref "docs/dev/table/connectors/kinesis" >}}">Amazon Kinesis Data Streams</a>,
-           <a href="{{< ref "docs/dev/table/connectors/filesystem" >}}">Filesystem</a></td>
+          <td><a href="{{< ref "docs/connectors/table/formats/avro" >}}">Apache Avro</a></td>
+          <td><a href="{{< ref "docs/connectors/table/kafka" >}}">Apache Kafka</a>,
+           <a href="{{< ref "docs/connectors/table/upsert-kafka" >}}">Upsert Kafka</a>,
+           <a href="{{< ref "docs/connectors/table/kinesis" >}}">Amazon Kinesis Data Streams</a>,
+           <a href="{{< ref "docs/connectors/table/filesystem" >}}">Filesystem</a></td>
         </tr>
         <tr>
-          <td><a href="{{< ref "docs/dev/table/connectors/formats/avro-confluent" >}}">Confluent Avro</a></td>
-          <td><a href="{{< ref "docs/dev/table/connectors/kafka" >}}">Apache Kafka</a>,
-           <a href="{{< ref "docs/dev/table/connectors/upsert-kafka" >}}">Upsert Kafka</a></td>
+          <td><a href="{{< ref "docs/connectors/table/formats/avro-confluent" >}}">Confluent Avro</a></td>
+          <td><a href="{{< ref "docs/connectors/table/kafka" >}}">Apache Kafka</a>,
+           <a href="{{< ref "docs/connectors/table/upsert-kafka" >}}">Upsert Kafka</a></td>
         </tr>
         <tr>
-         <td><a href="{{< ref "docs/dev/table/connectors/formats/debezium" >}}">Debezium CDC</a></td>
-          <td><a href="{{< ref "docs/dev/table/connectors/kafka" >}}">Apache Kafka</a>,
-           <a href="{{< ref "docs/dev/table/connectors/filesystem" >}}">Filesystem</a></td>
+         <td><a href="{{< ref "docs/connectors/table/formats/debezium" >}}">Debezium CDC</a></td>
+          <td><a href="{{< ref "docs/connectors/table/kafka" >}}">Apache Kafka</a>,
+           <a href="{{< ref "docs/connectors/table/filesystem" >}}">Filesystem</a></td>
         </tr>
         <tr>
-         <td><a href="{{< ref "docs/dev/table/connectors/formats/canal" >}}">Canal CDC</a></td>
-          <td><a href="{{< ref "docs/dev/table/connectors/kafka" >}}">Apache Kafka</a>,
-           <a href="{{< ref "docs/dev/table/connectors/filesystem" >}}">Filesystem</a></td>
+         <td><a href="{{< ref "docs/connectors/table/formats/canal" >}}">Canal CDC</a></td>
+          <td><a href="{{< ref "docs/connectors/table/kafka" >}}">Apache Kafka</a>,
+           <a href="{{< ref "docs/connectors/table/filesystem" >}}">Filesystem</a></td>
         </tr>
         <tr>
-         <td><a href="{{< ref "docs/dev/table/connectors/formats/maxwell" >}}">Maxwell CDC</a></td>
-          <td><a href="{{< ref "docs/dev/table/connectors/kafka" >}}">Apache Kafka</a>,
-           <a href="{{< ref "docs/dev/table/connectors/filesystem" >}}">Filesystem</a></td>
+         <td><a href="{{< ref "docs/connectors/table/formats/maxwell" >}}">Maxwell CDC</a></td>
+          <td><a href="{{< ref "docs/connectors/table/kafka" >}}">Apache Kafka</a>,
+           <a href="{{< ref "docs/connectors/table/filesystem" >}}">Filesystem</a></td>
         </tr>
         <tr>
-         <td><a href="{{< ref "docs/dev/table/connectors/formats/parquet" >}}">Apache Parquet</a></td>
-         <td><a href="{{< ref "docs/dev/table/connectors/filesystem" >}}">Filesystem</a></td>
+         <td><a href="{{< ref "docs/connectors/table/formats/parquet" >}}">Apache Parquet</a></td>
+         <td><a href="{{< ref "docs/connectors/table/filesystem" >}}">Filesystem</a></td>
         </tr>
         <tr>
-         <td><a href="{{< ref "docs/dev/table/connectors/formats/orc" >}}">Apache ORC</a></td>
-         <td><a href="{{< ref "docs/dev/table/connectors/filesystem" >}}">Filesystem</a></td>
+         <td><a href="{{< ref "docs/connectors/table/formats/orc" >}}">Apache ORC</a></td>
+         <td><a href="{{< ref "docs/connectors/table/filesystem" >}}">Filesystem</a></td>
         </tr>
         <tr>
-        <td><a href="{{< ref "docs/dev/table/connectors/formats/raw" >}}">Raw</a></td>
-        <td><a href="{{< ref "docs/dev/table/connectors/kafka" >}}">Apache Kafka</a>,
-          <a href="{{< ref "docs/dev/table/connectors/upsert-kafka" >}}">Upsert Kafka</a>,
-          <a href="{{< ref "docs/dev/table/connectors/kinesis" >}}">Amazon Kinesis Data Streams</a>,
-          <a href="{{< ref "docs/dev/table/connectors/filesystem" >}}">Filesystem</a></td>
+        <td><a href="{{< ref "docs/connectors/table/formats/raw" >}}">Raw</a></td>
+        <td><a href="{{< ref "docs/connectors/table/kafka" >}}">Apache Kafka</a>,
+          <a href="{{< ref "docs/connectors/table/upsert-kafka" >}}">Upsert Kafka</a>,
+          <a href="{{< ref "docs/connectors/table/kinesis" >}}">Amazon Kinesis Data Streams</a>,
+          <a href="{{< ref "docs/connectors/table/filesystem" >}}">Filesystem</a></td>
         </tr>
     </tbody>
 </table>

@@ -35,7 +35,7 @@ When reading (deserializing) a record with this format the Avro writer schema is
 
 When writing (serializing) a record with this format the Avro schema is inferred from the table schema and used to retrieve a schema id to be encoded with the data. The lookup is performed with in the configured Confluent Schema Registry under the [subject](https://docs.confluent.io/current/schema-registry/index.html#schemas-subjects-and-topics) given in `avro-confluent.schema-registry.subject`.
 
-The Avro Schema Registry format can only be used in conjunction with the [Apache Kafka SQL connector]({{< ref "docs/dev/table/connectors/kafka" >}}) or the [Upsert Kafka SQL Connector]({{< ref "docs/dev/table/connectors/upsert-kafka" >}}).
+The Avro Schema Registry format can only be used in conjunction with the [Apache Kafka SQL connector]({{< ref "docs/connectors/table/kafka" >}}) or the [Upsert Kafka SQL Connector]({{< ref "docs/connectors/table/upsert-kafka" >}}).
 
 Dependencies
 ------------
@@ -208,7 +208,7 @@ Data Type Mapping
 ----------------
 
 Currently, Apache Flink always uses the table schema to derive the Avro reader schema during deserialization and Avro writer schema during serialization. Explicitly defining an Avro schema is not supported yet.
-See the [Apache Avro Format]({{< ref "docs/dev/table/connectors/formats/avro" >}}#data-type-mapping) for the mapping between Avro and Flink DataTypes. 
+See the [Apache Avro Format]({{< ref "docs/connectors/table/formats/avro" >}}#data-type-mapping) for the mapping between Avro and Flink DataTypes. 
 
 In addition to the types listed there, Flink supports reading/writing nullable types. Flink maps nullable types to Avro `union(something, null)`, where `something` is the Avro type converted from Flink type.
 

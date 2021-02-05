@@ -29,7 +29,7 @@ under the License.
 All Flink processes create a log text file that contains messages for various events happening in that process.
 These logs provide deep insights into the inner workings of Flink, and can be used to detect problems (in the form of WARN/ERROR messages) and can help in debugging them.
 
-The log files can be accessed via the Job-/TaskManager pages of the WebUI. The used [Resource Provider]({{< ref "/deployment/resource-providers/index" >}}) (e.g., YARN) may provide additional means of accessing them.
+The log files can be accessed via the Job-/TaskManager pages of the WebUI. The used [Resource Provider]({{< ref "docs/deployment/overview" >}}) (e.g., YARN) may provide additional means of accessing them.
 
 The logging in Flink uses the [SLF4J](http://www.slf4j.org/) logging interface.
 This allows you to use any logging framework that supports SLF4J, without having to modify the Flink source code.

@@ -49,9 +49,9 @@ that triggers the execution, or in the command line process `./bin/flink run
 ...`.
 
 The JobManager and TaskManagers can be started in various ways: directly on
-the machines as a [standalone cluster]({{< ref "/deployment/resource-providers/standalone/index" >}}), in containers, or managed by resource
+the machines as a [standalone cluster]({{< ref "docs/deployment/resource-providers/standalone/overview" >}}), in containers, or managed by resource
 frameworks like [YARN]({{< ref "deployment/resource-providers/yarn" >}})
-or [Mesos]({{< ref "/deployment/resource-providers/mesos" >}}).
+or [Mesos]({{< ref "docs/deployment/resource-providers/mesos" >}}).
 TaskManagers connect to JobManagers, announcing themselves as available, and
 are assigned work.
 
@@ -82,13 +82,13 @@ failures, among others. This process consists of three different components:
   * **JobMaster** 
 
     A _JobMaster_ is responsible for managing the execution of a single
-    [JobGraph]({{< ref "/concepts/glossary" >}}#logical-graph).
+    [JobGraph]({{< ref "docs/concepts/glossary" >}}#logical-graph).
     Multiple jobs can run simultaneously in a Flink cluster, each having its
     own JobMaster.
 
 There is always at least one JobManager. A high-availability setup might have
 multiple JobManagers, one of which is always the *leader*, and the others are
-*standby* (see [High Availability (HA)]({{< ref "/deployment/ha/index" >}})).
+*standby* (see [High Availability (HA)]({{< ref "docs/deployment/ha/overview" >}})).
 
 ### TaskManagers
 
@@ -108,7 +108,7 @@ For distributed execution, Flink *chains* operator subtasks together into
 *tasks*. Each task is executed by one thread.  Chaining operators together into
 tasks is a useful optimization: it reduces the overhead of thread-to-thread
 handover and buffering, and increases overall throughput while decreasing
-latency.  The chaining behavior can be configured; see the [chaining docs]({{< ref "dev/stream/operators/index" >}}#task-chaining-and-resource-groups) for details.
+latency.  The chaining behavior can be configured; see the [chaining docs]({{< ref "docs/dev/datastream/operators/overview" >}}#task-chaining-and-resource-groups) for details.
 
 The sample dataflow in the figure below is executed with five subtasks, and
 hence with five parallel threads.
@@ -165,12 +165,12 @@ jobs from its ``main()`` method. The execution of these jobs can happen in a
 local JVM (``LocalEnvironment``) or on a remote setup of clusters with multiple
 machines (``RemoteEnvironment``). For each program, the `ExecutionEnvironment`
 provides methods to control the job execution (e.g. setting the parallelism) and to interact with
-the outside world (see [Anatomy of a Flink Program]({{< ref "dev/datastream_api" >}}#anatomy-of-a-flink-program)).
+the outside world (see [Anatomy of a Flink Program]({{< ref "docs/dev/datastream/overview" >}}#anatomy-of-a-flink-program)).
 
 The jobs of a Flink Application can either be submitted to a long-running
-[Flink Session Cluster]({{< ref "/concepts/glossary" >}}#flink-session-cluster), a dedicated [Flink Job
-Cluster]({{< ref "/concepts/glossary" >}}#flink-job-cluster), or a
-[Flink Application Cluster]({{< ref "/concepts/glossary" >}}#flink-application-cluster). The difference between these options is mainly related to the cluster’s lifecycle and to resource
+[Flink Session Cluster]({{< ref "docs/concepts/glossary" >}}#flink-session-cluster), a dedicated [Flink Job
+Cluster]({{< ref "docs/concepts/glossary" >}}#flink-job-cluster), or a
+[Flink Application Cluster]({{< ref "docs/concepts/glossary" >}}#flink-application-cluster). The difference between these options is mainly related to the cluster’s lifecycle and to resource
 isolation guarantees.
 
 ### Flink Session Cluster

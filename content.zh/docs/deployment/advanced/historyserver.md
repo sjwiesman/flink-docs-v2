@@ -78,7 +78,7 @@ historyserver.archive.fs.refresh-interval: 10000
 
 所包含的存档被下载缓存在本地文件系统中。本地目录通过 `historyserver.web.tmpdir` 配置。
 
-请查看配置页面以获取[配置选项的完整列表]({{< ref "/deployment/config.zh" >}}#history-server)。
+请查看配置页面以获取[配置选项的完整列表]({{< ref "docs/deployment/config" >}}#history-server)。
 
 <a name="available-requests"></a>
 

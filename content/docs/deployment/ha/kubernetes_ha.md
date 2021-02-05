@@ -29,20 +29,20 @@ under the License.
 Flink's Kubernetes HA services use [Kubernetes](https://kubernetes.io/) for high availability services.
 
 Kubernetes high availability services can only be used when deploying to Kubernetes.
-Consequently, they can be configured when using [standalone Flink on Kubernetes]({{< ref "/deployment/resource-providers/standalone/kubernetes" >}}) or the [native Kubernetes integration]({{< ref "/ deployment/resource-providers/native_kubernetes" >}})
+Consequently, they can be configured when using [standalone Flink on Kubernetes]({{< ref "docs/deployment/resource-providers/standalone/kubernetes" >}}) or the [native Kubernetes integration]({{< ref "docs/deployment/resource-providers/native_kubernetes" >}})
 
 ## Configuration
 
 In order to start an HA-cluster you have to configure the following configuration keys:
 
-- [high-availability]({{< ref "/deployment/config" >}}#high-availability-1) (required): 
+- [high-availability]({{< ref "docs/deployment/config" >}}#high-availability-1) (required): 
 The `high-availability` option has to be set to `KubernetesHaServicesFactory`.
 
 ```yaml
 high-availability: org.apache.flink.kubernetes.highavailability.KubernetesHaServicesFactory
 ```
 
-- [high-availability.storageDir]({{< ref "/deployment/config" >}}#high-availability-storagedir) (required): 
+- [high-availability.storageDir]({{< ref "docs/deployment/config" >}}#high-availability-storagedir) (required): 
 JobManager metadata is persisted in the file system `high-availability.storageDir` and only a pointer to this state is stored in Kubernetes.
 
 ```yaml
@@ -51,7 +51,7 @@ high-availability.storageDir: s3:///flink/recovery
 
 The `storageDir` stores all metadata needed to recover a JobManager failure.
   
-- [kubernetes.cluster-id]({{< ref "/deployment/config" >}}#kubernetes-cluster-id) (required):
+- [kubernetes.cluster-id]({{< ref "docs/deployment/config" >}}#kubernetes-cluster-id) (required):
 In order to identify the Flink cluster, you have to specify a `kubernetes.cluster-id`.
 
 ```yaml

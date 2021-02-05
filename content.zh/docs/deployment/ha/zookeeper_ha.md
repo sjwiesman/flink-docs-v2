@@ -37,12 +37,12 @@ Flink includes scripts to [bootstrap a simple ZooKeeper](#bootstrap-zookeeper) i
 
 In order to start an HA-cluster you have to configure the following configuration keys:
 
-- [high-availability]({{< ref "/deployment/config" >}}#high-availability-1) (required): 
+- [high-availability]({{< ref "docs/deployment/config" >}}#high-availability-1) (required): 
 The `high-availability` option has to be set to `zookeeper`.
 
   <pre>high-availability: zookeeper</pre>
 
-- [high-availability.storageDir]({{< ref "/deployment/config" >}}#high-availability-storagedir) (required): 
+- [high-availability.storageDir]({{< ref "docs/deployment/config" >}}#high-availability-storagedir) (required): 
 JobManager metadata is persisted in the file system `high-availability.storageDir` and only a pointer to this state is stored in ZooKeeper.
 
   <pre>high-availability.storageDir: hdfs:///flink/recovery</pre>
@@ -56,12 +56,12 @@ A *ZooKeeper quorum* is a replicated group of ZooKeeper servers, which provide t
 
   Each `addressX:port` refers to a ZooKeeper server, which is reachable by Flink at the given address and port.
 
-- [high-availability.zookeeper.path.root]({{< ref "/deployment/config" >}}#high-availability-zookeeper-path-root) (recommended): 
+- [high-availability.zookeeper.path.root]({{< ref "docs/deployment/config" >}}#high-availability-zookeeper-path-root) (recommended): 
 The *root ZooKeeper node*, under which all cluster nodes are placed.
 
   <pre>high-availability.zookeeper.path.root: /flink</pre>
 
-- [high-availability.cluster-id]({{< ref "/deployment/config" >}}#high-availability-cluster-id) (recommended): 
+- [high-availability.cluster-id]({{< ref "docs/deployment/config" >}}#high-availability-cluster-id) (recommended): 
 The *cluster-id ZooKeeper node*, under which all required coordination data for a cluster is placed.
 
   <pre>high-availability.cluster-id: /default_ns # important: customize per cluster</pre>
@@ -100,8 +100,8 @@ zookeeper.sasl.service-name: zookeeper
 zookeeper.sasl.login-context-name: Client  
 ```
 
-For more information on Flink configuration for Kerberos security, please refer to the [security section of the Flink configuration page]({{< ref "/deployment/config" >}}#security).
-You can also find further details on [how Flink sets up Kerberos-based security internally]({{< ref "/deployment/security/security-kerberos" >}}).
+For more information on Flink configuration for Kerberos security, please refer to the [security section of the Flink configuration page]({{< ref "docs/deployment/config" >}}#security).
+You can also find further details on [how Flink sets up Kerberos-based security internally]({{< ref "docs/deployment/security/security-kerberos" >}}).
 
 {{< top >}}
 

@@ -61,11 +61,11 @@ Flink's [high availability services](#high-availability-services) encapsulate th
 
 Flink ships with two high availability service implementations:
 
-* [ZooKeeper]({{< ref "/deployment/ha/zookeeper_ha" >}}): 
+* [ZooKeeper]({{< ref "docs/deployment/ha/zookeeper_ha" >}}): 
 ZooKeeper HA services can be used with every Flink cluster deployment. 
 They require a running ZooKeeper quorum.  
 
-* [Kubernetes]({{< ref "/deployment/ha/kubernetes_ha" >}}):
+* [Kubernetes]({{< ref "docs/deployment/ha/kubernetes_ha" >}}):
 Kubernetes HA services only work when running on Kubernetes.
 
 {{< top >}}
