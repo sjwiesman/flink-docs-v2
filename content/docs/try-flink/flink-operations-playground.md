@@ -73,7 +73,7 @@ JobManager. Additionally, two Kafka Topics *input* and *output* are created.
 
 The Job consumes `ClickEvent`s from the *input* topic, each with a `timestamp` and a `page`. The 
 events are then keyed by `page` and counted in 15 second
-[windows]({{< ref "docs/dev/stream/operators/windows" >}}). The results are written to the 
+[windows]({{< ref "docs/dev/datastream/operators/windows" >}}). The results are written to the 
 *output* topic. 
 
 There are six different pages and we generate 1000 click events per page and 15 seconds. Hence, the 
@@ -314,7 +314,7 @@ The Job will quickly process the full backlog of input events (accumulated durin
 from Kafka and produce output at a much higher rate (> 24 records/minute) until it reaches 
 the head of the stream. In the *output* you will see that all keys (`page`s) are present for all time 
 windows and that every count is exactly one thousand. Since we are using the 
-[FlinkKafkaProducer]({{< ref "docs/dev/connectors/kafka" >}}#kafka-producers-and-fault-tolerance)
+[FlinkKafkaProducer]({{< ref "docs/connectors/datastream/kafka" >}}#kafka-producers-and-fault-tolerance)
 in its "at-least-once" mode, there is a chance that you will see some duplicate output records.
 
 {{< hint info >}}
@@ -787,7 +787,7 @@ which is Flink's fault-tolerance mechanism. If you run without it and go through
 [failure and recovery](#observing-failure--recovery), you should will see that data is actually 
 lost.
 
-* `--event-time` enables [event time semantics]({{< ref "docs/dev/event_time" >}}) for your 
+* `--event-time` enables [event time semantics]({{< ref "docs/concepts/time" >}}) for your 
 Job. When disabled, the Job will assign events to windows based on the wall-clock time instead of 
 the timestamp of the `ClickEvent`. Consequently, the number of events per window will not be exactly
 one thousand anymore. 

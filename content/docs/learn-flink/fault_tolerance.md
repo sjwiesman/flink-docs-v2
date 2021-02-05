@@ -135,7 +135,7 @@ checkpoint, it has all of the sources record their offsets and insert numbered _
 into their streams. These barriers flow through the job graph, indicating the part of the stream
 before and after each checkpoint. 
 
-{{<img src="/fig/stream_barriers.svg" alt="Checkpoint barriers are inserted into the streams" width="80%" >}}
+{{< img src="/fig/stream_barriers.svg" alt="Checkpoint barriers are inserted into the streams" width="80%" >}}
 
 Checkpoint _n_ will contain the state of each operator that resulted from having consumed **every
 event before checkpoint barrier _n_, and none of the events after it**.
@@ -145,7 +145,7 @@ with two input streams (such as a `CoProcessFunction`) perform _barrier alignmen
 snapshot will reflect the state resulting from consuming events from both input streams up to (but
 not past) both barriers.
 
-{{<img src="/fig/stream_aligning.svg" alt="Barrier alignment" width="100%" >}}
+{{< img src="/fig/stream_aligning.svg" alt="Barrier alignment" width="100%" >}}
 
 Flink's state backends use a copy-on-write mechanism to allow stream processing to continue
 unimpeded while older versions of the state are being asynchronously snapshotted. Only when the
@@ -197,6 +197,6 @@ The [Flink Operations Playground]({{< ref "docs/try-flink/flink-operations-playg
 - [Savepoints]({{< ref "docs/ops/state/savepoints" >}})
 - [Tuning Checkpoints and Large State]({{< ref "docs/ops/state/large_state_tuning" >}})
 - [Monitoring Checkpointing]({{< ref "docs/ops/monitoring/checkpoint_monitoring" >}})
-- [Task Failure Recovery]({{< ref "docs/dev/task_failure_recovery" >}})
+- [Task Failure Recovery]({{< ref "docs/execution/task_failure_recovery" >}})
 
 {{< top >}}

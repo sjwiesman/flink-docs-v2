@@ -299,7 +299,7 @@ hourlyTips.getSideOutput(lateFares).print();
 <a name="further-reading"></a>
 ## 延伸阅读
 
-- [处理函数（ProcessFunction）]({{< ref "docs/dev/stream/operators/process_function" >}})
-- [旁路输出（Side Outputs）]({{< ref "docs/dev/stream/side_output" >}})
+- [处理函数（ProcessFunction）]({{< ref "docs/dev/datastream/operators/process_function" >}})
+- [旁路输出（Side Outputs）]({{< ref "docs/dev/datastream/side_output" >}})
 
 {{< top >}}

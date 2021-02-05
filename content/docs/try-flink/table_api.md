@@ -194,7 +194,7 @@ Now with the skeleton of a Job set-up, you are ready to add some business logic.
 The goal is to build a report that shows the total spend for each account across each hour of the day.
 This means the timestamp column needs be be rounded down from millisecond to hour granularity. 
 
-Flink supports developing relational applications in pure [SQL]({{< ref "docs/dev/table/sql/index" >}}) or using the [Table API]({{< ref "docs/dev/table/tableApi" >}}).
+Flink supports developing relational applications in pure [SQL]({{< ref "docs/dev/table/sql/overview" >}}) or using the [Table API]({{< ref "docs/dev/table/tableApi" >}}).
 The Table API is a fluent DSL inspired by SQL, that can be written in Python, Java, or Scala and supports strong IDE integration.
 Just like a SQL query, Table programs can select the required fields and group by your keys.
 These features, allong with [built-in functions]({{< ref "docs/dev/table/functions/systemFunctions" >}}) like `floor` and `sum`, you can write this report.
@@ -257,7 +257,7 @@ Running the test with this implementation will pass.
 ## Adding Windows
 
 Grouping data based on time is a typical operation in data processing, especially when working with infinite streams.
-A grouping based on time is called a [window]({{< ref "docs/dev/stream/operators/windows" >}}) and Flink offers flexible windowing semantics.
+A grouping based on time is called a [window]({{< ref "docs/dev/datastream/operators/windows" >}}) and Flink offers flexible windowing semantics.
 The most basic type of window is called a `Tumble` window, which has a fixed size and whose buckets do not overlap.
 
 ```java

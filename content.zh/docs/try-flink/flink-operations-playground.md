@@ -65,7 +65,7 @@ Job 监控以及资源管理。Flink TaskManager 运行 worker 进程，
 {{< img src="/fig/click-event-count-example.svg" alt="Click Event Count Example" width="80%" >}}
 
 该 Job 负责从 *input* topic 消费点击事件 `ClickEvent`，每个点击事件都包含一个 `timestamp` 和一个 `page` 属性。
-这些事件将按照 `page` 属性进行分组，然后按照每 15s 窗口 [windows]({{< ref "docs/dev/stream/operators/windows" >}}) 进行统计，
+这些事件将按照 `page` 属性进行分组，然后按照每 15s 窗口 [windows]({{< ref "docs/dev/datastream/operators/windows" >}}) 进行统计，
 最终结果输出到 *output* topic 中。
 
 总共有 6 种不同的 page 属性，针对特定 page，我们会按照每 15s 产生 1000 个点击事件的速率生成数据。
@@ -316,7 +316,7 @@ docker-compose up -d taskmanager
 并以更快的速度(>24 条记录/分钟)产生输出，直到它追上 kafka 的 lag 延迟为止。
 此时观察 *output* topic 输出，
 你会看到在每一个时间窗口中都有按 `page` 进行分组的记录，而且计数刚好是 1000。
-由于我们使用的是 [FlinkKafkaProducer]({{< ref "docs/dev/connectors/kafka" >}}#kafka-producers-and-fault-tolerance) "至少一次"模式，因此你可能会看到一些记录重复输出多次。
+由于我们使用的是 [FlinkKafkaProducer]({{< ref "docs/connectors/datastream/kafka" >}}#kafka-producers-and-fault-tolerance) "至少一次"模式，因此你可能会看到一些记录重复输出多次。
 
 {{< hint info >}}
   **注意**：在大部分生产环境中都需要一个资源管理器 (Kubernetes、Yarn,、Mesos)对
@@ -801,7 +801,7 @@ curl localhost:8081/jobs/<jod-id>
 如果你没有开启 checkpoint，那么在 
 [Job 失败与恢复](#observing-failure--recovery)这一节中，你将会看到数据丢失现象发生。
 
-* `--event-time` 参数开启了 Job 的 [事件时间]({{< ref "docs/dev/event_time" >}}) 机制，该机制会使用 `ClickEvent` 自带的时间戳进行统计。
+* `--event-time` 参数开启了 Job 的 [事件时间]({{< ref "docs/concepts/time" >}}) 机制，该机制会使用 `ClickEvent` 自带的时间戳进行统计。
 如果不指定该参数，Flink 将结合当前机器时间使用事件处理时间进行统计。如此一来，每个窗口计数将不再是准确的 1000 了。 
 
 *Click Event Count* 这个 Job 还有另外一个选项，该选项默认是关闭的，你可以在 *client* 容器的 `docker-compose.yaml` 文件中添加该选项从而观察该 Job 在反压下的表现，该选项描述如下：

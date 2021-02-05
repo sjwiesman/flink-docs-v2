@@ -26,7 +26,7 @@ under the License.
 
 Apache Flink 的一种常见应用场景是 ETL（抽取、转换、加载）管道任务。从一个或多个数据源获取数据，进行一些转换操作和信息补充，将结果存储起来。在这个教程中，我们将介绍如何使用 Flink 的 DataStream API 实现这类应用。
 
-这里注意，Flink 的 [Table 和 SQL API]({{< ref "docs/dev/table/index" >}}) 完全可以满足很多 ETL 使用场景。但无论你最终是否直接使用 DataStream API，对这里介绍的基本知识有扎实的理解都是有价值的。
+这里注意，Flink 的 [Table 和 SQL API]({{< ref "docs/dev/table/overview" >}}) 完全可以满足很多 ETL 使用场景。但无论你最终是否直接使用 DataStream API，对这里介绍的基本知识有扎实的理解都是有价值的。
 
 
 
@@ -227,7 +227,7 @@ minutesByStartCell
 * **持久性**: Flink 状态是容错的，例如，它可以自动按一定的时间间隔产生 checkpoint，并且在任务失败后进行恢复
 * **纵向可扩展性**: Flink 状态可以存储在集成的 RocksDB 实例中，这种方式下可以通过增加本地磁盘来扩展空间
 * **横向可扩展性**: Flink 状态可以随着集群的扩缩容重新分布
-* **可查询性**: Flink 状态可以通过使用 [状态查询 API]({{< ref "docs/dev/stream/state/queryable_state" >}}) 从外部进行查询。
+* **可查询性**: Flink 状态可以通过使用 [状态查询 API]({{< ref "docs/dev/datastream/fault-tolerance/queryable_state" >}}) 从外部进行查询。
 
 在本节中你将学习如何使用 Flink 的 API 来管理 keyed state。
 
@@ -319,11 +319,11 @@ keyHasBeenSeen.clear()
 
 对一个给定的键值，你也许想在它一段时间不使用后来做这件事。当学习 `ProcessFunction` 的相关章节时，你将看到在事件驱动的应用中怎么用定时器来做这个。
 
-也可以选择使用 [状态的过期时间（TTL）]({{< ref "docs/dev/stream/state/state" >}}#state-time-to-live-ttl)，为状态描述符配置你想要旧状态自动被清除的时间。
+也可以选择使用 [状态的过期时间（TTL）]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}#state-time-to-live-ttl)，为状态描述符配置你想要旧状态自动被清除的时间。
 
 ### Non-keyed State
 
-在没有键的上下文中我们也可以使用 Flink 管理的状态。这也被称作 [算子的状态]({{< ref "docs/dev/stream/state/state" >}}#operator-state)。它包含的接口是很不一样的，由于对用户定义的函数来说使用 non-keyed state 是不太常见的，所以这里就不多介绍了。这个特性最常用于 source 和 sink 的实现。
+在没有键的上下文中我们也可以使用 Flink 管理的状态。这也被称作 [算子的状态]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}#operator-state)。它包含的接口是很不一样的，由于对用户定义的函数来说使用 non-keyed state 是不太常见的，所以这里就不多介绍了。这个特性最常用于 source 和 sink 的实现。
 
 {{< top >}}
 
@@ -411,7 +411,7 @@ public static class ControlFunction extends RichCoFlatMapFunction<String, String
 
 ## 延展阅读
 
-- [数据流转换]({{< ref "docs/dev/stream/operators/index" >}}#datastream-transformations)
+- [数据流转换]({{< ref "docs/dev/stream/operators/overview" >}}#datastream-transformations)
 - [有状态流的处理]({{< ref "docs/concepts/stateful-stream-processing" >}})
 
 {{< top >}}

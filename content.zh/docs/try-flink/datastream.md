@@ -472,14 +472,14 @@ class FraudDetector extends KeyedProcessFunction[Long, Transaction, Alert] {
 假设你的欺诈检测器所处理的交易数据如下：
 
 <p class="text-center">
-    <img alt="Transactions" width="80%" src="{% link /fig/fraud-transactions.svg %}"/>
+    <img alt="Transactions" width="80%" src="/fig/fraud-transactions.svg"/>
 </p>
 
 交易 3 和交易 4 应该被标记为欺诈行为，因为交易 3 是一个 $0.09 的小额交易，而紧随着的交易 4 是一个 $510 的大额交易。
 另外，交易 7、8 和 交易 9 就不属于欺诈交易了，因为在交易 7 这个 $0.02 的小额交易之后，并没有跟随一个大额交易，而是一个金额适中的交易，这使得交易 7 到 交易 9 不属于欺诈行为。
 
 欺诈检测器需要在多个交易事件之间记住一些信息。仅当一个大额的交易紧随一个小额交易的情况发生时，这个大额交易才被认为是欺诈交易。
-在多个事件之间存储信息就需要使用到 [状态]({{< ref "/concepts/glossary" >}}#managed-state)，这也是我们选择使用 [KeyedProcessFunction]({{< ref "/dev/stream/operators/process_function" >}}) 的原因。
+在多个事件之间存储信息就需要使用到 [状态]({{< ref "docs/concepts/glossary" >}}#managed-state)，这也是我们选择使用 [KeyedProcessFunction]({{< ref "docs/dev/datastream/operators/process_function" >}}) 的原因。
 它能够同时提供对状态和时间的细粒度操作，这使得我们能够在接下来的代码练习中实现更复杂的算法。
 
 最直接的实现方式是使用一个 boolean 型的标记状态来表示是否刚处理过一个小额交易。
@@ -492,7 +492,7 @@ Flink 会在同一个 `FraudDetector` 的并发实例中处理多个账户的交
 
 为了应对这个问题，Flink 提供了一套支持容错状态的原语，这些原语几乎与常规成员变量一样易于使用。
 
-Flink 中最基础的状态类型是 [ValueState]({{< ref "/dev/stream/state/state" >}}#using-managed-keyed-state)，这是一种能够为被其封装的变量添加容错能力的类型。
+Flink 中最基础的状态类型是 [ValueState]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}#using-managed-keyed-state)，这是一种能够为被其封装的变量添加容错能力的类型。
 `ValueState` 是一种 _keyed state_，也就是说它只能被用于 _keyed context_ 提供的 operator 中，即所有能够紧随 `DataStream#keyBy` 之后被调用的operator。
 一个 operator 中的  _keyed state_ 的作用域默认是属于它所属的 key 的。
 这个例子中，key 就是当前正在处理的交易行为所属的信用卡账户（key 传入 keyBy() 函数调用），而 `FraudDetector` 维护了每个帐户的标记状态。
