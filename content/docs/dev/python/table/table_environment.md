@@ -91,7 +91,7 @@ table_env = StreamTableEnvironment.create(env, environment_settings=env_settings
 
 ```
 
-**Note:** Almost all the configurations in `ExecutionEnvironment`/`StreamExecutionEnvironment` can be configured via `TableEnvironment.get_config()` now, see [Configuration]({{< ref "/deployment/config" >}}) for more details.
+**Note:** Almost all the configurations in `ExecutionEnvironment`/`StreamExecutionEnvironment` can be configured via `TableEnvironment.get_config()` now, see [Configuration]({{< ref "docs/deployment/config" >}}) for more details.
 Only a few rarely used or deprecated configurations still require direct access to `ExecutionEnvironment` /`StreamExecutionEnvironment` for configuring, e.g. the input dependency constraint.
 
 TableEnvironment API
@@ -196,8 +196,8 @@ These APIs are used to create/remove Table API/SQL Tables and write queries:
         Executes the given single statement and returns the execution result.
         The statement can be DDL/DML/DQL/SHOW/DESCRIBE/EXPLAIN/USE. <br> <br>
         Note that for "INSERT INTO" statement this is an asynchronous operation, which is usually expected when submitting a job to a remote cluster.
-        However, when executing a job in a mini cluster or IDE, you need to wait until the job execution finished, then you can refer to <a href="{{< ref "/dev/python/faq" >}}#wait-for-jobs-to-finish-when-executing-jobs-in-mini-cluster">here</a> for more details. <br>
-        Please refer the <a href="{{< ref "/dev/table/sql/index" >}}">SQL</a> documentation for more details about SQL statement.
+        However, when executing a job in a mini cluster or IDE, you need to wait until the job execution finished, then you can refer to <a href="{{< ref "docs/dev/python/faq" >}}#wait-for-jobs-to-finish-when-executing-jobs-in-mini-cluster">here</a> for more details. <br>
+        Please refer the <a href="{{< ref "docs/dev/table/sql/overview" >}}">SQL</a> documentation for more details about SQL statement.
       </td>
       <td class="text-center">
         <a href="{{ site.pythondocs_baseurl }}/api/python/pyflink.table.html#pyflink.table.TableEnvironment.execute_sql">link</a>
@@ -401,7 +401,7 @@ These APIs are used to explain/execute jobs. Note that the API `execute_sql` can
 
 These APIs are used to register UDFs or remove the registered UDFs. 
 Note that the API `execute_sql` can also be used to register/remove UDFs.
-For more details about the different kinds of UDFs, please refer to [User Defined Functions]({{< ref "/dev/table/functions/index" >}}).
+For more details about the different kinds of UDFs, please refer to [User Defined Functions]({{< ref "docs/dev/table/functions/overview" >}}).
 
 <table class="table table-bordered">
   <thead>
@@ -549,7 +549,7 @@ For more details about the different kinds of UDFs, please refer to [User Define
 ### Dependency Management
 
 These APIs are used to manage the Python dependencies which are required by the Python UDFs.
-Please refer to the [Dependency Management]({{< ref "/dev/python/table-api-users-guide/dependency_management" >}}#python-dependency-in-python-program) documentation for more details.
+Please refer to the [Dependency Management]({{< ref "docs/dev/python/table/dependency_management" >}}#python-dependency-in-python-program) documentation for more details.
 
 <table class="table table-bordered">
   <thead>
@@ -615,8 +615,8 @@ Please refer to the [Dependency Management]({{< ref "/dev/python/table-api-users
       </td>
       <td>
         Returns the table config to define the runtime behavior of the Table API.
-        You can find all the available configuration options in <a href="{{< ref "/deployment/config" >}}">Configuration</a> and
-        <a href="{{< ref "/dev/python/python_config" >}}">Python Configuation</a>. <br> <br>
+        You can find all the available configuration options in <a href="{{< ref "docs/deployment/config" >}}">Configuration</a> and
+        <a href="{{< ref "docs/dev/python/python_config" >}}">Python Configuation</a>. <br> <br>
         The following code is an example showing how to set the configuration options through this API:
 ```python
 # set the parallelism to 8
@@ -633,7 +633,7 @@ table_env.get_config().get_configuration().set_string(
 
 ### Catalog APIs
 
-These APIs are used to access catalogs and modules. You can find more detailed introduction in [Modules]({{< ref "/dev/table/modules" >}}) and [Catalogs]({{< ref "/dev/table/catalogs" >}}) documentation.
+These APIs are used to access catalogs and modules. You can find more detailed introduction in [Modules]({{< ref "docs/dev/table/modules" >}}) and [Catalogs]({{< ref "docs/dev/table/catalogs" >}}) documentation.
 
 <table class="table table-bordered">
   <thead>
@@ -844,7 +844,7 @@ Statebackend, Checkpoint and Restart Strategy
 ---------------------------------------------
 
 Before Flink 1.10 you can configure the statebackend, checkpointing and restart strategy via the `StreamExecutionEnvironment`.
-And now you can configure them by setting key-value options in `TableConfig`, see [Fault Tolerance]({{< ref "/deployment/config" >}}#fault-tolerance), [State Backends]({{< ref "/deployment/config" >}}#checkpoints-and-state-backends) and [Checkpointing]({{< ref "/deployment/config" >}}#checkpointing) for more details.
+And now you can configure them by setting key-value options in `TableConfig`, see [Fault Tolerance]({{< ref "docs/deployment/config" >}}#fault-tolerance), [State Backends]({{< ref "docs/deployment/config" >}}#checkpoints-and-state-backends) and [Checkpointing]({{< ref "docs/deployment/config" >}}#checkpointing) for more details.
 
 The following code is an example showing how to configure the statebackend, checkpoint and restart strategy through the Table API:
 ```python

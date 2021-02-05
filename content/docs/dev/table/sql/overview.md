@@ -30,28 +30,28 @@ This page describes the SQL language supported in Flink, including Data Definiti
 
 This page lists all the supported statements supported in Flink SQL for now:
 
-- [SELECT (Queries)]({{< ref "/dev/table/sql/queries" >}})
-- [CREATE TABLE, DATABASE, VIEW, FUNCTION]({{< ref "/dev/table/sql/create" >}})
-- [DROP TABLE, DATABASE, VIEW, FUNCTION]({{< ref "/dev/table/sql/drop" >}})
-- [ALTER TABLE, DATABASE, FUNCTION]({{< ref "/dev/table/sql/alter" >}})
-- [INSERT]({{< ref "/dev/table/sql/insert" >}})
-- [SQL HINTS]({{< ref "/dev/table/sql/hints" >}})
-- [DESCRIBE]({{< ref "/dev/table/sql/describe" >}})
-- [EXPLAIN]({{< ref "/dev/table/sql/explain" >}})
-- [USE]({{< ref "/dev/table/sql/use" >}})
-- [SHOW]({{< ref "/dev/table/sql/show" >}})
+- [SELECT (Queries)]({{< ref "docs/dev/table/sql/queries" >}})
+- [CREATE TABLE, DATABASE, VIEW, FUNCTION]({{< ref "docs/dev/table/sql/create" >}})
+- [DROP TABLE, DATABASE, VIEW, FUNCTION]({{< ref "docs/dev/table/sql/drop" >}})
+- [ALTER TABLE, DATABASE, FUNCTION]({{< ref "docs/dev/table/sql/alter" >}})
+- [INSERT]({{< ref "docs/dev/table/sql/insert" >}})
+- [SQL HINTS]({{< ref "docs/dev/table/sql/hints" >}})
+- [DESCRIBE]({{< ref "docs/dev/table/sql/describe" >}})
+- [EXPLAIN]({{< ref "docs/dev/table/sql/explain" >}})
+- [USE]({{< ref "docs/dev/table/sql/use" >}})
+- [SHOW]({{< ref "docs/dev/table/sql/show" >}})
 
 ## Data Types
 
-Please see the dedicated page about [data types]({{< ref "/dev/table/types" >}}).
+Please see the dedicated page about [data types]({{< ref "docs/dev/table/types" >}}).
 
 Generic types and (nested) composite types (e.g., POJOs, tuples, rows, Scala case classes) can be fields of a row as well.
 
-Fields of composite types with arbitrary nesting can be accessed with [value access functions]({{< ref "/dev/table/functions/systemFunctions" >}}#value-access-functions).
+Fields of composite types with arbitrary nesting can be accessed with [value access functions]({{< ref "docs/dev/table/functions/systemFunctions" >}}#value-access-functions).
 
-Generic types are treated as a black box and can be passed on or processed by [user-defined functions]({{< ref "/dev/table/functions/udfs" >}}).
+Generic types are treated as a black box and can be passed on or processed by [user-defined functions]({{< ref "docs/dev/table/functions/udfs" >}}).
 
-For DDLs, we support full data types defined in page [Data Types]({{< ref "/dev/table/types" >}}).
+For DDLs, we support full data types defined in page [Data Types]({{< ref "docs/dev/table/types" >}}).
 
 **Notes:** Some of the data types are not supported in SQL queries yet (i.e. in cast expressions or literals). E.g. `STRING`, `BYTES`, `RAW`, `TIME(p) WITHOUT TIME ZONE`, `TIME(p) WITH LOCAL TIME ZONE`, `TIMESTAMP(p) WITHOUT TIME ZONE`, `TIMESTAMP(p) WITH LOCAL TIME ZONE`, `ARRAY`, `MULTISET`, `ROW`.
 

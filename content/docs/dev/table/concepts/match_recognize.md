@@ -27,7 +27,7 @@ under the License.
 # 'Detecting Patterns in Tables'
 
 It is a common use case to search for a set of event patterns, especially in case of data streams.
-Flink comes with a [complex event processing (CEP) library]({{< ref "docs/dev/libs/cep" >}})
+Flink comes with a [complex event processing (CEP) library]({{< ref "docs/libs/cep" >}})
 which allows for pattern detection in event streams. Furthermore, Flink's SQL API provides a
 relational way of expressing queries with a large set of built-in functions and rule-based
 optimizations that can be used out of the box.
@@ -96,7 +96,7 @@ project.
 ```
 
 Alternatively, you can also add the dependency to the cluster classpath (see the
-[dependency section]({{< ref "docs/dev/project-configuration" >}}) for more information).
+[dependency section]({{< ref "docs/dev/datastream/project-configuration" >}}) for more information).
 
 If you want to use the `MATCH_RECOGNIZE` clause in the
 [SQL Client]({{< ref "docs/dev/table/sqlClient" >}}), you don't have to do anything as all the

@@ -30,28 +30,28 @@ under the License.
 
 本页面列出了目前 Flink SQL 所支持的所有语句：
 
-- [SELECT (Queries)]({{< ref "/dev/table/sql/queries.zh" >}})
-- [CREATE TABLE, DATABASE, VIEW, FUNCTION]({{< ref "/dev/table/sql/create.zh" >}})
-- [DROP TABLE, DATABASE, VIEW, FUNCTION]({{< ref "/dev/table/sql/drop.zh" >}})
-- [ALTER TABLE, DATABASE, FUNCTION]({{< ref "/dev/table/sql/alter.zh" >}})
-- [INSERT]({{< ref "/dev/table/sql/insert.zh" >}})
-- [SQL HINTS]({{< ref "/dev/table/sql/hints.zh" >}})
-- [DESCRIBE]({{< ref "/dev/table/sql/describe.zh" >}})
-- [EXPLAIN]({{< ref "/dev/table/sql/explain.zh" >}})
-- [USE]({{< ref "/dev/table/sql/use.zh" >}})
-- [SHOW]({{< ref "/dev/table/sql/show.zh" >}})
+- [SELECT (Queries)]({{< ref "docs/dev/table/sql/queries" >}})
+- [CREATE TABLE, DATABASE, VIEW, FUNCTION]({{< ref "docs/dev/table/sql/create" >}})
+- [DROP TABLE, DATABASE, VIEW, FUNCTION]({{< ref "docs/dev/table/sql/drop" >}})
+- [ALTER TABLE, DATABASE, FUNCTION]({{< ref "docs/dev/table/sql/alter" >}})
+- [INSERT]({{< ref "docs/dev/table/sql/insert" >}})
+- [SQL HINTS]({{< ref "docs/dev/table/sql/hints" >}})
+- [DESCRIBE]({{< ref "docs/dev/table/sql/describe" >}})
+- [EXPLAIN]({{< ref "docs/dev/table/sql/explain" >}})
+- [USE]({{< ref "docs/dev/table/sql/use" >}})
+- [SHOW]({{< ref "docs/dev/table/sql/show" >}})
 
 ## 数据类型
 
-请参考专门描述该主题的页面 [数据类型]({{< ref "/dev/table/types.zh" >}})。
+请参考专门描述该主题的页面 [数据类型]({{< ref "docs/dev/table/types" >}})。
 
 通用类型与（嵌套的）复合类型 （如：POJO、tuples、rows、Scala case 类) 都可以作为行的字段。
 
-复合类型的字段任意的嵌套可被 [值访问函数]({{< ref "/dev/table/functions/systemFunctions.zh" >}}#value-access-functions) 访问。
+复合类型的字段任意的嵌套可被 [值访问函数]({{< ref "docs/dev/table/functions/systemFunctions" >}}#value-access-functions) 访问。
 
-通用类型将会被视为一个黑箱，且可以被 [用户自定义函数]({{< ref "/dev/table/functions/udfs.zh" >}}) 传递或引用。
+通用类型将会被视为一个黑箱，且可以被 [用户自定义函数]({{< ref "docs/dev/table/functions/udfs" >}}) 传递或引用。
 
-对于 DDL 语句而言，我们支持所有在 [数据类型]({{< ref "/dev/table/types.zh" >}}) 页面中定义的数据类型。
+对于 DDL 语句而言，我们支持所有在 [数据类型]({{< ref "docs/dev/table/types" >}}) 页面中定义的数据类型。
 
 **注意：** SQL查询不支持部分数据类型（cast 表达式或字符常量值）。如：`STRING`, `BYTES`, `RAW`, `TIME(p) WITHOUT TIME ZONE`, `TIME(p) WITH LOCAL TIME ZONE`, `TIMESTAMP(p) WITHOUT TIME ZONE`, `TIMESTAMP(p) WITH LOCAL TIME ZONE`, `ARRAY`, `MULTISET`, `ROW`.
 

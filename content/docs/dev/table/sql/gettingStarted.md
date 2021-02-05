@@ -34,7 +34,7 @@ You only need to have basic knowledge of SQL to follow along. No other programmi
 
 ### Installation
 
-There are multiple ways to install Flink. For experimentation, the most common option is to download the binaries and run them locally. You can follow the steps in [local installation]({{< ref "/try-flink/local_installation" >}}) to set up an environment for the rest of the tutorial. 
+There are multiple ways to install Flink. For experimentation, the most common option is to download the binaries and run them locally. You can follow the steps in [local installation]({{< ref "docs/try-flink/local_installation" >}}) to set up an environment for the rest of the tutorial. 
 
 Once you're all set, use the following command to start a local cluster from the installation folder:
 
@@ -46,7 +46,7 @@ Once started, the Flink WebUI on [localhost:8081](localhost:8081) is available l
 
 ### SQL Client
 
-The [SQL Client]({{< ref "/dev/table/sqlClient" >}}) is an interactive client to submit SQL queries to Flink and visualize the results. 
+The [SQL Client]({{< ref "docs/dev/table/sqlClient" >}}) is an interactive client to submit SQL queries to Flink and visualize the results. 
 To start the SQL client, run the `sql-client` script from the installation folder.
 
  ```bash
@@ -62,7 +62,7 @@ Let's start with printing 'Hello World', using the following simple query:
 SELECT 'Hello World';
 ```
 
-Running the `HELP` command lists the full set of supported SQL statements. Let's run one such command, `SHOW`, to see a full list of Flink [built-in functions]({{< ref "/dev/table/functions/systemFunctions" >}}).
+Running the `HELP` command lists the full set of supported SQL statements. Let's run one such command, `SHOW`, to see a full list of Flink [built-in functions]({{< ref "docs/dev/table/functions/systemFunctions" >}}).
 
 ```sql
 SHOW FUNCTIONS;
@@ -86,9 +86,9 @@ It differs from a traditional database because Flink does not manage data at res
 
 Flink data processing pipelines begin with source tables. Source tables produce rows operated over during the query's execution; they are the tables referenced in the `FROM` clause of a query.  These could be Kafka topics, databases, filesystems, or any other system that Flink knows how to consume. 
 
-Tables can be defined through the SQL client or using environment config file. The SQL client support [SQL DDL commands]({{< ref "/dev/table/sql/index" >}}) similar to traditional SQL. Standard SQL DDL is used to [create]({{< ref "/dev/table/sql/create" >}}), [alter]({{< ref "/dev/table/sql/alter" >}}), [drop]({{< ref "/dev/table/sql/drop" >}}) tables. 
+Tables can be defined through the SQL client or using environment config file. The SQL client support [SQL DDL commands]({{< ref "docs/dev/table/sql/overview" >}}) similar to traditional SQL. Standard SQL DDL is used to [create]({{< ref "docs/dev/table/sql/create" >}}), [alter]({{< ref "docs/dev/table/sql/alter" >}}), [drop]({{< ref "docs/dev/table/sql/drop" >}}) tables. 
 
-Flink has a support for different [connectors]({{< ref "/dev/table/connect" >}}) and [formats]({{< ref "/dev/table/connectors/formats/index" >}}) that can be used with tables. Following is an example to define a source table backed by a [CSV file]({{< ref "/dev/table/connectors/formats/csv" >}}) with `emp_id`, `name`, `dept_id` as columns in a `CREATE` table statement.
+Flink has a support for different [connectors]({{< ref "docs/connectors/table/overview" >}}) and [formats]({{< ref "docs/connectors/table/formats/overview" >}}) that can be used with tables. Following is an example to define a source table backed by a [CSV file]({{< ref "docs/connectors/table/formats/csv" >}}) with `emp_id`, `name`, `dept_id` as columns in a `CREATE` table statement.
 
 ```sql
 CREATE TABLE employee_information (
@@ -117,7 +117,7 @@ SELECT * from employee_information WHERE DeptId = 1;
 
 While not designed initially with streaming semantics in mind, SQL is a powerful tool for building continuous data pipelines. Where Flink SQL differs from traditional database queries is that is continuously consuming rows as the arrives and produces updates to its results. 
 
-A [continuous query]({{< ref "/dev/table/streaming/dynamic_tables" >}}#continuous-queries) never terminates and produces a dynamic table as a result. [Dynamic tables]({{< ref "/dev/table/streaming/dynamic_tables" >}}#continuous-queries) are the core concept of Flink's Table API and SQL support for streaming data. 
+A [continuous query]({{< ref "docs/dev/table/concepts/dynamic_tables" >}}#continuous-queries) never terminates and produces a dynamic table as a result. [Dynamic tables]({{< ref "docs/dev/table/concepts/dynamic_tables" >}}#continuous-queries) are the core concept of Flink's Table API and SQL support for streaming data. 
 
 Aggregations on continuous streams need to store aggregated results continuously during the execution of the query. For example, suppose you need to count the number of employees for each department from an incoming data stream. The query needs to maintain the most up to date count for each department to output timely results as new rows are processed.
 
@@ -156,12 +156,12 @@ In particular, Apache Flink's [user mailing list](https://flink.apache.org/commu
 
 ## Resources to Learn more
 
-* [SQL]({{< ref "/dev/table/sql/index" >}}): Supported operations and syntax for SQL.
-* [SQL Client]({{< ref "/dev/table/sqlClient" >}}): Play around with Flink SQL and submit a table program to a cluster without programming knowledge
-* [Concepts & Common API]({{< ref "/dev/table/common" >}}): Shared concepts and APIs of the Table API and SQL.
-* [Streaming Concepts]({{< ref "/dev/table/streaming/index" >}}): Streaming-specific documentation for the Table API or SQL such as configuration of time attributes and handling of updating results.
-* [Built-in Functions]({{< ref "/dev/table/functions/systemFunctions" >}}): Supported functions in Table API and SQL.
-* [Connect to External Systems]({{< ref "/dev/table/connect" >}}): Available connectors and formats for reading and writing data to external systems.
+* [SQL]({{< ref "docs/dev/table/sql/overview" >}}): Supported operations and syntax for SQL.
+* [SQL Client]({{< ref "docs/dev/table/sqlClient" >}}): Play around with Flink SQL and submit a table program to a cluster without programming knowledge
+* [Concepts & Common API]({{< ref "docs/dev/table/common" >}}): Shared concepts and APIs of the Table API and SQL.
+* [Streaming Concepts]({{< ref "docs/dev/table/concepts/overview" >}}): Streaming-specific documentation for the Table API or SQL such as configuration of time attributes and handling of updating results.
+* [Built-in Functions]({{< ref "docs/dev/table/functions/systemFunctions" >}}): Supported functions in Table API and SQL.
+* [Connect to External Systems]({{< ref "docs/connectors/table/overview" >}}): Available connectors and formats for reading and writing data to external systems.
 
 ---------------
 

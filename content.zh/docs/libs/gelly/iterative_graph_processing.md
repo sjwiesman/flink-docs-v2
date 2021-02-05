@@ -172,7 +172,7 @@ and can be specified using the `setName()` method.
 * <strong>Aggregators</strong>: Iteration aggregators can be registered using the `registerAggregator()` method. An iteration aggregator combines
 all aggregates globally once per superstep and makes them available in the next superstep. Registered aggregators can be accessed inside the user-defined `ComputeFunction`.
 
-* <strong>Broadcast Variables</strong>: DataSets can be added as [Broadcast Variables]({{< ref "/dev/batch/index" >}}#broadcast-variables) to the `ComputeFunction`, using the `addBroadcastSet()` method.
+* <strong>Broadcast Variables</strong>: DataSets can be added as [Broadcast Variables]({{< ref "docs/dev/dataset/overview" >}}#broadcast-variables) to the `ComputeFunction`, using the `addBroadcastSet()` method.
 
 {{< tabs "8401417e-de55-4d30-afd0-16141e8aa9b7" >}}
 {{< tab "Java" >}}
@@ -406,7 +406,7 @@ and can be specified using the `setName()` method.
 * <strong>Aggregators</strong>: Iteration aggregators can be registered using the `registerAggregator()` method. An iteration aggregator combines
 all aggregates globally once per superstep and makes them available in the next superstep. Registered aggregators can be accessed inside the user-defined `ScatterFunction` and `GatherFunction`.
 
-* <strong>Broadcast Variables</strong>: DataSets can be added as [Broadcast Variables]({{< ref "/dev/batch/index" >}}#broadcast-variables) to the `ScatterFunction` and `GatherFunction`, using the `addBroadcastSetForUpdateFunction()` and `addBroadcastSetForMessagingFunction()` methods, respectively.
+* <strong>Broadcast Variables</strong>: DataSets can be added as [Broadcast Variables]({{< ref "docs/dev/dataset/overview" >}}#broadcast-variables) to the `ScatterFunction` and `GatherFunction`, using the `addBroadcastSetForUpdateFunction()` and `addBroadcastSetForMessagingFunction()` methods, respectively.
 
 * <strong>Number of Vertices</strong>: Accessing the total number of vertices within the iteration. This property can be set using the `setOptNumVertices()` method.
 The number of vertices can then be accessed in the vertex update function and in the messaging function using the `getNumberOfVertices()` method. If the option is not set in the configuration, this method will return -1.
@@ -772,7 +772,7 @@ Currently, the following parameters can be specified:
 
 * <strong>Aggregators</strong>: Iteration aggregators can be registered using the `registerAggregator()` method. An iteration aggregator combines all aggregates globally once per superstep and makes them available in the next superstep. Registered aggregators can be accessed inside the user-defined `GatherFunction`, `SumFunction` and `ApplyFunction`.
 
-* <strong>Broadcast Variables</strong>: DataSets can be added as [Broadcast Variables]({{< ref "/dev/index" >}}#broadcast-variables) to the `GatherFunction`, `SumFunction` and `ApplyFunction`, using the methods `addBroadcastSetForGatherFunction()`, `addBroadcastSetForSumFunction()` and `addBroadcastSetForApplyFunction` methods, respectively.
+* <strong>Broadcast Variables</strong>: DataSets can be added as [Broadcast Variables]({{< ref "docs/dev/dataset/overview" >}}#broadcast-variables) to the `GatherFunction`, `SumFunction` and `ApplyFunction`, using the methods `addBroadcastSetForGatherFunction()`, `addBroadcastSetForSumFunction()` and `addBroadcastSetForApplyFunction` methods, respectively.
 
 * <strong>Number of Vertices</strong>: Accessing the total number of vertices within the iteration. This property can be set using the `setOptNumVertices()` method.
 The number of vertices can then be accessed in the gather, sum and/or apply functions by using the `getNumberOfVertices()` method. If the option is not set in the configuration, this method will return -1.

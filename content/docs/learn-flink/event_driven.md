@@ -286,7 +286,7 @@ The hands-on exercise that goes with this section is the {{< training_link file=
 
 ## Further Reading
 
-- [ProcessFunction]({{< ref "docs/dev/stream/operators/process_function" >}})
-- [Side Outputs]({{< ref "docs/dev/stream/side_output" >}})
+- [ProcessFunction]({{< ref "docs/dev/datastream/operators/process_function" >}})
+- [Side Outputs]({{< ref "docs/dev/datastream/side_output" >}})
 
 {{< top >}}

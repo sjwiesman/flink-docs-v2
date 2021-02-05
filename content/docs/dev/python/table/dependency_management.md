@@ -26,8 +26,6 @@ under the License.
 
 # Dependency Management
 
-
-
 # Java Dependency in Python Program
 
 If third-party Java dependencies are used, you can specify the dependencies with the following Python Table APIs or through [command line arguments]({{< ref "docs/deployment/cli" >}}#usage) directly when submitting the job.
@@ -132,5 +130,5 @@ tEnv.executeSql("select add_one(a) as a from source").collect();
 You can refer to the SQL statement about [CREATE FUNCTION]({{< ref "docs/dev/table/sql/create" >}}#create-function) for more details
 on how to create Python user-defined functions using SQL statements.
 
-The Python dependencies could be specified via the Python [config options]({{< ref "docs/ dev/python/python_config" >}}#python-options),
+The Python dependencies could be specified via the Python [config options]({{< ref "docs/dev/python/python_config" >}}#python-options),
 such as **python.archives**, **python.files**, **python.requirements**, **python.client.executable**, **python.executable**. etc or through [command line arguments]({{< ref "docs/deployment/cli" >}}#usage) when submitting the job.

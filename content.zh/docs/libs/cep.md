@@ -37,7 +37,7 @@ FlinkCEP是在Flink上层实现的复杂事件处理库。
 
 ## 开始
 
-如果你想现在开始尝试，[创建一个Flink程序]({{< ref "/dev/project-configuration.zh" >}})，
+如果你想现在开始尝试，[创建一个Flink程序]({{< ref "docs/dev/datastream/project-configuration" >}})，
 添加FlinkCEP的依赖到项目的`pom.xml`文件中。
 
 {{< tabs "722d55a5-7f12-4bcc-b080-b28d5e8860ac" >}}
@@ -61,7 +61,7 @@ FlinkCEP是在Flink上层实现的复杂事件处理库。
 {{< /tab >}}
 {{< /tabs >}}
 
-{% info 提示 %} FlinkCEP不是二进制发布包的一部分。在集群上执行如何链接它可以看[这里]({{< ref "/dev/project-configuration.zh" >}})。
+{% info 提示 %} FlinkCEP不是二进制发布包的一部分。在集群上执行如何链接它可以看[这里]({{< ref "docs/dev/datastream/project-configuration" >}})。
 
 现在可以开始使用Pattern API写你的第一个CEP程序了。
 
@@ -738,7 +738,7 @@ val relaxedNot: Pattern[Event, _] = start.notFollowedBy("not").where(...)
 
 也可以为模式定义一个有效时间约束。
 例如，你可以通过`pattern.within()`方法指定一个模式应该在10秒内发生。
-这种时间模式支持[处理时间和事件时间]({{< ref "/dev/event_time.zh" >}}).
+这种时间模式支持[处理时间和事件时间]({{< ref "docs/concepts/time" >}}).
 
 {% warn 注意 %} 一个模式序列只能有一个时间限制。如果限制了多个时间在不同的单个模式上，会使用最小的那个时间限制。
 
@@ -1456,7 +1456,7 @@ class MyPatternProcessFunction<IN, OUT> extends PatternProcessFunction<IN, OUT> 
 `PatternProcessFunction`可以访问`Context`对象。有了它之后，你可以访问时间属性，比如`currentProcessingTime`或者当前匹配的`timestamp`
 （最新分配到匹配上的事件的时间戳）。
 更多信息可以看[时间上下文](#时间上下文)。
-通过这个上下文也可以将结果输出到[侧输出]({{< ref "/dev/stream/side_output.zh" >}}).
+通过这个上下文也可以将结果输出到[侧输出]({{< ref "docs/dev/datastream/side_output" >}}).
 
 
 #### 处理超时的部分匹配
@@ -1481,7 +1481,7 @@ class MyPatternProcessFunction<IN, OUT> extends PatternProcessFunction<IN, OUT> 
 ```
 
 <span class="label label-info">Note</span> `processTimedOutMatch`不能访问主输出。
-但你可以通过`Context`对象把结果输出到[侧输出]({{< ref "/dev/stream/side_output.zh" >}})。
+但你可以通过`Context`对象把结果输出到[侧输出]({{< ref "docs/dev/datastream/side_output" >}})。
 
 
 #### 便捷的API

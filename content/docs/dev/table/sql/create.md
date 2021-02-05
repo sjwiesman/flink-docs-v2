@@ -26,7 +26,7 @@ under the License.
 
 # CREATE Statements
 
-CREATE statements are used to register a table/view/function into current or specified [Catalog]({{< ref "/dev/table/catalogs" >}}). A registered table/view/function can be used in SQL queries.
+CREATE statements are used to register a table/view/function into current or specified [Catalog]({{< ref "docs/dev/table/catalogs" >}}). A registered table/view/function can be used in SQL queries.
 
 Flink SQL supports the following CREATE statements for now:
 
@@ -59,7 +59,7 @@ The following examples show how to run a CREATE statement in `TableEnvironment`.
 {{< /tab >}}
 {{< tab "SQL CLI" >}}
 
-CREATE statements can be executed in [SQL CLI]({{< ref "/dev/table/sqlClient" >}}).
+CREATE statements can be executed in [SQL CLI]({{< ref "docs/dev/table/sqlClient" >}}).
 
 The following examples show how to run a CREATE statement in SQL CLI.
 
@@ -217,7 +217,7 @@ CREATE TABLE MyTable (
 Metadata columns are an extension to the SQL standard and allow to access connector and/or format specific
 fields for every row of a table. A metadata column is indicated by the `METADATA` keyword. For example,
 a metadata column can be be used to read and write the timestamp from and to Kafka records for time-based
-operations. The [connector and format documentation]({{< ref "/dev/table/connectors/index" >}}) lists the
+operations. The [connector and format documentation]({{< ref "docs/connectors/table/overview" >}}) lists the
 available metadata fields for every component. However, declaring a metadata column in a table's schema
 is optional.
 
@@ -309,7 +309,7 @@ schema declaration. The column itself is not physically stored within the table.
 is derived automatically from the given expression and does not have to be declared manually.
 
 The planner will transform computed columns into a regular projection after the source. For optimization
-or [watermark strategy push down]({{< ref "/dev/table/sourceSinks" >}}), the evaluation might be spread
+or [watermark strategy push down]({{< ref "docs/dev/table/sourcesSinks" >}}), the evaluation might be spread
 across operators, performed multiple times, or skipped if not needed for the given query.
 
 For example, a computed column could be defined as:
@@ -328,11 +328,11 @@ CREATE TABLE MyTable (
 The expression may contain any combination of columns, constants, or functions. The expression cannot
 contain a subquery.
 
-Computed columns are commonly used in Flink for defining [time attributes]({{< ref "/dev/table/streaming/time_attributes" >}})
+Computed columns are commonly used in Flink for defining [time attributes]({{< ref "docs/dev/table/concepts/time_attributes" >}})
 in `CREATE TABLE` statements.
-- A [processing time attribute]({{< ref "/dev/table/streaming/time_attributes" >}}#processing-time)
+- A [processing time attribute]({{< ref "docs/dev/table/concepts/time_attributes" >}}#processing-time)
 can be defined easily via `proc AS PROCTIME()` using the system's `PROCTIME()` function.
-- An [event time attribute]({{< ref "/dev/table/streaming/time_attributes" >}}#event-time) timestamp
+- An [event time attribute]({{< ref "docs/dev/table/concepts/time_attributes" >}}#event-time) timestamp
 can be pre-processed before the `WATERMARK` declaration. For example, the computed column can be used
 if the original field is not `TIMESTAMP(3)` type or is nested in a JSON string.
 
@@ -357,7 +357,7 @@ The  `rowtime_column_name` defines an existing column that is marked as the even
 The `watermark_strategy_expression` defines the watermark generation strategy. It allows arbitrary non-query expression, including computed columns, to calculate the watermark. The expression return type must be TIMESTAMP(3), which represents the timestamp since the Epoch.
 The returned watermark will be emitted only if it is non-null and its value is larger than the previously emitted local watermark (to preserve the contract of ascending watermarks). The watermark generation expression is evaluated by the framework for every record.
 The framework will periodically emit the largest generated watermark. If the current watermark is still identical to the previous one, or is null, or the value of the returned watermark is smaller than that of the last emitted one, then no new watermark will be emitted.
-Watermark is emitted in an interval defined by [`pipeline.auto-watermark-interval`]({{< ref "/deployment/config" >}}#pipeline-auto-watermark-interval) configuration.
+Watermark is emitted in an interval defined by [`pipeline.auto-watermark-interval`]({{< ref "docs/deployment/config" >}}#pipeline-auto-watermark-interval) configuration.
 If watermark interval is `0ms`, the generated watermarks will be emitted per-record if it is not null and greater than the last emitted one.
 
 When using event time semantics, tables must contain an event time attribute and watermarking strategy.
@@ -411,7 +411,7 @@ Partition the created table by the specified columns. A directory is created for
 
 Table properties used to create a table source/sink. The properties are usually used to find and create the underlying connector.
 
-The key and value of expression `key1=val1` should both be string literal. See details in [Connect to External Systems]({{< ref "/dev/table/connectors/index" >}}) for all the supported table properties of different connectors.
+The key and value of expression `key1=val1` should both be string literal. See details in [Connect to External Systems]({{< ref "docs/connectors/table/overview" >}}) for all the supported table properties of different connectors.
 
 **Notes:** The table name can be of three formats: 1. `catalog_name.db_name.table_name` 2. `db_name.table_name` 3. `table_name`. For `catalog_name.db_name.table_name`, the table would be registered into metastore with catalog named "catalog_name" and database named "db_name"; for `db_name.table_name`, the table would be registered into the current catalog of the execution table environment and database named "db_name"; for `table_name`, the table would be registered into the current catalog and database of the execution table environment.
 
@@ -531,7 +531,7 @@ Create a catalog with the given catalog properties. If a catalog with the same n
 Catalog properties used to store extra information related to this catalog.
 The key and value of expression `key1=val1` should both be string literal.
 
-Check out more details at [Catalogs]({{< ref "/dev/table/catalogs" >}}).
+Check out more details at [Catalogs]({{< ref "docs/dev/table/catalogs" >}}).
 
 {{< top >}}
 
@@ -584,11 +584,11 @@ CREATE [TEMPORARY|TEMPORARY SYSTEM] FUNCTION
 
 Create a catalog function that has catalog and database namespaces with the identifier and optional language tag. If a function with the same name already exists in the catalog, an exception is thrown.
 
-If the language tag is JAVA/SCALA, the identifier is the full classpath of the UDF. For the implementation of Java/Scala UDF, please refer to [User-defined Functions]({{< ref "/dev/table/functions/udfs" >}}) for more details.
+If the language tag is JAVA/SCALA, the identifier is the full classpath of the UDF. For the implementation of Java/Scala UDF, please refer to [User-defined Functions]({{< ref "docs/dev/table/functions/udfs" >}}) for more details.
 
-If the language tag is PYTHON, the identifier is the fully qualified name of the UDF, e.g. `pyflink.table.tests.test_udf.add`. For the implementation of Python UDF, please refer to [Python UDFs]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}) for more details.
+If the language tag is PYTHON, the identifier is the fully qualified name of the UDF, e.g. `pyflink.table.tests.test_udf.add`. For the implementation of Python UDF, please refer to [Python UDFs]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}) for more details.
 
-If the language tag is PYTHON, however the current program is written in Java/Scala or pure SQL, then you need to [configure the Python dependencies]({{< ref "/dev/python/table-api-users-guide/dependency_management" >}}#python-dependency-in-javascala-program).
+If the language tag is PYTHON, however the current program is written in Java/Scala or pure SQL, then you need to [configure the Python dependencies]({{< ref "docs/dev/python/table/dependency_management" >}}#python-dependency-in-javascala-program).
 
 **TEMPORARY**
 

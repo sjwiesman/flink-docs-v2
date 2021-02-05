@@ -63,7 +63,7 @@ The following examples show how to run a SHOW statement in `TableEnvironment`.
 {{< /tab >}}
 {{< tab "SQL CLI" >}}
 
-SHOW statements can be executed in [SQL CLI]({{< ref "/dev/table/sqlClient" >}}).
+SHOW statements can be executed in [SQL CLI]({{< ref "docs/dev/table/sqlClient" >}}).
 
 The following examples show how to run a SHOW statement in SQL CLI.
 

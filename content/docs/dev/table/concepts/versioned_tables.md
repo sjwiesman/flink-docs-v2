@@ -79,8 +79,8 @@ update_time  product_id product_name price
 ## Versioned Table Sources
 
 Versioned tables are defined implicitly for any tables whose underlying sources or formats directly define changelogs.
-Examples include the [upsert Kafka]({{< ref "/dev/table/connectors/upsert-kafka" >}}) source as well as database changelog
-formats such as [debezium]({{< ref "/dev/table/connectors/formats/debezium" >}}) and [canal]({{< ref "/dev/table/connectors/formats/canal" >}}).
+Examples include the [upsert Kafka]({{< ref "docs/connectors/table/upsert-kafka" >}}) source as well as database changelog
+formats such as [debezium]({{< ref "docs/connectors/table/formats/debezium" >}}) and [canal]({{< ref "docs/connectors/table/formats/canal" >}}).
 As discussed above, the only additional requirement is the `CREATE` table statement must contain a `PRIMARY KEY` and an event-time attribute. 
 
 ```sql
@@ -129,7 +129,7 @@ The `JSON` format does not support native changelog semantics, so Flink can only
 
 Flink interprets each row as an `INSERT` to the table, meaning we cannot define a `PRIMARY KEY` over currency.
 However, it is clear to us (the query developer) that this table has all the necessary information to define a versioned table. 
-Flink can reinterpret this table as a versioned table by defining a [deduplication query]({{< ref "/dev/table/sql/queries" >}}#deduplication)
+Flink can reinterpret this table as a versioned table by defining a [deduplication query]({{< ref "docs/dev/table/sql/queries" >}}#deduplication)
 which produces an ordered changelog stream with an inferred primary key (currency) and event time (update_time). 
 
 ```sql
@@ -172,7 +172,7 @@ WHERE rownum = 1
 
 - `ROW_NUMBER()`: Assigns an unique, sequential number to each row, starting with one.
 - `PARTITION BY col1[, col2...]`: Specifies the partition columns, i.e. the deduplicate key. These columns form the primary key of the subsequent versioned table.
-- `ORDER BY time_attr DESC`: Specifies the ordering column, it must be a [time attribute]({{< ref "/dev/table/streaming/time_attributes" >}}).
+- `ORDER BY time_attr DESC`: Specifies the ordering column, it must be a [time attribute]({{< ref "docs/dev/table/concepts/time_attributes" >}}).
 - `WHERE rownum = 1`: The `rownum = 1` is required for Flink to recognize this query is to generate a versioned table.
 
 {{< top >}}

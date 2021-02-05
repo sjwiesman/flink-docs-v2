@@ -217,7 +217,7 @@ CREATE TABLE MyTable (
 Metadata columns are an extension to the SQL standard and allow to access connector and/or format specific
 fields for every row of a table. A metadata column is indicated by the `METADATA` keyword. For example,
 a metadata column can be be used to read and write the timestamp from and to Kafka records for time-based
-operations. The [connector and format documentation]({{< ref "docs/dev/table/connectors/overview" >}}) lists the
+operations. The [connector and format documentation]({{< ref "docs/connectors/table/overview" >}}) lists the
 available metadata fields for every component. However, declaring a metadata column in a table's schema
 is optional.
 
@@ -309,7 +309,7 @@ schema declaration. The column itself is not physically stored within the table.
 is derived automatically from the given expression and does not have to be declared manually.
 
 The planner will transform computed columns into a regular projection after the source. For optimization
-or [watermark strategy push down]({{< ref "docs/dev/table/sourceSinks" >}}), the evaluation might be spread
+or [watermark strategy push down]({{< ref "docs/dev/table/sourcesSinks" >}}), the evaluation might be spread
 across operators, performed multiple times, or skipped if not needed for the given query.
 
 For example, a computed column could be defined as:
@@ -409,7 +409,7 @@ Flink 假设声明了主键的列都是不包含 Null 值的，Connector 在处�
 
 表属性用于创建 table source/sink ，一般用于寻找和创建底层的连接器。
 
-表达式 `key1=val1` 的键和值必须为字符串文本常量。请参考 [连接外部系统]({{< ref "docs/dev/table/connect" >}}) 了解不同连接器所支持的属性。
+表达式 `key1=val1` 的键和值必须为字符串文本常量。请参考 [连接外部系统]({{< ref "docs/connectors/table/overview" >}}) 了解不同连接器所支持的属性。
 
 **注意：** 表名可以为以下三种格式 1. `catalog_name.db_name.table_name` 2. `db_name.table_name` 3. `table_name`。使用`catalog_name.db_name.table_name` 的表将会与名为 "catalog_name" 的 catalog 和名为 "db_name" 的数据库一起注册到 metastore 中。使用 `db_name.table_name` 的表将会被注册到当前执行的 table environment 中的 catalog 且数据库会被命名为 "db_name"；对于 `table_name`, 数据表将会被注册到当前正在运行的catalog和数据库中。
 

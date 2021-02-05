@@ -29,12 +29,12 @@ under the License.
 
 `SELECT` statements and `VALUES` statements are specified with the `sqlQuery()` method of the `TableEnvironment`.
 The method returns the result of the SELECT statement (or the VALUES statements) as a `Table`.
-A `Table` can be used in [subsequent SQL and Table API queries]({{< ref "/dev/table/common" >}}#mixing-table-api-and-sql), be [converted into a DataStream]({{< ref "/dev/table/common" >}}#integration-with-datastream), or [written to a TableSink]({{< ref "/dev/table/common" >}}#emit-a-table).
+A `Table` can be used in [subsequent SQL and Table API queries]({{< ref "docs/dev/table/common" >}}#mixing-table-api-and-sql), be [converted into a DataStream]({{< ref "docs/dev/table/common" >}}#integration-with-datastream), or [written to a TableSink]({{< ref "docs/dev/table/common" >}}#emit-a-table).
 SQL and Table API queries can be seamlessly mixed and are holistically optimized and translated into a single program.
 
-In order to access a table in a SQL query, it must be [registered in the TableEnvironment]({{< ref "/dev/table/common" >}}#register-tables-in-the-catalog).
-A table can be registered from a [TableSource]({{< ref "/dev/table/common" >}}#register-a-tablesource), [Table]({{< ref "/dev/table/common" >}}#register-a-table), [CREATE TABLE statement](#create-table), [DataStream]({{< ref "/dev/table/common" >}}#register-a-datastream).
-Alternatively, users can also [register catalogs in a TableEnvironment]({{< ref "/dev/table/catalogs" >}}) to specify the location of the data sources.
+In order to access a table in a SQL query, it must be [registered in the TableEnvironment]({{< ref "docs/dev/table/common" >}}#register-tables-in-the-catalog).
+A table can be registered from a [TableSource]({{< ref "docs/dev/table/common" >}}#register-a-tablesource), [Table]({{< ref "docs/dev/table/common" >}}#register-a-table), [CREATE TABLE statement](#create-table), [DataStream]({{< ref "docs/dev/table/common" >}}#register-a-datastream).
+Alternatively, users can also [register catalogs in a TableEnvironment]({{< ref "docs/dev/table/catalogs" >}}) to specify the location of the data sources.
 
 For convenience, `Table.toString()` automatically registers the table under a unique name in its `TableEnvironment` and returns the name.
 So, `Table` objects can be directly inlined into SQL queries as shown in the examples below.
@@ -154,7 +154,7 @@ A SELECT statement or a VALUES statement can be executed to collect the content 
 `TableResult.collect()` method returns a closeable row iterator. The select job will not be finished unless all result data has been collected. We should actively close the job to avoid resource leak through the `CloseableIterator#close()` method. 
 We can also print the select result to client console through the `TableResult.print()` method. The result data in `TableResult` can be accessed only once. Thus, `collect()` and `print()` must not be called after each other.
 
-`TableResult.collect()` and `TableResult.print()` have slightly different behaviors under different checkpointing settings (to enable checkpointing for a streaming job, see <a href="{{< ref "/deployment/config" >}}#checkpointing">checkpointing config</a>).
+`TableResult.collect()` and `TableResult.print()` have slightly different behaviors under different checkpointing settings (to enable checkpointing for a streaming job, see <a href="{{< ref "docs/deployment/config" >}}#checkpointing">checkpointing config</a>).
 * For batch jobs or streaming jobs without checkpointing, `TableResult.collect()` and `TableResult.print()` have neither exactly-once nor at-least-once guarantee. Query results are immediately accessible by the clients once they're produced, but exceptions will be thrown when the job fails and restarts.
 * For streaming jobs with exactly-once checkpointing, `TableResult.collect()` and `TableResult.print()` guarantee an end-to-end exactly-once record delivery. A result will be accessible by clients only after its corresponding checkpoint completes.
 * For streaming jobs with at-least-once checkpointing, `TableResult.collect()` and `TableResult.print()` guarantee an end-to-end at-least-once record delivery. Query results are immediately accessible by the clients once they're produced, but it is possible for the same result to be delivered multiple times.
@@ -844,7 +844,7 @@ WHERE rownum = 1
 
 - `ROW_NUMBER()`: Assigns an unique, sequential number to each row, starting with one.
 - `PARTITION BY col1[, col2...]`: Specifies the partition columns, i.e. the deduplicate key.
-- `ORDER BY time_attr [asc|desc]`: Specifies the ordering column, it must be a [time attribute]({{< ref "/dev/table/streaming/time_attributes" >}}). Currently Flink supports [processing time attribute]({{< ref "/dev/table/streaming/time_attributes" >}}#processing-time) and [event time atttribute]({{< ref "/dev/table/streaming/time_attributes" >}}#event-time). Ordering by ASC means keeping the first row, ordering by DESC means keeping the last row.
+- `ORDER BY time_attr [asc|desc]`: Specifies the ordering column, it must be a [time attribute]({{< ref "docs/dev/table/concepts/time_attributes" >}}). Currently Flink supports [processing time attribute]({{< ref "docs/dev/table/concepts/time_attributes" >}}#processing-time) and [event time atttribute]({{< ref "docs/dev/table/concepts/time_attributes" >}}#event-time). Ordering by ASC means keeping the first row, ordering by DESC means keeping the last row.
 - `WHERE rownum = 1`: The `rownum = 1` is required for Flink to recognize this query is deduplication.
 
 The following examples show how to specify SQL queries with Deduplication on streaming tables.
@@ -870,7 +870,7 @@ WHERE row_num = 1
 {{< top >}}
 
 Deduplication can keep the time attribute of input stream, this is very helpful when the downstream operation is window aggregation or join operation.
-Both processing-time deduplication and event-time deduplication support working on mini-batch mode, this is more performance friendly, please see also [mini-batch configuration]({{< ref "/dev/table/config" >}}#table-exec-mini-batch-enabled) for how to enable mini-batch mode..
+Both processing-time deduplication and event-time deduplication support working on mini-batch mode, this is more performance friendly, please see also [mini-batch configuration]({{< ref "docs/dev/table/config" >}}#table-exec-mini-batch-enabled) for how to enable mini-batch mode..
 
 ### Group Windows
 
@@ -902,7 +902,7 @@ Group windows are defined in the `GROUP BY` clause of a SQL query. Just like que
 
 #### Time Attributes
 
-For SQL queries on streaming tables, the `time_attr` argument of the group window function must refer to a valid time attribute that specifies the processing time or event time of rows. See the [documentation of time attributes]({{< ref "/dev/table/streaming/time_attributes" >}}) to learn how to define time attributes.
+For SQL queries on streaming tables, the `time_attr` argument of the group window function must refer to a valid time attribute that specifies the processing time or event time of rows. See the [documentation of time attributes]({{< ref "docs/dev/table/concepts/time_attributes" >}}) to learn how to define time attributes.
 
 For SQL on batch tables, the `time_attr` argument of the group window function must be an attribute of type `TIMESTAMP`.
 
@@ -934,7 +934,7 @@ The start and end timestamps of group windows as well as time attributes can be 
         <code>SESSION_END(time_attr, interval)</code><br/>
       </td>
       <td><p>Returns the timestamp of the <i>exclusive</i> upper bound of the corresponding tumbling, hopping, or session window.</p>
-        <p><b>Note:</b> The exclusive upper bound timestamp <i>cannot</i> be used as a <a href="{{< ref "/dev/table/streaming/time_attributes" >}}">rowtime attribute</a> in subsequent time-based operations, such as <a href="#joins">interval joins</a> and <a href="#aggregations">group window or over window aggregations</a>.</p></td>
+        <p><b>Note:</b> The exclusive upper bound timestamp <i>cannot</i> be used as a <a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}">rowtime attribute</a> in subsequent time-based operations, such as <a href="#joins">interval joins</a> and <a href="#aggregations">group window or over window aggregations</a>.</p></td>
     </tr>
     <tr>
       <td>
@@ -943,7 +943,7 @@ The start and end timestamps of group windows as well as time attributes can be 
         <code>SESSION_ROWTIME(time_attr, interval)</code><br/>
       </td>
       <td><p>Returns the timestamp of the <i>inclusive</i> upper bound of the corresponding tumbling, hopping, or session window.</p>
-      <p>The resulting attribute is a <a href="{{< ref "/dev/table/streaming/time_attributes" >}}">rowtime attribute</a> that can be used in subsequent time-based operations such as <a href="#joins">interval joins</a> and <a href="#aggregations">group window or over window aggregations</a>.</p></td>
+      <p>The resulting attribute is a <a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}">rowtime attribute</a> that can be used in subsequent time-based operations such as <a href="#joins">interval joins</a> and <a href="#aggregations">group window or over window aggregations</a>.</p></td>
     </tr>
     <tr>
       <td>
@@ -951,7 +951,7 @@ The start and end timestamps of group windows as well as time attributes can be 
         <code>HOP_PROCTIME(time_attr, interval, interval)</code><br/>
         <code>SESSION_PROCTIME(time_attr, interval)</code><br/>
       </td>
-      <td><p>Returns a <a href="{{< ref "/dev/table/streaming/time_attributes" >}}#processing-time">proctime attribute</a> that can be used in subsequent time-based operations such as <a href="#joins">interval joins</a> and <a href="#aggregations">group window or over window aggregations</a>.</p></td>
+      <td><p>Returns a <a href="{{< ref "docs/dev/table/concepts/time_attributes" >}}#processing-time">proctime attribute</a> that can be used in subsequent time-based operations such as <a href="#joins">interval joins</a> and <a href="#aggregations">group window or over window aggregations</a>.</p></td>
     </tr>
   </tbody>
 </table>
@@ -988,7 +988,7 @@ GROUP BY
 
 Searches for a given pattern in a streaming table according to the `MATCH_RECOGNIZE` [ISO standard](https://standards.iso.org/ittf/PubliclyAvailableStandards/c065143_ISO_IEC_TR_19075-5_2016.zip). 
 This makes it possible to express complex event processing (CEP) logic in SQL queries.
-For a more detailed description, see the dedicated page for [detecting patterns]({{< ref "/dev/table/streaming/match_recognize" >}}) in tables
+For a more detailed description, see the dedicated page for [detecting patterns]({{< ref "docs/dev/table/concepts/match_recognize" >}}) in tables
 
 ```sql
 SELECT T.aid, T.bid, T.cid

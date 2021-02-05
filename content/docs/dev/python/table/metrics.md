@@ -32,7 +32,7 @@ PyFlink exposes a metric system that allows gathering and exposing metrics to ex
 
 ## Registering metrics
 
-You can access the metric system from a [User-defined Function]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}) by calling `function_context.get_metric_group()` in the `open` method.
+You can access the metric system from a [User-defined Function]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}) by calling `function_context.get_metric_group()` in the `open` method.
 The `get_metric_group()` method returns a `MetricGroup` object on which you can create and register new metrics.
 
 ### Metric types
@@ -141,7 +141,7 @@ class MyUDF(ScalarFunction):
 
 ## Scope
 
-You can refer to the Java metric document for more details on [Scope definition]({{< ref "/ops/metrics" >}}#Scope).
+You can refer to the Java metric document for more details on [Scope definition]({{< ref "docs/ops/metrics" >}}#Scope).
 
 ### User Scope
 

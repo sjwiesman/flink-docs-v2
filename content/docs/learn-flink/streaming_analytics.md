@@ -385,8 +385,8 @@ long and close at 1:00.
 
 Note, however, that the tumbling and sliding window assigners take an optional offset parameter
 that can be used to change the alignment of the windows. See
-[Tumbling Windows]({{< ref "docs/dev/stream/operators/windows" >}}#tumbling-windows) and
-[Sliding Windows]({{< ref "docs/dev/stream/operators/windows" >}}#sliding-windows) for details.
+[Tumbling Windows]({{< ref "docs/dev/datastream/operators/windows" >}}#tumbling-windows) and
+[Sliding Windows]({{< ref "docs/dev/datastream/operators/windows" >}}#sliding-windows) for details.
 
 #### Windows Can Follow Windows
 
@@ -429,7 +429,7 @@ The hands-on exercise that goes with this section is the {{< training_link file=
 
 ## Further Reading
 
-- [Timely Stream Processing]({{< ref "docs/concepts/timely-stream-processing" >}})
-- [Windows]({{< ref "docs/dev/stream/operators/windows" >}})
+- [Timely Stream Processing]({{< ref "docs/concepts/time" >}})
+- [Windows]({{< ref "docs/dev/datastream/operators/windows" >}})
 
 {{< top >}}

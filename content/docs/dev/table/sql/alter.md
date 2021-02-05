@@ -28,7 +28,7 @@ under the License.
 
 
 
-ALTER statements are used to modified a registered table/view/function definition in the [Catalog]({{< ref "/dev/table/catalogs" >}}).
+ALTER statements are used to modified a registered table/view/function definition in the [Catalog]({{< ref "docs/dev/table/catalogs" >}}).
 
 Flink SQL supports the following ALTER statements for now:
 
@@ -58,7 +58,7 @@ The following examples show how to run an ALTER statement in `TableEnvironment`.
 {{< /tab >}}
 {{< tab "SQL CLI" >}}
 
-ALTER statements can be executed in [SQL CLI]({{< ref "/dev/table/sqlClient" >}}).
+ALTER statements can be executed in [SQL CLI]({{< ref "docs/dev/table/sqlClient" >}}).
 
 The following examples show how to run an ALTER statement in SQL CLI.
 
@@ -176,9 +176,9 @@ ALTER [TEMPORARY|TEMPORARY SYSTEM] FUNCTION
 
 Alter a catalog function with the new identifier and optional language tag. If a function doesn't exist in the catalog, an exception is thrown.
 
-If the language tag is JAVA/SCALA, the identifier is the full classpath of the UDF. For the implementation of Java/Scala UDF, please refer to [User-defined Functions]({{< ref "/dev/table/functions/udfs" >}}) for more details.
+If the language tag is JAVA/SCALA, the identifier is the full classpath of the UDF. For the implementation of Java/Scala UDF, please refer to [User-defined Functions]({{< ref "docs/dev/table/functions/udfs" >}}) for more details.
 
-If the language tag is PYTHON, the identifier is the fully qualified name of the UDF, e.g. `pyflink.table.tests.test_udf.add`. For the implementation of Python UDF, please refer to [Python UDFs]({{< ref "/dev/python/table-api-users-guide/udfs/python_udfs" >}}) for more details.
+If the language tag is PYTHON, the identifier is the fully qualified name of the UDF, e.g. `pyflink.table.tests.test_udf.add`. For the implementation of Python UDF, please refer to [Python UDFs]({{< ref "docs/dev/python/table/udfs/python_udfs" >}}) for more details.
 
 **TEMPORARY**
 

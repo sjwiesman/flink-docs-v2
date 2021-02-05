@@ -93,7 +93,7 @@ ExistingSavepoint savepoint = Savepoint.load(bEnv, "hdfs://path/", new MemorySta
 
 ### Operator State
 
-[Operator state]({{< ref "/dev/stream/state/state" >}}#operator-state) is any non-keyed state in Flink.
+[Operator state]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}#operator-state) is any non-keyed state in Flink.
 This includes, but is not limited to, any use of `CheckpointedFunction` or `BroadcastState` within an application.
 When reading operator state, users specify the operator uid, the state name, and the type information.
 
@@ -124,7 +124,7 @@ DataSet<Integer> listState  = savepoint.readUnionState<>(
 
 #### Broadcast State
 
-[BroadcastState]({{< ref "/dev/stream/state/broadcast_state" >}}) can be read using `ExistingSavepoint#readBroadcastState`.
+[BroadcastState]({{< ref "docs/dev/datastream/fault-tolerance/broadcast_state" >}}) can be read using `ExistingSavepoint#readBroadcastState`.
 The state name and type information should match those used to define the `MapStateDescriptor` that declared this state in the DataStream application.
 The framework will return a _single_ copy of the state, equivalent to restoring a DataStream with parallelism 1.
 
@@ -150,7 +150,7 @@ DataSet<Integer> listState = savepoint.readListState<>(
 
 ### Keyed State
 
-[Keyed state]({{< ref "/dev/stream/state/state" >}}#keyed-state), or partitioned state, is any state that is partitioned relative to a key.
+[Keyed state]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}#keyed-state), or partitioned state, is any state that is partitioned relative to a key.
 When reading a keyed state, users specify the operator id and a `KeyedStateReaderFunction<KeyType, OutputType>`.
 
 The `KeyedStateReaderFunction` allows users to read arbitrary columns and complex state types such as ListState, MapState, and AggregatingState.
@@ -232,7 +232,7 @@ Along with reading registered state values, each key has access to a `Context` w
 
 ### Window State
 
-The state processor api supports reading state from a [window operator]({{< ref "/dev/stream/operators/windows" >}}).
+The state processor api supports reading state from a [window operator]({{< ref "docs/dev/datastream/operators/windows" >}}).
 When reading a window state, users specify the operator id, window assigner, and aggregation type.
 
 Additionally, a `WindowReaderFunction` can be specified to enrich each read with additional information similar
@@ -344,7 +344,7 @@ Savepoint
     .write(savepointPath);
 ```
 
-The [UIDs]({{< ref "/ops/state/savepoints" >}}#assigning-operator-ids) associated with each operator must match one to one with the UIDs assigned to the operators in your `DataStream` application; these are how Flink knows what state maps to which operator.
+The [UIDs]({{< ref "docs/ops/state/savepoints" >}}#assigning-operator-ids) associated with each operator must match one to one with the UIDs assigned to the operators in your `DataStream` application; these are how Flink knows what state maps to which operator.
 
 ### Operator State
 
@@ -380,7 +380,7 @@ BootstrapTransformation transformation = OperatorTransformation
 
 ### Broadcast State
 
-[BroadcastState]({{< ref "/dev/stream/state/broadcast_state" >}}) can be written using a `BroadcastStateBootstrapFunction`. Similar to broadcast state in the `DataStream` API, the full state must fit in memory. 
+[BroadcastState]({{< ref "docs/dev/datastream/fault-tolerance/broadcast_state" >}}) can be written using a `BroadcastStateBootstrapFunction`. Similar to broadcast state in the `DataStream` API, the full state must fit in memory. 
 
 ```java
 public class CurrencyRate {
@@ -450,11 +450,11 @@ The `KeyedStateBootstrapFunction` supports setting event time and processing tim
 The timers will not fire inside the bootstrap function and only become active once restored within a `DataStream` application.
 If a processing time timer is set but the state is not restored until after that time has passed, the timer will fire immediately upon start.
 
-<span class="label label-danger">Attention</span> If your bootstrap function creates timers, the state can only be restored using one of the [process]({{< ref "/dev/stream/operators/process_function" >}}) type functions.
+<span class="label label-danger">Attention</span> If your bootstrap function creates timers, the state can only be restored using one of the [process]({{< ref "docs/dev/datastream/operators/process_function" >}}) type functions.
 
 ### Window State
 
-The state processor api supports writing state for the [window operator]({{< ref "/dev/stream/operators/windows" >}}).
+The state processor api supports writing state for the [window operator]({{< ref "docs/dev/datastream/operators/windows" >}}).
 When writing window state, users specify the operator id, window assigner, evictor, optional trigger, and aggregation type.
 It is important the configurations on the bootstrap transformation match the configurations on the DataStream window.
 

@@ -38,7 +38,7 @@ library makes when [dealing with lateness](#handling-lateness-in-event-time) in 
 
 ## Getting Started
 
-If you want to jump right in, [set up a Flink program]({{< ref "/dev/project-configuration" >}}) and
+If you want to jump right in, [set up a Flink program]({{< ref "docs/dev/datastream/project-configuration" >}}) and
 add the FlinkCEP dependency to the `pom.xml` of your project.
 
 {{< tabs "3b3e4675-dd86-4b2d-8487-9c8711f234b3" >}}
@@ -62,7 +62,7 @@ add the FlinkCEP dependency to the `pom.xml` of your project.
 {{< /tab >}}
 {{< /tabs >}}
 
-FlinkCEP is not part of the binary distribution. See how to link with it for cluster execution [here]({{< ref "/dev/project-configuration" >}}).
+FlinkCEP is not part of the binary distribution. See how to link with it for cluster execution [here]({{< ref "docs/dev/datastream/project-configuration" >}}).
 
 Now you can start writing your first CEP program using the Pattern API.
 
@@ -709,7 +709,7 @@ till the next matching one".
 
 It's also possible to define a temporal constraint for the pattern to be valid.
 For example, you can define that a pattern should occur within 10 seconds via the `pattern.within()` method.
-Temporal patterns are supported for both [processing and event time]({{< ref "/dev/event_time" >}}).
+Temporal patterns are supported for both [processing and event time]({{< ref "docs/concepts/time" >}}).
 
 {{< hint info >}}
 A pattern sequence can only have one temporal constraint. If multiple such constraints are defined on different individual patterns, then the smallest is applied.
@@ -1347,7 +1347,7 @@ class MyPatternProcessFunction<IN, OUT> extends PatternProcessFunction<IN, OUT> 
 The `PatternProcessFunction` gives access to a `Context` object. Thanks to it, one can access time related
 characteristics such as `currentProcessingTime` or `timestamp` of current match (which is the timestamp of the last element assigned to the match).
 For more info see [Time context](#time-context).
-Through this context one can also emit results to a [side-output]({{< ref "/dev/stream/side_output" >}}).
+Through this context one can also emit results to a [side-output]({{< ref "docs/dev/datastream/side_output" >}}).
 
 
 #### Handling Timed Out Partial Patterns
@@ -1373,7 +1373,7 @@ class MyPatternProcessFunction<IN, OUT> extends PatternProcessFunction<IN, OUT> 
 ```
 
 <span class="label label-info">Note</span> The `processTimedOutMatch` does not give one access to the main output. You can still emit results
-through [side-outputs]({{< ref "/dev/stream/side_output" >}}) though, through the `Context` object.
+through [side-outputs]({{< ref "docs/dev/datastream/side_output" >}}) though, through the `Context` object.
 
 
 #### Convenience API

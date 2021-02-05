@@ -79,7 +79,7 @@ public class Person {
 Person person = new Person("Fred Flintstone", 35);
 ```
 
-Flink's serializer [supports schema evolution for POJO types]({{< ref "docs/dev/stream/state/schema_evolution" >}}#pojo-types).
+Flink's serializer [supports schema evolution for POJO types]({{< ref "docs/dev/datastream/fault-tolerance/schema_evolution" >}}#pojo-types).
 
 ### Scala tuples and case classes
 
@@ -224,9 +224,9 @@ instructions in the README, do the first exercise: {{< training_link file="/ride
 ## Further Reading
 
 - [Flink Serialization Tuning Vol. 1: Choosing your Serializer — if you can](https://flink.apache.org/news/2020/04/15/flink-serialization-tuning-vol-1.html)
-- [Anatomy of a Flink Program]({{< ref "docs/dev/datastream_api" >}}#anatomy-of-a-flink-program)
-- [Data Sources]({{< ref "docs/dev/datastream_api" >}}#data-sources)
-- [Data Sinks]({{< ref "docs/dev/datastream_api" >}}#data-sinks)
-- [DataStream Connectors]({{< ref "docs/dev/connectors/index" >}})
+- [Anatomy of a Flink Program]({{< ref "docs/dev/datastream/overview" >}}#anatomy-of-a-flink-program)
+- [Data Sources]({{< ref "docs/dev/datastream/overview" >}}#data-sources)
+- [Data Sinks]({{< ref "docs/dev/datastream/overview" >}}#data-sinks)
+- [DataStream Connectors]({{< ref "docs/connectors/datastream/overview" >}})
 
 {{< top >}}
