@@ -29,9 +29,9 @@ under the License.
 ## Predefined Sources and Sinks
 
 A few basic data sources and sinks are built into Flink and are always available.
-The [predefined data sources]({{< ref "/dev/datastream_api" >}}#data-sources) include reading from files, directories, and sockets, and
+The [predefined data sources]({{< ref "docs/dev/datastream/overview" >}}#data-sources) include reading from files, directories, and sockets, and
 ingesting data from collections and iterators.
-The [predefined data sinks]({{< ref "/dev/datastream_api" >}}#data-sinks) support writing to files, to stdout and stderr, and to sockets.
+The [predefined data sinks]({{< ref "docs/dev/datastream/overview" >}}#data-sinks) support writing to files, to stdout and stderr, and to sockets.
 
 ## Bundled Connectors
 
@@ -72,7 +72,7 @@ Additional streaming connectors for Flink are being released through [Apache Bah
 Using a connector isn't the only way to get data in and out of Flink.
 One common pattern is to query an external database or web service in a `Map` or `FlatMap`
 in order to enrich the primary datastream.
-Flink offers an API for [Asynchronous I/O]({{< ref "/dev/stream/operators/asyncio" >}})
+Flink offers an API for [Asynchronous I/O]({{< ref "docs/dev/datastream/operators/asyncio" >}})
 to make it easier to do this kind of enrichment efficiently and robustly.
 
 ### Queryable State
@@ -81,7 +81,7 @@ When a Flink application pushes a lot of data to an external data store, this
 can become an I/O bottleneck.
 If the data involved has many fewer reads than writes, a better approach can be
 for an external application to pull from Flink the data it needs.
-The [Queryable State]({{< ref "/dev/stream/state/queryable_state" >}}) interface
+The [Queryable State]({{< ref "docs/dev/datastream/fault-tolerance/queryable_state" >}}) interface
 enables this by allowing the state being managed by Flink to be queried on demand.
 
 {{< top >}}

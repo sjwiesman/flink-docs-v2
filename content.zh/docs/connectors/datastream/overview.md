@@ -30,7 +30,7 @@ under the License.
 
 一些比较基本的 Source 和 Sink 已经内置在 Flink 里。
 [预定义 data sources]({{< ref "docs/dev/datastream/overview" >}}#data-sources) 支持从文件、目录、socket，以及 collections 和 iterators 中读取数据。
-[预定义 data sinks]({{< ref "docs/dev/overview" >}}#data-sinks) 支持把数据写入文件、标准输出（stdout）、标准错误输出（stderr）和 socket。
+[预定义 data sinks]({{< ref "docs/dev/datastream/overview" >}}#data-sinks) 支持把数据写入文件、标准输出（stdout）、标准错误输出（stderr）和 socket。
 
 ## 附带的连接器
 
@@ -73,6 +73,6 @@ Flink 提供了[异步 I/O]({{< ref "docs/dev/datastream/operators/asyncio" >}})
 ### 可查询状态
 
 当 Flink 应用程序需要向外部存储推送大量数据时会导致 I/O 瓶颈问题出现。在这种场景下，如果对数据的读操作远少于写操作，那么让外部应用从 Flink 拉取所需的数据会是一种更好的方式。
-[可查询状态]({{< ref "docs/dev/datastream/state/queryable_state" >}}) 接口可以实现这个功能，该接口允许被 Flink 托管的状态可以被按需查询。
+[可查询状态]({{< ref "docs/dev/datastream/fault-tolerance/queryable_state" >}}) 接口可以实现这个功能，该接口允许被 Flink 托管的状态可以被按需查询。
 
 {{< top >}}

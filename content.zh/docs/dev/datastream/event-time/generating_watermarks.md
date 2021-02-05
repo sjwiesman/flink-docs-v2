@@ -26,7 +26,7 @@ under the License.
 
 # 生成 Watermark
 
-在本节中，你将了解 Flink 中用于处理**事件时间**的时间戳和 watermark 相关的 API。有关*事件时间*，*处理时间*和*摄取时间*的介绍，请参阅[事件时间概览]({{< ref "/dev/event_time" >}})小节。
+在本节中，你将了解 Flink 中用于处理**事件时间**的时间戳和 watermark 相关的 API。有关*事件时间*，*处理时间*和*摄取时间*的介绍，请参阅[事件时间概览]({{< ref "docs/concepts/time" >}})小节。
 
 <a name="introduction-to-watermark-strategies"></a>
 
@@ -212,7 +212,7 @@ watermark 的生成方式本质上是有两种：*周期性生成*和*标记生�
 
 生成 watermark 的时间间隔（每 *n* 毫秒）可以通过 `ExecutionConfig.setAutoWatermarkInterval(...)` 指定。每次都会调用生成器的 `onPeriodicEmit()` 方法，如果返回的 watermark 非空且值大于前一个 watermark，则将发出新的 watermark。
 
-如下是两个使用周期性 watermark 生成器的简单示例。注意：Flink 已经附带了 `BoundedOutOfOrdernessWatermarks`，它实现了 `WatermarkGenerator`，其工作原理与下面的 `BoundedOutOfOrdernessGenerator` 相似。可以在[这里]({{< ref "/dev/event_timestamp_extractors" >}})参阅如何使用它的内容。
+如下是两个使用周期性 watermark 生成器的简单示例。注意：Flink 已经附带了 `BoundedOutOfOrdernessWatermarks`，它实现了 `WatermarkGenerator`，其工作原理与下面的 `BoundedOutOfOrdernessGenerator` 相似。可以在[这里]({{< ref "docs/dev/datastream/event-time/built_in" >}})参阅如何使用它的内容。
 
 {{< tabs "24fa8f1b-702c-4d6e-88e5-afa94c31a8e4" >}}
 {{< tab "Java" >}}

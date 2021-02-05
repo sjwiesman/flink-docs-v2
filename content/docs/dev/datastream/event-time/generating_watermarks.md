@@ -29,7 +29,7 @@ under the License.
 In this section you will learn about the APIs that Flink provides for working
 with **event time** timestamps and watermarks.  For an introduction to *event
 time*, *processing time*, and *ingestion time*, please refer to the
-[introduction to event time]({{< ref "/dev/event_time" >}}).
+[introduction to event time]({{< ref "docs/concepts/time" >}}).
 
 ## Introduction to Watermark Strategies
 
@@ -263,7 +263,7 @@ Here we show two simple examples of watermark generators that use periodic
 watermark generation. Note that Flink ships with
 `BoundedOutOfOrdernessWatermarks`, which is a `WatermarkGenerator` that works
 similarly to the `BoundedOutOfOrdernessGenerator` shown below. You can read
-about using that [here]({{< ref "/dev/event_timestamp_extractors" >}}#assigners-allowing-a-fixed-amount-of-lateness).
+about using that [here]({{< ref "docs/dev/datastream/event-time/built_in" >}}).
 
 {{< tabs "0e9b4b32-60dd-4626-a987-63966ccae260" >}}
 {{< tab "Java" >}}

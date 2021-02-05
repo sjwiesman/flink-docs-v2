@@ -332,11 +332,11 @@ whether checkpointing is enabled for the job.
 In many scenarios, the timestamp of a record is embedded in the record itself, or the metadata of the `ConsumerRecord`.
 In addition, users may want to emit watermarks either periodically, or irregularly, e.g. based on
 special records in the Kafka stream that contain the current event-time watermark. For these cases, the Flink Kafka
-Consumer allows the specification of a [watermark strategy]({{< ref "docs/dev/event_time" >}}).
+Consumer allows the specification of a [watermark strategy]({{< ref "docs/concepts/time" >}}).
 
 You can specify your custom strategy as described
-[here]({{< ref "docs/dev/event_timestamps_watermarks" >}}), or use one from the
-[predefined ones]({{< ref "docs/dev/event_timestamp_extractors" >}}). 
+[here]({{< ref "docs/dev/datastream/event-time/generating_watermarks" >}}), or use one from the
+[predefined ones]({{< ref "docs/dev/datastream/event-time/built_in" >}}). 
 
 {{< tabs "33d02541-e172-4f6e-99fc-e097c5f5f856" >}}
 {{< tab "Java" >}}
@@ -376,7 +376,7 @@ val stream = env.addSource(myConsumer)
 (which is commonly the case), all topics and partitions need to have a continuous stream of records.
 Otherwise, the watermarks of the whole application cannot advance and all time-based operations,
 such as time windows or functions with timers, cannot make progress. A single idle Kafka partition causes this behavior.
-Consider setting appropriate [idelness timeouts]({{< ref "docs/dev/event_timestamps_watermarks" >}}#dealing-with-idle-sources) to mitigate this issue.
+Consider setting appropriate [idelness timeouts]({{< ref "docs/dev/datastream/event-time/generating_watermarks" >}}#dealing-with-idle-sources) to mitigate this issue.
  
 ## Kafka Producer
 

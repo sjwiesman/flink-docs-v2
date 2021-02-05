@@ -317,7 +317,7 @@ time of checkpoints. This effectively assures that all requests before the
 checkpoint was triggered have been successfully acknowledged by Elasticsearch, before
 proceeding to process more records sent to the sink.
 
-More details on checkpoints and fault tolerance are in the [fault tolerance docs]({{< ref "/learn-flink/fault_tolerance" >}}).
+More details on checkpoints and fault tolerance are in the [fault tolerance docs]({{< ref "docs/learn-flink/fault_tolerance" >}}).
 
 To use fault tolerant Elasticsearch Sinks, checkpointing of the topology needs to be enabled at the execution environment:
 
@@ -464,7 +464,7 @@ More information about Elasticsearch can be found [here](https://elastic.co).
 
 For the execution of your Flink program, it is recommended to build a
 so-called uber-jar (executable jar) containing all your dependencies
-(see [here]({{< ref "/dev/project-configuration" >}}) for further information).
+(see [here]({{< ref "docs/dev/datastream/project-configuration" >}}) for further information).
 
 Alternatively, you can put the connector's jar file into Flink's `lib/` folder to make it available
 system-wide, i.e. for all job being run.
