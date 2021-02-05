@@ -96,7 +96,7 @@ Using the `keyBy(...)` will split your infinite stream into logical keyed stream
 stream is not keyed.
 
 In the case of keyed streams, any attribute of your incoming events can be used as a key
-(more details [here]({{< ref "/dev/stream/state/state" >}}#keyed-datastream)). Having a keyed stream will
+(more details [here]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}#keyed-datastream)). Having a keyed stream will
 allow your windowed computation to be performed in parallel by multiple tasks, as each logical keyed stream can be processed
 independently from the rest. All elements referring to the same key will be sent to the same parallel task.
 
@@ -114,7 +114,7 @@ with pre-defined window assigners for the most common use cases, namely *tumblin
 *sliding windows*, *session windows* and *global windows*. You can also implement a custom window assigner by
 extending the `WindowAssigner` class. All built-in window assigners (except the global
 windows) assign elements to windows based on time, which can either be processing time or event
-time. Please take a look at our section on [event time]({{< ref "/dev/event_time" >}}) to learn
+time. Please take a look at our section on [event time]({{< ref "docs/concepts/time" >}}) to learn
 about the difference between processing time and event time and how timestamps and watermarks are generated.
 
 Time-based windows have a *start timestamp* (inclusive) and an *end timestamp* (exclusive)
@@ -1132,7 +1132,7 @@ necessarily the ones that arrive first or last.
 
 When working with *event-time* windowing, it can happen that elements arrive late, *i.e.* the watermark that Flink uses to
 keep track of the progress of event-time is already past the end timestamp of a window to which an element belongs. See
-[event time]({{< ref "/dev/event_time" >}}) and especially [late elements]({{< ref "/dev/event_time" >}}#late-elements) for a more thorough
+[event time]({{< ref "docs/dev/datastream/event-time/generating_watermarks" >}}) and especially [late elements]({{< ref "docs/dev/datastream/event-time/generating_watermarks" >}}#late-elements) for a more thorough
 discussion of how Flink deals with event time.
 
 By default, late elements are dropped when the watermark is past the end of the window. However,
@@ -1180,7 +1180,7 @@ When using the `GlobalWindows` window assigner no data is ever considered late b
 
 ### Getting late data as a side output
 
-Using Flink's [side output]({{< ref "/dev/stream/side_output" >}}) feature you can get a stream of the data
+Using Flink's [side output]({{< ref "docs/dev/datastream/side_output" >}}) feature you can get a stream of the data
 that was discarded as late.
 
 You first need to specify that you want to get late data using `sideOutputLateData(OutputTag)` on
@@ -1252,7 +1252,7 @@ will cover this after taking a look how watermarks interact with windows.
 ### Interaction of watermarks and windows
 
 Before continuing in this section you might want to take a look at our section about
-[event time and watermarks]({{< ref "/dev/event_time" >}}).
+[event time and watermarks]({{< ref "docs/concepts/time" >}}).
 
 When watermarks arrive at the window operator this triggers two things:
 

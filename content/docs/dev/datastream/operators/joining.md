@@ -28,7 +28,7 @@ under the License.
 
 ## Window Join
 
-A window join joins the elements of two streams that share a common key and lie in the same window. These windows can be defined by using a [window assigner]({{< ref "/dev/stream/operators/windows" >}}#window-assigners) and are evaluated on elements from both of the streams.
+A window join joins the elements of two streams that share a common key and lie in the same window. These windows can be defined by using a [window assigner]({{< ref "docs/dev/datastream/operators/windows" >}}#window-assigners) and are evaluated on elements from both of the streams.
 
 The elements from both sides are then passed to a user-defined `JoinFunction` or `FlatJoinFunction` where the user can emit results that meet the join criteria.
 

@@ -216,7 +216,7 @@ To control in which order the resulting records are emitted, Flink offers two mo
 
 ### Event Time
 
-When the streaming application works with [event time]({{< ref "/dev/event_time" >}}), watermarks will be handled correctly by the
+When the streaming application works with [event time]({{< ref "docs/concepts/time" >}}), watermarks will be handled correctly by the
 asynchronous I/O operator. That means concretely the following for the two order modes:
 
   - **Unordered**: Watermarks do not overtake records and vice versa, meaning watermarks establish an *order boundary*.

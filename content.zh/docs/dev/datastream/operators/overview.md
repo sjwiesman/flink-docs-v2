@@ -126,7 +126,7 @@ data_stream.filter(lambda x: x != 0)
 ### KeyBy
 #### DataStream &rarr; KeyedStream
 
-Logically partitions a stream into disjoint partitions. All records with the same key are assigned to the same partition. Internally, _keyBy()_ is implemented with hash partitioning. There are different ways to [specify keys]({{< ref "/dev/stream/state/state" >}}#keyed-datastream).
+Logically partitions a stream into disjoint partitions. All records with the same key are assigned to the same partition. Internally, _keyBy()_ is implemented with hash partitioning. There are different ways to [specify keys]({{< ref "docs/dev/datastream/fault-tolerance/state" >}}#keyed-datastream).
 
 {{< tabs keybyfunc >}}
 {{< tab "Java">}}
