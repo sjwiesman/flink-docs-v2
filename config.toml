@@ -5,13 +5,10 @@ enableGitInfo = false
 theme = "book"
 pygmentsUseClasses = true
 
-## DO NOT MERGE THIS LINE
-refLinksErrorLevel = "WARNING"
-
 [params]
   # Flag whether this is a stable version or not.
   # Used for the quickstart page.
-  IsStable = true 
+  IsStable = false 
   
   # Flag to indicate whether an outdated warning should be shown.
   ShowOutDatedWarning = false
@@ -21,7 +18,7 @@ refLinksErrorLevel = "WARNING"
   # we change the version for the complete docs when forking of a release branch
   # etc.
   # The full version string as referenced in Maven (e.g. 1.2.1)
-  Version = "1.12.1"
+  Version = "1.13-SNAPSHOT"
 
   # For stable releases, leave the bugfix version out (e.g. 1.2). For snapshot
   # release this should be the same as the regular version
@@ -31,7 +28,7 @@ refLinksErrorLevel = "WARNING"
   Branch = "master"
 
   # The github repository for Apache Flink
-  Repo = "//github.com/sjwiesman/flink-docs-v2"
+  Repo = "//github.com/apache/flink"
 
   GithubRepo = "https://github.com/apache/flink.git"
 
