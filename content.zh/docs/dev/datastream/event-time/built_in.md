@@ -3,7 +3,8 @@ title: "内置 Watermark 生成器"
 weight: 3
 type: docs
 aliases:
-  - /dev/event_timestamp_extractors.html
+  - /zh/dev/event_timestamp_extractors.html
+  - /zh/apis/streaming/event_timestamp_extractors.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

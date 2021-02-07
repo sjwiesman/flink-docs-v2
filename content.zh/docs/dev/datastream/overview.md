@@ -2,6 +2,12 @@
 title: 概览
 weight: 1
 type: docs
+aliases:
+  - /zh/dev/datastream_api.html
+  - /zh/apis/common/index.html
+  - /zh/dev/datastream_api
+  - /zh/apis/streaming/index.html
+  - /zh/apis/streaming_guide.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

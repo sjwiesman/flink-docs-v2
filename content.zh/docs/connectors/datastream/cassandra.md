@@ -4,6 +4,7 @@ weight: 3
 type: docs
 aliases:
   - /zh/dev/connectors/cassandra.html
+  - /zh/apis/streaming/connectors/cassandra.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

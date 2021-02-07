@@ -4,6 +4,9 @@ weight: 5
 type: docs
 aliases:
   - /dev/connectors/elasticsearch.html
+  - /apis/streaming/connectors/elasticsearch.html
+  - /dev/connectors/elasticsearch2.html
+  - /apis/streaming/connectors/elasticsearch2.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

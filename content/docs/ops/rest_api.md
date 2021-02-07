@@ -5,6 +5,8 @@ type: docs
 bookToc: false
 aliases:
   - /ops/rest_api.html
+  - /internals/monitoring_rest_api.html
+  - /monitoring/rest_api.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

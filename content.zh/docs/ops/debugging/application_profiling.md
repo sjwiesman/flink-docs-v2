@@ -3,7 +3,8 @@ title: "Application Profiling & Debugging"
 weight: 4
 type: docs
 aliases:
-  - /ops/debugging/application_profiling.html
+  - /zh/ops/debugging/application_profiling.html
+  - /zh/ops/debugging/application_profiling
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

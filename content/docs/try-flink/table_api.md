@@ -3,6 +3,9 @@ title: 'Real Time Reporting with the Table API'
 nav-title: 'Real Time Reporting with the Table API'
 weight: 4
 type: docs
+aliases:
+  - /try-flink/table_api.html
+  - /getting-started/walkthroughs/table_api.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

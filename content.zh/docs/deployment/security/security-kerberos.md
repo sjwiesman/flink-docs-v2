@@ -4,6 +4,7 @@ weight: 3
 type: docs
 aliases:
   - /zh/deployment/security/security-kerberos.html
+  - /zh/ops/security-kerberos.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

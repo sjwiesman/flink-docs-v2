@@ -4,6 +4,7 @@ weight: 2
 type: docs
 aliases:
   - /zh/deployment/security/security-ssl.html
+  - /zh/ops/security-ssl.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

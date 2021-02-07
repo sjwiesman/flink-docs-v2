@@ -3,7 +3,9 @@ title: "生成 Watermark"
 weight: 2
 type: docs
 aliases:
-  - /dev/event_timestamps_watermarks.html
+  - /zh/dev/event_timestamps_watermarks.html
+  - /zh/apis/streaming/event_time.html
+  - /zh/apis/streaming/event_timestamps_watermarks.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

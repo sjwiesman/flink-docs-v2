@@ -4,6 +4,7 @@ weight: 6
 type: docs
 aliases:
   - /zh/deployment/resource-providers/mesos.html
+  - /zh/ops/deployment/mesos.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

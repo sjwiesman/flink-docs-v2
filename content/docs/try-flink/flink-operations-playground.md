@@ -3,6 +3,9 @@ title: 'Flink Operations Playground'
 nav-title: 'Flink Operations Playground'
 weight: 6
 type: docs
+aliases:
+  - /try-flink/flink-operations-playground.html
+  - /getting-started/playground/flink-operations-playground.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

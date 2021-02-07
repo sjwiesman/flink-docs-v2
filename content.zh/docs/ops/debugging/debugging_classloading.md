@@ -4,6 +4,7 @@ weight: 3
 type: docs
 aliases:
   - /zh/ops/debugging/debugging_classloading.html
+  - /zh/monitoring/debugging_classloading.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

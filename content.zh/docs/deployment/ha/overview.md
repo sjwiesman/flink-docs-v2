@@ -4,6 +4,8 @@ weight: 1
 type: docs
 aliases:
   - /zh/deployment/ha/
+  - /zh/ops/jobmanager_high_availability.html
+  - /zh/deployment/jobmanager_high_availability.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

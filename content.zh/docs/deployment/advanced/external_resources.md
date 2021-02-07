@@ -4,6 +4,7 @@ weight: 2
 type: docs
 aliases:
   - /zh/deployment/advanced/external_resources.html
+  - /zh/ops/external_resources.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

@@ -4,6 +4,8 @@ weight: 8
 type: docs
 aliases:
   - /zh/deployment/repls/scala_shell.html
+  - /zh/apis/scala_shell.html
+  - /zh/ops/scala_shell.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

@@ -3,6 +3,9 @@ title: '基于 Table API 实现实时报表'
 nav-title: '基于 Table API 实现实时报表'
 weight: 4
 type: docs
+aliases:
+  - /zh/try-flink/table_api.html
+  - /zh/getting-started/walkthroughs/table_api.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

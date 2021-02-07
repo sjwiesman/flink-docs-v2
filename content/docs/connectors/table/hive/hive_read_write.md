@@ -4,6 +4,7 @@ weight: 4
 type: docs
 aliases:
   - /dev/table/connectors/hive/hive_read_write.html
+  - /dev/table/hive/hive_streaming.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

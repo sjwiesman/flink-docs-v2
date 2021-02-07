@@ -4,6 +4,7 @@ weight: 2
 type: docs
 aliases:
   - /zh/ops/monitoring/checkpoint_monitoring.html
+  - /zh/monitoring/checkpoint_monitoring.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

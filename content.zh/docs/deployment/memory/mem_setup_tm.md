@@ -4,6 +4,7 @@ weight: 3
 type: docs
 aliases:
   - /zh/deployment/memory/mem_setup_tm.html
+  - /zh/ops/memory/mem_setup_tm.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

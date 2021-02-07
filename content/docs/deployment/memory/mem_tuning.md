@@ -4,6 +4,7 @@ weight: 5
 type: docs
 aliases:
   - /deployment/memory/mem_tuning.html
+  - /ops/memory/mem_tuning.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

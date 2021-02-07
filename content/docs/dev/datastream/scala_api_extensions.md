@@ -4,6 +4,7 @@ weight: 201
 type: docs
 aliases:
   - /dev/scala_api_extensions.html
+  - /apis/scala_api_extensions.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

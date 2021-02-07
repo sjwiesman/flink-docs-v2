@@ -4,6 +4,7 @@ weight: 4
 type: docs
 aliases:
   - /ops/debugging/application_profiling.html
+  - /ops/debugging/application_profiling
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

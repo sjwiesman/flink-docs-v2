@@ -4,6 +4,8 @@ weight: 7
 type: docs
 aliases:
   - /deployment/repls/python_shell.html
+  - /apis/python_shell.html
+  - /ops/python_shell.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

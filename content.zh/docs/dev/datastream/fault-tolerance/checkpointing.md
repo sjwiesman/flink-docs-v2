@@ -4,6 +4,7 @@ weight: 4
 type: docs
 aliases:
   - /zh/dev/stream/state/checkpointing.html
+  - /zh/apis/streaming/fault_tolerance.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

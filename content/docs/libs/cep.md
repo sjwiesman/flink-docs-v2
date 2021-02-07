@@ -4,6 +4,7 @@ weight: 1
 type: docs
 aliases:
   - /dev/libs/cep.html
+  - /apis/streaming/libs/cep.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

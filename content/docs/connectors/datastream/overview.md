@@ -4,6 +4,7 @@ weight: 1
 type: docs
 aliases:
   - /dev/connectors/
+  - /api/connectors.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

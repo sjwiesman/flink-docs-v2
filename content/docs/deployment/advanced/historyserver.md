@@ -4,6 +4,7 @@ weight: 3
 type: docs
 aliases:
   - /deployment/advanced/historyserver.html
+  - /monitoring/historyserver.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

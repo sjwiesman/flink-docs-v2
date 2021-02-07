@@ -4,6 +4,7 @@ weight: 5
 type: docs
 aliases:
   - /deployment/filesystems/plugins.html
+  - /ops/plugins.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

@@ -2,6 +2,10 @@
 title: "Fraud Detection with the DataStream API"
 type: docs
 weight: 2
+aliaes:
+  - /try-flink/datastream_api.html
+  - /getting-started/walkthroughs/datastream_api.html
+  - /quickstart/run_example_quickstart.htmls
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

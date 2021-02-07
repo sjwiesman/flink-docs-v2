@@ -4,6 +4,7 @@ weight: 7
 type: docs
 aliases:
   - /deployment/memory/mem_migration.html
+  - /ops/memory/mem_migration.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

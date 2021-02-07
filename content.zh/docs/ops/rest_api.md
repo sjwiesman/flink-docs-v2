@@ -4,7 +4,9 @@ weight: 7
 type: docs
 bookToc: false
 aliases:
-  - /ops/rest_api.html
+  - /zh/ops/rest_api.html
+  - /zh/internals/monitoring_rest_api.html
+  - /zh/monitoring/rest_api.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

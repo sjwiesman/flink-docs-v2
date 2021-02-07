@@ -4,6 +4,7 @@ weight: 4
 type: docs
 aliases:
   - /flinkDev/ide_setup.html
+  - /internals/ide_setup.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

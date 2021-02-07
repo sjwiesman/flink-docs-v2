@@ -4,6 +4,8 @@ weight: 3
 type: docs
 aliases:
   - /ops/monitoring/back_pressure.html
+  - /internals/back_pressure_monitoring.html
+  - /ops/monitoring/back_pressure
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

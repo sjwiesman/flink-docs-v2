@@ -4,6 +4,7 @@ weight: 2
 type: docs
 aliases:
   - /zh/ops/debugging/debugging_event_time.html
+  - /zh/monitoring/debugging_event_time.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

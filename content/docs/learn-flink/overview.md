@@ -2,6 +2,10 @@
 title: "Overview"
 type: docs
 weight: 1
+aliases:
+  - /learn-flink/
+  - /training/
+  - /tutorials/
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

@@ -4,6 +4,7 @@ weight: 1
 type: docs
 aliases:
   - /zh/dev/libs/gelly/
+  - /zh/apis/batch/libs/gelly.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

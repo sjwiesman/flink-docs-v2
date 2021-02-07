@@ -4,6 +4,7 @@ weight: 12
 type: docs
 aliases:
   - /zh/ops/state/state_backends.html
+  - /zh/apis/streaming/state_backends.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

@@ -2,6 +2,9 @@
 title: Apache Flink Documentation 
 type: docs
 bookToc: false
+aliases:
+  - /examples/index.html
+  - /getting-started/examples/index.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

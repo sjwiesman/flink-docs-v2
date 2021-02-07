@@ -4,6 +4,7 @@ weight: 5
 type: docs
 aliases:
   - /deployment/resource-providers/yarn.html
+  - /ops/deployment/yarn_setup.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

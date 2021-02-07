@@ -4,6 +4,7 @@ weight: 3
 type: docs
 aliases:
   - /zh/deployment/filesystems/oss.html
+  - /zh/ops/filesystems/oss.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

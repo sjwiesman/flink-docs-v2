@@ -4,6 +4,7 @@ weight: 9
 type: docs
 aliases:
   - /zh/ops/state/savepoints.html
+  - /zh/apis/streaming/savepoints.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

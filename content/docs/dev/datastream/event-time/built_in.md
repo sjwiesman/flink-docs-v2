@@ -4,6 +4,7 @@ weight: 3
 type: docs
 aliases:
   - /dev/event_timestamp_extractors.html
+  - /apis/streaming/event_timestamp_extractors.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

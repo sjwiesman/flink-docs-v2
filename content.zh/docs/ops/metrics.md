@@ -4,6 +4,8 @@ weight: 6
 type: docs
 aliases:
   - /zh/ops/metrics.html
+  - /zh/apis/metrics.html
+  - /zh/monitoring/metrics.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

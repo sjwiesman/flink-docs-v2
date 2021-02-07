@@ -4,6 +4,14 @@ weight: 2
 type: docs
 aliases:
   - /zh/deployment/resource-providers/standalone/
+  - /zh/ops/deployment/cluster_setup.html
+  - /zh/apis/local_execution.html
+  - /zh/getting-started/tutorials/local_setup.html
+  - /zh/quickstart/setup_quickstart.html
+  - /zh/tutorials/flink_on_windows.html
+  - /zh/tutorials/local_setup.html
+  - /zh/getting-started/tutorials/flink_on_windows.html
+  - /zh/start/flink_on_windows.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

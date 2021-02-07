@@ -4,6 +4,8 @@ weight: 1
 type: docs
 aliases:
   - /deployment/filesystems/
+  - /ops/filesystem.html
+  - /ops/filesystems/index.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

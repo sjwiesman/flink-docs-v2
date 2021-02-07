@@ -4,6 +4,7 @@ weight: 2
 type: docs
 aliases:
   - /zh/dev/connectors/kafka.html
+  - /zh/apis/streaming/connectors/kafka.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

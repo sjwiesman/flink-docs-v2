@@ -4,6 +4,7 @@ weight: 2
 type: docs
 aliases:
   - /zh/dev/stream/state/state.html
+  - /zh/apis/streaming/state.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

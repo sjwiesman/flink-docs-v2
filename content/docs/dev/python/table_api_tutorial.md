@@ -4,6 +4,9 @@ weight: 21
 type: docs
 aliases:
   - /dev/python/table_api_tutorial.html
+  - /tutorials/python_table_api.html
+  - /getting-started/walkthroughs/python_table_api.html
+  - /try-flink/python_table_api.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

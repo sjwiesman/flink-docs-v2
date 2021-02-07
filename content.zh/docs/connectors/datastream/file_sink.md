@@ -4,6 +4,7 @@ weight: 6
 type: docs
 aliases:
   - /zh/dev/connectors/file_sink.html
+  - /zh/apis/streaming/connectors/filesystem_sink.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

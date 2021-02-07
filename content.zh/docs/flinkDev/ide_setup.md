@@ -3,7 +3,8 @@ title: "导入 Flink 到 IDE 中"
 weight: 4
 type: docs
 aliases:
-  - /flinkDev/ide_setup.html
+  - /zh/flinkDev/ide_setup.html
+  - /zh/internals/ide_setup.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

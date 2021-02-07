@@ -3,6 +3,9 @@ title: 'Overview'
 weight: 1
 type: docs
 bookToc: false
+aliases: 
+  - /concepts/
+  - /concepts/concepts.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

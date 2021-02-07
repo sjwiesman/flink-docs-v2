@@ -4,6 +4,7 @@ weight: 4
 type: docs
 aliases:
   - /zh/dev/table/streaming/versioned_tables.html
+  - /zh/dev/table/streaming/temporal_tables.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

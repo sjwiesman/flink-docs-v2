@@ -4,6 +4,7 @@ weight: 4
 type: docs
 aliases:
   - /zh/deployment/resource-providers/standalone/docker.html
+  - /zh/ops/deployment/docker.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

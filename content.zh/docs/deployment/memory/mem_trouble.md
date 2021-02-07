@@ -4,6 +4,7 @@ weight: 6
 type: docs
 aliases:
   - /zh/deployment/memory/mem_trouble.html
+  - /zh/ops/memory/mem_trouble.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

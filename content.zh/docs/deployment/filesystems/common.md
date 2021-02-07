@@ -4,6 +4,7 @@ weight: 1
 type: docs
 aliases:
   - /zh/deployment/filesystems/common.html
+  - /zh/ops/filesystems.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

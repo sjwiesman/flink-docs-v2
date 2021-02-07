@@ -4,6 +4,7 @@ weight: 21
 type: docs
 aliases:
   - /zh/flinkDev/building.html
+  - /zh/start/building.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

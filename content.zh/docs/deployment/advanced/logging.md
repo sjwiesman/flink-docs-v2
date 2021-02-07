@@ -4,6 +4,7 @@ weight: 4
 type: docs
 aliases:
   - /zh/deployment/advanced/logging.html
+  - /zh/monitoring/logging.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

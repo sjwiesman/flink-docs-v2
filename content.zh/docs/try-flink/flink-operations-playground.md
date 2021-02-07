@@ -3,6 +3,9 @@ title: 'Flink 操作场景'
 nav-title: 'Flink 操作场景'
 weight: 6
 type: docs
+aliases:
+  - /zh/try-flink/flink-operations-playground.html
+  - /zh/getting-started/playground/flink-operations-playground.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

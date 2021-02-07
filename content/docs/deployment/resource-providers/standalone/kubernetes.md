@@ -4,6 +4,7 @@ weight: 5
 type: docs
 aliases:
   - /deployment/resource-providers/standalone/kubernetes.html
+  - /ops/deployment/kubernetes.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

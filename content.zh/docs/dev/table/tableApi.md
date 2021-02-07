@@ -4,6 +4,8 @@ weight: 31
 type: docs
 aliases:
   - /zh/dev/table/tableApi.html
+  - /zh/dev/table_api.html
+  - /z/apis/table.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

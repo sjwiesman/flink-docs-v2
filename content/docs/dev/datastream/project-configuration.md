@@ -4,6 +4,18 @@ weight: 302
 type: docs
 aliases:
   - /dev/project-configuration.html
+  - /start/dependencies.html
+  - /getting-started/project-setup/dependencies.html
+  - /quickstart/java_api_quickstart.html
+  - /dev/projectsetup/java_api_quickstart.html
+  - /dev/linking_with_flink.html
+  - /dev/linking.html
+  - /dev/projectsetup/dependencies.html
+  - /dev/projectsetup/java_api_quickstart.html
+  - /getting-started/project-setup/java_api_quickstart.html
+  - /dev/getting-started/project-setup/scala_api_quickstart.html
+  - /getting-started/project-setup/scala_api_quickstart.html
+  - /quickstart/scala_api_quickstart.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

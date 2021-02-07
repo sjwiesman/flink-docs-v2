@@ -4,6 +4,7 @@ weight: 1
 type: docs
 aliases:
   - /zh/deployment/
+  - /zh/apis/cluster_execution.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

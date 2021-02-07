@@ -4,6 +4,7 @@ weight: 5
 type: docs
 aliases:
   - /zh/deployment/cli.html
+  - /zh/apis/cli.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

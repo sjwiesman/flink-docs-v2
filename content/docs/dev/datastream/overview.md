@@ -3,7 +3,11 @@ title: Overview
 weight: 1
 type: docs
 aliases:
-  - dev/datastream_api.html
+  - /dev/datastream_api.html
+  - /apis/common/index.html
+  - /dev/datastream_api
+  - /apis/streaming/index.html
+  - /apis/streaming_guide.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

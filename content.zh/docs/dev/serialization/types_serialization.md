@@ -3,7 +3,8 @@ title: "概览"
 weight: 1
 type: docs
 aliases:
-  - /dev/types_serialization.html
+  - /zh/dev/types_serialization.html
+  - /zh/internals/types_serialization.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

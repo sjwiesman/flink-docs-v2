@@ -4,6 +4,7 @@ weight: 1
 type: docs
 aliases:
   - /dev/types_serialization.html
+  - /internals/types_serialization.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

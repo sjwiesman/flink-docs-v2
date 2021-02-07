@@ -3,7 +3,8 @@ title: "Queries"
 weight: 2
 type: docs
 aliases:
-  - /zh/dev/table/sql/queries.html
+  - /dev/table/sql/queries.html
+  - /dev/table/sql.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

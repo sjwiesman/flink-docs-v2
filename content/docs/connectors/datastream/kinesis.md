@@ -4,6 +4,7 @@ weight: 4
 type: docs
 aliases:
   - /dev/connectors/kinesis.html
+  - /apis/streaming/connectors/kinesis.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

@@ -5,6 +5,7 @@ type: docs
 bookToc: false
 aliases:
   - /deployment/filesystems/common.html
+  - /ops/filesystems/common.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one

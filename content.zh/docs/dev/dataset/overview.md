@@ -4,6 +4,7 @@ type: docs
 weight: 1
 aliases:
   - /zh/dev/batch/index.html
+  - /zh/apis/programming_guide.html
 ---
 <!--
 Licensed to the Apache Software Foundation (ASF) under one
