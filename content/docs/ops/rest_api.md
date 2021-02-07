@@ -66,11 +66,6 @@ Querying unsupported/non-existing versions will return a 404 error.
 
 There exist several async operations among these APIs, e.g. `trigger savepoint`, `rescale a job`. They would return a `triggerid` to identify the operation you just POST and then you need to use that `triggerid` to query for the status of the operation.
 
-{{< expand "Custom Label" "..." >}}
-## Markdown content
-Lorem markdownum insigne...
-{{< /expand >}}
-
 {{< tabs "f00ed142-b05f-44f0-bafc-799080c1d40d" >}}
 {{< tab "v1" >}}
 #### JobManager

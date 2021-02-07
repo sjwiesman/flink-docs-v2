@@ -65,11 +65,6 @@ Flink 具有监控 API ，可用于查询正在运行的作业以及最近完成
 
 这些 API 中存在几种异步操作，例如：`trigger savepoint` 、 `rescale a job` 。它们将返回 `triggerid` 来标识你刚刚执行的 `POST` 请求，然后你需要使用该 `triggerid` 查询该操作的状态。
 
-{{< expand "Custom Label" "..." >}}
-## Markdown content
-Lorem markdownum insigne...
-{{< /expand >}}
-
 {{< tabs "f00ed142-b05f-44f0-bafc-799080c1d40d" >}}
 {{< tab "v1" >}}
 #### JobManager
